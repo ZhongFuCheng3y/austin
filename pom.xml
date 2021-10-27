@@ -6,6 +6,10 @@
 
     <modules>
         <module>web</module>
+        <module>support</module>
+        <module>service-api</module>
+        <module>service-api-impl</module>
+        <module>common</module>
     </modules>
 
     <parent>
