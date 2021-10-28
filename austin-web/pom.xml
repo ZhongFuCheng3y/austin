@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web</artifactId>
+    <artifactId>austin-web</artifactId>
 
     <dependencies>
         <!--SpringBoot 默认依赖-->
