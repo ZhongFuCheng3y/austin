@@ -4,7 +4,7 @@ austin项目**核心功能**：发送消息
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gvztdk1w2wj30ky0p8759.jpg)
 
-**项目出现意义**：只要公司内有发送消息的需求，都应该要有类似`austin`的项目，对各类消息进行统一发送处理。这有利于对功能的
+**项目出现意义**：只要公司内有发送消息的需求，都应该要有类似`austin`的项目，对各类消息进行统一发送处理。这有利于对功能的收拢，以及提高业务需求开发的效率
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzz1vifljj31vc0u07dr.jpg)
 
