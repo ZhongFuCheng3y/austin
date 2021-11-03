@@ -10,6 +10,7 @@
         <module>austin-service-api-impl</module>
         <module>austin-common</module>
         <module>austin-support</module>
+        <module>austin-handler</module>
     </modules>
 
     <parent>
