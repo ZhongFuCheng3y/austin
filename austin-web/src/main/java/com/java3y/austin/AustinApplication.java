@@ -1,6 +1,5 @@
 package com.java3y.austin;
 
-import cn.hutool.setting.SettingUtil;
 import com.java3y.austin.pojo.SmsParam;
 import com.java3y.austin.script.TencentSmsScript;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,11 @@ public class AustinApplication {
     public String hello() {
 
         SmsParam smsParam = SmsParam.builder()
-                .phones(new HashSet<>(Arrays.asList("13719193845")))
+                .phones(new HashSet<>(Arrays.asList("//")))
                 .content("3333")
                 .build();
 
         return tencentSmsScript.send(smsParam);
-
 
     }
 

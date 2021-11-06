@@ -12,6 +12,7 @@
     <artifactId>austin-handler</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.java3y.austin</groupId>
             <artifactId>austin-common</artifactId>
@@ -21,6 +22,17 @@
             <groupId>com.java3y.austin</groupId>
             <artifactId>austin-support</artifactId>
             <version>0.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <exclusions>
+                <exclusion>
+                        <groupId>com.squareup.okio</groupId>
+                        <artifactId>okio</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
