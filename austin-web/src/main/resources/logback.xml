@@ -4,7 +4,7 @@
 
     <contextName>austin</contextName>
 
-    <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 这里后面是需要读配置的 -->
+    <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 后面是可以读配置的 -->
     <property name="log.path" value="logs"/>
 
 

@@ -1,0 +1,18 @@
+# HTTP 连接配置 TODO
+ok:
+    http:
+        connect-timeout: 30
+        keep-alive-duration: 300
+        max-idle-connections: 200
+        read-timeout: 30
+        write-timeout: 30
+
+# 腾讯云账号相关的信息配置 TODO
+tencent:
+    sms:
+        account:
+            secret-id:
+            secret-key:
+            sign_name:
+            sms-sdk-app-id:
+            template-id:
