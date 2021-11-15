@@ -1,18 +1,29 @@
-# HTTP 连接配置 TODO
+# HTTP 连接配置 T0D0
 ok:
-    http:
-        connect-timeout: 30
-        keep-alive-duration: 300
-        max-idle-connections: 200
-        read-timeout: 30
-        write-timeout: 30
+  http:
+    connect-timeout: 30
+    keep-alive-duration: 300
+    max-idle-connections: 200
+    read-timeout: 30
+    write-timeout: 30
 
 # 腾讯云账号相关的信息配置 TODO
 tencent:
-    sms:
-        account:
-            secret-id:
-            secret-key:
-            sign_name:
-            sms-sdk-app-id:
-            template-id:
+  sms:
+    account:
+      secret-id:
+      secret-key:
+      sign_name:
+      sms-sdk-app-id:
+      template-id:
+
+
+# 数据库相关的信息配置 TODO
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+
+# tomcat / HikariPool(数据库连接池 配置） TODO
