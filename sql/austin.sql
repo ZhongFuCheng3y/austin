@@ -27,7 +27,7 @@ CREATE TABLE `message_template`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci COMMENT ='消息模板信息');
+  COLLATE = utf8mb4_unicode_ci COMMENT ='消息模板信息'
 
 
 
@@ -51,4 +51,4 @@ CREATE TABLE `sms_record`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci COMMENT ='短信记录信息');
+  COLLATE = utf8mb4_unicode_ci COMMENT ='短信记录信息'
