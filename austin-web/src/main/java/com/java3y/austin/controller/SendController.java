@@ -1,38 +1,44 @@
 package com.java3y.austin.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.java3y.austin.handler.SmsHandler;
-import com.java3y.austin.pojo.SmsParam;
 import com.java3y.austin.pojo.TaskInfo;
-import com.java3y.austin.script.TencentSmsScript;
+import com.java3y.austin.pojo.vo.BasicResultVO;
+import java.util.Collections;
+import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.HashSet;
+/**
+ * @author 三歪
+ */
 
 @RestController
 public class SendController {
 
 
-    @Autowired
-    private SmsHandler smsHandler;
+  @Autowired
+  private SmsHandler smsHandler;
 
-    /**
-     * 测试发送短信
-     * @param phone 手机号
-     * @return
-     */
-    @GetMapping("/sendSms")
-    public boolean sendSms(String phone,String content,Long messageTemplateId ) {
+  /**
+   * 测试发送短信
+   * @param phone 手机号
+   * @return BasicResultVO
+   */
+  @GetMapping("/sendSms")
+  public BasicResultVO<Void> sendSms(String phone, String content, Long messageTemplateId) {
 
-        TaskInfo taskInfo = TaskInfo.builder().receiver(new HashSet<>(Arrays.asList(phone)))
-                .content(content).messageTemplateId(messageTemplateId).build();
+    TaskInfo taskInfo = TaskInfo.builder().receiver(new HashSet<>(
+            Collections.singletonList(phone)))
+        .content(content)
+        .messageTemplateId(messageTemplateId)
+        .build();
 
-        return smsHandler.doHandler(taskInfo);
-
-
+    if (smsHandler.doHandler(taskInfo)) {
+      return BasicResultVO.success("发送信息成功");
     }
+
+    return BasicResultVO.fail();
+  }
 
 }

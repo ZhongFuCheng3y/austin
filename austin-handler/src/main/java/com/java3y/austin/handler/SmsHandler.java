@@ -12,30 +12,35 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * @author 三歪
+ */
+
 @Component
 public class SmsHandler implements Handler {
-    @Autowired
-    private SmsRecordDao smsRecordDao;
 
-    @Autowired
-    private SmsScript smsScript;
+  @Autowired
+  private SmsRecordDao smsRecordDao;
 
-    @Override
-    public boolean doHandler(TaskInfo taskInfo) {
+  @Autowired
+  private SmsScript smsScript;
 
-        SmsParam smsParam = SmsParam.builder()
-                .phones(taskInfo.getReceiver())
-                .content(taskInfo.getContent())
-                .messageTemplateId(taskInfo.getMessageTemplateId())
-                .supplierId(10)
-                .supplierName("腾讯云通知类消息渠道").build();
-        List<SmsRecord> recordList = smsScript.send(smsParam);
+  @Override
+  public boolean doHandler(TaskInfo taskInfo) {
 
-        if (CollUtil.isNotEmpty(recordList)) {
-            smsRecordDao.saveAll(recordList);
-            return true;
-        }
+    SmsParam smsParam = SmsParam.builder()
+        .phones(taskInfo.getReceiver())
+        .content(taskInfo.getContent())
+        .messageTemplateId(taskInfo.getMessageTemplateId())
+        .supplierId(10)
+        .supplierName("腾讯云通知类消息渠道").build();
+    List<SmsRecord> recordList = smsScript.send(smsParam);
 
-        return false;
+    if (CollUtil.isEmpty(recordList)) {
+      return false;
     }
+
+    smsRecordDao.saveAll(recordList);
+    return true;
+  }
 }
