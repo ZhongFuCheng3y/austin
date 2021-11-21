@@ -1,13 +1,9 @@
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gwn3mgftzaj30p00an0t1.jpg)
 
 <p align="center">
-  <a href="#公众号"><img src="https://img.shields.io/badge/关注公众号-Java3y-blue.svg" alt="Java3y"></a>
-  <a href="#https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4Njg5MDA5NA==&action=getalbum&album_id=2140193116740517888&scene=126#wechat_redirect"><img src="https://img.shields.io/badge/austin-系列文章-critical.svg" alt="Java3y"></a>
-  <a href="#公众号"><img src="https://img.shields.io/badge/关注公众号-对线面试官-yellow.svg" alt="对线面试官"></a>
-  <a href="http://javainterview.gitee.io/luffy/"><img src="https://img.shields.io/badge/对线面试官-系列文章-orange.svg" alt="对线面试官"></a>
+  <a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4Njg5MDA5NA==&action=getalbum&album_id=2140193116740517888&scene=126#wechat_redirect"><img src="https://img.shields.io/badge/austin-系列文章-critical.svg" alt="Java3y"></a>
+  <a href="#公众号"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
-
-
 
 
 ## 项目介绍
@@ -48,13 +44,30 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzxrppbb0j30ym0iaq8v.jpg)
 
-## 公众号
+## 已完成内容
 
-**Java3y**公众号持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
+截止11-21号：
+
+- Maven+SpringBoot项目搭建
+- logback日志记录项目运行时信息
+- 引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
+- 接入腾讯云渠道发送一条短信
+- 使用SpringData JPA将短信发送记录存储至MySQL
+- 完成对Kafka接入
+
+
+
+**Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
+
+
+
+如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
 
 <img src='https://tva1.sinaimg.cn/large/006tNbRwly1gb0nzpn8z7g30go0gokbp.gif' width=200px height=200px />
 
-**对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATJ的offer。一个**讲人话的面试系列**，八股文不再是背诵
+## 如何准备面试？
+
+**对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
 
 <img align="center" src='https://tva1.sinaimg.cn/large/008i3skNgy1gtlvty8zo5j60u00u0q5602.jpg' width=300px height=300px />
 
