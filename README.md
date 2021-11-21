@@ -1,4 +1,16 @@
-## 01、项目介绍
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gwn3mgftzaj30p00an0t1.jpg)
+
+<p align="center">
+  <a href="#公众号"><img src="https://img.shields.io/badge/关注公众号-Java3y-blue.svg" alt="Java3y"></a>
+  <a href="#https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4Njg5MDA5NA==&action=getalbum&album_id=2140193116740517888&scene=126#wechat_redirect"><img src="https://img.shields.io/badge/austin-系列文章-critical.svg" alt="Java3y"></a>
+  <a href="#公众号"><img src="https://img.shields.io/badge/关注公众号-对线面试官-yellow.svg" alt="对线面试官"></a>
+  <a href="http://javainterview.gitee.io/luffy/"><img src="https://img.shields.io/badge/对线面试官-系列文章-orange.svg" alt="对线面试官"></a>
+</p>
+
+
+
+
+## 项目介绍
 
 austin项目**核心功能**：发送消息
 
@@ -8,7 +20,7 @@ austin项目**核心功能**：发送消息
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzz1vifljj31vc0u07dr.jpg)
 
-## 02、项目流程图
+## 系统项目架构
 
 austin项目**核心流程**：`austin-api`接收到发送消息请求，直接将请求进`MQ`。`austin-handler`消费`MQ`消息后由各类消息的Handler进行发送处理
 
@@ -26,7 +38,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **Answer 3**：`autsin-admin`是`austin`项目的**管理后台**，负责管理消息以及查看消息下发的情况。业务方可根据通过`austin-admin`管理后台直接**定时**发送消息，而`austin-cron`就是承载着定时任务的工作了。
 
-## 03、项目技术架构图
+## 将要实现的项目架构模块
 
 2021-11~2021-12实现功能：
 
@@ -36,9 +48,20 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzxrppbb0j30ym0iaq8v.jpg)
 
-未完待续
+## 公众号
+
+**Java3y**公众号持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
+
+<img src='https://tva1.sinaimg.cn/large/006tNbRwly1gb0nzpn8z7g30go0gokbp.gif' width=200px height=200px />
+
+**对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATJ的offer。一个**讲人话的面试系列**，八股文不再是背诵
+
+<img align="center" src='https://tva1.sinaimg.cn/large/008i3skNgy1gtlvty8zo5j60u00u0q5602.jpg' width=300px height=300px />
 
 
+如果你觉得有帮助，想要打赏作者，那么可以通过这个收款码打赏我，**金额不重要，心意最重要**。主要是我可以通过这个打赏情况来看我的心血有没有价值。
+
+<img src='https://tva1.sinaimg.cn/large/00831rSTly1gcuu0j4wwqj30u014qako.jpg' width=200px height=200px /><img src='https://tva1.sinaimg.cn/large/00831rSTly1gcuuckh3s4j30rc0yo7jr.jpg' width=200px height=200px />
 
 
 
