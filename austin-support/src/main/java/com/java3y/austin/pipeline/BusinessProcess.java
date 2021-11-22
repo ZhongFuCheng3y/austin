@@ -6,5 +6,10 @@ package com.java3y.austin.pipeline;
  * @author 3y
  */
 public interface BusinessProcess {
+
+    /**
+     * 真正处理逻辑
+     * @param context
+     */
     void process(ProcessContext context);
 }

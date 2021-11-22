@@ -1,5 +1,6 @@
 package com.java3y.austin.service;
 
+import com.java3y.austin.domain.BatchSendRequest;
 import com.java3y.austin.domain.SendRequest;
 import com.java3y.austin.domain.SendResponse;
 
@@ -11,8 +12,19 @@ import com.java3y.austin.domain.SendResponse;
 public interface SendService {
 
 
+    /**
+     * 单文案发送接口
+     * @param sendRequest
+     * @return
+     */
     SendResponse send(SendRequest sendRequest);
 
 
-    SendResponse batchSend(SendRequest sendRequest);
+    /**
+     * 多文案发送接口
+     * @param batchSendRequest
+     * @return
+     */
+    SendResponse batchSend(BatchSendRequest batchSendRequest);
+
 }

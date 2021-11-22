@@ -1,4 +1,4 @@
-package com.java3y.austin.pojo.vo;
+package com.java3y.austin.vo;
 
 import com.java3y.austin.constant.RespStatusEnum;
 import lombok.AllArgsConstructor;

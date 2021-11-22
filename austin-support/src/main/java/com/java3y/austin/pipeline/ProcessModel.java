@@ -1,10 +1,12 @@
 package com.java3y.austin.pipeline;
 
 
+import com.java3y.austin.vo.BasicResultVO;
+
 /**
  * 真正存储着责任链的数据
  * @author 3y
  */
-public class ProcessModel {
+public interface ProcessModel {
 
 }

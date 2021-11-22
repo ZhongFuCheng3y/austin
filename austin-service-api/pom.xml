@@ -11,5 +11,12 @@
 
     <artifactId>austin-service-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.java3y.austin</groupId>
+            <artifactId>austin-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
