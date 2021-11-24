@@ -3,12 +3,11 @@ package com.java3y.austin.script;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.enums.SmsStatus;
-import com.java3y.austin.pojo.SmsParam;
+import com.java3y.austin.domain.SmsParam;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -73,7 +72,7 @@ public class TencentSmsScript implements SmsScript {
 
             return assembleSmsRecord(smsParam,response);
 
-        } catch (TencentCloudSDKException e) {
+        } catch (Exception e) {
             log.error("send tencent sms fail!{},params:{}",
                     Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
             return null;

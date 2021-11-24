@@ -54,6 +54,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 - 接入腾讯云渠道发送一条短信
 - 使用SpringData JPA将短信发送记录存储至MySQL
 - 完成对Kafka接入
+- 接入层(api)代码架构实现(责任链模式)
 
 
 

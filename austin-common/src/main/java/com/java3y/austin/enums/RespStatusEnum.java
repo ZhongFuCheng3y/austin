@@ -1,4 +1,4 @@
-package com.java3y.austin.constant;
+package com.java3y.austin.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,8 @@ public enum RespStatusEnum {
   /**
    * 客户端
    */
-  CLIENT_BAD_PARAMETERS("A0100", "客户端参数错误"),
+  CLIENT_BAD_PARAMETERS("A0001", "客户端参数错误"),
+  TEMPLATE_NOT_FOUND("A0002", "找不到模板或模板已被删除"),
 
   /**
    * 系统
@@ -40,6 +41,8 @@ public enum RespStatusEnum {
   BUSINESS_CODE_IS_NULL("P0002","业务代码为空"),
   PROCESS_TEMPLATE_IS_NULL("P0003","流程模板配置为空"),
   PROCESS_LIST_IS_NULL("P0004","业务处理器配置为空" ),
+
+
 
   ;
 

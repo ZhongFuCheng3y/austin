@@ -1,4 +1,4 @@
-package com.java3y.austin.pojo;
+package com.java3y.austin.domain;
 
 import lombok.Builder;
 import lombok.Data;

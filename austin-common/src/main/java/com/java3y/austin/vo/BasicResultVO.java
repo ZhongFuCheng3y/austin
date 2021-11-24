@@ -1,6 +1,6 @@
 package com.java3y.austin.vo;
 
-import com.java3y.austin.constant.RespStatusEnum;
+import com.java3y.austin.enums.RespStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

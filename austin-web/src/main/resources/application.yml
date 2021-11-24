@@ -39,3 +39,7 @@ spring:
           reset: earliest
 
 # tomcat / HikariPool(数据库连接池 配置） TODO
+# 消息topicName TODO
+austin:
+  topic:
+    name: austin

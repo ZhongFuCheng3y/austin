@@ -1,7 +1,7 @@
 package com.java3y.austin.script;
 
 import com.java3y.austin.domain.SmsRecord;
-import com.java3y.austin.pojo.SmsParam;
+import com.java3y.austin.domain.SmsParam;
 
 import java.util.List;
 
