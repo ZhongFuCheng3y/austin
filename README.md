@@ -1,8 +1,11 @@
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gwn3mgftzaj30p00an0t1.jpg)
 
 <p align="center">
+  <a href="#公众号"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
+  <a href="#公众号"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="作者"></a>
   <a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4Njg5MDA5NA==&action=getalbum&album_id=2140193116740517888&scene=126#wechat_redirect"><img src="https://img.shields.io/badge/austin-系列文章-critical.svg" alt="Java3y"></a>
   <a href="#公众号"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
+  
 </p>
 
 
