@@ -2,10 +2,11 @@
 
 <p align="center">
   <a href="#已完成内容"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
-  <a href="#已完成内容"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="作者"></a>
-  <a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4Njg5MDA5NA==&action=getalbum&album_id=2140193116740517888&scene=126#wechat_redirect"><img src="https://img.shields.io/badge/austin-系列文章-critical.svg" alt="Java3y"></a>
-  <a href="#已完成内容"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
-  
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="gitee Starts"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/fork.svg?theme=dark" alt="gitee Starts"></a>
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a> 
+  <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
 
 
@@ -67,7 +68,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
 
-<img src='https://tva1.sinaimg.cn/large/006tNbRwly1gb0nzpn8z7g30go0gokbp.gif' width=200px height=200px />
+<img align="center" src='https://tva1.sinaimg.cn/large/006tNbRwly1gb0nzpn8z7g30go0gokbp.gif' width=300px height=300px />
 
 ## 如何准备面试？
 
