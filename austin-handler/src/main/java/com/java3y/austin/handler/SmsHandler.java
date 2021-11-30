@@ -15,43 +15,49 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @author 三歪
+ * @author 3y
  */
-
 @Component
 public class SmsHandler implements Handler {
 
-  @Autowired
-  private SmsRecordDao smsRecordDao;
+    @Autowired
+    private SmsRecordDao smsRecordDao;
 
-  @Autowired
-  private SmsScript smsScript;
+    @Autowired
+    private SmsScript smsScript;
 
-  @Override
-  public boolean doHandler(TaskInfo taskInfo) {
+    @Override
+    public boolean doHandler(TaskInfo taskInfo) {
 
-    SmsContentModel smsContentModel = (SmsContentModel) taskInfo.getContentModel();
+        SmsParam smsParam = SmsParam.builder()
+                .phones(taskInfo.getReceiver())
+                .content(getSmsContent(taskInfo))
+                .messageTemplateId(taskInfo.getMessageTemplateId())
+                .supplierId(10)
+                .supplierName("腾讯云通知类消息渠道").build();
+        List<SmsRecord> recordList = smsScript.send(smsParam);
 
-    String resultContent;
-    if (StrUtil.isNotBlank(smsContentModel.getUrl())) {
-      resultContent = smsContentModel.getContent() + " " + smsContentModel.getUrl();
-    } else {
-      resultContent = smsContentModel.getContent();
+        if (!CollUtil.isEmpty(recordList)) {
+            smsRecordDao.saveAll(recordList);
+            return true;
+        }
+
+        return false;
     }
 
-    SmsParam smsParam = SmsParam.builder()
-            .phones(taskInfo.getReceiver())
-            .content(resultContent)
-            .messageTemplateId(taskInfo.getMessageTemplateId())
-            .supplierId(10)
-            .supplierName("腾讯云通知类消息渠道").build();
-    List<SmsRecord> recordList = smsScript.send(smsParam);
 
-    if (CollUtil.isEmpty(recordList)) {
-      return false;
+    /**
+     * 如果有输入链接，则把链接拼在文案后
+     * <p>
+     * PS: 这里可以考虑将链接 转 短链
+     * PS: 如果是营销类的短信，需考虑拼接 回TD退订 之类的文案
+     */
+    private String getSmsContent(TaskInfo taskInfo) {
+        SmsContentModel smsContentModel = (SmsContentModel) taskInfo.getContentModel();
+        if (StrUtil.isNotBlank(smsContentModel.getUrl())) {
+            return smsContentModel.getContent() + " " + smsContentModel.getUrl();
+        } else {
+            return smsContentModel.getContent();
+        }
     }
-
-    smsRecordDao.saveAll(recordList);
-    return true;
-  }
 }

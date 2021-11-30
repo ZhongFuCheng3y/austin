@@ -6,6 +6,7 @@ import lombok.ToString;
 
 /**
  * 发送的消息类型
+ * @author 3y
  */
 @Getter
 @ToString

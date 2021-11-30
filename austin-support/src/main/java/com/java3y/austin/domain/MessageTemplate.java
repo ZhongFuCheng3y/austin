@@ -17,8 +17,9 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 /**
- * @autor 3y
+ *
  * 消息模板DO
+ * @author 3y
  */
 public class MessageTemplate {
 

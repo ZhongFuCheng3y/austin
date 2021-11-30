@@ -13,8 +13,10 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum BusinessCode {
 
+    /** 普通发送流程 */
     COMMON_SEND("send", "普通发送"),
 
+    /** 撤回流程 */
     RECALL("recall", "撤回消息");
 
 

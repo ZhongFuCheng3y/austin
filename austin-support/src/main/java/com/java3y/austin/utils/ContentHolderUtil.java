@@ -15,19 +15,24 @@ import java.util.Map;
  */
 public class ContentHolderUtil {
 
-	// 占位符前缀
+	/**
+	 * 占位符前缀
+	 */
 	private static final String PLACE_HOLDER_PREFIX = "{$";
-	// 占位符后缀
+
+	/**
+	 * 占位符后缀
+	 */
 	private static final String PLACE_HOLDER_ENDFIX = "}";
 
-	private static final StandardEvaluationContext evalutionContext;
+	private static final StandardEvaluationContext EVALUTION_CONTEXT;
 
 	private static PropertyPlaceholderHelper propertyPlaceholderHelper = new PropertyPlaceholderHelper(
 			PLACE_HOLDER_PREFIX, PLACE_HOLDER_ENDFIX);
 
 	static {
-		evalutionContext = new StandardEvaluationContext();
-		evalutionContext.addPropertyAccessor(new MapAccessor());
+		EVALUTION_CONTEXT = new StandardEvaluationContext();
+		EVALUTION_CONTEXT.addPropertyAccessor(new MapAccessor());
 	}
 
 	public static String replacePlaceHolder(final String template, final Map<String, String> paramMap) {

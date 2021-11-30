@@ -1,12 +1,12 @@
 package com.java3y.austin;
 
 import com.alibaba.fastjson.JSON;
-import com.java3y.austin.config.TaskInfoParseConfig;
 import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.handler.SmsHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class Receiver {
     @Autowired
     private SmsHandler smsHandler;
 
-    @KafkaListener(topics = {"austin"}, groupId = "sms")
+    @KafkaListener(topics = "#{'${austin.topic.name}'}", groupId = "austin")
     public void consumer(ConsumerRecord<?, String> consumerRecord) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if (kafkaMessage.isPresent()) {

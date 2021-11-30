@@ -8,11 +8,14 @@ import lombok.ToString;
 
 /**
  * 发送渠道类型枚举
+ * @author 3y
  */
 @Getter
 @ToString
 @AllArgsConstructor
 public enum ChannelType {
+
+
     IM(10, "IM(站内信)", ImContentModel.class),
     PUSH(20, "push(通知栏)", PushContentModel.class),
     SMS(30, "sms(短信)", SmsContentModel.class),
@@ -21,8 +24,13 @@ public enum ChannelType {
     MINI_PROGRAM(60, "miniProgram(小程序)", MiniProgramContentModel.class),
     ;
 
+    /** 编码值 */
     private Integer code;
+
+    /** 描述 */
     private String description;
+
+    /** 内容模型Class */
     private Class contentModelClass;
 
 
