@@ -25,10 +25,10 @@ public class PipelineConfig {
 
     /**
      * 普通发送执行流程
-     * 1. 参数校验
+     * 1. 前置参数校验
      * 2. 组装参数
-     * 3. 发送消息至MQ
-     *
+     * 3. 后置参数校验
+     * 4. 发送消息至MQ
      * @return
      */
     @Bean("commonSendTemplate")

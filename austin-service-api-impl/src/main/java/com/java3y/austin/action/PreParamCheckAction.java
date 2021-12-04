@@ -1,11 +1,10 @@
 package com.java3y.austin.action;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.domain.MessageParam;
 import com.java3y.austin.domain.SendTaskModel;
+import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.pipeline.BusinessProcess;
 import com.java3y.austin.pipeline.ProcessContext;
 import com.java3y.austin.vo.BasicResultVO;
@@ -29,13 +28,13 @@ public class PreParamCheckAction implements BusinessProcess {
         Long messageTemplateId = sendTaskModel.getMessageTemplateId();
         List<MessageParam> messageParamList = sendTaskModel.getMessageParamList();
 
-        // 没有传入 消息模板Id 和 messageParam
+        // 没有传入 消息模板Id 或者 messageParam
         if (messageTemplateId == null || CollUtil.isEmpty(messageParamList)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
             return;
         }
 
-        // 过滤接收者为null的messageParam
+        // 过滤 receiver=null 的messageParam
         List<MessageParam> resultMessageParamList = messageParamList.stream()
                 .filter(messageParam -> !StrUtil.isBlank(messageParam.getReceiver()))
                 .collect(Collectors.toList());

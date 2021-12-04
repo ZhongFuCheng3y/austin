@@ -3,10 +3,9 @@ package com.java3y.austin.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.dao.SmsRecordDao;
-import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.domain.SmsParam;
+import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.domain.TaskInfo;
-import com.java3y.austin.dto.ContentModel;
 import com.java3y.austin.dto.SmsContentModel;
 import com.java3y.austin.script.SmsScript;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * 短信发送处理
+ *
  * @author 3y
  */
 @Component
-public class SmsHandler implements Handler {
+public class SmsHandler extends Handler {
 
     @Autowired
     private SmsRecordDao smsRecordDao;
@@ -26,8 +27,9 @@ public class SmsHandler implements Handler {
     @Autowired
     private SmsScript smsScript;
 
+
     @Override
-    public boolean doHandler(TaskInfo taskInfo) {
+    public void handler(TaskInfo taskInfo) {
 
         SmsParam smsParam = SmsParam.builder()
                 .phones(taskInfo.getReceiver())
@@ -39,10 +41,7 @@ public class SmsHandler implements Handler {
 
         if (!CollUtil.isEmpty(recordList)) {
             smsRecordDao.saveAll(recordList);
-            return true;
         }
-
-        return false;
     }
 
 
@@ -60,4 +59,6 @@ public class SmsHandler implements Handler {
             return smsContentModel.getContent();
         }
     }
+
+
 }

@@ -27,7 +27,7 @@ spring:
     driver-class-name:
   # kafka相关的信息配置 TODO
   kafka:
-    bootstrap-servers:
+    bootstrap-servers: 119.91.205.248:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -37,6 +37,9 @@ spring:
       auto:
         offset:
           reset: earliest
+      auto-commit-interval: 1000
+      enable-auto-commit: true
+
 
 # tomcat / HikariPool(数据库连接池 配置） TODO
 # 消息topicName TODO
