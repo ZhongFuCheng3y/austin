@@ -50,16 +50,9 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 已完成内容
 
-截止11-21号：
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gx1xz00093j31b90u0dj4.jpg)
 
-- Maven+SpringBoot项目搭建
-- logback日志记录项目运行时信息
-- 引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
-- 接入腾讯云渠道发送一条短信
-- 使用SpringData JPA将短信发送记录存储至MySQL
-- 完成对Kafka接入
-- 接入层(api)代码架构实现(责任链模式)
-
+1204最近更新：消费层实现数据隔离
 
 
 **Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
