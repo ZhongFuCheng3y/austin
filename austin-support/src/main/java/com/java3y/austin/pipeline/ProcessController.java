@@ -59,6 +59,7 @@ public class ProcessController {
     private Boolean preCheck(ProcessContext context) {
         // 上下文
         if (context == null) {
+            context = new ProcessContext();
             context.setResponse(BasicResultVO.fail(RespStatusEnum.CONTEXT_IS_NULL));
             return false;
         }

@@ -7,6 +7,7 @@ import com.java3y.austin.domain.SmsParam;
 import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.dto.SmsContentModel;
+import com.java3y.austin.enums.ChannelType;
 import com.java3y.austin.script.SmsScript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,10 @@ import java.util.List;
  */
 @Component
 public class SmsHandler extends Handler {
+
+    public SmsHandler() {
+        channelCode = ChannelType.SMS.getCode();
+    }
 
     @Autowired
     private SmsRecordDao smsRecordDao;

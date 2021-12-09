@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Task 执行器
+ * 0.丢弃消息
  * 1.通用去重功能
  * 2.发送消息
  *
@@ -28,10 +29,13 @@ public class Task implements Runnable {
     @Override
     public void run() {
 
+        // 0. TODO 丢弃消息
+
         // 1. TODO 通用去重
 
         // 2. 真正发送消息
         handlerHolder.route(taskInfo.getSendChannel())
                 .doHandler(taskInfo);
+
     }
 }

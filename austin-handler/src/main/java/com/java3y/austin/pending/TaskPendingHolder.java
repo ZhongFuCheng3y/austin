@@ -17,23 +17,18 @@ import java.util.concurrent.ExecutorService;
  */
 @Component
 public class TaskPendingHolder {
-
-    private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
-
-    /**
-     * 获取得到所有的groupId
-     */
-    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
-
-
     /**
      * 线程池的参数
      */
     private Integer coreSize = 3;
     private Integer maxSize = 3;
     private Integer queueSize = 100;
+    private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
 
-
+    /**
+     * 获取得到所有的groupId
+     */
+    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
     /**
      * 给每个渠道，每种消息类型初始化一个线程池
      *
@@ -46,7 +41,6 @@ public class TaskPendingHolder {
             taskPendingHolder.put(groupId, ThreadPoolConfig.getThreadPool(coreSize, maxSize, queueSize));
         }
     }
-
     /**
      * 得到对应的线程池
      * @param groupId

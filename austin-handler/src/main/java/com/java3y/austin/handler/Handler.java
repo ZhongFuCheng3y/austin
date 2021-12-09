@@ -1,7 +1,6 @@
 package com.java3y.austin.handler;
 
 import com.java3y.austin.domain.TaskInfo;
-import com.java3y.austin.enums.ChannelType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +11,13 @@ import javax.annotation.PostConstruct;
  */
 public abstract class Handler {
 
+    /**
+     * 标识渠道的Code
+     * 子类初始化的时候指定
+     */
+    protected Integer channelCode;
+
+
     @Autowired
     private HandlerHolder handlerHolder;
 
@@ -20,9 +26,7 @@ public abstract class Handler {
      */
     @PostConstruct
     private void init() {
-        for (ChannelType channelType : ChannelType.values()) {
-            handlerHolder.putHandler(channelType.getCode(), this);
-        }
+        handlerHolder.putHandler(channelCode, this);
     }
 
     public void doHandler(TaskInfo taskInfo) {
