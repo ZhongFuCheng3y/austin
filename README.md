@@ -50,9 +50,11 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 已完成内容
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gx1xz00093j31b90u0dj4.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gxbeg7demij313s0u0dij.jpg)
 
-1204最近更新：消费层实现数据隔离
+**近期更新时间**：2021年12月12日
+
+**近期更新功能**：通用去重消息功能
 
 
 **Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
