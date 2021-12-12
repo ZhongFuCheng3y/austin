@@ -1,8 +1,10 @@
 package com.java3y.austin.pending;
 
 
+import cn.hutool.core.collection.CollUtil;
 import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.handler.HandlerHolder;
+import com.java3y.austin.service.deduplication.DeduplicationRuleService;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -24,18 +26,24 @@ public class Task implements Runnable {
     @Autowired
     private HandlerHolder handlerHolder;
 
+    @Autowired
+    private DeduplicationRuleService deduplicationRuleService;
+
     private TaskInfo taskInfo;
 
     @Override
     public void run() {
-
         // 0. TODO 丢弃消息
 
-        // 1. TODO 通用去重
+        // 1.平台通用去重
+        deduplicationRuleService.duplication(taskInfo);
+
 
         // 2. 真正发送消息
-        handlerHolder.route(taskInfo.getSendChannel())
-                .doHandler(taskInfo);
+        if (CollUtil.isNotEmpty(taskInfo.getReceiver())) {
+            handlerHolder.route(taskInfo.getSendChannel())
+                    .doHandler(taskInfo);
+        }
 
     }
 }
