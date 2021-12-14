@@ -17,7 +17,7 @@ import java.util.Date;
 public class DeduplicationRuleService {
 
     @Autowired
-    private ContentAbstractDeduplicationService contentDeduplicationService;
+    private ContentDeduplicationService contentDeduplicationService;
 
     @Autowired
     private FrequencyDeduplicationService frequencyDeduplicationService;
