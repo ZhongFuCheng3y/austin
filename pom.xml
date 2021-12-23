@@ -74,6 +74,15 @@
                 <artifactId>tencentcloud-sdk-java</artifactId>
                 <version>3.1.390</version>
             </dependency>
+
+            <!--apollo-->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>1.9.1</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
