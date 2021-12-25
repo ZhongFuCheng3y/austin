@@ -45,8 +45,6 @@ spring:
     password:
 
 
-# tomcat / HikariPool(数据库连接池 配置） TODO
-
 # 消息topicName TODO
 austin:
   topic:
@@ -70,3 +68,12 @@ management:
       prometheus:
         enabled: true
 
+# apollo  TODO
+app:
+  id: austin
+apollo:
+  bootstrap:
+    enabled: true
+    namespaces: boss.austin
+
+# tomcat / HikariPool(数据库连接池 配置） TODO
