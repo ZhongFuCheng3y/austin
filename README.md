@@ -52,7 +52,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gy2hsnqs54j30zy0u0n09.jpg)
 
-**近期更新时间**：2021年1月5日
+**近期更新时间**：2022年1月5日
 
 **近期更新功能**：引入分布式配置中心（Apollo）
 
