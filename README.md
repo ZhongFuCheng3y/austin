@@ -1,11 +1,11 @@
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gwn3mgftzaj30p00an0t1.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ccd794db76e482680f72d60959cf368~tplv-k3u1fbpfcp-zoom-1.image)
 
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="gitee Starts"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/fork.svg?theme=dark" alt="gitee Starts"></a>
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a> 
+  <a href="#"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4fe24129798148d195602d4f104caed5~tplv-k3u1fbpfcp-zoom-1.image" alt="作者"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/994512cf8c584238aab549e8a227ef66~tplv-k3u1fbpfcp-zoom-1.image" alt="gitee Starts"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c058b32e4b7047009f2b95b7e847fb62~tplv-k3u1fbpfcp-zoom-1.image" alt="gitee Starts"></a>
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ae94bceffa144dea3b3a9069c31948b~tplv-k3u1fbpfcp-zoom-1.image"></a> 
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/27e55e6c49c04a70b3ea9df5c61c2fe0~tplv-k3u1fbpfcp-zoom-1.image"></a> 
   <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
 
@@ -14,17 +14,17 @@
 
 austin项目**核心功能**：发送消息
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gvztdk1w2wj30ky0p8759.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5436b2e3d6cd471db9aafbd436198ca7~tplv-k3u1fbpfcp-zoom-1.image)
 
 **项目出现意义**：只要公司内有发送消息的需求，都应该要有类似`austin`的项目，对各类消息进行统一发送处理。这有利于对功能的收拢，以及提高业务需求开发的效率
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzz1vifljj31vc0u07dr.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c267ebb2ff234243b8665312dbb46310~tplv-k3u1fbpfcp-zoom-1.image)
 
 ## 系统项目架构
 
 austin项目**核心流程**：`austin-api`接收到发送消息请求，直接将请求进`MQ`。`austin-handler`消费`MQ`消息后由各类消息的Handler进行发送处理
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzwltzsdfj31ku0u0q5r.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cce7979291e740a39c5f00f1cee8c214~tplv-k3u1fbpfcp-zoom-1.image)
 
 **Question 1** ：为什么发个消息需要MQ？
 
@@ -42,15 +42,15 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 2021-11~2021-12实现功能：
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzx4f1iwoj31le0rs0uy.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d2edbaed45c3471d946c09bd829d936b~tplv-k3u1fbpfcp-zoom-1.image)
 
 实现功能所需引入的技术栈：
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gvzxrppbb0j30ym0iaq8v.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4b200a3e5ab2450f9123756ac7cc7cf2~tplv-k3u1fbpfcp-zoom-1.image)
 
 ## 已完成内容
 
-![](https://tva1.sinaimg.cn/large/008i3skNgy1gy2hsnqs54j30zy0u0n09.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2d93fbb67a054eb29c15684724f02abd~tplv-k3u1fbpfcp-zoom-1.image)
 
 **近期更新时间**：2022年1月5日
 
@@ -63,12 +63,12 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
 
-<img align="center" src='https://tva1.sinaimg.cn/large/006tNbRwly1gb0nzpn8z7g30go0gokbp.gif' width=300px height=300px />
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e109cdb8d064c1e87541d7b6c17957d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 ## 如何准备面试？
 
 **对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
 
-<img align="center" src='https://tva1.sinaimg.cn/large/008i3skNgy1gtlvty8zo5j60u00u0q5602.jpg' width=300px height=300px />
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 
