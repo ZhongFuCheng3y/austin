@@ -52,7 +52,7 @@ public class EmailHandler extends Handler {
         MailAccount account = new MailAccount();
         try {
             account.setHost("smtp.qq.com").setPort(465);
-            account.setUser("403686131@qq.com").setPass("cmnznhomnbtlbggi").setAuth(true);
+            account.setUser("403686131@qq.com").setPass("//TODO").setAuth(true);
             account.setFrom("403686131@qq.com");
 
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
