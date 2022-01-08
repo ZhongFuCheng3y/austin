@@ -1,11 +1,11 @@
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ccd794db76e482680f72d60959cf368~tplv-k3u1fbpfcp-zoom-1.image)
 
 <p align="center">
-  <a href="#"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4fe24129798148d195602d4f104caed5~tplv-k3u1fbpfcp-zoom-1.image" alt="作者"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/994512cf8c584238aab549e8a227ef66~tplv-k3u1fbpfcp-zoom-1.image" alt="gitee Starts"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c058b32e4b7047009f2b95b7e847fb62~tplv-k3u1fbpfcp-zoom-1.image" alt="gitee Starts"></a>
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ae94bceffa144dea3b3a9069c31948b~tplv-k3u1fbpfcp-zoom-1.image"></a> 
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/27e55e6c49c04a70b3ea9df5c61c2fe0~tplv-k3u1fbpfcp-zoom-1.image"></a> 
+  <a href="#"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="gitee Starts"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/fork.svg?theme=dark" alt="gitee Starts"></a>
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a> 
   <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
 
