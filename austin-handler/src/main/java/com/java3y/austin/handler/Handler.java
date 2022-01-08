@@ -1,6 +1,9 @@
 package com.java3y.austin.handler;
 
+import com.java3y.austin.domain.AnchorInfo;
 import com.java3y.austin.domain.TaskInfo;
+import com.java3y.austin.enums.AnchorState;
+import com.java3y.austin.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +33,10 @@ public abstract class Handler {
     }
 
     public void doHandler(TaskInfo taskInfo) {
-        handler(taskInfo);
+        if (!handler(taskInfo)) {
+            LogUtils.print(AnchorInfo.builder().state(AnchorState.SEND_FAIL.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+        }
+        LogUtils.print(AnchorInfo.builder().state(AnchorState.SEND_SUCCESS.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
     }
 
     /**
@@ -39,6 +45,6 @@ public abstract class Handler {
      * @param taskInfo
      * @return
      */
-    public abstract void handler(TaskInfo taskInfo);
+    public abstract boolean handler(TaskInfo taskInfo);
 
 }
