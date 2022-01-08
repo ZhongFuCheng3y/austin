@@ -1,5 +1,6 @@
 package com.java3y.austin.service;
 
+import cn.monitor4all.logRecord.annotation.OperationLog;
 import com.java3y.austin.domain.BatchSendRequest;
 import com.java3y.austin.domain.SendRequest;
 import com.java3y.austin.domain.SendResponse;
@@ -23,6 +24,7 @@ public class SendServiceImpl implements SendService  {
     private ProcessController processController;
 
     @Override
+    @OperationLog(bizType = "SendService#send", bizId = "#sendRequest.messageTemplateId", msg = "#sendRequest")
     public SendResponse send(SendRequest sendRequest) {
 
         SendTaskModel sendTaskModel = SendTaskModel.builder()
@@ -42,6 +44,7 @@ public class SendServiceImpl implements SendService  {
     }
 
     @Override
+    @OperationLog(bizType = "SendService#batchSend", bizId = "#batchSendRequest.messageTemplateId", msg = "#batchSendRequest")
     public SendResponse batchSend(BatchSendRequest batchSendRequest) {
         SendTaskModel sendTaskModel = SendTaskModel.builder()
                 .messageTemplateId(batchSendRequest.getMessageTemplateId())

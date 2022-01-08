@@ -81,6 +81,21 @@
                 <artifactId>apollo-client-config-data</artifactId>
                 <version>1.9.1</version>
             </dependency>
+
+            <!--注解打印日志-->
+            <dependency>
+                <groupId>cn.monitor4all</groupId>
+                <artifactId>log-record-starter</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+
+            <!--邮件发送-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

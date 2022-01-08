@@ -2,8 +2,11 @@ package com.java3y.austin.service.deduplication;
 
 import cn.hutool.core.collection.CollUtil;
 import com.java3y.austin.constant.AustinConstant;
+import com.java3y.austin.domain.AnchorInfo;
 import com.java3y.austin.domain.DeduplicationParam;
 import com.java3y.austin.domain.TaskInfo;
+import com.java3y.austin.enums.AnchorState;
+import com.java3y.austin.utils.LogUtils;
 import com.java3y.austin.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,10 @@ public abstract class AbstractDeduplicationService {
         putInRedis(readyPutRedisReceiver, inRedisValue, param);
 
         // 剔除符合去重条件的用户
-        taskInfo.getReceiver().removeAll(filterReceiver);
+        if (CollUtil.isNotEmpty(filterReceiver)) {
+            taskInfo.getReceiver().removeAll(filterReceiver);
+            LogUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(filterReceiver).state(param.getAnchorState().getCode()).build());
+        }
     }
 
 

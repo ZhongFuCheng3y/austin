@@ -24,12 +24,10 @@ public class SendController {
 
     /**
      * 发送
-     *
-     * @param phone
      * @return
      */
     @GetMapping("/sendSmsTest")
-    public SendResponse sendSmsTest(String phone, Long templateId) {
+    public SendResponse sendSmsTest(String receiver, Long templateId) {
 
         /**
          *
@@ -39,11 +37,11 @@ public class SendController {
          * messageTemplate Id 为2 的模板内容（营销短信）
          * {"auditStatus":10,"auditor":"yyyyyyz","created":1636978066,"creator":"yyyyc","deduplicationTime":1,"expectPushTime":"0","flowId":"yyyy","id":1,"idType":30,"isDeleted":0,"isNightShield":0,"msgContent":"{\"content\":\"{$contentValue}\"}","msgStatus":10,"msgType":20,"name":"test短信","proposer":"yyyy22","sendAccount":66,"sendChannel":30,"team":"yyyt","templateType":10,"updated":1636978066,"updator":"yyyyu"}
          */
-
         // 文案参数
         Map<String, String> variables = new HashMap<>(8);
-        variables.put("contentValue", "6666");
-        MessageParam messageParam = new MessageParam().setReceiver(phone).setVariables(variables);
+        variables.put("contentValue", "6666" + System.currentTimeMillis());
+        variables.put("title", "yyyyyy");
+        MessageParam messageParam = new MessageParam().setReceiver(receiver).setVariables(variables);
 
 
         SendRequest sendRequest = new SendRequest().setCode(BusinessCode.COMMON_SEND.getCode())

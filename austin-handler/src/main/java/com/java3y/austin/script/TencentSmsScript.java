@@ -10,6 +10,7 @@ import com.java3y.austin.domain.SmsParam;
 import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.enums.SmsStatus;
 import com.tencentcloudapi.common.Credential;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20210111.SmsClient;
@@ -62,18 +63,13 @@ public class TencentSmsScript implements SmsScript {
     private String SIGN_NAME;
 
     @Override
-    public List<SmsRecord> send(SmsParam smsParam) {
-        try {
+    public List<SmsRecord> send(SmsParam smsParam) throws TencentCloudSDKException {
+
             SmsClient client = init();
             SendSmsRequest request = assembleReq(smsParam);
             SendSmsResponse response = client.SendSms(request);
-
             return assembleSmsRecord(smsParam,response);
-        } catch (Exception e) {
-            log.error("send tencent sms fail!{},params:{}",
-                    Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
-            return null;
-        }
+
     }
 
     private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, SendSmsResponse response) {
