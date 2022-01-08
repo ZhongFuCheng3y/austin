@@ -22,6 +22,8 @@ public enum AnchorState {
     WHITE_LIST(50, "白名单过滤"),
     SEND_SUCCESS(60, "消息下发成功"),
     SEND_FAIL(70, "消息下发失败"),
+
+    CLICK(0100, "消息被点击"),
     ;
 
 
