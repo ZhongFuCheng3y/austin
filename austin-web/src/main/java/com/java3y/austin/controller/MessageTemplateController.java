@@ -4,8 +4,11 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.dao.MessageTemplateDao;
 import com.java3y.austin.domain.MessageTemplate;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 3y
  */
 @RestController
+@RequestMapping("/Message")
+@Api("发送消息")
 public class MessageTemplateController {
 
     @Autowired
@@ -25,6 +30,7 @@ public class MessageTemplateController {
      * test insert
      */
     @GetMapping("/insert")
+    @ApiOperation("/插入数据")
     public String insert() {
 
         MessageTemplate messageTemplate = MessageTemplate.builder()
@@ -61,6 +67,7 @@ public class MessageTemplateController {
      * test query
      */
     @GetMapping("/query")
+    @ApiOperation("/查找数据")
     public String query() {
         Iterable<MessageTemplate> all = messageTemplateDao.findAll();
         for (MessageTemplate messageTemplate : all) {
