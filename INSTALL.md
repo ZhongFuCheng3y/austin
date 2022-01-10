@@ -259,3 +259,10 @@ docker exec -it redis redis-cli
 部门的创建其实也是一份"配置"，输入`organizations`就能把现有的部门给改掉，我新增了`boss`股东部门，大家都是我的股东。
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1gy8usif8ipj31n80iimyq.jpg)
+
+安装更详细的过程以及整个文章系列的更新思路都在公众号**Java3y**连载哟！
+
+
+如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
+
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e109cdb8d064c1e87541d7b6c17957d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />

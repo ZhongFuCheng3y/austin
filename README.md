@@ -40,9 +40,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 使用姿势
 
-目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目强依赖`MySQL`/`Redis`/`Kafka`/`apollo`。
-
-缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)
+目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目强依赖`MySQL`/`Redis`/`Kafka`/`apollo`，如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
