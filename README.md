@@ -89,15 +89,15 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ## 已完成内容
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2d93fbb67a054eb29c15684724f02abd~tplv-k3u1fbpfcp-zoom-1.image)
 
-**近期更新时间**：2022年1月5日
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f99631fe25c42b39cbfb6e59cccec85~tplv-k3u1fbpfcp-watermark.image?)
 
-**近期更新功能**：引入分布式配置中心（Apollo）
+**近期更新时间**：2022年1月10日
+
+**近期更新功能**：邮件渠道接入+业务日志链路追踪实现
 
 
 **Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
-
 
 
 如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
