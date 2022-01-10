@@ -5,15 +5,12 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.dao.SmsRecordDao;
-import com.java3y.austin.domain.AnchorInfo;
 import com.java3y.austin.domain.SmsParam;
 import com.java3y.austin.domain.SmsRecord;
 import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.dto.SmsContentModel;
-import com.java3y.austin.enums.AnchorState;
 import com.java3y.austin.enums.ChannelType;
 import com.java3y.austin.script.SmsScript;
-import com.java3y.austin.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,8 +43,8 @@ public class SmsHandler extends Handler {
                 .phones(taskInfo.getReceiver())
                 .content(getSmsContent(taskInfo))
                 .messageTemplateId(taskInfo.getMessageTemplateId())
-                .supplierId(10)
-                .supplierName("腾讯云通知类消息渠道").build();
+                .sendAccount(taskInfo.getSendAccount())
+                .build();
         try {
             List<SmsRecord> recordList = smsScript.send(smsParam);
             if (!CollUtil.isEmpty(recordList)) {

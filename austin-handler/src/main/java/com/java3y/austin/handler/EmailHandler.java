@@ -1,18 +1,17 @@
 package com.java3y.austin.handler;
 
-import cn.hutool.extra.mail.Mail;
+
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
+
 import com.google.common.base.Throwables;
-import com.java3y.austin.domain.AnchorInfo;
 import com.java3y.austin.domain.TaskInfo;
-import com.java3y.austin.dto.ContentModel;
 import com.java3y.austin.dto.EmailContentModel;
-import com.java3y.austin.enums.AnchorState;
 import com.java3y.austin.enums.ChannelType;
-import com.java3y.austin.utils.LogUtils;
+import com.java3y.austin.utils.AccountUtils;
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +23,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EmailHandler extends Handler {
 
+    private static final String EMAIL_ACCOUNT_KEY = "emailAccount";
+    private static final String PREFIX = "email_";
+
+    @Autowired
+    private AccountUtils accountUtils;
+
     public EmailHandler() {
         channelCode = ChannelType.EMAIL.getCode();
     }
@@ -31,7 +36,7 @@ public class EmailHandler extends Handler {
     @Override
     public boolean handler(TaskInfo taskInfo) {
         EmailContentModel emailContentModel = (EmailContentModel) taskInfo.getContentModel();
-        MailAccount account = getAccount();
+        MailAccount account = getAccountConfig(taskInfo.getSendAccount());
         try {
             MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(),
                     emailContentModel.getContent(), true, null);
@@ -42,27 +47,22 @@ public class EmailHandler extends Handler {
         return true;
     }
 
-
-
     /**
-     * 获取账号信息
+     * 获取账号信息合配置
+     *
      * @return
      */
-    private MailAccount getAccount() {
-        MailAccount account = new MailAccount();
+    private MailAccount getAccountConfig(Integer sendAccount) {
+        MailAccount account = accountUtils.getAccount(sendAccount, EMAIL_ACCOUNT_KEY, PREFIX, new MailAccount());
         try {
-            account.setHost("smtp.qq.com").setPort(465);
-            account.setUser("403686131@qq.com").setPass("//TODO").setAuth(true);
-            account.setFrom("403686131@qq.com");
-
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
             sf.setTrustAllHosts(true);
-            account.setStarttlsEnable(true).setSslEnable(true).setCustomProperty("mail.smtp.ssl.socketFactory", sf);
-
+            account.setAuth(true).setStarttlsEnable(true).setSslEnable(true).setCustomProperty("mail.smtp.ssl.socketFactory", sf);
             account.setTimeout(25000).setConnectionTimeout(25000);
         } catch (Exception e) {
             log.error("EmailHandler#getAccount fail!{}", Throwables.getStackTraceAsString(e));
         }
         return account;
     }
+
 }
