@@ -79,9 +79,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ## 使用姿势
 
-目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目强依赖`MySQL`/`Redis`/`Kafka`/`apollo`。
-
-缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)
+目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目强依赖`MySQL`/`Redis`/`Kafka`/`apollo`，如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
