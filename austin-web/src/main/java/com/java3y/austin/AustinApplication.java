@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AustinApplication {
     public static void main(String[] args) {
-        // TODO apollo的地址
+        // TODO apollo的地址.
         //System.setProperty("apollo.config-service", "http://ip:7000");
         SpringApplication.run(AustinApplication.class, args);
     }
