@@ -77,7 +77,7 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum makecache fast
 ```
 
-安装DOCKER CE(注意：Docker分为CE版和EE版，一般我们用CE版就够用了)
+安装DOCKER CE(注意：Docker分为CE版和EE版，一般我们用CE版就够用了.)
 
 ```
 yum -y install docker-ce
