@@ -40,6 +40,8 @@ spring:
 austin:
   topic:
     name: austinTopic
+  # GrayLog ip 地址 TODO
+  grayLogIp:
 
 # 监控配置  TODO
 management:
@@ -66,4 +68,4 @@ apollo:
   bootstrap:
     enabled: true
     namespaces: boss.austin
-# tomcat / .HikariPool(数据库连接池 配置） TODO
+# tomcat / HikariPool(数据库连接池 配置） TODO

@@ -7,6 +7,8 @@
     <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 后面是可以读配置的 -->
     <property name="log.path" value="logs"/>
 
+    <springProperty scope="context" name="grayLogIp" source="austin.grayLogIp"/>
+
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -73,7 +75,7 @@
 
     <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
         <!-- Graylog服务的地址 -->
-        <graylogHost>120.48.13.113</graylogHost>
+        <graylogHost>${grayLogIp}</graylogHost>
         <!-- UDP Input端口 -->
         <graylogPort>12201</graylogPort>
         <!-- 最大GELF数据块大小（单位：字节），508为建议最小值，最大值为65467 -->
