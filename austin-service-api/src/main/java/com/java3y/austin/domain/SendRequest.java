@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 public class SendRequest {
 
     /**
-     * 执行业务类型
+     * 执行业务类型(默认填写 "send")
      */
     private String code;
 
