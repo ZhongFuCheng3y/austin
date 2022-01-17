@@ -48,7 +48,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 使用姿势
 
-目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目强依赖`MySQL`/`Redis`/`Kafka`/`apollo`，如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
+目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/`Kafka`/`apollo`，**弱依赖**`prometheus`/`graylog`。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
@@ -95,6 +95,12 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 **近期更新功能**：邮件渠道接入+业务日志链路追踪实现
 
+## 项目交流
+
+可以添加我的**个人微信**备注：austin拉进项目交流群
+
+
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0b8c4a3cbefa4fe8adcbe98402064752~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 **Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
 
