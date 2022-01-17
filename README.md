@@ -91,9 +91,9 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f99631fe25c42b39cbfb6e59cccec85~tplv-k3u1fbpfcp-watermark.image?)
 
-**近期更新时间**：2022年1月10日
+**近期更新时间**：2022年1月17日
 
-**近期更新功能**：邮件渠道接入+业务日志链路追踪实现
+**近期更新功能**：完成接入graylog
 
 ## 项目交流
 
