@@ -100,7 +100,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 可以添加我的**个人微信**备注：austin拉进项目交流群
 
 
-<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0b8c4a3cbefa4fe8adcbe98402064752~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5eae548196934599a7cb3637aedf381d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 **Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
 
