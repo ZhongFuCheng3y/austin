@@ -452,7 +452,7 @@ services:
         - 12201:12201/udp
 networks:
     graylog:
-      driver: bridg
+      driver: bridge
 ```
 
 这个文件里唯一需要改动的就是`ip`（本来的端口是`9000`的，我由于已经占用了`9000`端口了，所以我这里把端口改成了`9009`，你们可以随意）

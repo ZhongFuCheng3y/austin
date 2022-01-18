@@ -20,7 +20,7 @@ public final class BasicResultVO<T> {
   /**
    * 响应状态
    */
-  private String code;
+  private String status;
 
   /**
    * 响应编码
@@ -41,7 +41,7 @@ public final class BasicResultVO<T> {
   }
 
   public BasicResultVO(RespStatusEnum status, String msg, T data) {
-    this.code = status.getCode();
+    this.status = status.getCode();
     this.msg = msg;
     this.data = data;
   }
