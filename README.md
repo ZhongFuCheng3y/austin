@@ -36,9 +36,9 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c94059a008784a69bd10b98caa46d683~tplv-k3u1fbpfcp-zoom-1.image)
 
-**Question**：`austin-stream`和`austin-datahourse`的作用？
+**Question**：`austin-stream`和`austin-datahouse`的作用？
 
-**Answer**：`austin-handler`在发送消息的过程中会做些**通用业务处理**以及**发送消息**，这个过程会产生大量的日志数据。日志数据会被收集至MQ，由`austin-stream`流式处理模块进行消费并最后将数据写入至`austin-datahourse`
+**Answer**：`austin-handler`在发送消息的过程中会做些**通用业务处理**以及**发送消息**，这个过程会产生大量的日志数据。日志数据会被收集至MQ，由`austin-stream`流式处理模块进行消费并最后将数据写入至`austin-datahouse`
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4bd420001c549ebad922637f7b2e38a~tplv-k3u1fbpfcp-zoom-1.image)
 
@@ -91,9 +91,9 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f99631fe25c42b39cbfb6e59cccec85~tplv-k3u1fbpfcp-watermark.image?)
 
-**近期更新时间**：2022年1月10日
+**近期更新时间**：2022年1月17日
 
-**近期更新功能**：邮件渠道接入+业务日志链路追踪实现
+**近期更新功能**：完成接入graylog
 
 ## 项目交流
 
