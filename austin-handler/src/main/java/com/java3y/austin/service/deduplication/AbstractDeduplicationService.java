@@ -19,7 +19,7 @@ import java.util.*;
  * 去重服务
  */
 @Slf4j
-public abstract class AbstractDeduplicationService {
+public abstract class AbstractDeduplicationService implements DeduplicationService {
 
     @Autowired
     private RedisUtils redisUtils;

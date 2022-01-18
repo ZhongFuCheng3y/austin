@@ -1,18 +1,17 @@
 package com.java3y.austin.service.deduplication;
 
-import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
+import com.google.common.collect.Lists;
 import com.java3y.austin.constant.AustinConstant;
 import com.java3y.austin.domain.DeduplicationParam;
 import com.java3y.austin.domain.TaskInfo;
-import com.java3y.austin.enums.AnchorState;
+import com.java3y.austin.service.deduplication.build.BuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author 3y.
@@ -22,47 +21,39 @@ import java.util.Date;
 @Service
 public class DeduplicationRuleService {
 
-    /**
-     * 配置样例：{"contentDeduplication":{"num":1,"time":300},"frequencyDeduplication":{"num":5}}
-     */
-    private static final String DEDUPLICATION_RULE_KEY = "deduplication";
-    private static final String CONTENT_DEDUPLICATION = "contentDeduplication";
-    private static final String FREQUENCY_DEDUPLICATION = "frequencyDeduplication";
-    private static final String TIME = "time";
-    private static final String NUM = "num";
 
-    @Autowired
-    private ContentDeduplicationService contentDeduplicationService;
-
-    @Autowired
-    private FrequencyDeduplicationService frequencyDeduplicationService;
-
+    private static final String SERVICE = "Service";
     @ApolloConfig("boss.austin")
     private Config config;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private BuilderFactory builderFactory;
+
+    //需要去重的服务
+    private static final List<String> DEDUPLICATION_LIST = Lists.newArrayList(DeduplicationConstants.CONTENT_DEDUPLICATION, DeduplicationConstants.FREQUENCY_DEDUPLICATION);
+
     public void duplication(TaskInfo taskInfo) {
-        // 配置示例:{"contentDeduplication":{"num":1,"time":300},"frequencyDeduplication":{"num":5}}
-        JSONObject property = JSON.parseObject(config.getProperty(DEDUPLICATION_RULE_KEY, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_OBJECT));
-        JSONObject contentDeduplication = property.getJSONObject(CONTENT_DEDUPLICATION);
-        JSONObject frequencyDeduplication = property.getJSONObject(FREQUENCY_DEDUPLICATION);
+        // 配置样例：{"contentDeduplication":{"num":1,"time":300},"frequencyDeduplication":{"num":5}}
+        String deduplication = config.getProperty(DeduplicationConstants.DEDUPLICATION_RULE_KEY, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_OBJECT);
+        //去重
+        DEDUPLICATION_LIST.forEach(
+                key -> {
+                    DeduplicationParam deduplicationParam = builderFactory.select(key).build(deduplication, key);
+                    if (deduplicationParam != null) {
+                        deduplicationParam.setTaskInfo(taskInfo);
+                        DeduplicationService deduplicationService = findService(key + SERVICE);
+                        deduplicationService.deduplication(deduplicationParam);
+                    }
+                }
+        );
 
-        // 文案去重
-        DeduplicationParam contentParams = DeduplicationParam.builder()
-                .deduplicationTime(contentDeduplication.getLong(TIME))
-                .countNum(contentDeduplication.getInteger(NUM)).taskInfo(taskInfo)
-                .anchorState(AnchorState.CONTENT_DEDUPLICATION)
-                .build();
-        contentDeduplicationService.deduplication(contentParams);
+    }
 
+    private DeduplicationService findService(String beanName) {
+        return applicationContext.getBean(beanName, DeduplicationService.class);
 
-        // 运营总规则去重(一天内用户收到最多同一个渠道的消息次数)
-        Long seconds = (DateUtil.endOfDay(new Date()).getTime() - DateUtil.current()) / 1000;
-        DeduplicationParam businessParams = DeduplicationParam.builder()
-                .deduplicationTime(seconds)
-                .countNum(frequencyDeduplication.getInteger(NUM)).taskInfo(taskInfo)
-                .anchorState(AnchorState.RULE_DEDUPLICATION)
-                .build();
-        frequencyDeduplicationService.deduplication(businessParams);
     }
 
 }
