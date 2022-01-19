@@ -29,7 +29,7 @@ public abstract class AbstractDeduplicationBuilder implements Builder {
         if (object == null) {
             return null;
         }
-        DeduplicationParam deduplicationParam = JSONObject.parseObject(object.getString(CONFIG_PRE + key), DeduplicationParam.class);
+        DeduplicationParam deduplicationParam = JSONObject.parseObject(object.getString(DEDUPLICATION_CONFIG_PRE + key), DeduplicationParam.class);
         if (deduplicationParam == null) {
             return null;
         }

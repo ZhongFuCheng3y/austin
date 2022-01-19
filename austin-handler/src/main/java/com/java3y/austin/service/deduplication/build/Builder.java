@@ -9,7 +9,7 @@ import com.java3y.austin.domain.TaskInfo;
  */
 public interface Builder {
 
-    String CONFIG_PRE = "deduplication_";
+    String DEDUPLICATION_CONFIG_PRE = "deduplication_";
 
     /**
      * 根据配置构建去重参数
