@@ -1,9 +1,9 @@
 package com.java3y.austin.service.deduplication.build;
 
-import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.domain.DeduplicationParam;
+import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.enums.AnchorState;
-import com.java3y.austin.service.deduplication.build.Builder;
+import com.java3y.austin.enums.DeduplicationType;
 import org.springframework.stereotype.Service;
 
 
@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
  * @author huskey
  * @date 2022/1/18
  */
-
 @Service
-public class ContentDeduplicationBuilder implements Builder {
+public class ContentDeduplicationBuilder extends AbstractDeduplicationBuilder implements Builder {
 
-    public DeduplicationParam build(String deduplication, String key) {
-        JSONObject object = JSONObject.parseObject(deduplication);
-        if (object == null) {
-            return null;
+    public ContentDeduplicationBuilder() {
+        deduplicationType = DeduplicationType.CONTENT.getCode();
+    }
+
+    @Override
+    public DeduplicationParam build(String deduplication, TaskInfo taskInfo) {
+        DeduplicationParam deduplicationParam = getParamsFromConfig(deduplicationType, deduplication, taskInfo);
+        if (deduplication == null) {
+           return null;
         }
-        DeduplicationParam deduplicationParam = JSONObject.parseObject(object.getString(key), DeduplicationParam.class);
-        if (deduplicationParam == null) {
-            return null;
-        }
-        deduplicationParam.setAnchorState(AnchorState.RULE_DEDUPLICATION);
+        deduplicationParam.setAnchorState(AnchorState.CONTENT_DEDUPLICATION);
         return deduplicationParam;
 
     }

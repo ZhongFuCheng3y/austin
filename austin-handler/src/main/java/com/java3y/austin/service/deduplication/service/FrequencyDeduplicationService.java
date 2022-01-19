@@ -1,7 +1,8 @@
-package com.java3y.austin.service.deduplication;
+package com.java3y.austin.service.deduplication.service;
 
 import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.domain.TaskInfo;
+import com.java3y.austin.enums.DeduplicationType;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FrequencyDeduplicationService extends AbstractDeduplicationService {
+
+    public FrequencyDeduplicationService() {
+        deduplicationType = DeduplicationType.FREQUENCY.getCode();
+    }
 
     private static final String PREFIX = "FRE";
 

@@ -1,4 +1,4 @@
-package com.java3y.austin.service.deduplication;
+package com.java3y.austin.service.deduplication.service;
 
 import com.java3y.austin.domain.DeduplicationParam;
 
@@ -8,5 +8,9 @@ import com.java3y.austin.domain.DeduplicationParam;
  */
 public interface DeduplicationService {
 
+    /**
+     * 去重
+     * @param param
+     */
     void deduplication(DeduplicationParam param);
 }

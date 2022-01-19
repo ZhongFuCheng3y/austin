@@ -1,10 +1,10 @@
 package com.java3y.austin.service.deduplication.build;
 
 import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.domain.DeduplicationParam;
+import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.enums.AnchorState;
-import com.java3y.austin.service.deduplication.build.Builder;
+import com.java3y.austin.enums.DeduplicationType;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -15,15 +15,14 @@ import java.util.Date;
  */
 
 @Service
-public class FrequencyDeduplicationBuilder implements Builder {
+public class FrequencyDeduplicationBuilder extends AbstractDeduplicationBuilder implements Builder {
+    public FrequencyDeduplicationBuilder() {
+        deduplicationType = DeduplicationType.FREQUENCY.getCode();
+    }
 
     @Override
-    public DeduplicationParam build(String deduplication, String key) {
-        JSONObject object = JSONObject.parseObject(deduplication);
-        if (object == null) {
-            return null;
-        }
-        DeduplicationParam deduplicationParam = JSONObject.parseObject(object.getString(key), DeduplicationParam.class);
+    public DeduplicationParam build(String deduplication, TaskInfo taskInfo) {
+        DeduplicationParam deduplicationParam = getParamsFromConfig(deduplicationType, deduplication, taskInfo);
         if (deduplicationParam == null) {
             return null;
         }
