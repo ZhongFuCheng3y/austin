@@ -44,7 +44,7 @@ public class Task implements Runnable {
             return;
         }
 
-        // 1.平台通用去重
+        // 1.平台通用去重 test
         deduplicationRuleService.duplication(taskInfo);
 
         // 2. 真正发送消息

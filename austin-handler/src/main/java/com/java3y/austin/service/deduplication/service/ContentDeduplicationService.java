@@ -1,8 +1,9 @@
-package com.java3y.austin.service.deduplication;
+package com.java3y.austin.service.deduplication.service;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.domain.TaskInfo;
+import com.java3y.austin.enums.DeduplicationType;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ContentDeduplicationService extends AbstractDeduplicationService {
+
+    public ContentDeduplicationService() {
+        deduplicationType = DeduplicationType.CONTENT.getCode();
+    }
 
     /**
      * 内容去重 构建key

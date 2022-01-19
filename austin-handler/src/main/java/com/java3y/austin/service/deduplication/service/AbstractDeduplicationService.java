@@ -1,16 +1,17 @@
-package com.java3y.austin.service.deduplication;
+package com.java3y.austin.service.deduplication.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.java3y.austin.constant.AustinConstant;
 import com.java3y.austin.domain.AnchorInfo;
 import com.java3y.austin.domain.DeduplicationParam;
 import com.java3y.austin.domain.TaskInfo;
-import com.java3y.austin.enums.AnchorState;
+import com.java3y.austin.service.deduplication.DeduplicationHolder;
 import com.java3y.austin.utils.LogUtils;
 import com.java3y.austin.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -19,11 +20,21 @@ import java.util.*;
  * 去重服务
  */
 @Slf4j
-public abstract class AbstractDeduplicationService {
+public abstract class AbstractDeduplicationService implements DeduplicationService {
+    protected Integer deduplicationType;
+
+    @Autowired
+    private DeduplicationHolder deduplicationHolder;
+
+    @PostConstruct
+    private void init() {
+        deduplicationHolder.putService(deduplicationType, this);
+    }
 
     @Autowired
     private RedisUtils redisUtils;
 
+    @Override
     public void deduplication(DeduplicationParam param) {
         TaskInfo taskInfo = param.getTaskInfo();
         Set<String> filterReceiver = new HashSet<>(taskInfo.getReceiver().size());
