@@ -11,12 +11,11 @@ import java.util.List;
  */
 public interface SmsScript {
 
-
     /**
      * 发送短信
-     *
      * @param smsParam
      * @return 渠道商接口返回值
+     * @throws Exception
      */
     List<SmsRecord> send(SmsParam smsParam) throws Exception;
 

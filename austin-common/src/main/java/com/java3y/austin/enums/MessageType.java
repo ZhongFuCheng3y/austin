@@ -30,7 +30,7 @@ public enum MessageType {
     /**
      * 英文标识
      */
-    private String code_en;
+    private String codeEn;
 
 
     /**

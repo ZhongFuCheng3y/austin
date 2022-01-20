@@ -43,7 +43,7 @@ public enum ChannelType {
     /**
      * 英文标识
      */
-    private String code_en;
+    private String codeEn;
 
     /**
      * 通过code获取class

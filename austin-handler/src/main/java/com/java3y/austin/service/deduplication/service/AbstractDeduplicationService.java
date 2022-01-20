@@ -94,7 +94,7 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
             }
         }
         if (CollUtil.isNotEmpty(keyValues)) {
-            redisUtils.pipelineSetEX(keyValues, param.getDeduplicationTime());
+            redisUtils.pipelineSetEx(keyValues, param.getDeduplicationTime());
         }
     }
 

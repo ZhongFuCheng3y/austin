@@ -12,6 +12,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 
+/**
+ * swagger配置类
+ * @author 3y
+ */
 @Component
 @EnableOpenApi
 @ApiModel

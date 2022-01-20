@@ -27,7 +27,7 @@ public class ContentHolderUtil {
 
     private static final StandardEvaluationContext EVALUATION_CONTEXT;
 
-    private static final PropertyPlaceholderHelper propertyPlaceholderHelper = new PropertyPlaceholderHelper(
+    private static final PropertyPlaceholderHelper PROPERTY_PLACEHOLDER_HELPER = new PropertyPlaceholderHelper(
             PLACE_HOLDER_PREFIX, PLACE_HOLDER_SUFFIX);
 
     static {
@@ -36,7 +36,7 @@ public class ContentHolderUtil {
     }
 
     public static String replacePlaceHolder(final String template, final Map<String, String> paramMap) {
-        String replacedPushContent = propertyPlaceholderHelper.replacePlaceholders(template,
+        String replacedPushContent = PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders(template,
                 new CustomPlaceholderResolver(paramMap));
         return replacedPushContent;
     }
