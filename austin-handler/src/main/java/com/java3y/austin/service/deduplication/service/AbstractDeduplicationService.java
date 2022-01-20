@@ -49,7 +49,7 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
             String value = inRedisValue.get(key);
 
             // 符合条件的用户
-            if (value != null && Integer.valueOf(value) >= param.getCountNum()) {
+            if (value != null && Integer.parseInt(value) >= param.getCountNum()) {
                 filterReceiver.add(receiver);
             } else {
                 readyPutRedisReceiver.add(receiver);

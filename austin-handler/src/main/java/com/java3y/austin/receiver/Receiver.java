@@ -38,14 +38,14 @@ public class Receiver {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if (kafkaMessage.isPresent()) {
 
-            List<TaskInfo> TaskInfoLists = JSON.parseArray(kafkaMessage.get(), TaskInfo.class);
-            String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(TaskInfoLists.get(0));
+            List<TaskInfo> taskInfoLists = JSON.parseArray(kafkaMessage.get(), TaskInfo.class);
+            String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(taskInfoLists.get(0));
 
             /**
              * 每个消费者组 只消费 他们自身关心的消息
              */
             if (topicGroupId.equals(messageGroupId)) {
-                for (TaskInfo taskInfo : TaskInfoLists) {
+                for (TaskInfo taskInfo : taskInfoLists) {
                     LogUtils.print(LogParam.builder().bizType(LOG_BIZ_TYPE).object(taskInfo).build(), AnchorInfo.builder().ids(taskInfo.getReceiver()).businessId(taskInfo.getBusinessId()).state(AnchorState.RECEIVE.getCode()).build());
                     Task task = context.getBean(Task.class).setTaskInfo(taskInfo);
                     taskPendingHolder.route(topicGroupId).execute(task);

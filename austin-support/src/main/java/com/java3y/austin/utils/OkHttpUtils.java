@@ -4,7 +4,6 @@ import cn.hutool.core.map.MapUtil;
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +52,7 @@ public class OkHttpUtils {
      * @param headers 请求头字段 {k1, v1 k2, v2, ...}
      * @return string
      */
-    public String doGetWithHeaders(String url, Map<String,String> headers) {
+    public String doGetWithHeaders(String url, Map<String, String> headers) {
         return doGet(url, null, headers);
     }
 
@@ -66,7 +65,7 @@ public class OkHttpUtils {
      * @param headers 请求头字段 {k1, v1 k2, v2, ...}
      * @return string
      */
-    public String doGet(String url, Map<String, String> params, Map<String,String> headers) {
+    public String doGet(String url, Map<String, String> params, Map<String, String> headers) {
         StringBuilder sb = new StringBuilder(url);
         if (params != null && params.keySet().size() > 0) {
             boolean firstFlag = true;
@@ -82,7 +81,7 @@ public class OkHttpUtils {
         Request.Builder builder = getBuilderWithHeaders(headers);
         Request request = builder.url(sb.toString()).build();
 
-        log.info("do get request and url[{}]", sb.toString());
+        log.info("do get request and url[{}]", sb);
         return execute(request);
     }
 
@@ -94,7 +93,7 @@ public class OkHttpUtils {
      * @param headers 请求头字段 {k1, v1 k2, v2, ...}
      * @return string
      */
-    public String doPost(String url, Map<String, String> params, Map<String,String> headers) {
+    public String doPost(String url, Map<String, String> params, Map<String, String> headers) {
         FormBody.Builder formBuilder = new FormBody.Builder();
 
         if (params != null && params.keySet().size() > 0) {
@@ -117,7 +116,7 @@ public class OkHttpUtils {
      * @param headers 请求头字段 {k1, v1 k2, v2, ...}
      * @return
      */
-    private Request.Builder getBuilderWithHeaders(Map<String,String> headers) {
+    private Request.Builder getBuilderWithHeaders(Map<String, String> headers) {
         Request.Builder builder = new Request.Builder();
         if (!MapUtil.isEmpty(headers)) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
@@ -166,7 +165,7 @@ public class OkHttpUtils {
     }
 
 
-    private String executePost(String url, String data, MediaType contentType, Map<String,String> headers) {
+    private String executePost(String url, String data, MediaType contentType, Map<String, String> headers) {
         RequestBody requestBody = RequestBody.create(data.getBytes(StandardCharsets.UTF_8), contentType);
         Request.Builder builder = getBuilderWithHeaders(headers);
         Request request = builder.url(url).post(requestBody).build();
@@ -175,18 +174,12 @@ public class OkHttpUtils {
     }
 
     private String execute(Request request) {
-        Response response = null;
-        try {
-            response = okHttpClient.newCall(request).execute();
+        try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 return response.body().string();
             }
         } catch (Exception e) {
             log.error(Throwables.getStackTraceAsString(e));
-        } finally {
-            if (response != null) {
-                response.close();
-            }
         }
         return "";
     }

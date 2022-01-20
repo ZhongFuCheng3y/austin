@@ -47,9 +47,9 @@ public class TencentSmsScript implements SmsScript {
     public List<SmsRecord> send(SmsParam smsParam) throws Exception {
         TencentSmsParam tencentSmsParam = accountUtils.getAccount(smsParam.getSendAccount(), SMS_ACCOUNT_KEY, PREFIX, TencentSmsParam.builder().build());
         SmsClient client = init(tencentSmsParam);
-        SendSmsRequest request = assembleReq(smsParam,tencentSmsParam);
+        SendSmsRequest request = assembleReq(smsParam, tencentSmsParam);
         SendSmsResponse response = client.SendSms(request);
-        return assembleSmsRecord(smsParam, response,tencentSmsParam);
+        return assembleSmsRecord(smsParam, response, tencentSmsParam);
     }
 
 
@@ -66,7 +66,7 @@ public class TencentSmsScript implements SmsScript {
                     .reverse().substring(0, PHONE_NUM)).reverse().toString();
 
             SmsRecord smsRecord = SmsRecord.builder()
-                    .sendDate(Integer.valueOf(DateUtil.format(new Date(), AustinConstant.YYYYMMDD)))
+                    .sendDate(Integer.valueOf(DateUtil.format(new Date(), AustinConstant.YYYY_MM_DD)))
                     .messageTemplateId(smsParam.getMessageTemplateId())
                     .phone(Long.valueOf(phone))
                     .supplierId(tencentSmsParam.getSupplierId())
@@ -102,6 +102,7 @@ public class TencentSmsScript implements SmsScript {
 
     /**
      * 初始化 client
+     *
      * @param account
      */
     private SmsClient init(TencentSmsParam account) {

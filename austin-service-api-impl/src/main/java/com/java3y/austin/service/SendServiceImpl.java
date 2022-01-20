@@ -11,14 +11,15 @@ import com.java3y.austin.vo.BasicResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * 发送接口
+ *
  * @author 3y
  */
 @Service
-public class SendServiceImpl implements SendService  {
+public class SendServiceImpl implements SendService {
 
     @Autowired
     private ProcessController processController;
@@ -29,7 +30,7 @@ public class SendServiceImpl implements SendService  {
 
         SendTaskModel sendTaskModel = SendTaskModel.builder()
                 .messageTemplateId(sendRequest.getMessageTemplateId())
-                .messageParamList(Arrays.asList(sendRequest.getMessageParam()))
+                .messageParamList(Collections.singletonList(sendRequest.getMessageParam()))
                 .build();
 
         ProcessContext context = ProcessContext.builder()

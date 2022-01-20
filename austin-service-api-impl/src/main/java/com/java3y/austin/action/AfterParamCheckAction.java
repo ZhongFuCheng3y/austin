@@ -14,7 +14,6 @@ import com.java3y.austin.pipeline.ProcessContext;
 import com.java3y.austin.vo.BasicResultVO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author 3y
- *
+ * <p>
  * 后置参数检查
  */
 @Slf4j
@@ -43,12 +42,12 @@ public class AfterParamCheckAction implements BusinessProcess {
 
         if (CollUtil.isEmpty(taskInfo)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
-            return;
         }
     }
 
     /**
      * 如果指定类型是手机号，且渠道是发送短信，检测输入手机号是否合法
+     *
      * @param taskInfo
      */
     private void filterIllegalPhoneNum(List<TaskInfo> taskInfo) {

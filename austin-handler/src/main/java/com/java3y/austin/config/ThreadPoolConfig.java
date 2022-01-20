@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池配置
+ *
  * @author 3y
  */
 public class ThreadPoolConfig {
@@ -16,19 +17,17 @@ public class ThreadPoolConfig {
     /**
      * @param coreSize
      * @param maxSize
-     * @param queueSize
-     * 阻塞队列满了，也不丢弃任务  CallerRunsPolicy 策略
+     * @param queueSize 阻塞队列满了，也不丢弃任务  CallerRunsPolicy 策略
      * @return
      */
     public static ExecutorService getThreadPool(Integer coreSize, Integer maxSize, Integer queueSize) {
-        ThreadPoolExecutor threadPoolExecutor = ExecutorBuilder.create()
+        return ExecutorBuilder.create()
                 .setCorePoolSize(coreSize)
                 .setMaxPoolSize(maxSize)
                 .setKeepAliveTime(60, TimeUnit.SECONDS)
                 .setWorkQueue(new LinkedBlockingQueue<>(queueSize))
                 .setHandler(new ThreadPoolExecutor.CallerRunsPolicy())
                 .build();
-        return threadPoolExecutor;
     }
 
 

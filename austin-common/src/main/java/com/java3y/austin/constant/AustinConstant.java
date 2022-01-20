@@ -3,6 +3,7 @@ package com.java3y.austin.constant;
 
 /**
  * 基础的常量信息
+ *
  * @author 3y
  */
 public class AustinConstant {
@@ -17,7 +18,7 @@ public class AustinConstant {
     /**
      * 时间格式
      */
-    public final static String YYYYMMDD = "yyyyMMdd";
+    public final static String YYYY_MM_DD = "yyyyMMdd";
 
 
     /**
@@ -25,7 +26,6 @@ public class AustinConstant {
      */
     public final static String APOLLO_DEFAULT_VALUE_JSON_OBJECT = "{}";
     public final static String APOLLO_DEFAULT_VALUE_JSON_ARRAY = "[]";
-
 
 
 }
