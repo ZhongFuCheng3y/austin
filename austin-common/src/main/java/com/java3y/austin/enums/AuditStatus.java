@@ -1,23 +1,28 @@
 package com.java3y.austin.enums;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
- * 模板枚举信息
  * @author 3y
+ * @date 2022/1/22
  */
 @Getter
 @ToString
 @AllArgsConstructor
-public enum TemplateType {
+public enum AuditStatus {
 
-    CLOCKING(10, "定时类的模板(后台定时调用)"),
-    REALTIME(20, "实时类的模板(接口实时调用)"),
-    ;
+    /**
+     * 10.待审核 20.审核成功 30.被拒绝'
+     */
+    WAIT_AUDIT(10, "待审核"),
+    AUDIT_SUCCESS(20, "审核成功"),
+    AUDIT_REJECT(30, "被拒绝");
 
     private Integer code;
     private String description;
+
 
 }

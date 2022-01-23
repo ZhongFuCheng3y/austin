@@ -5,27 +5,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
-
-
 /**
- * 消息模板的Vo
- *
+ * 消息模板管理 请求参数
  * @author 3y
+ * @date 2022/1/22
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageTemplateVo {
-    /**
-     * 返回List列表
-     */
-    private List<Map<String,Object>> rows;
+public class MessageTemplateParam {
 
     /**
-     * 总条数
+     * 当前页码
      */
-    private Long count;
+    private Integer page ;
+
+    /**
+     * 当前页大小
+     */
+    private Integer perPage;
+
+
 }
