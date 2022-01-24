@@ -46,6 +46,11 @@ public class SmsRecord {
     private String supplierName;
 
     /**
+     * 短信发送的内容
+     */
+    private String msgContent;
+
+    /**
      * 批次号Id
      */
     private String seriesId;

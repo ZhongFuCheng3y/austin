@@ -71,6 +71,7 @@ public class TencentSmsScript implements SmsScript {
                     .phone(Long.valueOf(phone))
                     .supplierId(tencentSmsParam.getSupplierId())
                     .supplierName(tencentSmsParam.getSupplierName())
+                    .msgContent(smsParam.getContent())
                     .seriesId(sendStatus.getSerialNo())
                     .chargingNum(Math.toIntExact(sendStatus.getFee()))
                     .status(SmsStatus.SEND_SUCCESS.getCode())
