@@ -1,8 +1,15 @@
 package com.java3y.austin.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
+import com.java3y.austin.domain.MessageParam;
 import com.java3y.austin.domain.MessageTemplate;
+import com.java3y.austin.domain.SendRequest;
+import com.java3y.austin.domain.SendResponse;
+import com.java3y.austin.enums.BusinessCode;
+import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.service.MessageTemplateService;
+import com.java3y.austin.service.SendService;
 import com.java3y.austin.utils.ConvertMap;
 import com.java3y.austin.vo.BasicResultVO;
 import com.java3y.austin.vo.MessageTemplateParam;
@@ -28,13 +35,13 @@ import java.util.stream.Collectors;
 @Api("发送消息")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class MessageTemplateController {
-
-
     private static final List<String> flatFieldName = Arrays.asList("msgContent");
-
 
     @Autowired
     private MessageTemplateService messageTemplateService;
+
+    @Autowired
+    private SendService sendService;
 
     /**
      * 如果Id存在，则修改
@@ -89,13 +96,31 @@ public class MessageTemplateController {
     @DeleteMapping("delete/{id}")
     @ApiOperation("/根据Ids删除")
     public BasicResultVO deleteByIds(@PathVariable("id") String id) {
-
         if (StrUtil.isNotBlank(id)) {
             List<Long> idList = Arrays.stream(id.split(StrUtil.COMMA)).map(s -> Long.valueOf(s)).collect(Collectors.toList());
             messageTemplateService.deleteByIds(idList);
             return BasicResultVO.success();
         }
         return BasicResultVO.fail();
-
     }
+
+
+    /**
+     * 测试发送接口
+     */
+    @PostMapping("test")
+    @ApiOperation("/测试发送接口")
+    public BasicResultVO test(@RequestBody MessageTemplateParam messageTemplateParam) {
+
+        Map<String, String> variables = JSON.parseObject(messageTemplateParam.getMsgContent(), Map.class);
+        MessageParam messageParam = MessageParam.builder().receiver(messageTemplateParam.getReceiver()).variables(variables).build();
+        SendRequest sendRequest = SendRequest.builder().code(BusinessCode.COMMON_SEND.getCode()).messageTemplateId(messageTemplateParam.getId()).messageParam(messageParam).build();
+
+        SendResponse response = sendService.send(sendRequest);
+        if (response.getCode() != RespStatusEnum.SUCCESS.getCode()) {
+            return BasicResultVO.fail(response.getMsg());
+        }
+        return BasicResultVO.success(response);
+    }
+
 }
