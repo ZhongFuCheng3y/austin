@@ -5,7 +5,8 @@
   <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="gitee Starts"></a>
   <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/fork.svg?theme=dark" alt="gitee Starts"></a>
   <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a> 
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a>
+  <a href="https://github.com/ZhongFuCheng3y/austin-admin"><img src="https://img.shields.io/badge/austin前端-GitHub-green.svg" alt="作者"></a> 
   <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
 
@@ -76,28 +77,28 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ```
 
-## 将要实现的项目架构模块
+**11**、austin前端管理系统部署（一分钟即能打开）。[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)/[Gitee](https://gitee.com/zhongfucheng/austin-admin)：
+## 里程碑
 
-2021-11~2021-12实现功能：
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d2edbaed45c3471d946c09bd829d936b~tplv-k3u1fbpfcp-zoom-1.image)
-
-实现功能所需引入的技术栈：
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4b200a3e5ab2450f9123756ac7cc7cf2~tplv-k3u1fbpfcp-zoom-1.image)
-
-## 已完成内容
-
+第四季度：[三个月已完成的内容](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247503562&idx=1&sn=99ba92325ae5e8f8054700e770f0898d&chksm=ebd48fcbdca306dd65f2a56c2febd0ef5e6227aa8166183b9fe7edc1ba09ef6066ef3d797af6&token=1246005878&lang=zh_CN#rd)
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f99631fe25c42b39cbfb6e59cccec85~tplv-k3u1fbpfcp-watermark.image?)
 
-**近期更新时间**：2022年1月17日
 
-**近期更新功能**：完成接入graylog
+目前规划：
+- [x] 01、搭建消息推送Web后台管理页面，进一步降低接入和使用门槛（done）
+- [ ] 02、引入分布式定时任务框架，实现定时推送消息，提高运营侧下发营销消息的效率。
+- [ ] 03、接入流式处理平台实时处理日志数据，多维度聚合后产生全链路追踪数据供业务方自行排查问题，减少排查问题的人效
+- [ ] 04、持续提高消息推送系统的影响力，让更多的业务方了解其功能，进而挖掘更多拉新和唤醒用户的玩法，提高站内的次留率和转化率
+
+
+**近期更新时间**：2022年1月25日
+
+**近期更新功能**：austin前端管理系统
 
 ## 项目交流
 
-可以添加我的**个人微信**备注：austin拉进项目交流群
+可以添加我的**个人微信**备注：【**项目**】，我会空闲的时候拉进项目交流群
 
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5eae548196934599a7cb3637aedf381d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
