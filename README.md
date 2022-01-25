@@ -79,10 +79,10 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 ```
 
 **11**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看
-![0125.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c818806aa7540f5afe72cfbdef2f7d7~tplv-k3u1fbpfcp-watermark.image?)
-![012501.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70b931917b5448d7be46daa384fd6220~tplv-k3u1fbpfcp-watermark.image?)
-![012502.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1cb026b6d5c2458faacf26a0bd35dc01~tplv-k3u1fbpfcp-watermark.image?)
-![012503.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb4c7f61ddc64de5accd231bc7145010~tplv-k3u1fbpfcp-watermark.image?)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c818806aa7540f5afe72cfbdef2f7d7~tplv-k3u1fbpfcp-watermark.image?)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70b931917b5448d7be46daa384fd6220~tplv-k3u1fbpfcp-watermark.image?)
+![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1cb026b6d5c2458faacf26a0bd35dc01~tplv-k3u1fbpfcp-watermark.image?)
+![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb4c7f61ddc64de5accd231bc7145010~tplv-k3u1fbpfcp-watermark.image?)
 ## 里程碑
 
 第四季度：[三个月已完成的内容](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247503562&idx=1&sn=99ba92325ae5e8f8054700e770f0898d&chksm=ebd48fcbdca306dd65f2a56c2febd0ef5e6227aa8166183b9fe7edc1ba09ef6066ef3d797af6&token=1246005878&lang=zh_CN#rd)
