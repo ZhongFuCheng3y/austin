@@ -1,14 +1,17 @@
 create
 database austin;
 
+use austin;
+
+
 CREATE TABLE `message_template`
 (
     `id`                 bigint(20) NOT NULL AUTO_INCREMENT,
     `name`               varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
     `audit_status`       tinyint(4) NOT NULL DEFAULT '0' COMMENT '当前消息审核状态： 10.待审核 20.审核成功 30.被拒绝',
-    `flow_id`            varchar(50) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '工单ID',
+    `flow_id`            varchar(50) COLLATE utf8mb4_unicode_ci   COMMENT '工单ID',
     `msg_status`         tinyint(4) NOT NULL DEFAULT '0' COMMENT '当前消息状态：10.新建 20.停用 30.启用 40.等待发送 50.发送中 60.发送成功 70.发送失败',
-    `cron_task_id`       int(11) COMMENT '定时任务Id (xxl-job-admin返回)',
+    `cron_task_id`       bigint(20) COMMENT '定时任务Id (xxl-job-admin返回)',
     `id_type`            tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息的发送ID类型：10. userId 20.did 30.手机号 40.openId 50.email',
     `send_channel`       tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息发送渠道：10.IM 20.Push 30.短信 40.Email 50.公众号 60.小程序',
     `template_type`      tinyint(4) NOT NULL DEFAULT '0' COMMENT '10.运营类 20.技术类接口调用',
@@ -59,19 +62,21 @@ CREATE TABLE `sms_record`
 
 
 /*测试短信*/
-INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, id_type, send_channel, template_type, msg_type, expect_push_time, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated, deduplication_time, is_night_shield) VALUES (1, 'test短信', 10, 'yyyy', 10, 30, 30, 10, 10, '0', '{"content":"{$contentValue}"}', 10, 'yyyyc', 'yyyyu', 'yyyyyyz', 'yyyt', 'yyyy22', 0, 1636978066, 1636978066, 1, 0);
+INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type, send_channel, template_type, msg_type, expect_push_time, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated, deduplication_time, is_night_shield)
+
+VALUES (1, 'test短信', 10, 10, 30, 30, 10, 10, '0', '{"content":"{$contentValue}"}', 10, 'yyyyc', 'yyyyu', 'yyyyyyz', 'yyyt', 'yyyy22', 0, 1636978066, 1636978066, 1, 0);
 
 /*测试短信+url链接追踪*/
-INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, id_type, send_channel, template_type,
+INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type, send_channel, template_type,
                                      msg_type, expect_push_time, msg_content, send_account, creator, updator, auditor,
                                      team, proposer, is_deleted, created, updated, deduplication_time, is_night_shield)
-VALUES (2, 'test短信', 10, 'yyyy', 10, 30, 30, 10, 20, '0',
+VALUES (2, 'test短信', 10, 10, 30, 30, 10, 20, '0',
         '{"content":"{$contentValue}","url":"https://gitee.com/zhongfucheng/austin"}', 10, 'yyyyc', 'yyyyu', 'yyyyyyz',
         'yyyt', 'yyyy22', 0, 1637411536, 1637411536, 1, 0);
 
 /*测试邮件发送*/
-INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, id_type, send_channel, template_type,
+INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type, send_channel, template_type,
                                      msg_type, expect_push_time, msg_content, send_account, creator, updator, auditor,
                                      team, proposer, is_deleted, created, updated, deduplication_time, is_night_shield)
-VALUES (3, 'test邮件', 10, 'yyyy', 10, 50, 40, 20, 10, '0', '{"content":"{$contentValue}","title":"{$title}"}', 10,
+VALUES (3, 'test邮件', 10, 10, 50, 40, 20, 10, '0', '{"content":"{$contentValue}","title":"{$title}"}', 10,
         'yyyyc', 'yyyyu', 'yyyyyyz', 'yyyt', 'yyyy22', 0, 1641546914, 1641546914, 1, 0);

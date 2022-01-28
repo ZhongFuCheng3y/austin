@@ -3,6 +3,7 @@ package com.java3y.austin.service.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.constant.AustinConstant;
 import com.java3y.austin.dao.MessageTemplateDao;
 import com.java3y.austin.domain.MessageTemplate;
@@ -89,12 +90,16 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         XxlJobInfo xxlJobInfo = XxlJobUtils.buildXxlJobInfo(messageTemplate);
 
         BasicResultVO basicResultVO = cronTaskService.saveCronTask(xxlJobInfo);
-        // basicResultVO.getData()
-        //cronTaskService.startCronTask()
+        JSONObject data = (JSONObject) basicResultVO.getData();
+        if (data.get("content") != null) {
+            cronTaskService.startCronTask(Integer.valueOf(String.valueOf(data.get("content"))));
+            MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
+            messageTemplateDao.save(clone);
+            return BasicResultVO.success();
+        } else {
+            return BasicResultVO.fail();
+        }
 
-        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
-        messageTemplateDao.save(clone);
-        return BasicResultVO.success();
     }
 
     @Override

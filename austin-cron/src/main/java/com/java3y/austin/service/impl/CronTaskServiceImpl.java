@@ -1,5 +1,6 @@
 package com.java3y.austin.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
@@ -39,7 +40,7 @@ public class CronTaskServiceImpl implements CronTaskService {
         Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobInfo), Map.class);
 
         String path;
-        if (xxlJobInfo.getId() != null) {
+        if (xxlJobInfo.getId() == null) {
             path = xxlAddresses + XxlJobConstant.INSERT_URL;
         } else {
             path = xxlAddresses + XxlJobConstant.UPDATE_URL;
@@ -69,7 +70,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("TaskService#saveTask fail:{}", JSON.toJSONString(response.body()));
             return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(response.body()));
         }
-        return BasicResultVO.success(JSON.toJSONString(response.body()));
+        return BasicResultVO.success(JSON.parseObject(response.body()));
     }
 
     @Override
@@ -122,6 +123,7 @@ public class CronTaskServiceImpl implements CronTaskService {
         Map<String, Object> hashMap = new HashMap<>();
         hashMap.put("userName", xxlUserName);
         hashMap.put("password", xxlPassword);
+        hashMap.put("randomCode", IdUtil.fastSimpleUUID());
         log.info("TaskService#getCookie params：{}", hashMap);
 
         HttpResponse response = HttpRequest.post(path).form(hashMap).execute();
