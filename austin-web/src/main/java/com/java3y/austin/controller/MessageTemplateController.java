@@ -48,7 +48,7 @@ public class MessageTemplateController {
      * 如果Id不存在，则保存
      */
     @PostMapping("/save")
-    @ApiOperation("/插入数据")
+    @ApiOperation("/保存数据")
     public BasicResultVO saveOrUpdate(@RequestBody MessageTemplate messageTemplate) {
         MessageTemplate info = messageTemplateService.saveOrUpdate(messageTemplate);
 
@@ -123,4 +123,25 @@ public class MessageTemplateController {
         return BasicResultVO.success(response);
     }
 
+
+    /**
+     * 启动模板的定时任务
+     */
+    @PostMapping("start/{id}")
+    @ApiOperation("/启动模板的定时任务")
+    public BasicResultVO start(@RequestBody @PathVariable("id") Long id) {
+        messageTemplateService.startCronTask(id);
+
+        return BasicResultVO.success();
+    }
+    /**
+     * 启动模板的定时任务
+     */
+    @PostMapping("stop/{id}")
+    @ApiOperation("/暂停模板的定时任务")
+    public BasicResultVO stop(@RequestBody @PathVariable("id") Long id) {
+        messageTemplateService.stopCronTask(id);
+
+        return BasicResultVO.success();
+    }
 }

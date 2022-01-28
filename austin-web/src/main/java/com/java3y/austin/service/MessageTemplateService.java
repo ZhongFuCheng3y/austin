@@ -1,6 +1,7 @@
 package com.java3y.austin.service;
 
 import com.java3y.austin.domain.MessageTemplate;
+import com.java3y.austin.vo.BasicResultVO;
 import com.java3y.austin.vo.MessageTemplateParam;
 
 import java.util.List;
@@ -60,4 +61,15 @@ public interface MessageTemplateService {
      * @param id
      */
     void copy(Long id);
+
+    /**
+     * 启动模板的定时任务
+     */
+    BasicResultVO startCronTask(Long id);
+
+    /**
+     * 暂停模板的定时任务
+     */
+    BasicResultVO stopCronTask(Long id);
+
 }

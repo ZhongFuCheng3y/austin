@@ -6,9 +6,14 @@ import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.constant.AustinConstant;
 import com.java3y.austin.dao.MessageTemplateDao;
 import com.java3y.austin.domain.MessageTemplate;
+import com.java3y.austin.entity.XxlJobInfo;
 import com.java3y.austin.enums.AuditStatus;
 import com.java3y.austin.enums.MessageStatus;
+import com.java3y.austin.enums.TemplateType;
+import com.java3y.austin.service.CronTaskService;
 import com.java3y.austin.service.MessageTemplateService;
+import com.java3y.austin.utils.XxlJobUtils;
+import com.java3y.austin.vo.BasicResultVO;
 import com.java3y.austin.vo.MessageTemplateParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +29,13 @@ import java.util.List;
  */
 @Service
 public class MessageTemplateServiceImpl implements MessageTemplateService {
+
+
     @Autowired
     private MessageTemplateDao messageTemplateDao;
 
+    @Autowired
+    private CronTaskService cronTaskService;
 
     @Override
     public List<MessageTemplate> queryList(MessageTemplateParam param) {
@@ -43,9 +52,14 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     public MessageTemplate saveOrUpdate(MessageTemplate messageTemplate) {
         if (messageTemplate.getId() == null) {
             initStatus(messageTemplate);
+        } else {
+            resetStatus(messageTemplate);
         }
+
+        messageTemplate.setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
         return messageTemplateDao.save(messageTemplate);
     }
+
 
     @Override
     public void deleteByIds(List<Long> ids) {
@@ -62,9 +76,36 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public void copy(Long id) {
         MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
-        MessageTemplate clone = ObjectUtil.clone(messageTemplate);
-        clone.setId(null);
+        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setId(null);
         messageTemplateDao.save(clone);
+    }
+
+    @Override
+    public BasicResultVO startCronTask(Long id) {
+        // 1.修改模板状态
+        MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
+
+        // 2.动态创建定时任务并启动
+        XxlJobInfo xxlJobInfo = XxlJobUtils.buildXxlJobInfo(messageTemplate);
+
+        BasicResultVO basicResultVO = cronTaskService.saveCronTask(xxlJobInfo);
+        // basicResultVO.getData()
+        //cronTaskService.startCronTask()
+
+        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
+        messageTemplateDao.save(clone);
+        return BasicResultVO.success();
+    }
+
+    @Override
+    public BasicResultVO stopCronTask(Long id) {
+        // 1.修改模板状态
+        MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
+        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.STOP.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
+        messageTemplateDao.save(clone);
+
+        // 2.暂停定时任务
+        return cronTaskService.stopCronTask(clone.getCronTaskId());
     }
 
 
@@ -79,8 +120,26 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode())
                 .setCreator("Java3y").setUpdator("Java3y").setTeam("公众号Java3y").setAuditor("3y")
                 .setDeduplicationTime(AustinConstant.FALSE).setIsNightShield(AustinConstant.FALSE)
-                .setCreated(Math.toIntExact(DateUtil.currentSeconds())).setUpdated(Math.toIntExact(DateUtil.currentSeconds()))
+                .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
                 .setIsDeleted(AustinConstant.FALSE);
+
+    }
+
+    /**
+     * 1. 重置模板的状态
+     * 2. 修改定时任务信息
+     *
+     * @param messageTemplate
+     */
+    private void resetStatus(MessageTemplate messageTemplate) {
+        messageTemplate.setUpdator(messageTemplate.getUpdator())
+                .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode());
+
+        if (messageTemplate.getCronTaskId() != null && TemplateType.CLOCKING.getCode().equals(messageTemplate.getTemplateType())) {
+            XxlJobInfo xxlJobInfo = XxlJobUtils.buildXxlJobInfo(messageTemplate);
+            cronTaskService.saveCronTask(xxlJobInfo);
+            cronTaskService.stopCronTask(messageTemplate.getCronTaskId());
+        }
     }
 
 

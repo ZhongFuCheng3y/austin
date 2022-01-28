@@ -51,6 +51,12 @@ public class MessageTemplate implements Serializable {
     private Integer msgStatus;
 
     /**
+     * 定时任务Id(由xxl-job返回)
+     */
+    private Integer cronTaskId;
+
+
+    /**
      * 发送的Id类型
      */
     private Integer idType;

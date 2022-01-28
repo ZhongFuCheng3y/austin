@@ -31,6 +31,11 @@
             <artifactId>austin-service-api-impl</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.java3y.austin</groupId>
+            <artifactId>austin-cron</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!--监控-->
         <dependency>
