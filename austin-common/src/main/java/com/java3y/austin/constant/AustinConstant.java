@@ -23,7 +23,7 @@ public class AustinConstant {
     /**
      * cron时间格式
      */
-    public final static String CRON_FORMAT = "ss mm HH dd MM ? yyyy";
+    public final static String CRON_FORMAT = "ss mm HH dd MM ? yyyy-yyyy";
 
 
     /**

@@ -80,7 +80,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public void copy(Long id) {
         MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
-        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setId(null);
+        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setId(null).setCronTaskId(null);
         messageTemplateDao.save(clone);
     }
 
