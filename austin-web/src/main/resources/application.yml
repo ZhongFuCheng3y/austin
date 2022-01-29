@@ -74,8 +74,8 @@ xxl:
   job:
     admin:
       addresses:  # 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      username: admin
-      password: 123456
+      username: admin # 后台账号名
+      password: 123456 # 后台密码
     executor:
       appname: austin # 执行器 AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
       jobHandlerName: austinJob # 执行器任务名
