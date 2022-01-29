@@ -3,13 +3,13 @@ package com.java3y.austin.service.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.constant.AustinConstant;
 import com.java3y.austin.dao.MessageTemplateDao;
 import com.java3y.austin.domain.MessageTemplate;
 import com.java3y.austin.entity.XxlJobInfo;
 import com.java3y.austin.enums.AuditStatus;
 import com.java3y.austin.enums.MessageStatus;
+import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.enums.TemplateType;
 import com.java3y.austin.service.CronTaskService;
 import com.java3y.austin.service.MessageTemplateService;
@@ -37,6 +37,9 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     @Autowired
     private CronTaskService cronTaskService;
+
+    @Autowired
+    private XxlJobUtils xxlJobUtils;
 
     @Override
     public List<MessageTemplate> queryList(MessageTemplateParam param) {
@@ -86,20 +89,24 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         // 1.修改模板状态
         MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
 
-        // 2.动态创建定时任务并启动
-        XxlJobInfo xxlJobInfo = XxlJobUtils.buildXxlJobInfo(messageTemplate);
+        // 2.动态创建或更新定时任务
+        XxlJobInfo xxlJobInfo = xxlJobUtils.buildXxlJobInfo(messageTemplate);
 
+        // 3.获取taskId(如果本身存在则复用原有任务，如果不存在则得到新建后任务ID)
+        Integer taskId = messageTemplate.getCronTaskId();
         BasicResultVO basicResultVO = cronTaskService.saveCronTask(xxlJobInfo);
-        JSONObject data = (JSONObject) basicResultVO.getData();
-        if (data.get("content") != null) {
-            cronTaskService.startCronTask(Integer.valueOf(String.valueOf(data.get("content"))));
-            MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
-            messageTemplateDao.save(clone);
-            return BasicResultVO.success();
-        } else {
-            return BasicResultVO.fail();
+        if (taskId == null && RespStatusEnum.SUCCESS.getCode().equals(basicResultVO.getStatus()) && basicResultVO.getData() != null) {
+            taskId = Integer.valueOf(String.valueOf(basicResultVO.getData()));
         }
 
+        // 4. 启动定时任务
+        if (taskId != null) {
+            cronTaskService.startCronTask(taskId);
+            MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setCronTaskId(taskId).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
+            messageTemplateDao.save(clone);
+            return BasicResultVO.success();
+        }
+        return BasicResultVO.fail();
     }
 
     @Override
@@ -132,7 +139,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     /**
      * 1. 重置模板的状态
-     * 2. 修改定时任务信息
+     * 2. 修改定时任务信息(如果存在)
      *
      * @param messageTemplate
      */
@@ -141,7 +148,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode());
 
         if (messageTemplate.getCronTaskId() != null && TemplateType.CLOCKING.getCode().equals(messageTemplate.getTemplateType())) {
-            XxlJobInfo xxlJobInfo = XxlJobUtils.buildXxlJobInfo(messageTemplate);
+            XxlJobInfo xxlJobInfo = xxlJobUtils.buildXxlJobInfo(messageTemplate);
             cronTaskService.saveCronTask(xxlJobInfo);
             cronTaskService.stopCronTask(messageTemplate.getCronTaskId());
         }

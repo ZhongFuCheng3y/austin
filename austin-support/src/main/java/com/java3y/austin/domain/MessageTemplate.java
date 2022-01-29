@@ -55,6 +55,12 @@ public class MessageTemplate implements Serializable {
      */
     private Integer cronTaskId;
 
+    /**
+     * 定时发送的人群ID
+     * 1. 目前阶段直接填入Id测试
+     * 2. 正常是需要通过ID获取文件遍历每个Id
+     */
+    private String cronCrowdId;
 
     /**
      * 发送的Id类型

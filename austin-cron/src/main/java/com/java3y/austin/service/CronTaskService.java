@@ -1,5 +1,6 @@
 package com.java3y.austin.service;
 
+import com.java3y.austin.entity.XxlJobGroup;
 import com.java3y.austin.entity.XxlJobInfo;
 import com.java3y.austin.vo.BasicResultVO;
 
@@ -38,5 +39,17 @@ public interface CronTaskService {
      */
     BasicResultVO stopCronTask(Integer taskId);
 
+
+    /**
+     * 得到执行器Id
+     *
+     * @return
+     */
+    BasicResultVO getGroupId(String appName, String title);
+
+    /**
+     * 创建执行器
+     */
+    BasicResultVO createGroup(XxlJobGroup xxlJobGroup);
 
 }

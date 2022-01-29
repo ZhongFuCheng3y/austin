@@ -115,7 +115,6 @@ public class MessageTemplateController {
         Map<String, String> variables = JSON.parseObject(messageTemplateParam.getMsgContent(), Map.class);
         MessageParam messageParam = MessageParam.builder().receiver(messageTemplateParam.getReceiver()).variables(variables).build();
         SendRequest sendRequest = SendRequest.builder().code(BusinessCode.COMMON_SEND.getCode()).messageTemplateId(messageTemplateParam.getId()).messageParam(messageParam).build();
-
         SendResponse response = sendService.send(sendRequest);
         if (response.getCode() != RespStatusEnum.SUCCESS.getCode()) {
             return BasicResultVO.fail(response.getMsg());
@@ -130,9 +129,7 @@ public class MessageTemplateController {
     @PostMapping("start/{id}")
     @ApiOperation("/启动模板的定时任务")
     public BasicResultVO start(@RequestBody @PathVariable("id") Long id) {
-        messageTemplateService.startCronTask(id);
-
-        return BasicResultVO.success();
+        return messageTemplateService.startCronTask(id);
     }
     /**
      * 启动模板的定时任务
@@ -140,8 +137,6 @@ public class MessageTemplateController {
     @PostMapping("stop/{id}")
     @ApiOperation("/暂停模板的定时任务")
     public BasicResultVO stop(@RequestBody @PathVariable("id") Long id) {
-        messageTemplateService.stopCronTask(id);
-
-        return BasicResultVO.success();
+        return messageTemplateService.stopCronTask(id);
     }
 }
