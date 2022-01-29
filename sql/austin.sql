@@ -13,7 +13,7 @@ CREATE TABLE `message_template`
     `flow_id`            varchar(50) COLLATE utf8mb4_unicode_ci COMMENT '工单ID',
     `msg_status`         tinyint(4) NOT NULL DEFAULT '0' COMMENT '当前消息状态：10.新建 20.停用 30.启用 40.等待发送 50.发送中 60.发送成功 70.发送失败',
     `cron_task_id`       bigint(20) COMMENT '定时任务Id (xxl-job-admin返回)',
-    `cron_crowd_id`      varchar (50) COMMENT '定时发送人群ID',
+    `cron_crowd_path`    varchar (500) COMMENT '定时发送人群的文件路径',
     `id_type`            tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息的发送ID类型：10. userId 20.did 30.手机号 40.openId 50.email',
     `send_channel`       tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息发送渠道：10.IM 20.Push 30.短信 40.Email 50.公众号 60.小程序',
     `template_type`      tinyint(4) NOT NULL DEFAULT '0' COMMENT '10.运营类 20.技术类接口调用',
