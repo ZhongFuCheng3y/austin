@@ -139,17 +139,6 @@ public class MessageTemplate implements Serializable {
      */
     private Integer updated;
 
-    /**
-     * 消息去重时间 单位小时
-     */
-    private Integer deduplicationTime;
-
-    /**
-     * 是否夜间屏蔽
-     * 0:不屏蔽
-     * 1：屏蔽
-     */
-    private Integer isNightShield;
 
 
 }

@@ -131,7 +131,6 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         messageTemplate.setFlowId(StrUtil.EMPTY)
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode())
                 .setCreator("Java3y").setUpdator("Java3y").setTeam("公众号Java3y").setAuditor("3y")
-                .setDeduplicationTime(AustinConstant.FALSE).setIsNightShield(AustinConstant.FALSE)
                 .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
                 .setIsDeleted(AustinConstant.FALSE);
 

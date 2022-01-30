@@ -6,17 +6,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Throwables;
 import com.java3y.austin.constant.AustinConstant;
-import com.java3y.austin.dto.ContentModel;
-import com.java3y.austin.dto.SmsContentModel;
-import com.java3y.austin.enums.ChannelType;
-import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.dao.MessageTemplateDao;
 import com.java3y.austin.domain.MessageParam;
 import com.java3y.austin.domain.MessageTemplate;
 import com.java3y.austin.domain.SendTaskModel;
+import com.java3y.austin.domain.TaskInfo;
+import com.java3y.austin.dto.ContentModel;
+import com.java3y.austin.enums.ChannelType;
+import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.pipeline.BusinessProcess;
 import com.java3y.austin.pipeline.ProcessContext;
-import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.utils.ContentHolderUtil;
 import com.java3y.austin.utils.TaskInfoUtils;
 import com.java3y.austin.vo.BasicResultVO;
@@ -79,9 +78,7 @@ public class AssembleAction implements BusinessProcess {
                     .templateType(messageTemplate.getTemplateType())
                     .msgType(messageTemplate.getMsgType())
                     .sendAccount(messageTemplate.getSendAccount())
-                    .contentModel(getContentModelValue(messageTemplate, messageParam))
-                    .deduplicationTime(messageTemplate.getDeduplicationTime())
-                    .isNightShield(messageTemplate.getIsNightShield()).build();
+                    .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
 
             taskInfoList.add(taskInfo);
         }

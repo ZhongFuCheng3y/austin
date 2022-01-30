@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Throwables;
 import com.java3y.austin.domain.SendTaskModel;
-import com.java3y.austin.domain.TaskInfo;
 import com.java3y.austin.enums.RespStatusEnum;
 import com.java3y.austin.pipeline.BusinessProcess;
 import com.java3y.austin.pipeline.ProcessContext;
-import com.java3y.austin.pipeline.ProcessModel;
 import com.java3y.austin.vo.BasicResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ public class SendMqAction implements BusinessProcess {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    @Value("${austin.topic.name}")
+    @Value("${austin.business.topic.name}")
     private String topicName;
 
     @Override

@@ -1,7 +1,10 @@
 package com.java3y.austin.controller;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Throwables;
 import com.java3y.austin.domain.MessageParam;
 import com.java3y.austin.domain.MessageTemplate;
 import com.java3y.austin.domain.SendRequest;
@@ -16,10 +19,13 @@ import com.java3y.austin.vo.MessageTemplateParam;
 import com.java3y.austin.vo.MessageTemplateVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +37,7 @@ import java.util.stream.Collectors;
  *
  * @author 3y
  */
+@Slf4j
 @RestController
 @RequestMapping("/messageTemplate")
 @Api("发送消息")
@@ -44,6 +51,10 @@ public class MessageTemplateController {
     @Autowired
     private SendService sendService;
 
+    @Value("${austin.business.upload.crowd.path}")
+    private String dataPath;
+
+
     /**
      * 如果Id存在，则修改
      * 如果Id不存在，则保存
@@ -51,6 +62,7 @@ public class MessageTemplateController {
     @PostMapping("/save")
     @ApiOperation("/保存数据")
     public BasicResultVO saveOrUpdate(@RequestBody MessageTemplate messageTemplate) {
+
         MessageTemplate info = messageTemplateService.saveOrUpdate(messageTemplate);
 
         return BasicResultVO.success(info);
@@ -132,6 +144,7 @@ public class MessageTemplateController {
     public BasicResultVO start(@RequestBody @PathVariable("id") Long id) {
         return messageTemplateService.startCronTask(id);
     }
+
     /**
      * 暂停模板的定时任务
      */
@@ -147,8 +160,24 @@ public class MessageTemplateController {
     @PostMapping("upload")
     @ApiOperation("/上传人群文件")
     public BasicResultVO upload(@RequestParam("file") MultipartFile file) {
-        return BasicResultVO.success();
+        String filePath = new StringBuilder(dataPath)
+                .append(IdUtil.fastSimpleUUID())
+                .append(file.getOriginalFilename())
+                .toString();
+        try {
+            File localFile = new File(filePath);
+            if (!localFile.exists()) {
+                localFile.mkdirs();
+            }
+            file.transferTo(localFile);
+
+
+        } catch (Exception e) {
+            log.error("MessageTemplateController#upload fail! e:{},params{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(file));
+            return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
+        }
+        return BasicResultVO.success(MapUtil.of(new String[][]{{"value", filePath}}));
     }
 
-
 }
+
