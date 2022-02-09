@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * xxl 任务信息 配置
+ * @author 3y
  */
 @Data
 @Accessors(chain = true)

@@ -112,7 +112,7 @@ public class TencentSmsScript implements SmsScript {
         httpProfile.setEndpoint(account.getUrl());
         ClientProfile clientProfile = new ClientProfile();
         clientProfile.setHttpProfile(httpProfile);
-        SmsClient client = new SmsClient(cred, account.getUrl(), clientProfile);
+        SmsClient client = new SmsClient(cred, account.getRegion(), clientProfile);
         return client;
     }
 
