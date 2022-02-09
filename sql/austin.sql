@@ -1,8 +1,6 @@
-create
-database austin;
+create database austin;
 
-use
-austin;
+use austin;
 
 
 CREATE TABLE `message_template`
