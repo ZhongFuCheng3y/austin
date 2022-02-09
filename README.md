@@ -68,9 +68,9 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **8**、由于使用了Apollo且我是在云服务器上安装的，我这边会直接跳过`metaserver`服务发现，在`AustinApplication`需要配置对应的apollo地址
 
-**9**、目前短信和邮件账号的信息都配置在**apollo**，配置的示例参照`com.java3y.austin.utils.AccountUtils#getAccount`中的注释
+**9**、目前短信和邮件账号的信息都配置在**apollo**，配置的示例参照`com.java3y.austin.support.utils#getAccount`中的注释
 
-**10**、调用http接口`com.java3y.austin.controller.SendController#send`给自己发一条短信或者邮件感受
+**10**、调用http接口`com.java3y.austin.web.controller#send`给自己发一条短信或者邮件感受
 
 ```shell
 
