@@ -24,7 +24,7 @@ public class CrowdInfoVo implements Serializable {
     /**
      * 接收者id
      */
-    private String id;
+    private String receiver;
 
     /**
      * 参数信息
