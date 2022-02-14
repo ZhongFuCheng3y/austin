@@ -54,7 +54,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
-**2**、适配`application.properties`的配置信息(`srping.datasource`)
+**2**、适配`application.properties`的配置信息(`spring.datasource`)
 
 **3**、执行`sql`文件夹下的`austin.sql`创建对应的表
 
@@ -97,9 +97,9 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 - [ ] 04、持续提高消息推送系统的影响力，让更多的业务方了解其功能，进而挖掘更多拉新和唤醒用户的玩法，提高站内的次留率和转化率
 
 
-**近期更新时间**：2022年1月25日
+**近期更新时间**：2022年2月14日
 
-**近期更新功能**：austin前端管理系统
+**近期更新功能**：接入xxl-job分布式定时任务框架并完成定时任务逻辑
 
 ## 项目交流
 

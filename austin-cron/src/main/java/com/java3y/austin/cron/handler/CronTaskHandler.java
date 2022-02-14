@@ -27,7 +27,6 @@ public class CronTaskHandler {
         log.info("CronTaskHandler#execute messageTemplateId:{} cron exec!", XxlJobHelper.getJobParam());
         Long messageTemplateId = Long.valueOf(XxlJobHelper.getJobParam());
         taskHandler.handle(messageTemplateId);
-
     }
 
 }

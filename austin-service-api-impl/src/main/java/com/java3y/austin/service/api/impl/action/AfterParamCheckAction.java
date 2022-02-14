@@ -51,8 +51,8 @@ public class AfterParamCheckAction implements BusinessProcess {
      * @param taskInfo
      */
     private void filterIllegalPhoneNum(List<TaskInfo> taskInfo) {
-        Integer idType = taskInfo.get(0).getIdType();
-        Integer sendChannel = taskInfo.get(0).getSendChannel();
+        Integer idType = CollUtil.getFirst(taskInfo.iterator()).getIdType();
+        Integer sendChannel = CollUtil.getFirst(taskInfo.iterator()).getSendChannel();
 
         if (IdType.PHONE.getCode().equals(idType) && ChannelType.SMS.getCode().equals(sendChannel)) {
             Iterator<TaskInfo> iterator = taskInfo.iterator();
@@ -66,7 +66,7 @@ public class AfterParamCheckAction implements BusinessProcess {
 
                 if (CollUtil.isNotEmpty(illegalPhone)) {
                     task.getReceiver().removeAll(illegalPhone);
-                    log.error("{} find illegal phone!{}", task.getMessageTemplateId(), JSON.toJSONString(illegalPhone));
+                    log.error("messageTemplateId:{} find illegal phone!{}", task.getMessageTemplateId(), JSON.toJSONString(illegalPhone));
                 }
                 if (CollUtil.isEmpty(task.getReceiver())) {
                     iterator.remove();

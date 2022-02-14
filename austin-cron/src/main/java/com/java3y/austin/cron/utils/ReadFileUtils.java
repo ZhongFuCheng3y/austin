@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.csv.*;
 import com.google.common.base.Throwables;
-import com.java3y.austin.cron.domain.CrowdInfoVo;
+import com.java3y.austin.cron.vo.CrowdInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileReader;

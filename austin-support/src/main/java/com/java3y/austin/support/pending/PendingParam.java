@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 
 
 /**
@@ -37,12 +38,8 @@ public class PendingParam<T> {
     private Long timeThreshold;
 
     /**
-     * pending具体实现对象
+     * 消费线程池实例【必填】
      */
-    private Pending pending;
+    protected ExecutorService executorService;
 
-    /**
-     * 消费线程数【可选】
-     */
-    protected Integer threadNum;
 }
