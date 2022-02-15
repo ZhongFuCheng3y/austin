@@ -3,19 +3,13 @@ package com.java3y.austin.stream.utils;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * flink工具类
  *
  * @author 3y
  */
-@Component
 public class FlinkUtils {
-
-    @Value("${spring.kafka.bootstrap-servers}")
-    private String broker;
 
     /**
      * 获取kafkaConsumer
@@ -25,7 +19,7 @@ public class FlinkUtils {
      */
     public KafkaSource<String> getKafkaConsumer(String topicName, String groupId) {
         KafkaSource<String> source = KafkaSource.<String>builder()
-                .setBootstrapServers(broker)
+                .setBootstrapServers("ip:port")
                 .setTopics(topicName)
                 .setGroupId(groupId)
                 .setStartingOffsets(OffsetsInitializer.earliest())

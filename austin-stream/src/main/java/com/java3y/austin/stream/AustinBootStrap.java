@@ -8,6 +8,7 @@ import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.springframework.context.ApplicationContext;
 
 /**
  * flink启动类
@@ -22,9 +23,10 @@ public class AustinBootStrap {
 
         String topicName = "austinTopicV2";
         String groupId = "austinTopicV23";
+        ApplicationContext applicationContext = SpringContextUtils.loadContext("classpath*:austin-spring.xml");
+        FlinkUtils flinkUtils = applicationContext.getBean(FlinkUtils.class);
+        KafkaSource<String> kafkaConsumer = flinkUtils.getKafkaConsumer(topicName, groupId);
 
-        KafkaSource<String> kafkaConsumer = SpringContextUtils.getBean(FlinkUtils.class)
-                .getKafkaConsumer(topicName, groupId);
         DataStreamSource<String> kafkaSource = env.fromSource(kafkaConsumer, WatermarkStrategy.noWatermarks(), "kafkaSource");
         kafkaSource.addSink(new SinkFunction<String>() {
             @Override
@@ -32,7 +34,10 @@ public class AustinBootStrap {
                 log.error("kafka value:{}", value);
             }
         });
-//        DataStream<AnchorInfo> stream = envBatchPendingThread
+
+
+
+        //        DataStream<AnchorInfo> stream = envBatchPendingThread
 //                .addSource(new AustinSource())
 //                .name("transactions");
 //
