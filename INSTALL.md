@@ -250,6 +250,10 @@ docker exec -it redis redis-cli
 
 部署Apollo跟之前一样直接用`docker-compose`就完事了，在GitHub已经给出了对应的教程和`docker-compose.yml`以及相关的文件，直接复制粘贴就完事咯。
 
+目录结构最好保持一致：
+
+![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a532e3221834466a85b6739871694957~tplv-k3u1fbpfcp-watermark.image?)
+
 **<https://www.apolloconfig.com/#/zh/deployment/quick-start-docker>**
 
 **<https://github.com/apolloconfig/apollo/tree/master/scripts/docker-quick-start>**
