@@ -54,19 +54,19 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
-**2**、适配`application.properties`的配置信息(`spring.datasource`)
+**2**、填写`application.properties`中`austin-database`对应的`ip/port/username/password`信息
 
-**3**、执行`sql`文件夹下的`austin.sql`创建对应的表
+**3**、执行`sql`文件夹下的`austin.sql`创建对应的表以及插入测试数据
 
-**4**、填写Kafka配置的`bootstrap-servers`地址和端口以及对应的`topicName`
+**4**、填写`application.properties`中`austin-kafka`对应的`ip`/`port`信息
 
-**5**、填写Redis的`host`、`port`和`password`
+**5**、填写`application.properties`中`austin-redis`对应的`ip`/`port`信息
 
-**6**、填写apollo的`appid`/`namespace`
+**6**、检查`apollo`的`app.id`/`apollo.bootstrap.namespaces`，检查创建的消息队列topic：`austin.business.topic.name`
 
 **7**、以上配置信息都在`application.properties`文件中修改。
 
-**8**、由于使用了Apollo且我是在云服务器上安装的，我这边会直接跳过`metaserver`服务发现，在`AustinApplication`需要配置对应的apollo地址
+**8**、由于使用了Apollo且我是在云服务器上安装的，我这边会直接跳过`metaserver`服务发现，在`AustinApplication`需要配置对应的apollo地址(注意端口!)
 
 **9**、目前短信和邮件账号的信息都配置在**apollo**，配置的示例参照`com.java3y.austin.support.utils#getAccount`中的注释
 
