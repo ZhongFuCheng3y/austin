@@ -9,6 +9,7 @@ import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.support.utils.LogUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +23,10 @@ public class DiscardMessageService {
     @ApolloConfig("boss.austin")
     private Config config;
 
+    @Autowired
+    private LogUtils logUtils;
+    
+
     /**
      * 丢弃消息，配置在apollo
      * @param taskInfo
@@ -33,7 +38,7 @@ public class DiscardMessageService {
                 AustinConstant.APOLLO_DEFAULT_VALUE_JSON_ARRAY));
 
         if (array.contains(String.valueOf(taskInfo.getMessageTemplateId()))) {
-            LogUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).state(AnchorState.DISCARD.getCode()).build());
+            logUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).state(AnchorState.DISCARD.getCode()).build());
             return true;
         }
         return false;

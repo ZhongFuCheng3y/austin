@@ -183,10 +183,10 @@ docker ps
 docker exec -it kafka sh
 ```
 
-创建一个topic(这里我的**topicName**就叫austinTopic，你们可以改成自己的)
+创建一个topic(这里我的**topicName**就叫austinBusiness，你们可以改成自己的)
 
 ```
-$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinTopic --partitions 4 --zookeeper zookeeper:2181 --replication-factor 1 
+$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 4 --zookeeper zookeeper:2181 --replication-factor 1 
 ```
 
 查看刚创建的topic信息：
@@ -344,16 +344,16 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-    - targets: ['ip:9090']  // TODO ip自己写
+    - targets: ['ip:9090']  
   - job_name: 'cadvisor'
     static_configs:
-    - targets: ['ip:8899']  // TODO ip自己写
+    - targets: ['ip:8899']  
   - job_name: 'node'
     static_configs:
-    - targets: ['ip:9100']  // TODO ip自己写
+    - targets: ['ip:9100']  
 ```
 
-（**这里要注意端口，按自己配置的来**）
+（**这里要注意端口，按自己配置的来,ip也要填写为自己的**）
 
 把这份`prometheus.yml`的配置往`/etc/prometheus/prometheus.yml` 路径下**复制**一份。随后在目录下`docker-compose up -d`启动，于是我们就可以分别访问：
 

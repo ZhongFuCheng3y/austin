@@ -33,6 +33,9 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
 
     @Autowired
     private RedisUtils redisUtils;
+    @Autowired
+    private LogUtils logUtils;
+
 
     @Override
     public void deduplication(DeduplicationParam param) {
@@ -62,7 +65,7 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
         // 剔除符合去重条件的用户
         if (CollUtil.isNotEmpty(filterReceiver)) {
             taskInfo.getReceiver().removeAll(filterReceiver);
-            LogUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(filterReceiver).state(param.getAnchorState().getCode()).build());
+            logUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(filterReceiver).state(param.getAnchorState().getCode()).build());
         }
     }
 

@@ -39,12 +39,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-
-        <dependency>
             <groupId>com.java3y.austin</groupId>
             <artifactId>austin-support</artifactId>
             <version>0.0.1-SNAPSHOT</version>

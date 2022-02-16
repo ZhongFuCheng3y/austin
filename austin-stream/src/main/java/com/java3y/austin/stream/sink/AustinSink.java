@@ -5,6 +5,9 @@ import com.java3y.austin.common.domain.AnchorInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 
+/**
+ * mock
+ */
 @Slf4j
 public class AustinSink extends RichSinkFunction<AnchorInfo> {
 

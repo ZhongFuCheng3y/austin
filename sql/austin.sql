@@ -59,24 +59,8 @@ CREATE TABLE `sms_record`
   COLLATE = utf8mb4_unicode_ci COMMENT ='短信记录信息';
 
 
-/*测试短信*/
-INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type,
-                                     send_channel, template_type, msg_type, msg_content, send_account, creator,
-                                     updator, auditor, team, proposer, is_deleted, created, updated)
-VALUES (1, 'test短信', 10, 10, 30, 30, 10, 10, '{"content":"{$contentValue}"}', 10, 'yyyyc', 'yyyyu', 'yyyyyyz', 'yyyt',
-        'yyyy22', 0, 1636978066, 1636978066);
+-- 短信测试
+INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, cron_task_id, cron_crowd_path, expect_push_time, id_type, send_channel, template_type, msg_type, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated) VALUES (1, '短信测试', 10, '', 10, null, '', '', 30, 30, 20, 20, '{"content":"6666","url":"","title":""}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '3y', 0, 1644387139, 1644387139);
 
-/*测试短信+url链接追踪*/
-INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type, send_channel, template_type,
-                                     msg_type, msg_content, send_account, creator, updator, auditor,
-                                     team, proposer, is_deleted, created, updated)
-VALUES (2, 'test短信', 10, 10, 30, 30, 10, 20,
-        '{"content":"{$contentValue}","url":"https://gitee.com/zhongfucheng/austin"}', 10, 'yyyyc', 'yyyyu', 'yyyyyyz',
-        'yyyt', 'yyyy22', 0, 1637411536, 1637411536);
-
-/*测试邮件发送*/
-INSERT INTO austin.message_template (id, name, audit_status, msg_status, id_type, send_channel, template_type,
-                                     msg_type, msg_content, send_account, creator, updator, auditor,
-                                     team, proposer, is_deleted, created, updated)
-VALUES (3, 'test邮件', 10, 10, 50, 40, 20, 10, '{"content":"{$contentValue}","title":"{$title}"}', 10,
-        'yyyyc', 'yyyyu', 'yyyyyyz', 'yyyt', 'yyyy22', 0, 1641546914, 1641546914);
+-- 邮件测试
+INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, cron_task_id, cron_crowd_path, expect_push_time, id_type, send_channel, template_type, msg_type, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated) VALUES (2, '测试邮件', 10, '', 10, null, '', '', 50, 40, 20, 10, '{"content":"4344444444","url":"","title":"6666666"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '3y', 0, 1644387638, 1644387638);

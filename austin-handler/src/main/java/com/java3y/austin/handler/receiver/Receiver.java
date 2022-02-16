@@ -38,6 +38,9 @@ public class Receiver {
     @Autowired
     private TaskPendingHolder taskPendingHolder;
 
+    @Autowired
+    private LogUtils logUtils;
+
     @KafkaListener(topics = "#{'${austin.business.topic.name}'}")
     public void consumer(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
@@ -51,7 +54,7 @@ public class Receiver {
              */
             if (topicGroupId.equals(messageGroupId)) {
                 for (TaskInfo taskInfo : taskInfoLists) {
-                    LogUtils.print(LogParam.builder().bizType(LOG_BIZ_TYPE).object(taskInfo).build(), AnchorInfo.builder().ids(taskInfo.getReceiver()).businessId(taskInfo.getBusinessId()).state(AnchorState.RECEIVE.getCode()).build());
+                    logUtils.print(LogParam.builder().bizType(LOG_BIZ_TYPE).object(taskInfo).build(), AnchorInfo.builder().ids(taskInfo.getReceiver()).businessId(taskInfo.getBusinessId()).state(AnchorState.RECEIVE.getCode()).build());
                     Task task = context.getBean(Task.class).setTaskInfo(taskInfo);
                     taskPendingHolder.route(topicGroupId).execute(task);
                 }
