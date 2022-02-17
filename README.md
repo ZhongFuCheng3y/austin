@@ -74,7 +74,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ```shell
 
-curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"code":"send","messageParam":{"receiver":"13788888888","variables":{"title":"yyyyyy","contentValue":"6666164180"}},"messageTemplateId":1}'
+curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '"{"code":"send","messageParam":{"extra":null,"receiver":"13719333899","variables":{"content":"2222","url":"1111"}},"messageTemplateId":1}"'
 
 ```
 

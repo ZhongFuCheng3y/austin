@@ -91,7 +91,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     @Override
     public BasicResultVO startCronTask(Long id) {
-        // 1.修改模板状态
+        // 1.获取消息模板的信息
         MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
 
         // 2.动态创建或更新定时任务

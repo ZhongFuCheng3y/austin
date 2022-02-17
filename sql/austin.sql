@@ -60,7 +60,7 @@ CREATE TABLE `sms_record`
 
 
 -- 短信测试
-INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, cron_task_id, cron_crowd_path, expect_push_time, id_type, send_channel, template_type, msg_type, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated) VALUES (1, '短信测试', 10, '', 10, null, '', '', 30, 30, 20, 20, '{"content":"6666","url":"","title":""}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '3y', 0, 1644387139, 1644387139);
+INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, cron_task_id, cron_crowd_path, expect_push_time, id_type, send_channel, template_type, msg_type, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated) VALUES (1, '短信测试', 10, '', 10, null, '', '', 30, 30, 20, 20, '{"content":"{$content}","url":"{$url}","title":""}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '3y', 0, 1644387139, 1644387139);
 
 -- 邮件测试
 INSERT INTO austin.message_template (id, name, audit_status, flow_id, msg_status, cron_task_id, cron_crowd_path, expect_push_time, id_type, send_channel, template_type, msg_type, msg_content, send_account, creator, updator, auditor, team, proposer, is_deleted, created, updated) VALUES (2, '测试邮件', 10, '', 10, null, '', '', 50, 40, 20, 10, '{"content":"4344444444","url":"","title":"6666666"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '3y', 0, 1644387638, 1644387638);
