@@ -378,7 +378,7 @@ scrape_configs:
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5836357acce442b480628e06b2e7420a~tplv-k3u1fbpfcp-zoom-1.image)
 
-服务器的监控直接选用**8913**的就好了
+服务器的监控直接选用**8919**的就好了
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01a19e6370f54c10b096e1c9bd743b59~tplv-k3u1fbpfcp-zoom-1.image)
 
