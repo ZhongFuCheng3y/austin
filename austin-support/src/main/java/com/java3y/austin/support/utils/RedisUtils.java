@@ -60,4 +60,24 @@ public class RedisUtils {
             log.error("redis pipelineSetEX fail! e:{}", Throwables.getStackTraceAsString(e));
         }
     }
+
+    /**
+     * pipeline 设置 key-value 并设置过期时间
+     *
+     * @param seconds 过期时间
+     * @param delta   自增的步长
+     */
+    public void pipelineHashIncrByEX(Map<String, String> keyValues, Long seconds, Long delta) {
+        try {
+            redisTemplate.executePipelined((RedisCallback<String>) connection -> {
+                for (Map.Entry<String, String> entry : keyValues.entrySet()) {
+                    connection.hIncrBy(entry.getKey().getBytes(), entry.getValue().getBytes(), delta);
+                    connection.expire(entry.getKey().getBytes(), seconds);
+                }
+                return null;
+            });
+        } catch (Exception e) {
+            log.error("redis pipelineSetEX fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
+    }
 }
