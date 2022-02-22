@@ -37,6 +37,7 @@
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
         <log4j.version>2.17.1</log4j.version>
+        <weixin-java-mp>4.1.0</weixin-java-mp>
     </properties>
 
     <dependencyManagement>
@@ -150,6 +151,13 @@
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
+            </dependency>
+
+            <!--微信第三方SDK-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java-mp}</version>
             </dependency>
 
         </dependencies>
