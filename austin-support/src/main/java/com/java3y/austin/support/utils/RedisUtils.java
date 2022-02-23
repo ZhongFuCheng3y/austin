@@ -39,9 +39,38 @@ public class RedisUtils {
                 }
             }
         } catch (Exception e) {
-            log.error("redis mGet fail! e:{}", Throwables.getStackTraceAsString(e));
+            log.error("RedisUtils#mGet fail! e:{}", Throwables.getStackTraceAsString(e));
         }
         return result;
+    }
+
+    /**
+     * hGetAll
+     *
+     * @param key
+     */
+    public Map<Object, Object> hGetAll(String key) {
+        try {
+            Map<Object, Object> entries = redisTemplate.opsForHash().entries(key);
+            return entries;
+        } catch (Exception e) {
+            log.error("RedisUtils#hGetAll fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
+        return null;
+    }
+
+    /**
+     * lRange
+     *
+     * @param key
+     */
+    public List<String> lRange(String key, long start, long end) {
+        try {
+            return redisTemplate.opsForList().range(key, start, end);
+        } catch (Exception e) {
+            log.error("RedisUtils#lRange fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
+        return null;
     }
 
     /**
@@ -57,7 +86,7 @@ public class RedisUtils {
                 return null;
             });
         } catch (Exception e) {
-            log.error("redis pipelineSetEX fail! e:{}", Throwables.getStackTraceAsString(e));
+            log.error("RedisUtils#pipelineSetEx fail! e:{}", Throwables.getStackTraceAsString(e));
         }
     }
 
@@ -67,7 +96,7 @@ public class RedisUtils {
      * @param seconds 过期时间
      * @param delta   自增的步长
      */
-    public void pipelineHashIncrByEX(Map<String, String> keyValues, Long seconds, Long delta) {
+    public void pipelineHashIncrByEx(Map<String, String> keyValues, Long seconds, Long delta) {
         try {
             redisTemplate.executePipelined((RedisCallback<String>) connection -> {
                 for (Map.Entry<String, String> entry : keyValues.entrySet()) {
