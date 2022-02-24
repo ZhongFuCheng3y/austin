@@ -15,6 +15,7 @@ public class AustinConstant {
     public final static Integer FALSE = 0;
 
 
+
     /**
      * 时间格式
      */
@@ -31,6 +32,13 @@ public class AustinConstant {
      */
     public final static String APOLLO_DEFAULT_VALUE_JSON_OBJECT = "{}";
     public final static String APOLLO_DEFAULT_VALUE_JSON_ARRAY = "[]";
+
+
+    /**
+     * businessId默认的长度
+     * 生成的逻辑：com.java3y.austin.support.utils.TaskInfoUtils#generateBusinessId(java.lang.Long, java.lang.Integer)
+     */
+    public final static Integer BUSINESS_ID_LENGTH = 16;
 
 
 }

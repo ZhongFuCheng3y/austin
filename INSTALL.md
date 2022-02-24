@@ -39,9 +39,9 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'my password';
 
 ```
 grant all privileges on *.* to 'root'@'%' identified by 'my password' with grant option;
-​
+
 flush privileges;
-​
+
 exit
 ```
 
@@ -53,7 +53,7 @@ exit
 
 ```
 yum -y install gcc
-​
+
 yum -y install gcc-c++
 ```
 
@@ -125,42 +125,42 @@ docker-compose --version
 version: '3'
 services:
   zookepper:
-    image: wurstmeister/zookeeper                    # 原镜像`wurstmeister/zookeeper`
-    container_name: zookeeper                        # 容器名为'zookeeper'
-    volumes:                                         # 数据卷挂载路径设置,将本机目录映射到容器目录
-      - "/etc/localtime:/etc/localtime"
-    ports:                                           # 映射端口
-      - "2181:2181"
-​
+    image: wurstmeister/zookeeper                    # 原镜像`wurstmeister/zookeeper`
+    container_name: zookeeper                        # 容器名为'zookeeper'
+    volumes:                                         # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - "/etc/localtime:/etc/localtime"
+    ports:                                           # 映射端口
+      - "2181:2181"
+
   kafka:
-    image: wurstmeister/kafka                                # 原镜像`wurstmeister/kafka`
-    container_name: kafka                                    # 容器名为'kafka'
-    volumes:                                                 # 数据卷挂载路径设置,将本机目录映射到容器目录
-      - "/etc/localtime:/etc/localtime"
-    environment:                                                       # 设置环境变量,相当于docker run命令中的-e
-      KAFKA_BROKER_ID: 0                                               # 在kafka集群中，每个kafka都有一个BROKER_ID来区分自己
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://ip:9092 # TODO 将kafka的地址端口注册给zookeeper
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092                        # 配置kafka的监听端口
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181                
-      KAFKA_CREATE_TOPICS: "hello_world"
-    ports:                              # 映射端口
-      - "9092:9092"
-    depends_on:                         # 解决容器依赖启动先后问题
-      - zookepper
-​
+    image: wurstmeister/kafka                                # 原镜像`wurstmeister/kafka`
+    container_name: kafka                                    # 容器名为'kafka'
+    volumes:                                                 # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - "/etc/localtime:/etc/localtime"
+    environment:                                                       # 设置环境变量,相当于docker run命令中的-e
+      KAFKA_BROKER_ID: 0                                               # 在kafka集群中，每个kafka都有一个BROKER_ID来区分自己
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://ip:9092 # TODO 将kafka的地址端口注册给zookeeper
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092                        # 配置kafka的监听端口
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181                
+      KAFKA_CREATE_TOPICS: "hello_world"
+    ports:                              # 映射端口
+      - "9092:9092"
+    depends_on:                         # 解决容器依赖启动先后问题
+      - zookepper
+
   kafka-manager:
-    image: sheepkiller/kafka-manager                         # 原镜像`sheepkiller/kafka-manager`
-    container_name: kafka-manager                            # 容器名为'kafka-manager'
-    environment:                        # 设置环境变量,相当于docker run命令中的-e
-      ZK_HOSTS: zookeeper:2181 
-      APPLICATION_SECRET: xxxxx
-      KAFKA_MANAGER_AUTH_ENABLED: "true"  # 开启kafka-manager权限校验
-      KAFKA_MANAGER_USERNAME: admin       # 登陆账户
-      KAFKA_MANAGER_PASSWORD: 123456      # 登陆密码
-    ports:                              # 映射端口
-      - "9000:9000"
-    depends_on:                         # 解决容器依赖启动先后问题
-      - kafka
+    image: sheepkiller/kafka-manager                         # 原镜像`sheepkiller/kafka-manager`
+    container_name: kafka-manager                            # 容器名为'kafka-manager'
+    environment:                        # 设置环境变量,相当于docker run命令中的-e
+      ZK_HOSTS: zookeeper:2181 
+      APPLICATION_SECRET: xxxxx
+      KAFKA_MANAGER_AUTH_ENABLED: "true"  # 开启kafka-manager权限校验
+      KAFKA_MANAGER_USERNAME: admin       # 登陆账户
+      KAFKA_MANAGER_PASSWORD: 123456      # 登陆密码
+    ports:                              # 映射端口
+      - "9000:9000"
+    depends_on:                         # 解决容器依赖启动先后问题
+      - kafka
 ```
 
 文件内 **// TODO 中的ip**需要改成自己的，并且如果你用的是云服务器，那需要把端口给打开。
@@ -222,16 +222,16 @@ requirepass austin
 version: '3'
 services:
   redis:
-    image: redis:latest
-    container_name: redis
-    restart: always
-    ports:
-      - 6379:6379
-    volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf:rw
-      - ./data:/data:rw
-    command:
-      /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf "
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data:/data:rw
+    command:
+      /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf "
 ```
 
 配置的工作就完了，如果是云服务器，记得开redis端口**6379**
@@ -240,9 +240,9 @@ services:
 
 ```
 docker-compose up -d
-​
+
 docker ps
-​
+
 docker exec -it redis redis-cli
 ```
 
@@ -272,89 +272,89 @@ PS：我的namespace是`boss.austin`
 
 ```
 version: '2'
-​
+
 networks:
-    monitor:
-        driver: bridge
-​
+    monitor:
+        driver: bridge
+
 services:
-    prometheus:
-        image: prom/prometheus
-        container_name: prometheus
-        hostname: prometheus
-        restart: always
-        volumes:
-            - ./prometheus.yml:/etc/prometheus/prometheus.yml
-#            - ./node_down.yml:/usr/local/etc/node_down.yml:rw
-        ports:
-            - "9090:9090"
-        networks:
-            - monitor
-​
-    alertmanager:
-        image: prom/alertmanager
-        container_name: alertmanager
-        hostname: alertmanager
-        restart: always
-#        volumes:
-#            - ./alertmanager.yml:/usr/local/etc/alertmanager.yml
-        ports:
-            - "9093:9093"
-        networks:
-            - monitor
-​
-    grafana:
-        image: grafana/grafana
-        container_name: grafana
-        hostname: grafana
-        restart: always
-        ports:
-            - "3000:3000"
-        networks:
-            - monitor
-​
-    node-exporter:
-        image: quay.io/prometheus/node-exporter
-        container_name: node-exporter
-        hostname: node-exporter
-        restart: always
-        ports:
-            - "9100:9100"
-        networks:
-            - monitor
-​
-    cadvisor:
-        image: google/cadvisor:latest
-        container_name: cadvisor
-        hostname: cadvisor
-        restart: always
-        volumes:
-            - /:/rootfs:ro
-            - /var/run:/var/run:rw
-            - /sys:/sys:ro
-            - /var/lib/docker/:/var/lib/docker:ro
-        ports:
-            - "8899:8080"
-        networks:
-            - monitor
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        hostname: prometheus
+        restart: always
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#            - ./node_down.yml:/usr/local/etc/node_down.yml:rw
+        ports:
+            - "9090:9090"
+        networks:
+            - monitor
+
+    alertmanager:
+        image: prom/alertmanager
+        container_name: alertmanager
+        hostname: alertmanager
+        restart: always
+#        volumes:
+#            - ./alertmanager.yml:/usr/local/etc/alertmanager.yml
+        ports:
+            - "9093:9093"
+        networks:
+            - monitor
+
+    grafana:
+        image: grafana/grafana
+        container_name: grafana
+        hostname: grafana
+        restart: always
+        ports:
+            - "3000:3000"
+        networks:
+            - monitor
+
+    node-exporter:
+        image: quay.io/prometheus/node-exporter
+        container_name: node-exporter
+        hostname: node-exporter
+        restart: always
+        ports:
+            - "9100:9100"
+        networks:
+            - monitor
+
+    cadvisor:
+        image: google/cadvisor:latest
+        container_name: cadvisor
+        hostname: cadvisor
+        restart: always
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+        ports:
+            - "8899:8080"
+        networks:
+            - monitor
 ```
 
 新建prometheus的配置文件`prometheus.yml`
 
 ```
 global:
-  scrape_interval:     15s
+  scrape_interval:     15s
   evaluation_interval: 15s
 scrape_configs:
   - job_name: 'prometheus'
-    static_configs:
-    - targets: ['ip:9090']  
+    static_configs:
+    - targets: ['ip:9090']  
   - job_name: 'cadvisor'
-    static_configs:
-    - targets: ['ip:8899']  
+    static_configs:
+    - targets: ['ip:8899']  
   - job_name: 'node'
-    static_configs:
-    - targets: ['ip:9100']  
+    static_configs:
+    - targets: ['ip:9100']  
 ```
 
 （**这里要注意端口，按自己配置的来,ip也要填写为自己的**）
@@ -398,9 +398,9 @@ import后就能直接看到高大上的监控页面了：
 
 ```
   - job_name: 'austin'
-    metrics_path: '/actuator/prometheus' # 采集的路径
-    static_configs:
-    - targets: ['ip:port'] # todo 这里的ip和端口写自己的应用下的
+    metrics_path: '/actuator/prometheus' # 采集的路径
+    static_configs:
+    - targets: ['ip:port'] # todo 这里的ip和端口写自己的应用下的
 ```
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbd1b8e2b15242a194da0ce8a7c61a80~tplv-k3u1fbpfcp-zoom-1.image)
@@ -414,49 +414,49 @@ import后就能直接看到高大上的监控页面了：
 ```
 version: '3'
 services:
-    mongo:
-      image: mongo:4.2
-      networks:
-        - graylog
-    elasticsearch:
-      image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-      environment:
-        - http.host=0.0.0.0
-        - transport.host=localhost
-        - network.host=0.0.0.0
-        - "ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m"
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
-      deploy:
-        resources:
-          limits:
-            memory: 1g
-      networks:
-        - graylog
-    graylog:
-      image: graylog/graylog:4.2
-      environment:
-        - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
-        - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-        - GRAYLOG_HTTP_EXTERNAL_URI=http://ip:9009/ # 这里注意要改ip
-      entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
-      networks:
-        - graylog
-      restart: always
-      depends_on:
-        - mongo
-        - elasticsearch
-      ports:
-        - 9009:9000
-        - 1514:1514
-        - 1514:1514/udp
-        - 12201:12201
-        - 12201:12201/udp
+    mongo:
+      image: mongo:4.2
+      networks:
+        - graylog
+    elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+      environment:
+        - http.host=0.0.0.0
+        - transport.host=localhost
+        - network.host=0.0.0.0
+        - "ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      deploy:
+        resources:
+          limits:
+            memory: 1g
+      networks:
+        - graylog
+    graylog:
+      image: graylog/graylog:4.2
+      environment:
+        - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+        - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+        - GRAYLOG_HTTP_EXTERNAL_URI=http://ip:9009/ # 这里注意要改ip
+      entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
+      networks:
+        - graylog
+      restart: always
+      depends_on:
+        - mongo
+        - elasticsearch
+      ports:
+        - 9009:9000
+        - 1514:1514
+        - 1514:1514/udp
+        - 12201:12201
+        - 12201:12201/udp
 networks:
-    graylog:
-      driver: bridge
+    graylog:
+      driver: bridge
 ```
 
 这个文件里唯一需要改动的就是`ip`（本来的端口是`9000`的，我由于已经占用了`9000`端口了，所以我这里把端口改成了`9009`，你们可以随意）
@@ -471,7 +471,32 @@ networks:
 
 最后配置`austin.grayLogIp`的ip即可实现分布式日志收集
 
-## 08、未完待续
+## 08、XXL-JOB
+
+文档：[https://www.xuxueli.com/xxl-job/#2.1%20%E5%88%9D%E5%A7%8B%E5%8C%96%E2%80%9C%E8%B0%83%E5%BA%A6%E6%95%B0%E6%8D%AE%E5%BA%93%E2%80%9D](https://www.xuxueli.com/xxl-job/#2.1%20%E5%88%9D%E5%A7%8B%E5%8C%96%E2%80%9C%E8%B0%83%E5%BA%A6%E6%95%B0%E6%8D%AE%E5%BA%93%E2%80%9D)
+
+xxl-job的部署我这边其实是依赖官网的文档的，步骤可以简单总结为：
+
+**1**、把xxl-job的仓库拉下来
+
+**2**、执行`/xxl-job/doc/db/tables_xxl_job.sql`的脚本（创建对应的库、创建表以及插入测试数据记录）
+
+**3**、如果是**本地**启动「调度中心」则在`xxl-job-admin`的`application.properties`更改相应的数据库配置，改完启动即可
+
+**4**、如果是**云服务**启动「调度中心」，则可以选择拉取`docker`镜像进行部署，我拉取的是`2.30`版本，随后执行以下命令即可：
+
+```shell
+docker pull xuxueli/xxl-job-admin:2.3.0
+
+docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://ip:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull --spring.datasource.username=root --spring.datasource.password=password " -p 6767:8080 --name xxl-job-admin  -d xuxueli/xxl-job-admin:2.3.0
+
+```
+
+**注意**：第二条命令的**ip**和**password**需要更改为自己的，并且，我开的是**6767**端口
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/180eabb4945e475494f3803c69318755~tplv-k3u1fbpfcp-zoom-1.image)
+
+## 09、未完待续
 
 安装更详细的过程以及整个文章系列的更新思路都在公众号**Java3y**连载哟！
 
