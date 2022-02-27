@@ -1,0 +1,13 @@
+austin:
+  async:
+    task:
+      thread-name-prefix: "fun-task-" # task前缀名
+      max-size: 8 #最大线程数
+      core-size: 4 #核心线程数
+      queue-capacity: 100
+      keep-alive: 60
+      rejected-handler: callrunspolicy #拒绝策略,不能自定义
+      allow-core-thread-timeout: true # 是否允许核心线程超时,默认false
+      await-termination-seconds: 10 #
+      wait-for-tasks-to-complete-on-shut-down: true # 任务执行完,在关闭应用
+
