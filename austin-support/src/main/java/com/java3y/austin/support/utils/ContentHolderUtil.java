@@ -5,6 +5,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.util.PropertyPlaceholderHelper;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,15 +38,17 @@ public class ContentHolderUtil {
 
     public static String replacePlaceHolder(final String template, final Map<String, String> paramMap) {
         String replacedPushContent = PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders(template,
-                new CustomPlaceholderResolver(paramMap));
+                new CustomPlaceholderResolver(template, paramMap));
         return replacedPushContent;
     }
 
     private static class CustomPlaceholderResolver implements PropertyPlaceholderHelper.PlaceholderResolver {
+        private final String template;
         private final Map<String, String> paramMap;
 
-        public CustomPlaceholderResolver(Map<String, String> paramMap) {
+        public CustomPlaceholderResolver(String template, Map<String, String> paramMap) {
             super();
+            this.template = template;
             this.paramMap = paramMap;
         }
 
@@ -53,12 +56,20 @@ public class ContentHolderUtil {
         public String resolvePlaceholder(String placeholderName) {
             String value = paramMap.get(placeholderName);
             if (null == value) {
-                String errorStr = MessageFormat.format("template:{} require param:{},but not exist! paramMap:{}",
-                        placeholderName, paramMap.toString());
+                String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}",
+                        template, placeholderName, paramMap.toString());
                 throw new IllegalArgumentException(errorStr);
             }
             return value;
         }
+    }
+
+    public static void main(String[] args) {
+        Map<String, String> params = new HashMap<>();
+        params.put("content", "test");
+//        params.put("url", "123");
+        String content = ContentHolderUtil.replacePlaceHolder("{\"content\":\"{$content}\",\"url\":\"{$url}\",\"title\":\"\"}", params);
+        System.out.println(content);
     }
 
 }
