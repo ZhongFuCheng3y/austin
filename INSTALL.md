@@ -192,7 +192,7 @@ $KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 4 -
 查看刚创建的topic信息：
 
 ```
-$KAFKA_HOME/bin/kafka-topics.sh --zookeeper zookeeper:2181 --describe --topic austinTopic
+$KAFKA_HOME/bin/kafka-topics.sh --zookeeper zookeeper:2181 --describe --topic austinBusiness
 ```
 
 ## 04、安装REDIS
