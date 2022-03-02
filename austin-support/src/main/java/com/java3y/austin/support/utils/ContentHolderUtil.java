@@ -5,7 +5,6 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.util.PropertyPlaceholderHelper;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,14 +61,6 @@ public class ContentHolderUtil {
             }
             return value;
         }
-    }
-
-    public static void main(String[] args) {
-        Map<String, String> params = new HashMap<>();
-        params.put("content", "test");
-//        params.put("url", "123");
-        String content = ContentHolderUtil.replacePlaceHolder("{\"content\":\"{$content}\",\"url\":\"{$url}\",\"title\":\"\"}", params);
-        System.out.println(content);
     }
 
 }

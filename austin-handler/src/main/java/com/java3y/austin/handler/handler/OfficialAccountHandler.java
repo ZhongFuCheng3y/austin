@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author zyg
+ * 微信服务号推送处理
+ */
 @Component
 @Slf4j
 public class OfficialAccountHandler extends BaseHandler implements Handler {

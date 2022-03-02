@@ -50,7 +50,7 @@ public class DataServiceImpl implements DataService {
         List<SimpleAnchorInfo> sortAnchorList = userInfoList.stream().map(s -> JSON.parseObject(s, SimpleAnchorInfo.class)).sorted((o1, o2) -> Math.toIntExact(o1.getTimestamp() - o2.getTimestamp())).collect(Collectors.toList());
 
         // 1. 对相同的businessId进行分类  {"businessId":[{businessId,state,timeStamp},{businessId,state,timeStamp}]}
-        Map<String, List<SimpleAnchorInfo>> map = new HashMap<>();
+        Map<String, List<SimpleAnchorInfo>> map = MapUtil.newHashMap();
         for (SimpleAnchorInfo simpleAnchorInfo : sortAnchorList) {
             List<SimpleAnchorInfo> simpleAnchorInfos = map.get(String.valueOf(simpleAnchorInfo.getBusinessId()));
             if (CollUtil.isEmpty(simpleAnchorInfos)) {

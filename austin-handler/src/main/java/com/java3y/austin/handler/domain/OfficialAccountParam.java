@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 import java.util.Map;
 
 /**
+ *
  * 模板消息参数
  * <p>
  * 参数示例：
  * https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
+ * * @author zyg
  */
 @Data
 @Builder

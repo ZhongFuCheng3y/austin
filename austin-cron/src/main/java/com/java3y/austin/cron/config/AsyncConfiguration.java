@@ -29,13 +29,13 @@ public class AsyncConfiguration implements AsyncConfigurer {
     public ThreadPoolTaskExecutor executor(AsyncExecutionProperties properties) {
         log.info("funExecutor -- init ");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(properties.getCoreSize()); // 核心线程数
-        executor.setMaxPoolSize(properties.getMaxSize()); // 最大线程数
-        executor.setKeepAliveSeconds(properties.getKeepAlive()); // 最大存活时间
-        executor.setQueueCapacity(properties.getQueueCapacity()); // 阻塞队列容量
-        executor.setThreadNamePrefix(properties.getThreadNamePrefix()); // 设置名称前缀
-        executor.setRejectedExecutionHandler(properties.getRejectedHandler().getHandler());// 设置拒绝策略
-        executor.setAllowCoreThreadTimeOut(properties.isAllowCoreThreadTimeout());// 是否允许核心线程超时
+        executor.setCorePoolSize(properties.getCoreSize());
+        executor.setMaxPoolSize(properties.getMaxSize());
+        executor.setKeepAliveSeconds(properties.getKeepAlive());
+        executor.setQueueCapacity(properties.getQueueCapacity());
+        executor.setThreadNamePrefix(properties.getThreadNamePrefix());
+        executor.setRejectedExecutionHandler(properties.getRejectedHandler().getHandler());
+        executor.setAllowCoreThreadTimeOut(properties.isAllowCoreThreadTimeout());
         executor.setWaitForTasksToCompleteOnShutdown(properties.isWaitForTasksToCompleteOnShutDown());
         executor.setAwaitTerminationSeconds(properties.getAwaitTerminationSeconds());
         log.info("austinExecutor: {} ", executor);

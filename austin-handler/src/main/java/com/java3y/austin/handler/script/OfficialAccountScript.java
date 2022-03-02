@@ -4,6 +4,9 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
 import java.util.List;
 
+/**
+ * @author zyg
+ */
 public interface OfficialAccountScript {
 
     /**
