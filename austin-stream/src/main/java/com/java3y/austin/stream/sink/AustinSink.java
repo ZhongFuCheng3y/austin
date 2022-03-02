@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.domain.AnchorInfo;
-import com.java3y.austin.stream.domain.SimpleAnchorInfo;
+import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.stream.utils.LettuceRedisUtils;
 import io.lettuce.core.RedisFuture;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class AustinSink implements SinkFunction<AnchorInfo> {
                  */
                 redisFutures.add(redisAsyncCommands.hincrby(String.valueOf(info.getBusinessId()).getBytes(),
                         String.valueOf(info.getState()).getBytes(), info.getIds().size()));
-                redisFutures.add(redisAsyncCommands.expire(String.valueOf(info.getBusinessId()).getBytes(), DateUtil.offsetDay(new Date(), 30).getTime()));
+                redisFutures.add(redisAsyncCommands.expire(String.valueOf(info.getBusinessId()).getBytes(), (DateUtil.offsetDay(new Date(), 30).getTime())/ 1000));
                 return redisFutures;
             });
 

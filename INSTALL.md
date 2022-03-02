@@ -256,6 +256,10 @@ docker exec -it redis redis-cli
 
 ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a532e3221834466a85b6739871694957~tplv-k3u1fbpfcp-watermark.image?)
 
+注：我的配置里更改过端口，所以我的程序`AustinApplication`写的端口为7000
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1b3944f3a9e849219c60e673baa5b7ff~tplv-k3u1fbpfcp-watermark.image?)
+
 **<https://www.apolloconfig.com/#/zh/deployment/quick-start-docker>**
 
 **<https://github.com/apolloconfig/apollo/tree/master/scripts/docker-quick-start>**

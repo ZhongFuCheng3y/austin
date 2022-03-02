@@ -1,9 +1,9 @@
 package com.java3y.austin.handler.script;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.SmsParam;
 import com.java3y.austin.handler.domain.TencentSmsParam;
@@ -66,7 +66,7 @@ public class TencentSmsScript implements SmsScript {
                     .reverse().substring(0, PHONE_NUM)).reverse().toString();
 
             SmsRecord smsRecord = SmsRecord.builder()
-                    .sendDate(Integer.valueOf(DateUtil.format(new Date(), AustinConstant.YYYY_MM_DD)))
+                    .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))
                     .messageTemplateId(smsParam.getMessageTemplateId())
                     .phone(Long.valueOf(phone))
                     .supplierId(tencentSmsParam.getSupplierId())

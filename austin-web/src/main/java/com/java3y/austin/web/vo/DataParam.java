@@ -19,14 +19,15 @@ public class DataParam {
     /**
      * 传入userId查看用户的链路信息
      */
-    private String userId;
+    private String receiver;
 
 
     /**
      * 业务Id(数据追踪使用)
      * 生成逻辑参考 TaskInfoUtils
+     * 如果传入的是模板ID，则生成当天的业务ID
      */
-    private Long businessId;
+    private String businessId;
 
 
 }

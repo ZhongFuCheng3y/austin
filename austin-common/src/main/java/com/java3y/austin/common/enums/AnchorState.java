@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum AnchorState {
 
-    RECEIVE(10, "成功消费Kafka"),
+    RECEIVE(10, "消息接收成功"),
     DISCARD(20, "消费被丢弃"),
     CONTENT_DEDUPLICATION(30, "消息被内容去重"),
     RULE_DEDUPLICATION(40, "消息被频次去重"),
@@ -29,5 +29,20 @@ public enum AnchorState {
 
     private Integer code;
     private String description;
+
+    /**
+     * 通过code获取描述
+     *
+     * @param code
+     * @return
+     */
+    public static String getDescriptionByCode(Integer code) {
+        for (AnchorState anchorState : AnchorState.values()) {
+            if (anchorState.getCode().equals(code)) {
+                return anchorState.getDescription();
+            }
+        }
+        return "未知点位";
+    }
 
 }

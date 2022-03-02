@@ -1,4 +1,4 @@
-package com.java3y.austin.stream.domain;
+package com.java3y.austin.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

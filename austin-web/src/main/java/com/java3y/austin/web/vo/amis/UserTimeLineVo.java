@@ -9,21 +9,18 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * https://aisuda.bce.baidu.com/amis/zh-CN/components/timeline#timeline-item
- *
  * @author 3y
- * 时间线 Vo
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TimeLineItemVo {
+public class UserTimeLineVo {
 
     /**
      * items
      */
-    private List<TimeLineItemVo.ItemsVO> items;
+    private List<UserTimeLineVo.ItemsVO> items;
 
     /**
      * ItemsVO
@@ -32,24 +29,27 @@ public class TimeLineItemVo {
     @Builder
     public static class ItemsVO {
         /**
-         * time
+         * 业务ID
          */
-        private String time;
+        private String businessId;
         /**
-         * title
+         * title 模板名称
          */
         private String title;
         /**
-         * detail
+         * detail 发送细节
          */
         private String detail;
+
         /**
-         * color
+         * 发送类型
          */
-        private String color;
+        private String sendType;
+
         /**
-         * icon
+         * 模板创建者
          */
-        private String icon;
+        private String creator;
+
     }
 }
