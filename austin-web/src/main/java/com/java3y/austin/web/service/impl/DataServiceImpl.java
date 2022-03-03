@@ -143,8 +143,9 @@ public class DataServiceImpl implements DataService {
         if (AustinConstant.BUSINESS_ID_LENGTH == businessId.length()) {
             return businessId;
         }
-        MessageTemplate messageTemplate = messageTemplateDao.findById(Long.valueOf(businessId)).get();
-        if (messageTemplate != null) {
+        Optional<MessageTemplate> optional = messageTemplateDao.findById(Long.valueOf(businessId));
+        if (optional.isPresent()) {
+            MessageTemplate messageTemplate = optional.get();
             return String.valueOf(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()));
         }
         return businessId;

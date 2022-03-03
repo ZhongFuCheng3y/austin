@@ -2,6 +2,8 @@ package com.java3y.austin.handler.pending;
 
 import com.java3y.austin.handler.config.ThreadPoolConfig;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
+import com.java3y.austin.support.config.ThreadPoolExecutorShutdownDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +19,9 @@ import java.util.concurrent.ExecutorService;
  */
 @Component
 public class TaskPendingHolder {
+
+    @Autowired
+    private ThreadPoolExecutorShutdownDefinition threadPoolExecutorShutdownDefinition;
     /**
      * 线程池的参数
      */
@@ -38,7 +43,9 @@ public class TaskPendingHolder {
     @PostConstruct
     public void init() {
         for (String groupId : groupIds) {
-            taskPendingHolder.put(groupId, ThreadPoolConfig.getThreadPool(coreSize, maxSize, queueSize));
+            ExecutorService threadPool = ThreadPoolConfig.getThreadPool(coreSize, maxSize, queueSize);
+            threadPoolExecutorShutdownDefinition.registryExecutor(threadPool);
+            taskPendingHolder.put(groupId, threadPool);
         }
     }
     /**

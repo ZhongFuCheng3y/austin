@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 延迟批量处理人群信息
@@ -49,7 +50,10 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
                         .setMaxPoolSize(PendingConstant.MAX_POOL_SIZE)
                         .setWorkQueue(PendingConstant.BLOCKING_QUEUE)
                         .setHandler(new ThreadPoolExecutor.CallerRunsPolicy())
+                        .setAllowCoreThreadTimeOut(true)
+                        .setKeepAliveTime(PendingConstant.KEEP_LIVE_TIME, TimeUnit.SECONDS)
                         .build());
+
         this.pendingParam = pendingParam;
     }
 

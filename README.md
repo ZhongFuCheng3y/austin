@@ -8,8 +8,10 @@
   <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a>
   <a href="https://github.com/ZhongFuCheng3y/austin-admin"><img src="https://img.shields.io/badge/austin前端-GitHub-green.svg" alt="作者"></a>
   <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/项目-交流-orange.svg" alt="项目交流"></a>
   <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
+
 
 
 ## 项目介绍
@@ -73,33 +75,49 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 **10**、调用http接口`com.java3y.austin.web.controller#send`给自己发一条短信或者邮件感受
 
 ```shell
-
-curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '"{"code":"send","messageParam":{"extra":null,"receiver":"13719333899","variables":{"content":"2222","url":"1111"}},"messageTemplateId":1}"'
-
+curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"code":"send","messageParam":{"extra":null,"receiver":"13719333899"},"messageTemplateId":1}'
 ```
 
-**11**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c818806aa7540f5afe72cfbdef2f7d7~tplv-k3u1fbpfcp-watermark.image?)
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70b931917b5448d7be46daa384fd6220~tplv-k3u1fbpfcp-watermark.image?)
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1cb026b6d5c2458faacf26a0bd35dc01~tplv-k3u1fbpfcp-watermark.image?)
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb4c7f61ddc64de5accd231bc7145010~tplv-k3u1fbpfcp-watermark.image?)
+**11**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看 
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a023d9082fa644bda9b50144e02985cb~tplv-k3u1fbpfcp-zoom-1.image) 
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7125184e9fbf4de8b522aecbd4e791df~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4adde725eeee443baf96f286f5429f05~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
+
 ## 里程碑
 
-第四季度：[三个月已完成的内容](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247503562&idx=1&sn=99ba92325ae5e8f8054700e770f0898d&chksm=ebd48fcbdca306dd65f2a56c2febd0ef5e6227aa8166183b9fe7edc1ba09ef6066ef3d797af6&token=1246005878&lang=zh_CN#rd)
+- [x] Maven+SpringBoot项目搭建
+- [x] logback日志记录项目运行时信息，引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
+- [x] 接入腾讯云渠道发送一条短信
+- [x] 使用SpringData JPA将短信发送记录存储至MySQL
+- [x] 使用SpringBoot接入Kafka
+- [x] 利用责任链完成对接入层的请求进行封装（责任链模式）
+- [x] 消费层实现数据隔离（线程池：生产者与消费者模式）
+- [x] 通用去重消息功能（SpringBoot接入Redis并使用pipeline减少网络请求）
+- [x] 配置服务器和docker容器以及SpringBoot应用的监控（prometheus+Grafana+auctuator）
+- [x] 接入分布式配置中心完成 丢失消息、白名单以及账号配置（Apollo分布式配置中心）
+- [x] 邮件渠道接入
+- [x] 日志链路数据追踪 + 注解式打印日志（优雅打印日志以及数据埋点）
+- [x] 接入GrayLog分布式日志收集框架
+- [x] 引入前端低代码平台AMIS搭建后台管理页面
+- [x] 接入分布式定时任务框架定时发送任务（xxl-job定时任务框架），编写上传文件接口并使用LazyPending批处理人群文件数据
+- [x] 接入实时流计算平台（Flink），实时日志数据根据用户维度和消息模板维度清洗至Redis
+- [x] 通过AMIS低代码平台接入echarts图表展示实时聚合后的数据
+- [ ] 优化现有的代码：优雅停机、动态配置等等
+- [ ] 接入微信服务号渠道
+- [ ] 接入微信小程序渠道
+- [ ] 接入PUSH渠道
+- [ ] 持续提高消息推送系统的影响力，让更多的业务方了解其功能，进而挖掘更多拉新和唤醒用户的玩法，提高站内的次留率和转化率
 
-![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f99631fe25c42b39cbfb6e59cccec85~tplv-k3u1fbpfcp-watermark.image?)
 
 
-短时间内规划：
-- [x] 01、搭建消息推送Web后台管理页面，进一步降低接入和使用门槛
-- [x] 02、引入分布式定时任务框架，实现定时推送消息，提高运营侧下发营销消息的效率。
-- [ ] 03、接入流式处理平台实时处理日志数据，多维度聚合后产生全链路追踪数据供业务方自行排查问题，减少排查问题的人效
-- [ ] 04、持续提高消息推送系统的影响力，让更多的业务方了解其功能，进而挖掘更多拉新和唤醒用户的玩法，提高站内的次留率和转化率
+**近期更新时间**：2022年3月3日
 
-
-**近期更新时间**：2022年2月22日
-
-**近期更新功能**：接入flink流式处理平台，编写实时相关数据多维度进redis
+**近期更新功能**：已接入Flink实时流，前端图表展示用户和消息模板维度的下发数据
 
 ## 项目交流
 
@@ -120,5 +138,3 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '"{"c
 **对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
-
-

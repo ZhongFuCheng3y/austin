@@ -27,7 +27,6 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Bean("austinExecutor")
     @Primary
     public ThreadPoolTaskExecutor executor(AsyncExecutionProperties properties) {
-        log.info("funExecutor -- init ");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(properties.getCoreSize());
         executor.setMaxPoolSize(properties.getMaxSize());
@@ -38,7 +37,6 @@ public class AsyncConfiguration implements AsyncConfigurer {
         executor.setAllowCoreThreadTimeOut(properties.isAllowCoreThreadTimeout());
         executor.setWaitForTasksToCompleteOnShutdown(properties.isWaitForTasksToCompleteOnShutDown());
         executor.setAwaitTerminationSeconds(properties.getAwaitTerminationSeconds());
-        log.info("austinExecutor: {} ", executor);
         executor.initialize();
         return executor;
     }

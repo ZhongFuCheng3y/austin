@@ -70,7 +70,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         Iterable<MessageTemplate> messageTemplates = messageTemplateDao.findAllById(ids);
         messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(AustinConstant.TRUE));
         for (MessageTemplate messageTemplate : messageTemplates) {
-            if (messageTemplate.getCronTaskId() > 0) {
+            if (messageTemplate.getCronTaskId()!=null && messageTemplate.getCronTaskId() > 0) {
                 cronTaskService.deleteCronTask(messageTemplate.getCronTaskId());
             }
         }
