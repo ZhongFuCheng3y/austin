@@ -51,7 +51,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 使用姿势
 
-目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/`Kafka`/`apollo`，**弱依赖**`prometheus`/`graylog`。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
+目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/`Kafka`/`apollo`，**弱依赖**`prometheus`/`graylog`/`flink`/`xxl-job`。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
@@ -85,11 +85,12 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4adde725eeee443baf96f286f5429f05~tplv-k3u1fbpfcp-zoom-1.image)
 
+
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
 
 **12**、正常使用**数据管理**需要将`austin-stream`的`jar`包上传至`Flink`，在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
 
-**13**、正常使用**定时任务**需要部署`xxl-job`，根据**部署文档**启动xxl的调度中心，并在`application.properteis`中填写  ` austin-xxl-job-ip`和`austin-xxl-job-port`
+**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  ` austin-xxl-job-ip`和`austin-xxl-job-port`
 
 
 ## 里程碑
