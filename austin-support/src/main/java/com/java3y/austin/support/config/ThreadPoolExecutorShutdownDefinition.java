@@ -3,8 +3,6 @@ package com.java3y.austin.support.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -28,21 +26,13 @@ public class ThreadPoolExecutorShutdownDefinition implements ApplicationListener
     /**
      * 线程中的任务在接收到应用关闭信号量后最多等待多久就强制终止，其实就是给剩余任务预留的时间， 到时间后线程池必须销毁
      */
-    private final long AWAIT_TERMINATION = 60;
+    private final long AWAIT_TERMINATION = 20;
 
     /**
      * awaitTermination的单位
      */
     private final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
 
-
-    public void registryExecutor(ThreadPoolTaskExecutor threadPoolTaskExecutor) {
-        POOLS.add(threadPoolTaskExecutor.getThreadPoolExecutor());
-    }
-
-    public void registryExecutor(ThreadPoolTaskScheduler threadPoolTaskExecutor) {
-        POOLS.add(threadPoolTaskExecutor.getScheduledThreadPoolExecutor());
-    }
 
     public void registryExecutor(ExecutorService executor) {
         POOLS.add(executor);
