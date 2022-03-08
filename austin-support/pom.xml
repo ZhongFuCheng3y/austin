@@ -78,6 +78,11 @@
             <groupId>de.siegmar</groupId>
             <artifactId>logback-gelf</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.lyh200</groupId>
+            <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

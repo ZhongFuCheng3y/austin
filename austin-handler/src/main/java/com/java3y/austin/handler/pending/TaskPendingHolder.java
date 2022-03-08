@@ -1,6 +1,9 @@
 package com.java3y.austin.handler.pending;
 
-import com.java3y.austin.handler.config.ThreadPoolConfig;
+import com.dtp.common.em.QueueTypeEnum;
+import com.dtp.core.DtpRegistry;
+import com.dtp.core.thread.DtpExecutor;
+import com.dtp.core.thread.ThreadPoolBuilder;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
 import com.java3y.austin.support.config.ThreadPoolExecutorShutdownDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -22,6 +26,14 @@ public class TaskPendingHolder {
 
     @Autowired
     private ThreadPoolExecutorShutdownDefinition threadPoolExecutorShutdownDefinition;
+
+    @Autowired
+    private SpringUtils springUtils;
+
+
+    @Autowired
+    private DtpRegistry dtpRegistry;
+
     /**
      * 线程池的参数
      */
@@ -43,9 +55,17 @@ public class TaskPendingHolder {
     @PostConstruct
     public void init() {
         for (String groupId : groupIds) {
-            ExecutorService threadPool = ThreadPoolConfig.getThreadPool(coreSize, maxSize, queueSize);
-            threadPoolExecutorShutdownDefinition.registryExecutor(threadPool);
-            taskPendingHolder.put(groupId, threadPool);
+            DtpExecutor dtpExecutor = ThreadPoolBuilder.newBuilder()
+                    .threadPoolName("austin-" + groupId)
+                    .corePoolSize(10)
+                    .maximumPoolSize(15)
+                    .keepAliveTime(15000)
+                    .timeUnit(TimeUnit.MILLISECONDS)
+                    .workQueue(QueueTypeEnum.SYNCHRONOUS_QUEUE.getName(), null, false)
+                    .buildDynamic();
+            DtpRegistry.register(dtpExecutor, "beanPostProcessor");
+            threadPoolExecutorShutdownDefinition.registryExecutor(dtpExecutor);
+            taskPendingHolder.put(groupId, dtpExecutor);
         }
     }
     /**

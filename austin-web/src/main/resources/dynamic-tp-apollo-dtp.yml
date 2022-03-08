@@ -1,0 +1,52 @@
+# 动态线程池配置文件，建议单独开一个文件放到配置中心，字段详解看readme介绍
+spring:
+  dynamic:
+    tp:
+      enabled: true
+      enabledBanner: true           # 是否开启banner打印，默认true
+      enabledCollect: true          # 是否开启监控指标采集，默认false
+      collectorType: micrometer     # 监控数据采集器类型（JsonLog | MicroMeter），默认logging
+      monitorInterval: 5            # 监控时间间隔（报警判断、指标采集），默认5s
+      apollo:                       # apollo配置，不配置默认拿apollo配置第一个namespace
+        namespace: dynamic-tp-apollo-dtp.yml
+      configType: yml
+      platforms:
+        - platform: wechat
+          urlKey: 38aa7eff500-1287
+          receivers: apollo
+        - platform: ding
+          urlKey: f80dad441fcd65bac48473d4a88dcd6a
+          secret: SECb544445a6a34f0315d08b17de41
+          receivers: 18888888888
+      executors:
+        - threadPoolName: dynamic-tp-test-1
+          corePoolSize: 5
+          maximumPoolSize: 8
+          keepAliveTime: 40
+          queueType: VariableLinkedBlockingQueue
+          queueCapacity: 500
+          rejectedHandlerType: CallerRunsPolicy
+          threadNamePrefix: test-1
+
+        - threadPoolName: dynamic-tp-test-2
+          corePoolSize: 3
+          maximumPoolSize: 4
+          keepAliveTime: 50
+          queueType: VariableLinkedBlockingQueue
+          queueCapacity: 5000
+          threadNamePrefix: test2
+          notifyItems: # 报警项，不配置自动会配置（变更通知、容量报警、活性报警、拒绝报警）
+            - type: capacity               # 报警项类型，查看源码 NotifyTypeEnum枚举类
+              enabled: true
+              threshold: 80                # 报警阈值
+              platforms: [ding,wechat]     # 可选配置，不配置默认拿上层platforms配置的所以平台
+              interval: 120                # 报警间隔（单位：s）
+            - type: change
+              enabled: true
+            - type: liveness
+              enabled: true
+              threshold: 80
+            - type: reject
+              enabled: true
+              threshold: 1
+
