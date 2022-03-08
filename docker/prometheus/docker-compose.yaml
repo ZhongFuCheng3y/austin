@@ -1,0 +1,66 @@
+version: '2'
+
+networks:
+  monitor:
+    driver: bridge
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    #            - ./node_down.yml:/usr/local/etc/node_down.yml:rw
+    ports:
+      - "9090:9090"
+    networks:
+      - monitor
+
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    hostname: alertmanager
+    restart: always
+    #        volumes:
+    #            - ./alertmanager.yml:/usr/local/etc/alertmanager.yml
+    ports:
+      - "9093:9093"
+    networks:
+      - monitor
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - monitor
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    container_name: node-exporter
+    hostname: node-exporter
+    restart: always
+    ports:
+      - "9100:9100"
+    networks:
+      - monitor
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8899:8080"
+    networks:
+      - monitor
