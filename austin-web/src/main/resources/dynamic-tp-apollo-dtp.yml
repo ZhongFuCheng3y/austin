@@ -19,22 +19,24 @@ spring:
           secret: SECb544445a6a34f0315d08b17de41
           receivers: 18888888888
       executors:
-        - threadPoolName: dynamic-tp-test-1
-          corePoolSize: 5
+        - threadPoolName: austin-im.notice
+          corePoolSize: 6
           maximumPoolSize: 8
-          keepAliveTime: 40
-          queueType: VariableLinkedBlockingQueue
-          queueCapacity: 500
-          rejectedHandlerType: CallerRunsPolicy
-          threadNamePrefix: test-1
-
-        - threadPoolName: dynamic-tp-test-2
-          corePoolSize: 3
-          maximumPoolSize: 4
+          queueCapacity: 200
+          queueType: VariableLinkedBlockingQueue   # 任务队列，查看源码QueueTypeEnum枚举类
+          rejectedHandlerType: CallerRunsPolicy    # 拒绝策略，查看RejectedTypeEnum枚举类
           keepAliveTime: 50
-          queueType: VariableLinkedBlockingQueue
-          queueCapacity: 5000
-          threadNamePrefix: test2
+          allowCoreThreadTimeOut: false
+          threadNamePrefix: austin-           # 线程名前缀
+        - threadPoolName: execute-xxl-thread-pool
+          corePoolSize: 3
+          maximumPoolSize: 3
+          queueCapacity: 200
+          queueType: VariableLinkedBlockingQueue   # 任务队列，查看源码QueueTypeEnum枚举类
+          rejectedHandlerType: CallerRunsPolicy    # 拒绝策略，查看RejectedTypeEnum枚举类
+          keepAliveTime: 50
+          allowCoreThreadTimeOut: false
+          threadNamePrefix: austin-           # 线程名前缀
           notifyItems: # 报警项，不配置自动会配置（变更通知、容量报警、活性报警、拒绝报警）
             - type: capacity               # 报警项类型，查看源码 NotifyTypeEnum枚举类
               enabled: true
@@ -49,4 +51,3 @@ spring:
             - type: reject
               enabled: true
               threshold: 1
-

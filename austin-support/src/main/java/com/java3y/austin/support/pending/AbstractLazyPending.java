@@ -1,15 +1,16 @@
 package com.java3y.austin.support.pending;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.thread.ThreadUtil;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
+import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,11 +38,17 @@ public abstract class AbstractLazyPending<T> {
     private Long lastHandleTime = System.currentTimeMillis();
 
     /**
+     * 是否终止线程
+     */
+    private Boolean stop = false;
+
+    /**
      * 单线程消费 阻塞队列的数据
      */
     @PostConstruct
     public void initConsumePending() {
-        ThreadUtil.newSingleExecutor().execute(() -> {
+        ExecutorService executorService = SupportThreadPoolConfig.getPendingSingleThreadPool();
+        executorService.execute(() -> {
             while (true) {
                 try {
                     T obj = pendingParam.getQueue().poll(pendingParam.getTimeThreshold(), TimeUnit.MILLISECONDS);
@@ -58,16 +65,23 @@ public abstract class AbstractLazyPending<T> {
                         // 具体执行逻辑
                         pendingParam.getExecutorService().execute(() -> this.handle(taskRef));
                     }
+
+                    // 判断是否停止当前线程
+                    if (stop && CollUtil.isEmpty(tasks)) {
+                        break;
+                    }
                 } catch (Exception e) {
                     log.error("Pending#initConsumePending failed:{}", Throwables.getStackTraceAsString(e));
                 }
             }
         });
+        executorService.shutdown();
     }
 
     /**
      * 1. 数量超限
      * 2. 时间超限
+     *
      * @return
      */
     private boolean dataReady() {
@@ -110,4 +124,5 @@ public abstract class AbstractLazyPending<T> {
      * @param list
      */
     public abstract void doHandle(List<T> list);
+
 }

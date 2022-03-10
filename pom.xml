@@ -164,7 +164,7 @@
             <dependency>
                 <groupId>io.github.lyh200</groupId>
                 <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2</version>
             </dependency>
 
         </dependencies>

@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.csv.*;
 import com.google.common.base.Throwables;
+import com.java3y.austin.cron.csv.CountFileRowHandler;
 import com.java3y.austin.cron.vo.CrowdInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,8 +47,27 @@ public class ReadFileUtils {
     }
 
     /**
+     * 读取csv文件，获取文件里的行数
+     *
+     * @param path
+     * @param countFileRowHandler
+     */
+    public static long countCsvRow(String path, CountFileRowHandler countFileRowHandler) {
+        try {
+            // 把首行当做是标题，获取reader
+            CsvReader reader = CsvUtil.getReader(new FileReader(path),
+                    new CsvReadConfig().setContainsHeader(true));
+            reader.read(countFileRowHandler);
+        } catch (Exception e) {
+            log.error("ReadFileUtils#getCsvRow fail!{}", Throwables.getStackTraceAsString(e));
+        }
+        return countFileRowHandler.getRowSize();
+    }
+
+    /**
      * 从文件的每一行数据获取到params信息
      * [{key:value},{key:value}]
+     *
      * @param fieldMap
      * @return
      */

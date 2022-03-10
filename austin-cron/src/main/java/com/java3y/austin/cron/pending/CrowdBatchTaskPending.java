@@ -2,9 +2,9 @@ package com.java3y.austin.cron.pending;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.thread.ExecutorBuilder;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
+import com.java3y.austin.cron.config.CronAsyncThreadPoolConfig;
 import com.java3y.austin.cron.constants.PendingConstant;
 import com.java3y.austin.cron.vo.CrowdInfoVo;
 import com.java3y.austin.service.api.domain.BatchSendRequest;
@@ -23,8 +23,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 延迟批量处理人群信息
@@ -45,15 +43,7 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
         pendingParam.setNumThreshold(PendingConstant.NUM_THRESHOLD)
                 .setQueue(new LinkedBlockingQueue(PendingConstant.QUEUE_SIZE))
                 .setTimeThreshold(PendingConstant.TIME_THRESHOLD)
-                .setExecutorService(ExecutorBuilder.create()
-                        .setCorePoolSize(PendingConstant.CORE_POOL_SIZE)
-                        .setMaxPoolSize(PendingConstant.MAX_POOL_SIZE)
-                        .setWorkQueue(PendingConstant.BLOCKING_QUEUE)
-                        .setHandler(new ThreadPoolExecutor.CallerRunsPolicy())
-                        .setAllowCoreThreadTimeOut(true)
-                        .setKeepAliveTime(PendingConstant.KEEP_LIVE_TIME, TimeUnit.SECONDS)
-                        .build());
-
+                .setExecutorService(CronAsyncThreadPoolConfig.getConsumePendingThreadPool());
         this.pendingParam = pendingParam;
     }
 
@@ -89,4 +79,5 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
                 .build();
         sendService.batchSend(batchSendRequest);
     }
+
 }
