@@ -1,5 +1,6 @@
 package com.java3y.austin.handler.receiver;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.LogParam;
@@ -47,7 +48,8 @@ public class Receiver {
         if (kafkaMessage.isPresent()) {
 
             List<TaskInfo> taskInfoLists = JSON.parseArray(kafkaMessage.get(), TaskInfo.class);
-            String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(taskInfoLists.get(0));
+
+            String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(CollUtil.getFirst(taskInfoLists.iterator()));
 
             /**
              * 每个消费者组 只消费 他们自身关心的消息

@@ -1,5 +1,6 @@
 package com.java3y.austin.cron.utils;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.csv.*;
@@ -107,7 +108,8 @@ public class ReadFileUtils {
                 for (int j = 1; j < headerInfo.size(); j++) {
                     param.put(headerInfo.get(j), row.get(j));
                 }
-                result.add(CrowdInfoVo.builder().receiver(row.get(0)).params(param).build());
+
+                result.add(CrowdInfoVo.builder().receiver(CollUtil.getFirst(row.iterator())).params(param).build());
             }
 
         } catch (Exception e) {

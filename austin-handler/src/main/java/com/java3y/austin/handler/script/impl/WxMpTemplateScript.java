@@ -1,5 +1,6 @@
-package com.java3y.austin.handler.script;
+package com.java3y.austin.handler.script.impl;
 
+import com.java3y.austin.handler.script.OfficialAccountScript;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;

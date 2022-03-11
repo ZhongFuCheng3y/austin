@@ -1,12 +1,9 @@
 package com.java3y.austin.handler.pending;
 
-import com.dtp.common.em.QueueTypeEnum;
-import com.dtp.common.em.RejectedTypeEnum;
-import com.dtp.core.DtpRegistry;
 import com.dtp.core.thread.DtpExecutor;
-import com.dtp.core.thread.ThreadPoolBuilder;
+import com.java3y.austin.handler.config.HandlerThreadPoolConfig;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
-import com.java3y.austin.support.config.ThreadPoolExecutorShutdownDefinition;
+import com.java3y.austin.support.utils.ThreadPoolUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,17 +21,9 @@ import java.util.concurrent.ExecutorService;
  */
 @Component
 public class TaskPendingHolder {
-
     @Autowired
-    private ThreadPoolExecutorShutdownDefinition threadPoolExecutorShutdownDefinition;
+    private ThreadPoolUtils threadPoolUtils;
 
-
-    /**
-     * 线程池的参数(初始化参数)
-     */
-    private Integer coreSize = 2;
-    private Integer maxSize = 2;
-    private Integer queueSize = 100;
     private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
 
     /**
@@ -48,22 +37,15 @@ public class TaskPendingHolder {
     @PostConstruct
     public void init() {
         /**
-         * example ThreadPoolName:austin-im.notice
+         * example ThreadPoolName:austin.im.notice
          *
          * 可以通过apollo配置：dynamic-tp-apollo-dtp.yml  动态修改线程池的信息
          */
         for (String groupId : groupIds) {
-            DtpExecutor dtpExecutor = ThreadPoolBuilder.newBuilder()
-                    .threadPoolName("austin-" + groupId)
-                    .corePoolSize(coreSize)
-                    .maximumPoolSize(maxSize)
-                    .workQueue(QueueTypeEnum.LINKED_BLOCKING_QUEUE.getName(), queueSize, false)
-                    .rejectedExecutionHandler(RejectedTypeEnum.CALLER_RUNS_POLICY.getName())
-                    .buildDynamic();
+            DtpExecutor executor = HandlerThreadPoolConfig.getExecutor(groupId);
+            threadPoolUtils.register(executor);
 
-            DtpRegistry.register(dtpExecutor, "beanPostProcessor");
-            threadPoolExecutorShutdownDefinition.registryExecutor(dtpExecutor);
-            taskPendingHolder.put(groupId, dtpExecutor);
+            taskPendingHolder.put(groupId, executor);
         }
     }
 

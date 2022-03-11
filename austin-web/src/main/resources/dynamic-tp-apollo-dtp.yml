@@ -19,7 +19,7 @@ spring:
           secret: SECb544445a6a34f0315d08b17de41
           receivers: 18888888888
       executors:
-        - threadPoolName: austin-im.notice
+        - threadPoolName: austin.im.notice
           corePoolSize: 6
           maximumPoolSize: 8
           queueCapacity: 200
