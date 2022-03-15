@@ -153,7 +153,7 @@
                 <version>${flink.version}</version>
             </dependency>
 
-            <!--微信第三方SDK-->
+            <!--微信服务号第三方SDK-->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-mp</artifactId>
@@ -165,6 +165,13 @@
                 <groupId>io.github.lyh200</groupId>
                 <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
                 <version>1.0.2</version>
+            </dependency>
+
+            <!--企业微信第三方SDK-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${weixin-java-mp}</version>
             </dependency>
 
         </dependencies>

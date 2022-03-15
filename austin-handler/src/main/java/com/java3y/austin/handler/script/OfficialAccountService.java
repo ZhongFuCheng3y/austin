@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author zyg
  */
-public interface OfficialAccountScript {
+public interface OfficialAccountService {
 
     /**
      * 发送模板消息
