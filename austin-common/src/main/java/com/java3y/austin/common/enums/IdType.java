@@ -7,6 +7,7 @@ import lombok.ToString;
 
 /**
  * 发送ID类型枚举
+ *
  * @author 3y
  */
 @Getter
@@ -17,8 +18,9 @@ public enum IdType {
     DID(20, "did"),
     PHONE(30, "phone"),
     OPEN_ID(40, "openId"),
-    EMAIL(50, "email");
-
+    EMAIL(50, "email"),
+    ENTERPRISE_USER_ID(60, "enterprise_user_id"),
+    ;
 
     private Integer code;
     private String description;
