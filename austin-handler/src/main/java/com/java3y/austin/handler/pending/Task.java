@@ -6,6 +6,7 @@ import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.deduplication.DeduplicationRuleService;
 import com.java3y.austin.handler.discard.DiscardMessageService;
 import com.java3y.austin.handler.handler.HandlerHolder;
+import com.java3y.austin.handler.shield.ShieldService;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,9 @@ public class Task implements Runnable {
     @Autowired
     private DiscardMessageService discardMessageService;
 
+    @Autowired
+    private ShieldService shieldService;
+
     private TaskInfo taskInfo;
 
 
@@ -48,14 +52,17 @@ public class Task implements Runnable {
         if (discardMessageService.isDiscard(taskInfo)) {
             return;
         }
+        // 1. 屏蔽消息
+        shieldService.shield(taskInfo);
 
-        // 1.平台通用去重
-        deduplicationRuleService.duplication(taskInfo);
-
-        // 2. 真正发送消息
+        // 2.平台通用去重
         if (CollUtil.isNotEmpty(taskInfo.getReceiver())) {
-            handlerHolder.route(taskInfo.getSendChannel())
-                    .doHandler(taskInfo);
+            deduplicationRuleService.duplication(taskInfo);
+        }
+
+        // 3. 真正发送消息
+        if (CollUtil.isNotEmpty(taskInfo.getReceiver())) {
+            handlerHolder.route(taskInfo.getSendChannel()).doHandler(taskInfo);
         }
 
     }

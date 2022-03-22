@@ -77,6 +77,7 @@ public class AssembleAction implements BusinessProcess {
                     .sendChannel(messageTemplate.getSendChannel())
                     .templateType(messageTemplate.getTemplateType())
                     .msgType(messageTemplate.getMsgType())
+                    .shieldType(messageTemplate.getShieldType())
                     .sendAccount(messageTemplate.getSendAccount())
                     .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
 

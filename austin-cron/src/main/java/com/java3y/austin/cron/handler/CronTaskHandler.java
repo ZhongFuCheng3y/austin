@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * 定时任务处理类
+ * 后台提交的定时任务处理类
  * @author 3y
  */
 @Service
@@ -27,7 +27,7 @@ public class CronTaskHandler {
     private DtpExecutor dtpExecutor = CronAsyncThreadPoolConfig.getXxlCronExecutor();
 
     /**
-     * 处理所有的 austin 定时任务消息
+     * 处理后台的 austin 定时任务消息
      */
     @XxlJob("austinJob")
     public void execute() {
