@@ -186,7 +186,7 @@ docker exec -it kafka sh
 创建一个topic(这里我的**topicName**就叫austinBusiness，你们可以改成自己的)
 
 ```
-$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 4 --zookeeper zookeeper:2181 --replication-factor 1 
+$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1 
 ```
 
 查看刚创建的topic信息：
@@ -214,6 +214,7 @@ dir /data
 appendonly yes
 appendfsync everysec
 requirepass austin
+
 ```
 
 `docker-compose.yaml`的文件内容如下：
@@ -244,6 +245,11 @@ docker-compose up -d
 docker ps
 
 docker exec -it redis redis-cli
+
+-- 进入到redis后访问的密码
+
+auth austin
+
 ```
 
 ## 05、安装APOLLO
