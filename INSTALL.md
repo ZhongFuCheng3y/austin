@@ -246,8 +246,6 @@ docker ps
 
 docker exec -it redis redis-cli
 
--- 进入到redis后访问的密码
-
 auth austin
 
 ```
