@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain;
+package com.java3y.austin.handler.domain.wechat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

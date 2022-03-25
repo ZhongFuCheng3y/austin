@@ -24,6 +24,8 @@ public enum ChannelType {
     OFFICIAL_ACCOUNT(50, "OfficialAccounts(服务号)", OfficialAccountsContentModel.class, "official_accounts"),
     MINI_PROGRAM(60, "miniProgram(小程序)", MiniProgramContentModel.class, "mini_program"),
     ENTERPRISE_WE_CHAT(70, "EnterpriseWeChat(企业微信)", EnterpriseWeChatContentModel.class, "enterprise_we_chat"),
+    DING_DING_ROBOT(80, "dingDingRobot(钉钉机器人)", DingDingContentModel.class, "ding_ding_robot"),
+
     ;
 
     /**

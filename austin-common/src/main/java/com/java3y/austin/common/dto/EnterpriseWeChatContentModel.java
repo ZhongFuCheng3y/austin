@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author 3y
- * 企业微信
+ * 企业微信 应用消息
  */
 @Data
 @Builder
