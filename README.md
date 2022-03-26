@@ -15,7 +15,7 @@
 
 ## 项目介绍
 
-austin项目**核心功能**：发送消息
+austin项目**核心功能**：统一的接口发送各种类型消息，对消息生命周期全链路追踪
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5436b2e3d6cd471db9aafbd436198ca7~tplv-k3u1fbpfcp-zoom-1.image)
 
@@ -125,13 +125,13 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 
 
-**近期更新时间**：2022年3月23日
+**近期更新时间**：2022年3月26日
 
-**近期更新功能**：夜间屏蔽次日推送消息
+**近期更新功能**：钉钉群自定义机器人接入完成，钉钉应用工作推送在接入中
 
 ## 项目交流
 
-可以添加我的**个人微信**备注：【**项目**】，我会空闲的时候拉进项目交流群
+欢迎扫描下方二维码添加我的**个人微信**备注：【**项目**】，我会空闲的时候拉进项目交流群（群里会解答相关的问题）
 
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5eae548196934599a7cb3637aedf381d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
@@ -146,5 +146,8 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 ## 如何准备面试？
 
 **对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
+
+
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f48cee2bbd44476f93dfcdd8aaf8a4eb~tplv-k3u1fbpfcp-watermark.image?)
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
