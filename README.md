@@ -28,7 +28,7 @@ austin项目**核心功能**：统一的接口发送各种类型消息，对消�
 austin项目**核心流程**：`austin-api`接收到发送消息请求，直接将请求进`MQ`。`austin-handler`消费`MQ`消息后由各类消息的Handler进行发送处理
 
 
-==![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5d4dfde0f164805a6e85a86498b0cd7~tplv-k3u1fbpfcp-watermark.image?)
+![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5d4dfde0f164805a6e85a86498b0cd7~tplv-k3u1fbpfcp-watermark.image?)
 
 **Question** ：为什么发个消息需要MQ？
 
@@ -48,9 +48,9 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **Question**：`austin-admin`和`austin-web`和`austin-cron`的作用？
 
-**Answer**：`autsin-admin`是`austin`项目的前端项目，可通过它实现对管理消息以及查看消息下发的情况，而`austin-web`则是提供相关的接口给到`austin-admin`进行调用。从部署和开发的角度上看，都是前后端分离的。
+**Answer**：`autsin-admin`是`austin`项目的前端项目，可通过它实现对管理消息以及查看消息下发的情况，而`austin-web`则是提供相关的接口给到`austin-admin`进行调用（austin项目是前后端分离的）
 
-业务方可操作`austin-admin`管理后台调用`austin-web`创建**定时**发送消息，而`austin-cron`就是承载着定时任务的工作了。
+业务方可操作`austin-admin`管理后台调用`austin-web`创建**定时**发送消息，`austin-cron`就承载着定时任务处理的工作
 
 ## 使用姿势
 
@@ -152,5 +152,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f48cee2bbd44476f93dfcdd8aaf8a4eb~tplv-k3u1fbpfcp-watermark.image?)
+
+想要获取这份电子书，**点击关注**下方公众号，回复「**对线**」得到我的联系方式即可进群获取电子书
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
