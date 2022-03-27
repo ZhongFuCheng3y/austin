@@ -73,7 +73,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **8**、由于使用了Apollo且我是在云服务器上安装的，我这边会直接跳过`metaserver`服务发现，在`AustinApplication`需要配置对应的apollo地址(注意端口!)
 
-**9**、目前短信和邮件账号的信息都配置在**apollo**，配置的示例参照`com.java3y.austin.support.utils#getAccount`中的注释
+**9**、发送渠道**账号的信息**都配置在**apollo**，配置的示例参照`com.java3y.austin.support.utils#getAccount`中的注释
 
 **10**、调用http接口`com.java3y.austin.web.controller#send`给自己发一条短信或者邮件感受
 
@@ -89,13 +89,13 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4adde725eeee443baf96f286f5429f05~tplv-k3u1fbpfcp-zoom-1.image)
 
-
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
 
-**12**、正常使用**数据管理**需要将`austin-stream`的`jar`包上传至`Flink`，在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
+**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
 
-**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  ` austin-xxl-job-ip`和`austin-xxl-job-port`
+**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-xxl-job-ip`和`austin-xxl-job-port`
 
+**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-grayLog-ip`
 
 ## 里程碑
 
