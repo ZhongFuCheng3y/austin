@@ -10,5 +10,9 @@ import com.java3y.austin.common.domain.TaskInfo;
 public interface ShieldService {
 
 
+    /**
+     * 屏蔽消息
+     * @param taskInfo
+     */
     void shield(TaskInfo taskInfo);
 }
