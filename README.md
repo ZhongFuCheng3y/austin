@@ -91,11 +91,13 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
 
-**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
+**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
 
 **13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-xxl-job-ip`和`austin-xxl-job-port`
 
-**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-grayLog-ip`
+**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin-grayLog-ip`
+
+**14**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表
 
 ## 里程碑
 
