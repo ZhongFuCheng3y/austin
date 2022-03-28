@@ -117,6 +117,9 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker-compose --version
 ```
 
+
+（Austin项目的中间件使用docker进行部署，文件内容可以参考项目中`docker`文件夹)
+
 ## 03、安装KAFKA
 
 新建搭建kafka环境的`docker-compose.yml`文件，内容如下：
@@ -506,7 +509,45 @@ docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://ip:3306/xxl_job?useUn
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/180eabb4945e475494f3803c69318755~tplv-k3u1fbpfcp-zoom-1.image)
 
-## 09、未完待续
+## 09、Flink
+
+部署Flink也是直接上docker-compose就完事了，值得注意的是：我们在部署的时候需要在配置文件里**指定时区**
+
+docker-compose.yml配置内容如下：
+
+```yaml
+version: "2.2"
+services:
+  jobmanager:
+    image: flink:latest
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
+  taskmanager:
+    image: flink:latest
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
+```
+
+
+## 10、未完待续
 
 安装更详细的过程以及整个文章系列的更新思路都在公众号**Java3y**连载哟！
 
