@@ -5,7 +5,7 @@ import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.common.dto.EmailContentModel;
+import com.java3y.austin.common.dto.model.EmailContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;

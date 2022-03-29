@@ -1,6 +1,6 @@
 package com.java3y.austin.common.domain;
 
-import com.java3y.austin.common.dto.ContentModel;
+import com.java3y.austin.common.dto.model.ContentModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

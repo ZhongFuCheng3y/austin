@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain.dingding;
+package com.java3y.austin.common.dto.account;
 
 
 import lombok.AllArgsConstructor;

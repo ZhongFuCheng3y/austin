@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain.sms;
+package com.java3y.austin.common.dto.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TencentSmsParam {
+public class TencentSmsAccount {
 
     /**
      * api相关

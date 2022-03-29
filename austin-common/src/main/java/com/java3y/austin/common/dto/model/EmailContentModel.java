@@ -1,4 +1,4 @@
-package com.java3y.austin.common.dto;
+package com.java3y.austin.common.dto.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,13 +7,22 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author 3y
- * 钉钉 自定义机器人
- * https://open.dingtalk.com/document/group/custom-robot-access
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DingDingContentModel extends ContentModel {
+public class EmailContentModel extends ContentModel {
+
+    /**
+     * 标题
+     */
+    private String title;
+
+    /**
+     * 内容(可写入HTML)
+     */
     private String content;
+
+
 }

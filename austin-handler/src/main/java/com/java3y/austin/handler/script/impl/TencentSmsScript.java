@@ -6,7 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
-import com.java3y.austin.handler.domain.sms.TencentSmsParam;
+import com.java3y.austin.common.dto.account.TencentSmsAccount;
 import com.java3y.austin.handler.script.SmsScript;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
@@ -46,15 +46,15 @@ public class TencentSmsScript implements SmsScript {
 
     @Override
     public List<SmsRecord> send(SmsParam smsParam) throws Exception {
-        TencentSmsParam tencentSmsParam = accountUtils.getAccount(smsParam.getSendAccount(), SMS_ACCOUNT_KEY, PREFIX, TencentSmsParam.builder().build());
-        SmsClient client = init(tencentSmsParam);
-        SendSmsRequest request = assembleReq(smsParam, tencentSmsParam);
+        TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccount(), SMS_ACCOUNT_KEY, PREFIX, TencentSmsAccount.builder().build());
+        SmsClient client = init(tencentSmsAccount);
+        SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
         SendSmsResponse response = client.SendSms(request);
-        return assembleSmsRecord(smsParam, response, tencentSmsParam);
+        return assembleSmsRecord(smsParam, response, tencentSmsAccount);
     }
 
 
-    private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsParam tencentSmsParam) {
+    private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsAccount tencentSmsAccount) {
         if (response == null || ArrayUtil.isEmpty(response.getSendStatusSet())) {
             return null;
         }
@@ -70,8 +70,8 @@ public class TencentSmsScript implements SmsScript {
                     .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))
                     .messageTemplateId(smsParam.getMessageTemplateId())
                     .phone(Long.valueOf(phone))
-                    .supplierId(tencentSmsParam.getSupplierId())
-                    .supplierName(tencentSmsParam.getSupplierName())
+                    .supplierId(tencentSmsAccount.getSupplierId())
+                    .supplierName(tencentSmsAccount.getSupplierName())
                     .msgContent(smsParam.getContent())
                     .seriesId(sendStatus.getSerialNo())
                     .chargingNum(Math.toIntExact(sendStatus.getFee()))
@@ -89,7 +89,7 @@ public class TencentSmsScript implements SmsScript {
     /**
      * 组装发送短信参数
      */
-    private SendSmsRequest assembleReq(SmsParam smsParam, TencentSmsParam account) {
+    private SendSmsRequest assembleReq(SmsParam smsParam, TencentSmsAccount account) {
         SendSmsRequest req = new SendSmsRequest();
         String[] phoneNumberSet1 = smsParam.getPhones().toArray(new String[smsParam.getPhones().size() - 1]);
         req.setPhoneNumberSet(phoneNumberSet1);
@@ -107,7 +107,7 @@ public class TencentSmsScript implements SmsScript {
      *
      * @param account
      */
-    private SmsClient init(TencentSmsParam account) {
+    private SmsClient init(TencentSmsAccount account) {
         Credential cred = new Credential(account.getSecretId(), account.getSecretKey());
         HttpProfile httpProfile = new HttpProfile();
         httpProfile.setEndpoint(account.getUrl());

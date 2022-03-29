@@ -1,4 +1,4 @@
-package com.java3y.austin.common.dto;
+package com.java3y.austin.common.dto.model;
 
 
 /**

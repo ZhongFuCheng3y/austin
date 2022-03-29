@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.common.dto.EnterpriseWeChatContentModel;
+import com.java3y.austin.common.dto.model.EnterpriseWeChatContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;

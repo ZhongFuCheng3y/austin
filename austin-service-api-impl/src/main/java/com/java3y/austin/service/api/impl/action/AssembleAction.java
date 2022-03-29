@@ -7,7 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.common.dto.ContentModel;
+import com.java3y.austin.common.dto.model.ContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
