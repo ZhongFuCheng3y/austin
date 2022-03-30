@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
+import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.common.dto.account.TencentSmsAccount;
@@ -37,16 +38,13 @@ import java.util.List;
 public class TencentSmsScript implements SmsScript {
 
     private static final Integer PHONE_NUM = 11;
-    private static final String SMS_ACCOUNT_KEY = "smsAccount";
-    private static final String PREFIX = "sms_";
 
     @Autowired
     private AccountUtils accountUtils;
 
-
     @Override
     public List<SmsRecord> send(SmsParam smsParam) throws Exception {
-        TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccount(), SMS_ACCOUNT_KEY, PREFIX, TencentSmsAccount.builder().build());
+        TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccount(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.builder().build());
         SmsClient client = init(tencentSmsAccount);
         SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
         SendSmsResponse response = client.SendSms(request);

@@ -6,10 +6,11 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.common.dto.account.DingDingRobotAccount;
 import com.java3y.austin.common.dto.model.DingDingContentModel;
 import com.java3y.austin.common.enums.ChannelType;
-import com.java3y.austin.common.dto.account.DingDingRobotAccount;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotResult;
 import com.java3y.austin.handler.handler.BaseHandler;
@@ -34,9 +35,6 @@ import java.util.ArrayList;
 @Service
 public class DingDingRobotHandler extends BaseHandler implements Handler {
 
-    private static final String DING_DING_ROBOT_ACCOUNT_KEY = "dingDingRobotAccount";
-    private static final String PREFIX = "ding_ding_robot_";
-
     @Autowired
     private AccountUtils accountUtils;
 
@@ -47,7 +45,7 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
     @Override
     public boolean handler(TaskInfo taskInfo) {
         try {
-            DingDingRobotAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), DING_DING_ROBOT_ACCOUNT_KEY, PREFIX, new DingDingRobotAccount());
+            DingDingRobotAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.DING_DING_ROBOT_ACCOUNT_KEY, SendAccountConstant.DING_DING_ROBOT_PREFIX, new DingDingRobotAccount());
             DingDingRobotParam dingDingRobotParam = assembleParam(taskInfo);
             String httpResult = HttpUtil.post(assembleParamUrl(account), JSON.toJSONString(dingDingRobotParam));
             DingDingRobotResult dingDingRobotResult = JSON.parseObject(httpResult, DingDingRobotResult.class);

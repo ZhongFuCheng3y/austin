@@ -1,16 +1,20 @@
 package com.java3y.austin.cron.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
+import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import com.java3y.austin.support.utils.AccountUtils;
-import com.java3y.austin.support.utils.RedisUtils;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 
@@ -25,16 +29,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RefreshDingDingAccessTokenHandler {
 
-    private static final String DING_DING_ROBOT_ACCOUNT_KEY = "dingDingWorkNoticeAccount";
-    private static final String PREFIX = "ding_ding_work_notice_";
-
 
     private static final String URL = "https://oapi.dingtalk.com/gettoken";
 
-
-
     @Autowired
-    private RedisUtils redisUtils;
+    private StringRedisTemplate redisTemplate;
 
     @Autowired
     private AccountUtils accountUtils;
@@ -46,35 +45,38 @@ public class RefreshDingDingAccessTokenHandler {
     public void execute() {
         log.info("refreshAccessTokenJob#execute!");
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
-            for (int index = 10; index < 1000; index = index + 10) {
-                DingDingWorkNoticeAccount account = accountUtils.getAccount(10, DING_DING_ROBOT_ACCOUNT_KEY, PREFIX, new DingDingWorkNoticeAccount());
+            for (int index = SendAccountConstant.START; true; index = index + SendAccountConstant.STEP) {
+                DingDingWorkNoticeAccount account = accountUtils.getAccount(index, SendAccountConstant.DING_DING_WORK_NOTICE_ACCOUNT_KEY, SendAccountConstant.DING_DING_WORK_NOTICE_PREFIX, new DingDingWorkNoticeAccount());
                 if (account == null) {
                     break;
                 }
                 String accessToken = getAccessToken(account);
-
+                if (StrUtil.isNotBlank(accessToken)) {
+                    redisTemplate.opsForValue().set(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + index, accessToken);
+                }
             }
         });
     }
 
     /**
      * 获取 access_token
+     *
      * @param account
      * @return
      */
     private String getAccessToken(DingDingWorkNoticeAccount account) {
+        String accessToken = "";
         try {
             DingTalkClient client = new DefaultDingTalkClient(URL);
             OapiGettokenRequest req = new OapiGettokenRequest();
             req.setAppkey(account.getAppKey());
             req.setAppsecret(account.getAppSecret());
-            req.setHttpMethod("GET");
+            req.setHttpMethod(AustinConstant.REQUEST_METHOD_GET);
             OapiGettokenResponse rsp = client.execute(req);
-            System.out.println(rsp.getBody());
+            accessToken = rsp.getAccessToken();
         } catch (Exception e) {
-
+            log.error("RefreshDingDingAccessTokenHandler#getAccessToken fail:{}", Throwables.getStackTraceAsString(e));
         }
-
-        return null;
+        return accessToken;
     }
 }

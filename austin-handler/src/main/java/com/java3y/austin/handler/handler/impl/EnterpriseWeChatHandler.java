@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.EnterpriseWeChatContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -35,12 +36,6 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
      */
     private static final String DELIMITER = "|";
 
-    /**
-     * 账号信息
-     */
-    private static final String ENTERPRISE_WECHAT_ACCOUNT_KEY = "enterpriseWechatAccount";
-    private static final String PREFIX = "enterprise_wechat_";
-
     @Autowired
     private AccountUtils accountUtils;
 
@@ -51,7 +46,7 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
     @Override
     public boolean handler(TaskInfo taskInfo) {
         try {
-            WxCpDefaultConfigImpl accountConfig = accountUtils.getAccount(taskInfo.getSendAccount(), ENTERPRISE_WECHAT_ACCOUNT_KEY, PREFIX, new WxCpDefaultConfigImpl());
+            WxCpDefaultConfigImpl accountConfig = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.ENTERPRISE_WECHAT_ACCOUNT_KEY, SendAccountConstant.ENTERPRISE_WECHAT_PREFIX, new WxCpDefaultConfigImpl());
             WxCpMessageServiceImpl messageService = new WxCpMessageServiceImpl(initService(accountConfig));
             WxCpMessageSendResult result = messageService.send(buildWxCpMessage(taskInfo, accountConfig.getAgentId()));
             if (Integer.valueOf(WxMpErrorMsgEnum.CODE_0.getCode()).equals(result.getErrCode())) {

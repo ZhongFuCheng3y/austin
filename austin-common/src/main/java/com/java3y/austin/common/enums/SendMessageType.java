@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum SendMessageType {
 
-    TEST(10, "文本"),
+    TEXT(10, "文本"),
     VOICE(20, "语音"),
     VIDEO(30, "视频"),
     NEWS(40, "图文"),

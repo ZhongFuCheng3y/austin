@@ -4,6 +4,7 @@ package com.java3y.austin.handler.handler.impl;
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.EmailContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -23,9 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class EmailHandler extends BaseHandler implements Handler {
-
-    private static final String EMAIL_ACCOUNT_KEY = "emailAccount";
-    private static final String PREFIX = "email_";
 
     @Autowired
     private AccountUtils accountUtils;
@@ -54,7 +52,7 @@ public class EmailHandler extends BaseHandler implements Handler {
      * @return
      */
     private MailAccount getAccountConfig(Integer sendAccount) {
-        MailAccount account = accountUtils.getAccount(sendAccount, EMAIL_ACCOUNT_KEY, PREFIX, new MailAccount());
+        MailAccount account = accountUtils.getAccount(sendAccount, SendAccountConstant.EMAIL_ACCOUNT_KEY, SendAccountConstant.EMAIL_ACCOUNT_PREFIX, new MailAccount());
         try {
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
             sf.setTrustAllHosts(true);

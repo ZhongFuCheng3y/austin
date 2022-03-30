@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author 3y
+ * <p>
+ * <p>
+ * 邮件消息体
  */
 @Data
 @Builder
