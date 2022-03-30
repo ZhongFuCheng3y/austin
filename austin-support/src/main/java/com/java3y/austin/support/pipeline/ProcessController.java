@@ -35,14 +35,13 @@ public class ProcessController {
      */
     public ProcessContext process(ProcessContext context) {
 
+        /**
+         * 前置检查
+         */
         try {
-            /**
-             * 前置检查
-             */
             preCheck(context);
-        } catch(ProcessException e) {
-            context = e.getProcessContext();
-            return context;
+        } catch (ProcessException e) {
+            return e.getProcessContext();
         }
 
         /**
@@ -61,6 +60,7 @@ public class ProcessController {
 
     /**
      * 执行前检查，出错则抛出异常
+     *
      * @param context 执行上下文
      * @throws ProcessException 异常信息
      */
