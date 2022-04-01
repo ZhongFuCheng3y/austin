@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
  * @description 前置参数校验
  */
 @Slf4j
-public class PreParamCheckAction implements BusinessProcess {
+public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
 
     @Override
-    public void process(ProcessContext context) {
-        SendTaskModel sendTaskModel = (SendTaskModel) context.getProcessModel();
+    public void process(ProcessContext<SendTaskModel> context) {
+        SendTaskModel sendTaskModel = context.getProcessModel();
 
         Long messageTemplateId = sendTaskModel.getMessageTemplateId();
         List<MessageParam> messageParamList = sendTaskModel.getMessageParamList();

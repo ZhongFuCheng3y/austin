@@ -31,14 +31,14 @@ import java.util.*;
  * @description 拼装参数
  */
 @Slf4j
-public class AssembleAction implements BusinessProcess {
+public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
     @Autowired
     private MessageTemplateDao messageTemplateDao;
 
     @Override
-    public void process(ProcessContext context) {
-        SendTaskModel sendTaskModel = (SendTaskModel) context.getProcessModel();
+    public void process(ProcessContext<SendTaskModel> context) {
+        SendTaskModel sendTaskModel = context.getProcessModel();
         Long messageTemplateId = sendTaskModel.getMessageTemplateId();
 
         try {
