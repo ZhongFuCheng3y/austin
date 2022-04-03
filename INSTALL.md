@@ -277,7 +277,8 @@ auth austin
 
 PS：我的namespace是`boss.austin`
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2101f27fee044a2d86e8d6031c808d95~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c4636a5620a454b931aea8b248e2890~tplv-k3u1fbpfcp-watermark.image?)
 
 ## 06、安装PROMETHEUS和GRAFANA(可选)
 
