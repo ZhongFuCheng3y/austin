@@ -5,7 +5,7 @@
 ```
 wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm
 yum -y install mysql57-community-release-el7-10.noarch.rpm
-yum -y install mysql-community-server
+yum -y install mysql-community-server --nogpgcheck
 ```
 
 **二**、启动并查看状态MySQL：
