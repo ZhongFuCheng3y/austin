@@ -12,7 +12,6 @@ services:
     restart: always
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    #            - ./node_down.yml:/usr/local/etc/node_down.yml:rw
     ports:
       - "9090:9090"
     networks:
@@ -23,8 +22,6 @@ services:
     container_name: alertmanager
     hostname: alertmanager
     restart: always
-    #        volumes:
-    #            - ./alertmanager.yml:/usr/local/etc/alertmanager.yml
     ports:
       - "9093:9093"
     networks:
