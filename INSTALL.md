@@ -299,7 +299,6 @@ services:
         restart: always
         volumes:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml
-#            - ./node_down.yml:/usr/local/etc/node_down.yml:rw
         ports:
             - "9090:9090"
         networks:
@@ -310,8 +309,6 @@ services:
         container_name: alertmanager
         hostname: alertmanager
         restart: always
-#        volumes:
-#            - ./alertmanager.yml:/usr/local/etc/alertmanager.yml
         ports:
             - "9093:9093"
         networks:
@@ -439,6 +436,7 @@ services:
         - transport.host=localhost
         - network.host=0.0.0.0
         - "ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m"
+        - GRAYLOG_ROOT_TIMEZONE=Asia/Shanghai
       ulimits:
         memlock:
           soft: -1
@@ -455,6 +453,7 @@ services:
         - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
         - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
         - GRAYLOG_HTTP_EXTERNAL_URI=http://ip:9009/ # 这里注意要改ip
+        - GRAYLOG_ROOT_TIMEZONE=Asia/Shanghai
       entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
       networks:
         - graylog
