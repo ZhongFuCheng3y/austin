@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class ProcessContext {
+public class ProcessContext<T extends ProcessModel> {
 
     /**
      * 标识责任链的code
@@ -27,7 +27,7 @@ public class ProcessContext {
     /**
      * 存储责任链上下文数据的模型
      */
-    private ProcessModel processModel;
+    private T processModel;
 
     /**
      * 责任链中断的标识
