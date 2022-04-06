@@ -19,6 +19,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092                        # 配置kafka的监听端口
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "hello_world"
+      KAFKA_HEAP_OPTS: -Xmx1G -Xms256M
     ports:                              # 映射端口
       - "9092:9092"
     depends_on:                         # 解决容器依赖启动先后问题
