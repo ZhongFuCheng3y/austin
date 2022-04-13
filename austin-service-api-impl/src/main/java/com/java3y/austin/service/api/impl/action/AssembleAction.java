@@ -21,6 +21,7 @@ import com.java3y.austin.support.utils.ContentHolderUtil;
 import com.java3y.austin.support.utils.TaskInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -31,6 +32,7 @@ import java.util.*;
  * @description 拼装参数
  */
 @Slf4j
+@Service
 public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
     @Autowired
