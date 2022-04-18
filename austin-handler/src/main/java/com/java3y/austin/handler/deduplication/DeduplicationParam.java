@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain;
+package com.java3y.austin.handler.deduplication;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.java3y.austin.common.domain.TaskInfo;

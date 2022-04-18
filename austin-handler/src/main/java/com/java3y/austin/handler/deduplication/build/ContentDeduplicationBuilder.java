@@ -3,7 +3,7 @@ package com.java3y.austin.handler.deduplication.build;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.DeduplicationType;
-import com.java3y.austin.handler.domain.DeduplicationParam;
+import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import org.springframework.stereotype.Service;
 
 

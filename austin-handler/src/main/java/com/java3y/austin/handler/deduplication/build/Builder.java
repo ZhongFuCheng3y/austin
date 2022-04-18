@@ -1,7 +1,7 @@
 package com.java3y.austin.handler.deduplication.build;
 
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.handler.domain.DeduplicationParam;
+import com.java3y.austin.handler.deduplication.DeduplicationParam;
 
 /**
  * @author luohaojie
