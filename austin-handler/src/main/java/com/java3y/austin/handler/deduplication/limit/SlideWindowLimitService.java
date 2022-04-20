@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 滑动窗口去重器（目前承载着 一天内N次相同渠道去重）
  * @author cao
  * @date 2022-04-20 11:34
  */

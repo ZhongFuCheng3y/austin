@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * 简单去重器（目前承载着 N分钟相同内容去重）
  * @author cao
  * @date 2022-04-20 13:41
  */
@@ -24,7 +25,7 @@ public class SimpleLimitService extends AbstractLimitService {
     @Autowired
     private RedisUtils redisUtils;
 
-
+    @Override
     public Set<String> limitFilter(AbstractDeduplicationService service, TaskInfo taskInfo, DeduplicationParam param) {
         Set<String> filterReceiver = new HashSet<>(taskInfo.getReceiver().size());
         // 获取redis记录
