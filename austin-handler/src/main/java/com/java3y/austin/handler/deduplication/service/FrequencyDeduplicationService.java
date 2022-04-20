@@ -3,7 +3,11 @@ package com.java3y.austin.handler.deduplication.service;
 import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.DeduplicationType;
+import com.java3y.austin.handler.deduplication.limit.LimitService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 
 /**
  * @author 3y
@@ -13,8 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class FrequencyDeduplicationService extends AbstractDeduplicationService {
 
-    public FrequencyDeduplicationService() {
+
+    @Autowired
+    public FrequencyDeduplicationService(@Qualifier("SimpleLimitService") LimitService limitService) {
+
+        this.limitService = limitService;
         deduplicationType = DeduplicationType.FREQUENCY.getCode();
+
     }
 
     private static final String PREFIX = "FRE";
@@ -33,7 +42,7 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
     @Override
     public String deduplicationSingleKey(TaskInfo taskInfo, String receiver) {
         return PREFIX + StrUtil.C_UNDERLINE
-                + receiver  + StrUtil.C_UNDERLINE
+                + receiver + StrUtil.C_UNDERLINE
                 + taskInfo.getMessageTemplateId() + StrUtil.C_UNDERLINE
                 + taskInfo.getSendChannel();
     }
