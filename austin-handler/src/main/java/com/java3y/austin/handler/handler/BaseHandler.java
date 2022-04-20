@@ -17,6 +17,12 @@ import javax.annotation.PostConstruct;
  * 发送各个渠道的handler
  */
 public abstract class BaseHandler implements Handler {
+    @Autowired
+    private HandlerHolder handlerHolder;
+    @Autowired
+    private LogUtils logUtils;
+    @Autowired
+    private FlowControlService flowControlService;
 
     /**
      * 标识渠道的Code
@@ -30,14 +36,6 @@ public abstract class BaseHandler implements Handler {
      */
     protected FlowControlParam flowControlParam;
 
-
-    @Autowired
-    private HandlerHolder handlerHolder;
-    @Autowired
-    private LogUtils logUtils;
-    @Autowired
-    private FlowControlService flowControlService;
-
     /**
      * 初始化渠道与Handler的映射关系
      */
@@ -45,17 +43,6 @@ public abstract class BaseHandler implements Handler {
     private void init() {
         handlerHolder.putHandler(channelCode, this);
     }
-
-    @Override
-    public void doHandler(TaskInfo taskInfo) {
-        flowControl(taskInfo);
-        if (handler(taskInfo)) {
-            logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_SUCCESS.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
-            return;
-        }
-        logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_FAIL.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
-    }
-
 
     /**
      * 流量控制
@@ -68,6 +55,18 @@ public abstract class BaseHandler implements Handler {
             flowControlService.flowControl(taskInfo, flowControlParam);
         }
     }
+    @Override
+    public void doHandler(TaskInfo taskInfo) {
+        flowControl(taskInfo);
+        if (handler(taskInfo)) {
+            logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_SUCCESS.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+            return;
+        }
+        logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_FAIL.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+    }
+
+
+
 
     /**
      * 统一处理的handler接口
