@@ -2,10 +2,12 @@ package com.java3y.austin.support.utils;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AustinConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -93,7 +95,6 @@ public class RedisUtils {
 
     /**
      * lpush 方法 并指定 过期时间
-     *
      */
     public void lPush(String key, String value, Long seconds) {
         try {
@@ -109,7 +110,6 @@ public class RedisUtils {
 
     /**
      * lLen 方法
-     *
      */
     public Long lLen(String key) {
         try {
@@ -119,9 +119,9 @@ public class RedisUtils {
         }
         return 0L;
     }
+
     /**
      * lPop 方法
-     *
      */
     public String lPop(String key) {
         try {
@@ -151,4 +151,33 @@ public class RedisUtils {
             log.error("redis pipelineSetEX fail! e:{}", Throwables.getStackTraceAsString(e));
         }
     }
+
+    /**
+     * 执行指定的lua脚本返回执行结果
+     * --KEYS[1]: 限流 key
+     * --ARGV[1]: 限流窗口
+     * --ARGV[2]: 当前时间戳（作为score）
+     * --ARGV[3]: 阈值
+     * --ARGV[4]: score 对应的唯一value
+     *
+     * @param redisScript
+     * @param keys
+     * @param args
+     * @return
+     */
+    public Boolean execLimitLua(RedisScript<Long> redisScript, List<String> keys, String... args) {
+
+        try {
+            Long execute = redisTemplate.execute(redisScript, keys, args);
+
+            return AustinConstant.TRUE.equals(execute.intValue());
+        } catch (Exception e) {
+
+            log.error("redis execLimitLua fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
+
+        return false;
+    }
+
+
 }
