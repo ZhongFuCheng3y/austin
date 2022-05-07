@@ -1,5 +1,6 @@
 package com.java3y.austin.handler.script;
 
+import com.java3y.austin.handler.domain.wechat.WeChatOfficialParam;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
 import java.util.List;
@@ -12,10 +13,10 @@ public interface OfficialAccountService {
     /**
      * 发送模板消息
      *
-     * @param wxMpTemplateMessages 模板消息列表
+     * @param weChatOfficialParam 模板消息参数
      * @return
      * @throws Exception
      */
-    List<String> send(List<WxMpTemplateMessage> wxMpTemplateMessages) throws Exception;
+    List<String> send(WeChatOfficialParam weChatOfficialParam) throws Exception;
 
 }
