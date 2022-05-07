@@ -44,7 +44,7 @@ public class TencentSmsScript implements SmsScript {
 
     @Override
     public List<SmsRecord> send(SmsParam smsParam) throws Exception {
-        TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccount(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.builder().build());
+        TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccount(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
         SmsClient client = init(tencentSmsAccount);
         SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
         SendSmsResponse response = client.SendSms(request);

@@ -27,14 +27,14 @@ public class AccountUtils {
      * (key:dingDingRobotAccount) 钉钉自定义机器人参数示例：[{"ding_ding_robot_10":{"secret":"SEC996d8d9d4768aded74114faae924f229229de444475a1c295d64fedf","webhook":"https://oapi.dingtalk.com/robot/send?access_token=8d03b644ffb6534b203d87333367328b0c3003d164715d2c6c6e56"}}]
      * (key:dingDingWorkNoticeAccount) 钉钉工作消息参数示例：[{"ding_ding_work_notice_10":{"appKey":"dingh6yyyyyyycrlbx","appSecret":"tQpvmkR863333yyyyyHP3QHyyyymy9Ao1yoL1oQX5Nlx_fYLLLlpPJWHvWKbTu","agentId":"152333383622"}}]
      */
-    public <T> T getAccount(Integer sendAccount, String apolloKey, String prefix, T t) {
+    public <T> T getAccount(Integer sendAccount, String apolloKey, String prefix, Class<T> clazz) {
         String accountValues = config.getProperty(apolloKey, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_ARRAY);
         JSONArray jsonArray = JSON.parseArray(accountValues);
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            Object object = jsonObject.getObject(prefix + sendAccount, t.getClass());
+            T object = jsonObject.getObject(prefix + sendAccount, clazz);
             if (object != null) {
-                return (T) object;
+                return object;
             }
         }
         return null;
