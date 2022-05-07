@@ -160,6 +160,13 @@
                 <version>${weixin-java}</version>
             </dependency>
 
+            <!--微信小程序第三方SDK-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin-java}</version>
+            </dependency>
+
             <!--动态线程池引入-->
             <dependency>
                 <groupId>io.github.lyh200</groupId>
