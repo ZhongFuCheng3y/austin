@@ -36,7 +36,7 @@ public class MiniProgramAccountServiceImpl implements MiniProgramAccountService 
         WeChatMiniProgramAccount miniProgramAccount = accountUtils.getAccount(miniProgramParam.getSendAccount(),
                 SendAccountConstant.WECHAT_MINI_PROGRAM_ACCOUNT_KEY,
                 SendAccountConstant.WECHAT_MINI_PROGRAM_PREFIX,
-                WeChatMiniProgramAccount.builder().build());
+                WeChatMiniProgramAccount.class);
 
         WxMaSubscribeService wxMaSubscribeService = initService(miniProgramAccount);
         List<WxMaSubscribeMessage> subscribeMessageList = assembleReq(miniProgramParam, miniProgramAccount);
