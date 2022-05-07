@@ -114,7 +114,8 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
             if (StrUtil.isNotBlank(originValue)) {
                 String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, variables);
-                ReflectUtil.setFieldValue(contentModel, field, resultValue);
+                Object resultObj = JSON.parseObject(resultValue, field.getType());
+                ReflectUtil.setFieldValue(contentModel, field, resultObj);
             }
         }
 
