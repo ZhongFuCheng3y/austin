@@ -45,7 +45,7 @@ public class RefreshGeTuiAccessTokenHandler {
         log.info("refreshGeTuiAccessTokenJob#execute!");
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
             for (int index = SendAccountConstant.START; true; index = index + SendAccountConstant.STEP) {
-                GeTuiAccount account = accountUtils.getAccount(index, SendAccountConstant.GE_TUI_ACCOUNT_KEY, SendAccountConstant.GE_TUI_ACCOUNT_PREFIX, new GeTuiAccount());
+                GeTuiAccount account = accountUtils.getAccount(index, SendAccountConstant.GE_TUI_ACCOUNT_KEY, SendAccountConstant.GE_TUI_ACCOUNT_PREFIX, GeTuiAccount.class);
                 if (account == null) {
                     break;
                 }
