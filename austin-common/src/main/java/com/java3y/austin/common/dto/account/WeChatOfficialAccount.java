@@ -19,17 +19,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WechatOfficialAccount {
-
-    /**
-     * 服务号关注者的openId
-     */
-    private String openId;
-
-    /**
-     * 需要使用的模板信息Id
-     */
-    private String templateId;
+public class WeChatOfficialAccount {
 
     /**
      * 模板消息跳转的url
@@ -47,7 +37,9 @@ public class WechatOfficialAccount {
     private String path;
 
     /**
-     * 模板消息的信息载体
+     * 账号相关
      */
-    private Map<String, String> map;
+    private String appId;
+    private String secret;
+    private String templateId;
 }
