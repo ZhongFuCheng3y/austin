@@ -13,11 +13,26 @@ package com.java3y.austin.common.constant;
 public class SendAccountConstant {
 
     /**
+     * 账号约定：所有的账号都从10开始，步长为10
+     */
+    public static final Integer START = 10;
+    public static final Integer STEP = 10;
+
+
+    /**
      * 钉钉 工作应用消息 账号
      */
     public static final String DING_DING_WORK_NOTICE_ACCOUNT_KEY = "dingDingWorkNoticeAccount";
     public static final String DING_DING_WORK_NOTICE_PREFIX = "ding_ding_work_notice_";
     public static final String DING_DING_ACCESS_TOKEN_PREFIX = "ding_ding_access_token_";
+
+    /**
+     * 个推PUSH 消息账号
+     */
+    public static final String GE_TUI_ACCOUNT_KEY = "geTuiAccount";
+    public static final String GE_TUI_ACCOUNT_PREFIX = "ge_tui_account_";
+    public static final String GE_TUI_ACCESS_TOKEN_PREFIX = "ge_tui_access_token_";
+
 
 
     /**
@@ -46,9 +61,5 @@ public class SendAccountConstant {
     public static final String SMS_ACCOUNT_KEY = "smsAccount";
     public static final String SMS_PREFIX = "sms_";
 
-    /**
-     * 账号约定：所有的账号都从10开始，步长为10
-     */
-    public static final Integer START = 10;
-    public static final Integer STEP = 10;
+
 }
