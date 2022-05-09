@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain.getui;
+package com.java3y.austin.handler.domain.push.getui;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 推送消息的param
@@ -65,7 +65,7 @@ public class SendPushParam {
          * cid
          */
         @JSONField(name = "cid")
-        private List<String> cid;
+        private Set<String> cid;
     }
 
     /**

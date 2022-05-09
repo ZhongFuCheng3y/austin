@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.domain.getui;
+package com.java3y.austin.handler.domain.push.getui;
 
 
 import com.alibaba.fastjson.JSONObject;
