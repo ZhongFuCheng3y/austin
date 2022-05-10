@@ -18,8 +18,9 @@ import org.springframework.stereotype.Component;
 /**
  * Task 执行器
  * 0.丢弃消息
- * 1.通用去重功能
- * 2.发送消息
+ * 2.屏蔽消息
+ * 2.通用去重功能
+ * 3.发送消息
  *
  * @author 3y
  */

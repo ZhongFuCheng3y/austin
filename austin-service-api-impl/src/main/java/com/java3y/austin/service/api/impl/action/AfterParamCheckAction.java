@@ -13,6 +13,7 @@ import com.java3y.austin.service.api.impl.domain.SendTaskModel;
 import com.java3y.austin.support.pipeline.BusinessProcess;
 import com.java3y.austin.support.pipeline.ProcessContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  * 后置参数检查
  */
 @Slf4j
+@Service
 public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
 
 

@@ -3,7 +3,7 @@ package com.java3y.austin.handler.deduplication.build;
 import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.deduplication.DeduplicationHolder;
-import com.java3y.austin.handler.domain.DeduplicationParam;
+import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;

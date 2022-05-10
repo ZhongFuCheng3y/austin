@@ -4,6 +4,9 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.DeduplicationType;
+import com.java3y.austin.handler.deduplication.limit.LimitService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContentDeduplicationService extends AbstractDeduplicationService {
 
-    public ContentDeduplicationService() {
+
+    @Autowired
+    public ContentDeduplicationService(@Qualifier("SlideWindowLimitService") LimitService limitService) {
+        this.limitService = limitService;
         deduplicationType = DeduplicationType.CONTENT.getCode();
     }
 
