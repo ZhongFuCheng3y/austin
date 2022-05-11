@@ -56,7 +56,11 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 目前引用的中间件教程的安装姿势均基于`Centos 7.6`(**完全部署所有的服务，大概8G内存**)，austin项目**强依赖**`MySQL`/`Redis`/`Kafka`/`apollo`，**弱依赖**`prometheus`/`graylog`/`flink`/`xxl-job`。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
-实在想要拉下clone项目后不部署环境直接启动，我这提供了[会员服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=735778370&lang=zh_CN#rd)
+
+
+> 实在想要`clone`项目后不用自己部署环境直接在本地启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=735778370&lang=zh_CN#rd)，**直连**部署好的服务器
+
+
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
@@ -100,6 +104,22 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 **14**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表
 
+## 会员服务
+
+收费课程是以**项目**为主，代码在Gitee和GitHub上都是开源的，项目没有商业版，后面也不会有。那么，付费跟我自己去拉Git仓库拉代码下来看有什么区别？
+
+1、有很多人的自学能力和基础确实不太行，不知道怎么开始学习，从哪开始看起，学习项目的过程中会走很多弯路，很容易就迷茫了。付费最跟自学最主要的区别就是**我的服务会更周到**。
+
+我会告诉你怎么开始学这个开源项目，哪些是重点需要掌握的，如何利用最短的时间把握整个系统架构和编码的设计，把时间节省下来去做其他事情。
+
+2、一个生产环境的系统肯定会依赖各种中间件，《消息推送平台-Austin》也是一样的。我专门买了两台服务器已经搭建好必要的依赖，付费的可以**使用我的远程服务器**，在**本地就可以直接启动运行体验和学习**
+
+3、项目在编写的过程中也经历多次的重构迭代，迭代的内容我是不会将以往文章内容重新修正发布，但语雀的文档内容一定是**及时同步**，文档跟代码是保持一致的
+
+4、除了项目，还可以问我些学习经验、学习路线、简历编写、面试经验等等问题，技术和学习上的知识**知无不言**
+
+详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=319992632&lang=zh_CN#rd)
+
 ## 里程碑
 
 - [x] Maven+SpringBoot项目搭建
@@ -141,16 +161,6 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5eae548196934599a7cb3637aedf381d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
-
-
-**Java3y**公众号在持续更新austin系列文章，**保姆级**讲解搭建项目的过程（包括技术选型以及一些业务的探讨）以及相关环境的搭建。**扫下面的码直接关注，带你了解整个项目**
-
-
-如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
-
-[会员服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=735778370&lang=zh_CN#rd)
-
-<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e109cdb8d064c1e87541d7b6c17957d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 ## 如何准备面试？
 
