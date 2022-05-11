@@ -2,6 +2,7 @@ package com.java3y.austin.service.api.impl.action;
 
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Throwables;
@@ -114,7 +115,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
             if (StrUtil.isNotBlank(originValue)) {
                 String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, variables);
-                Object resultObj = JSON.parseObject(resultValue, field.getType());
+                Object resultObj = JSONUtil.isJsonObj(resultValue) ? JSONUtil.toBean(resultValue, field.getType()) : resultValue;
                 ReflectUtil.setFieldValue(contentModel, field, resultObj);
             }
         }
