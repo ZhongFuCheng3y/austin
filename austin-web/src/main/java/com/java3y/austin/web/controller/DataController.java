@@ -46,10 +46,11 @@ public class DataController {
         return new BasicResultVO<>(RespStatusEnum.SUCCESS, echartsVo);
     }
 
-    public static void main(String[] args) {
-        EchartsVo.TitleVO titleVO = EchartsVo.TitleVO.builder().text("销售情况").build();
-        EchartsVo echartsVo = EchartsVo.builder().title(titleVO).build();
-
-        System.out.println(JSON.toJSONString(echartsVo));
+    @PostMapping("/sms")
+    @ApiOperation("/获取短信下发数据")
+    public BasicResultVO getSmsData(@RequestBody DataParam dataParam) {
+        EchartsVo echartsVo = EchartsVo.builder().build();
+     return null;
     }
+
 }
