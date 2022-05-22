@@ -81,7 +81,7 @@
             <dependency>
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
-                <version>3.1.390</version>
+                <version>3.1.510</version>
             </dependency>
 
             <!--apollo-->
