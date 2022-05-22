@@ -78,8 +78,8 @@ public class TencentSmsReceipt {
                                     .chargingNum(0)
                                     .status("SUCCESS".equals(pullSmsSendStatus.getReportStatus()) ? SmsStatus.RECEIVE_SUCCESS.getCode() : SmsStatus.RECEIVE_FAIL.getCode())
                                     .reportContent(pullSmsSendStatus.getDescription())
-                                    .created(Math.toIntExact(pullSmsSendStatus.getUserReceiveTime()))
-                                    .updated(Math.toIntExact(DateUtil.currentSeconds()))
+                                    .updated(Math.toIntExact(pullSmsSendStatus.getUserReceiveTime()))
+                                    .created(Math.toIntExact(DateUtil.currentSeconds()))
                                     .build();
                             smsRecordList.add(smsRecord);
                         }

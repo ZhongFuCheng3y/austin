@@ -1,12 +1,12 @@
 package com.java3y.austin.web.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.web.service.DataService;
 import com.java3y.austin.web.vo.DataParam;
 import com.java3y.austin.web.vo.amis.EchartsVo;
+import com.java3y.austin.web.vo.amis.SmsTimeLineVo;
 import com.java3y.austin.web.vo.amis.UserTimeLineVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,8 +49,13 @@ public class DataController {
     @PostMapping("/sms")
     @ApiOperation("/获取短信下发数据")
     public BasicResultVO getSmsData(@RequestBody DataParam dataParam) {
-        EchartsVo echartsVo = EchartsVo.builder().build();
-     return null;
+        if (dataParam == null || dataParam.getDateTime() == null || dataParam.getReceiver() == null) {
+            return new BasicResultVO<>(RespStatusEnum.SUCCESS, new SmsTimeLineVo());
+        }
+
+        SmsTimeLineVo smsTimeLineVo = dataService.getTraceSmsInfo(dataParam);
+
+        return new BasicResultVO<>(RespStatusEnum.SUCCESS, smsTimeLineVo);
     }
 
 }
