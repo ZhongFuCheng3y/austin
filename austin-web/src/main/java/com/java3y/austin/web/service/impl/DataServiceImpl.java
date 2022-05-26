@@ -197,14 +197,4 @@ public class DataServiceImpl implements DataService {
         }
         return businessId;
     }
-
-    public static void main(String[] args) {
-
-        Long time = 1653140847 * 1000L;
-
-        String format = DateUtil.format(new Date(time), DatePattern.NORM_DATETIME_PATTERN);
-
-        System.out.println(format
-        );
-    }
 }

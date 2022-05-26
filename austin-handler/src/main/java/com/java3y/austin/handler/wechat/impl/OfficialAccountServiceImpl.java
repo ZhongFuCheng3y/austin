@@ -1,9 +1,9 @@
-package com.java3y.austin.handler.script.impl;
+package com.java3y.austin.handler.wechat.impl;
 
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.WeChatOfficialAccount;
 import com.java3y.austin.handler.domain.wechat.WeChatOfficialParam;
-import com.java3y.austin.handler.script.OfficialAccountService;
+import com.java3y.austin.handler.wechat.OfficialAccountService;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
