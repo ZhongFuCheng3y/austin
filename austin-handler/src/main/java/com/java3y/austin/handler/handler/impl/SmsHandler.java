@@ -98,7 +98,8 @@ public class SmsHandler extends BaseHandler implements Handler {
             if (index <= messageTypeSmsConfigs.get(i).getWeights()) {
                 supplier = messageTypeSmsConfigs.get(i);
 
-                int j = (i + 1) % messageTypeSmsConfigs.size(); // 取下一个供应商
+                // 取下一个供应商
+                int j = (i + 1) % messageTypeSmsConfigs.size();
                 if (i == j) {
                     return new MessageTypeSmsConfig[]{supplier};
                 }
