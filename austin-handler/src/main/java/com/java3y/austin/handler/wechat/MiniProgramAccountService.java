@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.script;
+package com.java3y.austin.handler.wechat;
 
 import com.java3y.austin.handler.domain.wechat.WeChatMiniProgramParam;
 
