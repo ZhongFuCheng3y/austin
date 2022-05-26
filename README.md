@@ -1,4 +1,5 @@
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2ccd794db76e482680f72d60959cf368~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/108bca55a5364a73b3fd50b8bde304d1~tplv-k3u1fbpfcp-watermark.image?)
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
@@ -8,8 +9,13 @@
   <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a>
   <a href="https://github.com/ZhongFuCheng3y/austin-admin"><img src="https://img.shields.io/badge/austin前端-GitHub-green.svg" alt="作者"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/项目-交流-red.svg" alt="项目交流"></a>
+  <a href="https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119"><img src="https://img.shields.io/badge/项目-视频-green.svg" alt="Bilibili"></a>
   <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
 </p>
+
+最近我已经在**bilibili**更新Austin的视频了哟，**求关注和三连**！这是我更新的动力！！
+
+[https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119](https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119)
 
 
 
