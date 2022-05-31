@@ -5,7 +5,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.IdType;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
 
     public static final String PHONE_REGEX_EXP = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$";
-    public static final String EMAIL_REGEX_EXP = "[a-zA-Z0-9]+@[a-zA-Z0-9]+\\\\.[a-zA-Z0-9]+";
+    public static final String EMAIL_REGEX_EXP = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
 
     public static final HashMap<Integer, String> CHANNEL_REGEX_EXP = new HashMap<>();
     static {

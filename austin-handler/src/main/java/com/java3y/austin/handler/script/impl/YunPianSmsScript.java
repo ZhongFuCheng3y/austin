@@ -65,7 +65,7 @@ public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
      * @return
      */
     private Map<String, Object> assembleParam(SmsParam smsParam, YunPianSmsAccount account) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>(8);
         params.put("apikey", account.getApikey());
         params.put("mobile", StringUtils.join(smsParam.getPhones(), StrUtil.C_COMMA));
         params.put("tpl_id", account.getTplId());
