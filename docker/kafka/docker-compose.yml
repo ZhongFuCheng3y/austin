@@ -1,6 +1,6 @@
 version: '3'
 services:
-  zookepper:
+  zookeeper:
     image: wurstmeister/zookeeper                    # 原镜像`wurstmeister/zookeeper`
     container_name: zookeeper                        # 容器名为'zookeeper'
     volumes:                                         # 数据卷挂载路径设置,将本机目录映射到容器目录
@@ -23,7 +23,7 @@ services:
     ports:                              # 映射端口
       - "9092:9092"
     depends_on:                         # 解决容器依赖启动先后问题
-      - zookepper
+      - zookeeper
 
   kafka-manager:
     image: sheepkiller/kafka-manager                         # 原镜像`sheepkiller/kafka-manager`
