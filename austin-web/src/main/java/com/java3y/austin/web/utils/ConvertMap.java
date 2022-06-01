@@ -39,6 +39,7 @@ public class ConvertMap {
     /**
      * 将单个对象转换成Map(无嵌套)
      *
+     * 主要兼容amis的回显(前端不用amis可忽略)
      * @param obj
      * @param fieldName 需要 reduce 的属性名
      * @return
@@ -47,6 +48,8 @@ public class ConvertMap {
         Map<String, Object> result = MapUtil.newHashMap(32);
         Field[] fields = ReflectUtil.getFields(obj.getClass());
         for (Field field : fields) {
+
+            // msgContent需要打散
             if (fieldName.contains(field.getName())) {
                 JSONObject jsonObject;
                 Object value = ReflectUtil.getFieldValue(obj, field);
@@ -56,7 +59,11 @@ public class ConvertMap {
                     jsonObject = JSONObject.parseObject(JSON.toJSONString(value));
                 }
                 for (String key : jsonObject.keySet()) {
-                    result.put(key, jsonObject.getString(key));
+                    if (key.equals("feedCards") || key.equals("btns")) {
+                        result.put(key, JSON.parseArray(jsonObject.getString(key)));
+                    } else {
+                        result.put(key, jsonObject.getString(key));
+                    }
                 }
             }
             result.put(field.getName(), ReflectUtil.getFieldValue(obj, field));

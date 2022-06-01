@@ -43,8 +43,10 @@ public class SmsReceipt {
     private void init() {
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
             while (true) {
-                tencentSmsReceipt.pull();
-                yunPianSmsReceipt.pull();
+
+                // TODO 回执这里自行打开(免得报错)
+                // tencentSmsReceipt.pull();
+                // yunPianSmsReceipt.pull();
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
