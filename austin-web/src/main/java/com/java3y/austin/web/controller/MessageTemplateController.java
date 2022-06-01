@@ -54,7 +54,6 @@ public class MessageTemplateController {
     @Value("${austin.business.upload.crowd.path}")
     private String dataPath;
 
-
     /**
      * 如果Id存在，则修改
      * 如果Id不存在，则保存
@@ -62,9 +61,7 @@ public class MessageTemplateController {
     @PostMapping("/save")
     @ApiOperation("/保存数据")
     public BasicResultVO saveOrUpdate(@RequestBody MessageTemplate messageTemplate) {
-
         MessageTemplate info = messageTemplateService.saveOrUpdate(messageTemplate);
-
         return BasicResultVO.success(info);
     }
 
