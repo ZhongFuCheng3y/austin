@@ -4,13 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.DingDingRobotAccount;
-import com.java3y.austin.common.dto.model.DingDingContentModel;
+import com.java3y.austin.common.dto.model.DingDingRobotContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
@@ -74,7 +73,7 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
         }
 
         // 消息类型以及内容相关
-        DingDingContentModel contentModel = (DingDingContentModel) taskInfo.getContentModel();
+        DingDingRobotContentModel contentModel = (DingDingRobotContentModel) taskInfo.getContentModel();
         DingDingRobotParam param = DingDingRobotParam.builder().at(atVo)
                 .msgtype(SendMessageType.getDingDingRobotTypeByCode(contentModel.getSendType()))
                 .build();
