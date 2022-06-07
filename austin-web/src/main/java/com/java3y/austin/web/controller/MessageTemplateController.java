@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
 @Api("发送消息")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class MessageTemplateController {
-    private static final List<String> FLAT_FIELD_NAME = Arrays.asList("msgContent");
 
     @Autowired
     private MessageTemplateService messageTemplateService;
@@ -71,7 +70,7 @@ public class MessageTemplateController {
     @GetMapping("/list")
     @ApiOperation("/列表页")
     public BasicResultVO queryList(MessageTemplateParam messageTemplateParam) {
-        List<Map<String, Object>> result = ConvertMap.flatList(messageTemplateService.queryList(messageTemplateParam), FLAT_FIELD_NAME);
+        List<Map<String, Object>> result = ConvertMap.flatList(messageTemplateService.queryList(messageTemplateParam));
 
         long count = messageTemplateService.count();
         MessageTemplateVo messageTemplateVo = MessageTemplateVo.builder().count(count).rows(result).build();
@@ -84,7 +83,7 @@ public class MessageTemplateController {
     @GetMapping("query/{id}")
     @ApiOperation("/根据Id查找")
     public BasicResultVO queryById(@PathVariable("id") Long id) {
-        Map<String, Object> result = ConvertMap.flatSingle(messageTemplateService.queryById(id), FLAT_FIELD_NAME);
+        Map<String, Object> result = ConvertMap.flatSingle(messageTemplateService.queryById(id));
         return BasicResultVO.success(result);
     }
 

@@ -118,7 +118,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
                 OapiMessageCorpconversationAsyncsendV2Request.Link link = new OapiMessageCorpconversationAsyncsendV2Request.Link();
                 link.setText(contentModel.getContent());
                 link.setTitle(contentModel.getTitle());
-                link.setPicUrl(contentModel.getPicUrl());
+                link.setPicUrl(contentModel.getMediaId());
                 link.setMessageUrl(contentModel.getUrl());
                 message.setLink(link);
             }
@@ -139,11 +139,11 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
                 message.setActionCard(actionCard);
 
             }
-            if (SendMessageType.ACTION_CARD.getCode().equals(contentModel.getSendType())) {
+            if (SendMessageType.OA.getCode().equals(contentModel.getSendType())) {
                 OapiMessageCorpconversationAsyncsendV2Request.OA oa = new OapiMessageCorpconversationAsyncsendV2Request.OA();
                 oa.setMessageUrl(contentModel.getUrl());
-                oa.setHead(JSON.parseObject(contentModel.getHead(), OapiMessageCorpconversationAsyncsendV2Request.Head.class));
-                oa.setBody(JSON.parseObject(contentModel.getBody(), OapiMessageCorpconversationAsyncsendV2Request.Body.class));
+                oa.setHead(JSON.parseObject(contentModel.getDingDingOaHead(), OapiMessageCorpconversationAsyncsendV2Request.Head.class));
+                oa.setBody(JSON.parseObject(contentModel.getDingDingOaBody(), OapiMessageCorpconversationAsyncsendV2Request.Body.class));
                 message.setOa(oa);
             }
             req.setMsg(message);

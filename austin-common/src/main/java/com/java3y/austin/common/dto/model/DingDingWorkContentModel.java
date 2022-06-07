@@ -49,10 +49,6 @@ public class DingDingWorkContentModel extends ContentModel {
      */
     private String url;
 
-    /**
-     * 【链接消息】图片URL，
-     */
-    private String picUrl;
 
     /**
      * 图片、文件、语音消息 需要发送使用的素材ID字段
@@ -68,12 +64,12 @@ public class DingDingWorkContentModel extends ContentModel {
      * OA消息头
      * {"bgcolor":"FFBBBBBB","text":"头部标题"}
      */
-    private String head;
+    private String dingDingOaHead;
 
     /**
      * OA消息内容
      * {"title":"正文标题","form":[{"key":"姓名:","value":"张三"},{"key":"年龄:","value":"20"},{"key":"身高:","value":"1.8米"},{"key":"体重:","value":"130斤"},{"key":"学历:","value":"本科"},{"key":"爱好:","value":"打球、听音乐"}],"rich":{"num":"15.6","unit":"元"},"content":"大段文本大段文本大段文本大段文本大段文本大段文本","image":"@lADOADmaWMzazQKA","file_count":"3","author":"李四 "}
      */
-    private String body;
+    private String dingDingOaBody;
 
 }
