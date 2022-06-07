@@ -11,13 +11,18 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.dao.MessageTemplateDao;
+import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.MessageTemplate;
+import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.RedisUtils;
 import com.java3y.austin.support.utils.TaskInfoUtils;
 import com.java3y.austin.web.constants.AmisVoConstant;
 import com.java3y.austin.web.service.DataService;
+import com.java3y.austin.web.vo.DataParam;
 import com.java3y.austin.web.vo.amis.EchartsVo;
+import com.java3y.austin.web.vo.amis.SmsTimeLineVo;
 import com.java3y.austin.web.vo.amis.UserTimeLineVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +43,10 @@ public class DataServiceImpl implements DataService {
 
     @Autowired
     private MessageTemplateDao messageTemplateDao;
+
+    @Autowired
+    private SmsRecordDao smsRecordDao;
+
 
     @Override
     public UserTimeLineVo getTraceUserInfo(String receiver) {
@@ -132,6 +141,44 @@ public class DataServiceImpl implements DataService {
                 .tooltip(EchartsVo.TooltipVO.builder().build())
                 .build();
 
+    }
+
+    @Override
+    public SmsTimeLineVo getTraceSmsInfo(DataParam dataParam) {
+
+        ArrayList<SmsTimeLineVo.ItemsVO> itemsVOS = new ArrayList<>();
+        SmsTimeLineVo smsTimeLineVo = SmsTimeLineVo.builder().items(itemsVOS).build();
+
+        Integer sendDate = Integer.valueOf(DateUtil.format(new Date(dataParam.getDateTime() * 1000L)
+                , DatePattern.PURE_DATE_PATTERN));
+        List<SmsRecord> smsRecordList = smsRecordDao.findByPhoneAndSendDate(Long.valueOf(dataParam.getReceiver()), sendDate);
+
+        if (CollUtil.isEmpty(smsRecordList)) {
+            return smsTimeLineVo;
+        }
+
+        Map<String, List<SmsRecord>> maps = smsRecordList.stream().collect(Collectors.groupingBy((o) -> o.getPhone() + o.getSeriesId()));
+
+        for (Map.Entry<String, List<SmsRecord>> entry : maps.entrySet()) {
+            SmsTimeLineVo.ItemsVO itemsVO = SmsTimeLineVo.ItemsVO.builder().build();
+            for (SmsRecord smsRecord : entry.getValue()) {
+                // 发送记录 messageTemplateId >0 ,回执记录 messageTemplateId =0
+                if (smsRecord.getMessageTemplateId() > 0) {
+                    itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
+                    itemsVO.setContent(smsRecord.getMsgContent());
+                    itemsVO.setSendType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
+                    itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated()*1000L)), DatePattern.NORM_DATETIME_PATTERN));
+
+                } else {
+                    itemsVO.setReceiveType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
+                    itemsVO.setReceiveContent(smsRecord.getReportContent());
+                    itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated()*1000L)), DatePattern.NORM_DATETIME_PATTERN));
+                }
+            }
+            itemsVOS.add(itemsVO);
+        }
+
+        return smsTimeLineVo;
     }
 
     /**

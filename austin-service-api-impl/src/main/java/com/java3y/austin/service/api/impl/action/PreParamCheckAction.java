@@ -11,6 +11,7 @@ import com.java3y.austin.support.pipeline.ProcessContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,11 @@ import java.util.stream.Collectors;
 @Service
 public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
 
+    /**
+     * 最大的人数
+     */
+    private static final Integer BATCH_RECEIVER_SIZE = 100;
+
     @Override
     public void process(ProcessContext<SendTaskModel> context) {
         SendTaskModel sendTaskModel = context.getProcessModel();
@@ -30,13 +36,13 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
         Long messageTemplateId = sendTaskModel.getMessageTemplateId();
         List<MessageParam> messageParamList = sendTaskModel.getMessageParamList();
 
-        // 没有传入 消息模板Id 或者 messageParam
+        // 1.没有传入 消息模板Id 或者 messageParam
         if (messageTemplateId == null || CollUtil.isEmpty(messageParamList)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
             return;
         }
 
-        // 过滤 receiver=null 的messageParam
+        // 2.过滤 receiver=null 的messageParam
         List<MessageParam> resultMessageParamList = messageParamList.stream()
                 .filter(messageParam -> !StrUtil.isBlank(messageParam.getReceiver()))
                 .collect(Collectors.toList());
@@ -44,7 +50,13 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
             return;
         }
-
         sendTaskModel.setMessageParamList(resultMessageParamList);
+
+        // 3.过滤receiver大于100的请求
+        if (messageParamList.stream().anyMatch(messageParam -> messageParam.getReceiver().split(StrUtil.COMMA).length > BATCH_RECEIVER_SIZE)) {
+            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TOO_MANY_RECEIVER));
+            return;
+        }
+
     }
 }

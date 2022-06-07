@@ -74,14 +74,14 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.78</version>
+                <version>1.2.83</version>
             </dependency>
 
             <!--腾讯sdk(目前用在短信上)-->
             <dependency>
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
-                <version>3.1.390</version>
+                <version>3.1.510</version>
             </dependency>
 
             <!--apollo-->

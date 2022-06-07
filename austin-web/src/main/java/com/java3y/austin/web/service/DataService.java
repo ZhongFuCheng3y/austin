@@ -1,6 +1,8 @@
 package com.java3y.austin.web.service;
 
+import com.java3y.austin.web.vo.DataParam;
 import com.java3y.austin.web.vo.amis.EchartsVo;
+import com.java3y.austin.web.vo.amis.SmsTimeLineVo;
 import com.java3y.austin.web.vo.amis.UserTimeLineVo;
 
 /**
@@ -27,5 +29,13 @@ public interface DataService {
      */
     EchartsVo getTraceMessageTemplateInfo(String businessId);
 
+
+    /**
+     * 获取短信下发记录
+     *
+     * @param dataParam
+     * @return
+     */
+    SmsTimeLineVo getTraceSmsInfo(DataParam dataParam);
 
 }

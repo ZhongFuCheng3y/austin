@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.script.impl;
+package com.java3y.austin.handler.wechat.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
@@ -9,7 +9,7 @@ import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.WeChatMiniProgramAccount;
 import com.java3y.austin.handler.domain.wechat.WeChatMiniProgramParam;
-import com.java3y.austin.handler.script.MiniProgramAccountService;
+import com.java3y.austin.handler.wechat.MiniProgramAccountService;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

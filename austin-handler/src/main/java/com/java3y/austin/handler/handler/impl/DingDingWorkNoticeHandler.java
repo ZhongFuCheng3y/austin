@@ -11,8 +11,11 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
-import com.java3y.austin.common.dto.model.DingDingContentModel;
+import com.java3y.austin.common.dto.model.DingDingRobotContentModel;
+import com.java3y.austin.common.dto.model.DingDingWorkContentModel;
 import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.common.enums.SendMessageType;
+import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
@@ -21,6 +24,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 钉钉消息自定义机器人 消息处理器
@@ -73,7 +78,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
      */
     private OapiMessageCorpconversationAsyncsendV2Request assembleParam(DingDingWorkNoticeAccount account, TaskInfo taskInfo) {
         OapiMessageCorpconversationAsyncsendV2Request req = new OapiMessageCorpconversationAsyncsendV2Request();
-        DingDingContentModel contentModel = (DingDingContentModel) taskInfo.getContentModel();
+        DingDingWorkContentModel contentModel = (DingDingWorkContentModel) taskInfo.getContentModel();
         try {
             // 接收者相关
             if (AustinConstant.SEND_ALL.equals(CollUtil.getFirst(taskInfo.getReceiver()))) {
@@ -83,13 +88,64 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
             }
             req.setAgentId(Long.parseLong(account.getAgentId()));
 
-            // 内容相关
-            OapiMessageCorpconversationAsyncsendV2Request.Msg message = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
-            message.setMsgtype("text");
-            OapiMessageCorpconversationAsyncsendV2Request.Text textObj = new OapiMessageCorpconversationAsyncsendV2Request.Text();
-            textObj.setContent(contentModel.getContent());
-            message.setText(textObj);
 
+            OapiMessageCorpconversationAsyncsendV2Request.Msg message = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
+            message.setMsgtype(SendMessageType.getDingDingWorkTypeByCode(contentModel.getSendType()));
+
+            // 根据类型设置入参
+            if (SendMessageType.TEXT.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.Text textObj = new OapiMessageCorpconversationAsyncsendV2Request.Text();
+                textObj.setContent(contentModel.getContent());
+                message.setText(textObj);
+            }
+            if (SendMessageType.IMAGE.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.Image image = new OapiMessageCorpconversationAsyncsendV2Request.Image();
+                image.setMediaId(contentModel.getMediaId());
+                message.setImage(image);
+            }
+            if (SendMessageType.VOICE.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.Voice voice = new OapiMessageCorpconversationAsyncsendV2Request.Voice();
+                voice.setMediaId(contentModel.getMediaId());
+                voice.setDuration(contentModel.getDuration());
+                message.setVoice(voice);
+            }
+            if (SendMessageType.FILE.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.File file = new OapiMessageCorpconversationAsyncsendV2Request.File();
+                file.setMediaId(contentModel.getMediaId());
+                message.setFile(file);
+            }
+            if (SendMessageType.LINK.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.Link link = new OapiMessageCorpconversationAsyncsendV2Request.Link();
+                link.setText(contentModel.getContent());
+                link.setTitle(contentModel.getTitle());
+                link.setPicUrl(contentModel.getMediaId());
+                link.setMessageUrl(contentModel.getUrl());
+                message.setLink(link);
+            }
+
+            if (SendMessageType.MARKDOWN.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.Markdown markdown = new OapiMessageCorpconversationAsyncsendV2Request.Markdown();
+                markdown.setText(contentModel.getContent());
+                markdown.setTitle(contentModel.getTitle());
+                message.setMarkdown(markdown);
+
+            }
+            if (SendMessageType.ACTION_CARD.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.ActionCard actionCard = new OapiMessageCorpconversationAsyncsendV2Request.ActionCard();
+                actionCard.setTitle(contentModel.getTitle());
+                actionCard.setMarkdown(contentModel.getContent());
+                actionCard.setBtnOrientation(contentModel.getBtnOrientation());
+                actionCard.setBtnJsonList(JSON.parseArray(contentModel.getBtns(), OapiMessageCorpconversationAsyncsendV2Request.BtnJsonList.class));
+                message.setActionCard(actionCard);
+
+            }
+            if (SendMessageType.OA.getCode().equals(contentModel.getSendType())) {
+                OapiMessageCorpconversationAsyncsendV2Request.OA oa = new OapiMessageCorpconversationAsyncsendV2Request.OA();
+                oa.setMessageUrl(contentModel.getUrl());
+                oa.setHead(JSON.parseObject(contentModel.getDingDingOaHead(), OapiMessageCorpconversationAsyncsendV2Request.Head.class));
+                oa.setBody(JSON.parseObject(contentModel.getDingDingOaBody(), OapiMessageCorpconversationAsyncsendV2Request.Body.class));
+                message.setOa(oa);
+            }
             req.setMsg(message);
         } catch (Exception e) {
             log.error("assembleParam fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
