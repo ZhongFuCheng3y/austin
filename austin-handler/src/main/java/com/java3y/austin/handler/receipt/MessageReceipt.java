@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class SmsReceipt {
+public class MessageReceipt {
 
     @Autowired
     private TencentSmsReceipt tencentSmsReceipt;
@@ -45,8 +45,8 @@ public class SmsReceipt {
             while (true) {
 
                 // TODO 回执这里自行打开(免得报错)
-                // tencentSmsReceipt.pull();
-                // yunPianSmsReceipt.pull();
+//                tencentSmsReceipt.pull();
+//                yunPianSmsReceipt.pull();
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
