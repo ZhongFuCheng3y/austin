@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.TaskInfo;
@@ -13,6 +14,7 @@ import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.MessageParam;
+import com.java3y.austin.service.api.enums.BusinessCode;
 import com.java3y.austin.service.api.impl.domain.SendTaskModel;
 import com.java3y.austin.support.dao.MessageTemplateDao;
 import com.java3y.austin.support.domain.MessageTemplate;
@@ -50,9 +52,12 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
                 context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TEMPLATE_NOT_FOUND));
                 return;
             }
-
-            List<TaskInfo> taskInfos = assembleTaskInfo(sendTaskModel, messageTemplate.get());
-            sendTaskModel.setTaskInfo(taskInfos);
+            if (BusinessCode.COMMON_SEND.getCode().equals(context.getCode())) {
+                List<TaskInfo> taskInfos = assembleTaskInfo(sendTaskModel, messageTemplate.get());
+                sendTaskModel.setTaskInfo(taskInfos);
+            } else if (BusinessCode.RECALL.getCode().equals(context.getCode())) {
+                sendTaskModel.setMessageTemplate(messageTemplate.get());
+            }
         } catch (Exception e) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR));
             log.error("assemble task fail! templateId:{}, e:{}", messageTemplateId, Throwables.getStackTraceAsString(e));

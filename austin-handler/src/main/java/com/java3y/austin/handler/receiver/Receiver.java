@@ -6,9 +6,11 @@ import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.LogParam;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
+import com.java3y.austin.handler.handler.HandlerHolder;
 import com.java3y.austin.handler.pending.Task;
 import com.java3y.austin.handler.pending.TaskPendingHolder;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -33,6 +35,7 @@ import java.util.Optional;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Receiver {
     private static final String LOG_BIZ_TYPE = "Receiver#consumer";
+    private static final String LOG_BIZ_RECALL_TYPE = "Receiver#recall";
     @Autowired
     private ApplicationContext context;
 
@@ -42,13 +45,20 @@ public class Receiver {
     @Autowired
     private LogUtils logUtils;
 
+    @Autowired
+    private HandlerHolder handlerHolder;
+
+    /**
+     * 发送消息
+     * @param consumerRecord
+     * @param topicGroupId
+     */
     @KafkaListener(topics = "#{'${austin.business.topic.name}'}")
     public void consumer(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if (kafkaMessage.isPresent()) {
 
             List<TaskInfo> taskInfoLists = JSON.parseArray(kafkaMessage.get(), TaskInfo.class);
-
             String messageGroupId = GroupIdMappingUtils.getGroupIdByTaskInfo(CollUtil.getFirst(taskInfoLists.iterator()));
 
             /**
@@ -61,6 +71,20 @@ public class Receiver {
                     taskPendingHolder.route(topicGroupId).execute(task);
                 }
             }
+        }
+    }
+
+    /**
+     * 撤回消息
+     * @param consumerRecord
+     */
+    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}")
+    public void recall(ConsumerRecord<?,String> consumerRecord){
+        Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
+        if(kafkaMessage.isPresent()){
+            MessageTemplate messageTemplate = JSON.parseObject(kafkaMessage.get(), MessageTemplate.class);
+            logUtils.print(LogParam.builder().bizType(LOG_BIZ_RECALL_TYPE).object(messageTemplate).build());
+            handlerHolder.route(messageTemplate.getSendChannel()).recall(messageTemplate);
         }
     }
 }

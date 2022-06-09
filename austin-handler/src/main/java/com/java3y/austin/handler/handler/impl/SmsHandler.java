@@ -17,6 +17,7 @@ import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.handler.script.SmsScriptHolder;
 import com.java3y.austin.support.dao.SmsRecordDao;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,5 +157,8 @@ public class SmsHandler extends BaseHandler implements Handler {
         }
     }
 
+    @Override
+    public void recall(MessageTemplate messageTemplate) {
 
+    }
 }

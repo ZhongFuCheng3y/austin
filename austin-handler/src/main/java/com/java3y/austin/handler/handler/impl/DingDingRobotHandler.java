@@ -16,6 +16,7 @@ import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -61,6 +62,8 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
         }
         return false;
     }
+
+
 
     private DingDingRobotParam assembleParam(TaskInfo taskInfo) {
 
@@ -131,6 +134,12 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
             log.error("DingDingHandler#assembleSign fail!:{}", Throwables.getStackTraceAsString(e));
         }
         return sign;
+    }
+
+
+    @Override
+    public void recall(MessageTemplate messageTemplate) {
+
     }
 }
 

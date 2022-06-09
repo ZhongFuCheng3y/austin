@@ -129,8 +129,8 @@ public class MessageTemplate implements Serializable {
 
     /**
      * 是否删除
-     * 0：已删除
-     * 1：删除
+     * 0：未删除
+     * 1：已删除
      */
     private Integer isDeleted;
 

@@ -9,6 +9,7 @@ import com.java3y.austin.handler.domain.wechat.WeChatOfficialParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.handler.wechat.OfficialAccountService;
+import com.java3y.austin.support.domain.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -53,5 +54,9 @@ public class OfficialAccountHandler extends BaseHandler implements Handler {
         return false;
     }
 
+    @Override
+    public void recall(MessageTemplate messageTemplate) {
+
+    }
 }
 
