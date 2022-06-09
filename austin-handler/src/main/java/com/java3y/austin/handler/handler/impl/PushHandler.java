@@ -19,6 +19,7 @@ import com.java3y.austin.handler.domain.push.getui.SendPushParam;
 import com.java3y.austin.handler.domain.push.getui.SendPushResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,5 +161,8 @@ public class PushHandler extends BaseHandler implements Handler {
         }
         return param;
     }
+    @Override
+    public void recall(MessageTemplate messageTemplate) {
 
+    }
 }

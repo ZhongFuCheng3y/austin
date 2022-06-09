@@ -11,6 +11,7 @@ import com.java3y.austin.service.api.domain.MessageParam;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
 import com.java3y.austin.service.api.enums.BusinessCode;
+import com.java3y.austin.service.api.service.RecallService;
 import com.java3y.austin.service.api.service.SendService;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.service.MessageTemplateService;
@@ -49,6 +50,9 @@ public class MessageTemplateController {
 
     @Autowired
     private SendService sendService;
+
+    @Autowired
+    private RecallService recallService;
 
     @Value("${austin.business.upload.crowd.path}")
     private String dataPath;
@@ -125,6 +129,22 @@ public class MessageTemplateController {
         MessageParam messageParam = MessageParam.builder().receiver(messageTemplateParam.getReceiver()).variables(variables).build();
         SendRequest sendRequest = SendRequest.builder().code(BusinessCode.COMMON_SEND.getCode()).messageTemplateId(messageTemplateParam.getId()).messageParam(messageParam).build();
         SendResponse response = sendService.send(sendRequest);
+        if (response.getCode() != RespStatusEnum.SUCCESS.getCode()) {
+            return BasicResultVO.fail(response.getMsg());
+        }
+        return BasicResultVO.success(response);
+    }
+
+    /**
+     * 测试发送接口
+     */
+    @PostMapping("recall/{id}")
+    @ApiOperation("/撤回消息接口")
+    public BasicResultVO recall(@PathVariable("id") String id) {
+
+        SendRequest sendRequest = SendRequest.builder().code(BusinessCode.RECALL.getCode()).
+                messageTemplateId(Long.valueOf(id)).build();
+        SendResponse response = recallService.recall(sendRequest);
         if (response.getCode() != RespStatusEnum.SUCCESS.getCode()) {
             return BasicResultVO.fail(response.getMsg());
         }

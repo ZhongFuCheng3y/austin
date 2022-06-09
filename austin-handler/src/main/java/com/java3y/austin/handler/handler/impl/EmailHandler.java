@@ -13,6 +13,7 @@ import com.java3y.austin.handler.enums.RateLimitStrategy;
 import com.java3y.austin.handler.flowcontrol.FlowControlParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -73,5 +74,8 @@ public class EmailHandler extends BaseHandler implements Handler {
         }
         return account;
     }
+    @Override
+    public void recall(MessageTemplate messageTemplate) {
 
+    }
 }
