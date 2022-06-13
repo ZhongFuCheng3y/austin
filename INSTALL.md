@@ -193,8 +193,10 @@ docker exec -it kafka sh
 
 $KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
 
+$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinLog --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
 
-$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinLog --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1 
+$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinRecall --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
+ 
 ```
 
 查看刚创建的topic信息：
@@ -284,7 +286,12 @@ PS：我的namespace是`boss.austin`
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c4636a5620a454b931aea8b248e2890~tplv-k3u1fbpfcp-watermark.image?)
 
+apollo配置样例可看example/apollo.properties文件的内容
+
 `dynamic-tp-apollo-dtp`它是一个apollo的namespace，存放着动态线程池的配置
+
+动态线程池样例配置可看 dynamic-tp-apollo-dtp.yml 文件的内容
+
 
 ## 06、安装PROMETHEUS和GRAFANA(可选)
 
