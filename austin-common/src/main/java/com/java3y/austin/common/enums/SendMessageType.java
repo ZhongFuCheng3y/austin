@@ -27,6 +27,8 @@ public enum SendMessageType {
     LINK("110", "链接消息", "link", "link"),
     ACTION_CARD("120", "跳转卡片消息", "actionCard", "action_card"),
     OA("130", "OA消息", null, "oa"),
+    MP_NEWS("140", "图文消息(mpnews)", null, null),
+
     ;
 
     private String code;

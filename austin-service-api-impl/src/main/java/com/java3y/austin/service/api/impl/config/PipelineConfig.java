@@ -49,7 +49,7 @@ public class PipelineConfig {
     }
 
     /**
-     * 普通发送执行流程
+     * 消息撤回执行流程
      * 1.组装参数
      * 2.发送MQ
      * @return
@@ -63,9 +63,7 @@ public class PipelineConfig {
 
     /**
      * pipeline流程控制器
-     * 目前暂定只有 普通发送的流程
      * 后续扩展则加BusinessCode和ProcessTemplate
-     *
      * @return
      */
     @Bean
