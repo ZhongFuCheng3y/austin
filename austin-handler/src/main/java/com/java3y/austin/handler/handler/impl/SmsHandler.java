@@ -19,6 +19,7 @@ import com.java3y.austin.handler.script.SmsScriptHolder;
 import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
+import com.java3y.austin.support.service.ConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,8 +46,8 @@ public class SmsHandler extends BaseHandler implements Handler {
     @Autowired
     private SmsScriptHolder smsScriptHolder;
 
-    @ApolloConfig("boss.austin")
-    private Config config;
+    @Autowired
+    private ConfigService config;
 
 
     @Override
@@ -116,7 +117,7 @@ public class SmsHandler extends BaseHandler implements Handler {
      * 每种类型都会有其下发渠道账号的配置(流量占比也会配置里面)
      * <p>
      * 样例：
-     * key：msg_type_sms_config
+     * key：msgTypeSmsConfig
      * value：[{"message_type_10":[{"weights":80,"scriptName":"TencentSmsScript"},{"weights":20,"scriptName":"YunPianSmsScript"}]},{"message_type_20":[{"weights":20,"scriptName":"YunPianSmsScript"}]},{"message_type_30":[{"weights":20,"scriptName":"TencentSmsScript"}]},{"message_type_40":[{"weights":20,"scriptName":"TencentSmsScript"}]}]
      * 通知类短信有两个发送渠道 TencentSmsScript 占80%流量，YunPianSmsScript占20%流量
      * 营销类短信只有一个发送渠道 YunPianSmsScript
@@ -127,7 +128,7 @@ public class SmsHandler extends BaseHandler implements Handler {
      */
     private List<MessageTypeSmsConfig> getMessageTypeSmsConfig(Integer msgType) {
 
-        String apolloKey = "msg_type_sms_config";
+        String apolloKey = "msgTypeSmsConfig";
         String messagePrefix = "message_type_";
 
         String property = config.getProperty(apolloKey, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_ARRAY);

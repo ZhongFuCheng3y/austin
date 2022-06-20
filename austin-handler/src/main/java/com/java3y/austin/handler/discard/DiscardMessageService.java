@@ -2,12 +2,11 @@ package com.java3y.austin.handler.discard;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.ctrip.framework.apollo.Config;
-import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
+import com.java3y.austin.support.service.ConfigService;
 import com.java3y.austin.support.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DiscardMessageService {
-    private static final String DISCARD_MESSAGE_KEY = "discard";
+    private static final String DISCARD_MESSAGE_KEY = "discardMsgIds";
 
-    @ApolloConfig("boss.austin")
-    private Config config;
+    @Autowired
+    private ConfigService config;
 
     @Autowired
     private LogUtils logUtils;

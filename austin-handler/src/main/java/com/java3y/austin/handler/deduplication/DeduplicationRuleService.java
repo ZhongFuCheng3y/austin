@@ -1,10 +1,9 @@
 package com.java3y.austin.handler.deduplication;
 
-import com.ctrip.framework.apollo.Config;
-import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.DeduplicationType;
+import com.java3y.austin.support.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +17,10 @@ import java.util.List;
 @Service
 public class DeduplicationRuleService {
 
-    public static final String DEDUPLICATION_RULE_KEY = "deduplication";
+    public static final String DEDUPLICATION_RULE_KEY = "deduplicationRule";
 
-    @ApolloConfig("boss.austin")
-    private Config config;
+    @Autowired
+    private ConfigService config;
 
     @Autowired
     private DeduplicationHolder deduplicationHolder;
