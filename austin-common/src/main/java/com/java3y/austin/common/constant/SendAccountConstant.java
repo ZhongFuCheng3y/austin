@@ -49,6 +49,12 @@ public class SendAccountConstant {
     public static final String DING_DING_ROBOT_PREFIX = "ding_ding_robot_";
 
     /**
+     * 企业微信群机器人 账号
+     */
+    public static final String ENTERPRISE_WECHAT_ROBOT_ACCOUNT_KEY = "enterpriseWechatAccountRobot";
+    public static final String ENTERPRISE_WECHAT_ROBOT_PREFIX = "enterprise_wechat_robot_";
+
+    /**
      * 企业微信 应用消息 账号
      */
     public static final String ENTERPRISE_WECHAT_ACCOUNT_KEY = "enterpriseWechatAccount";

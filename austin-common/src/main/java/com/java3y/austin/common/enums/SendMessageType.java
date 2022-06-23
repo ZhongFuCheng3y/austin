@@ -14,20 +14,20 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum SendMessageType {
 
-    TEXT("10", "文本", "text", "text"),
-    VOICE("20", "语音", null, "voice"),
-    VIDEO("30", "视频", null, null),
-    NEWS("40", "图文", "feedCard", null),
-    TEXT_CARD("50", "文本卡片", null, null),
-    FILE("60", "文件", null, "file"),
-    MINI_PROGRAM_NOTICE("70", "小程序通知", null, null),
-    MARKDOWN("80", "markdown", "markdown", "markdown"),
-    TEMPLATE_CARD("90", "模板卡片", null, null),
-    IMAGE("100", "图片", null, "image"),
-    LINK("110", "链接消息", "link", "link"),
-    ACTION_CARD("120", "跳转卡片消息", "actionCard", "action_card"),
-    OA("130", "OA消息", null, "oa"),
-    MP_NEWS("140", "图文消息(mpnews)", null, null),
+    TEXT("10", "文本", "text", "text","text"),
+    VOICE("20", "语音", null, "voice",null),
+    VIDEO("30", "视频", null, null,null),
+    NEWS("40", "图文", "feedCard", null,"news"),
+    TEXT_CARD("50", "文本卡片", null, null,null),
+    FILE("60", "文件", null, "file","file"),
+    MINI_PROGRAM_NOTICE("70", "小程序通知", null, null,null),
+    MARKDOWN("80", "markdown", "markdown", "markdown","markdown"),
+    TEMPLATE_CARD("90", "模板卡片", null, null,"template_card"),
+    IMAGE("100", "图片", null, "image","image"),
+    LINK("110", "链接消息", "link", "link",null),
+    ACTION_CARD("120", "跳转卡片消息", "actionCard", "action_card",null),
+    OA("130", "OA消息", null, "oa",null),
+    MP_NEWS("140", "图文消息(mpnews)", null, null,null),
 
     ;
 
@@ -43,6 +43,11 @@ public enum SendMessageType {
      * 钉钉机器人消息的类型值
      */
     private String dingDingWorkType;
+
+    /**
+     * 企业微信机器人的类型值
+     */
+    private String enterpriseWeChatRobotType;
 
 
     /**
@@ -75,5 +80,19 @@ public enum SendMessageType {
         return null;
     }
 
+    /**
+     * 通过code获取企业微信机器人的Type值
+     *
+     * @param code
+     * @return
+     */
+    public static String getEnterpriseWeChatRobotTypeByCode(String code) {
+        for (SendMessageType value : SendMessageType.values()) {
+            if (value.getCode().equals(code)) {
+                return value.getEnterpriseWeChatRobotType();
+            }
+        }
+        return null;
+    }
 
 }
