@@ -60,7 +60,7 @@ public class EnterpriseWeChatContentModel extends ContentModel {
 
     /**
      * 图文消息（mpnews）
-     *  [{"title":"Title","thumb_media_id":"MEDIA_ID","author":"Author","content_source_url":"URL","content":"Content","digest":"Digest description"}]
+     * [{"title":"Title","thumb_media_id":"MEDIA_ID","author":"Author","content_source_url":"URL","content":"Content","digest":"Digest description"}]
      */
     private String mpNewsArticle;
 
@@ -74,12 +74,8 @@ public class EnterpriseWeChatContentModel extends ContentModel {
     private String contentItems;
 
 
-
     /**
      *  其他消息类型： https://developer.work.weixin.qq.com/document/path/90372#%E6%96%87%E6%9C%AC%E6%B6%88%E6%81%AF
      */
-
-
-
 
 }
