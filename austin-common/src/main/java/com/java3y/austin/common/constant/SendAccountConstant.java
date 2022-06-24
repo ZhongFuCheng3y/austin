@@ -55,6 +55,12 @@ public class SendAccountConstant {
     public static final String ENTERPRISE_WECHAT_ROBOT_PREFIX = "enterprise_wechat_robot_";
 
     /**
+     * 飞书群机器人 账号
+     */
+    public static final String FEI_SHU_ROBOT_ACCOUNT_KEY = "feiShuAccountRobot";
+    public static final String FEI_SHU_ROBOT_PREFIX = "fei_shu_robot_";
+
+    /**
      * 企业微信 应用消息 账号
      */
     public static final String ENTERPRISE_WECHAT_ACCOUNT_KEY = "enterpriseWechatAccount";
