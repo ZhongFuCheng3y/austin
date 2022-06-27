@@ -43,8 +43,4 @@ public class FeiShuRobotContentModel extends ContentModel {
      */
     private String postContent;
 
-    /**
-     * 图片路径
-     */
-    private String imagePath;
 }
