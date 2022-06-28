@@ -13,6 +13,7 @@ import com.java3y.austin.handler.utils.GroupIdMappingUtils;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -50,10 +51,11 @@ public class Receiver {
 
     /**
      * 发送消息
+     *
      * @param consumerRecord
      * @param topicGroupId
      */
-    @KafkaListener(topics = "#{'${austin.business.topic.name}'}")
+    @KafkaListener(topics = "#{'${austin.business.topic.name}'}", containerFactory = "filterContainerFactory")
     public void consumer(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if (kafkaMessage.isPresent()) {
@@ -78,7 +80,7 @@ public class Receiver {
      * 撤回消息
      * @param consumerRecord
      */
-    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}")
+    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}",containerFactory = "filterContainerFactory")
     public void recall(ConsumerRecord<?,String> consumerRecord){
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if(kafkaMessage.isPresent()){
