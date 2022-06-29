@@ -168,7 +168,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ## 项目交流
 
-欢迎扫描下方二维码添加我的**个人微信**备注：【**项目**】，我会空闲的时候拉进项目交流群（群里会解答相关的问题）
+由于austin项目交流群已经超过了两百人，添加我的**个人微信**备注：【**项目**】，我空的时候会拉进项目交流群里
 
 
 <img align="center" src='https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/60efe6b0f4354b838244b96a15efdf49~tplv-k3u1fbpfcp-watermark.image' width=300px height=300px />
