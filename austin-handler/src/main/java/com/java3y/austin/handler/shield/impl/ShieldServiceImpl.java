@@ -35,6 +35,10 @@ public class ShieldServiceImpl implements ShieldService {
     @Override
     public void shield(TaskInfo taskInfo) {
 
+        if (ShieldType.NIGHT_NO_SHIELD.getCode().equals(taskInfo.getShieldType())) {
+            return;
+        }
+
         /**
          * example:当消息下发至austin平台时，已经是凌晨1点，业务希望此类消息在次日的早上9点推送
          * (配合 分布式任务定时任务框架搞掂)
