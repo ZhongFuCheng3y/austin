@@ -7,6 +7,8 @@ import com.java3y.austin.support.service.ConfigService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+
 
 /**
  * @author 3y
@@ -19,7 +21,7 @@ public class ConfigServiceImpl implements ConfigService {
      * 本地配置
      */
     private static final String PROPERTIES_PATH = "local.properties";
-    private Props props = new Props(PROPERTIES_PATH);
+    private Props props = new Props(PROPERTIES_PATH, StandardCharsets.UTF_8);
 
     /**
      * apollo配置
