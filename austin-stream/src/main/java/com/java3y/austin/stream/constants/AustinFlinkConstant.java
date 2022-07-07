@@ -12,7 +12,7 @@ public class AustinFlinkConstant {
      * (真实网络ip,这里不能用配置的hosts，看语雀文档得到真实ip)
      */
     public static final String GROUP_ID = "austinLogGroup";
-    public static final String TOPIC_NAME = "austinLog";
+    public static final String TOPIC_NAME = "austinTraceLog";
     public static final String BROKER = "austin.kafka";
 
     /**
