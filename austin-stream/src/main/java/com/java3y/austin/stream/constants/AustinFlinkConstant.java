@@ -13,7 +13,7 @@ public class AustinFlinkConstant {
      */
     public static final String GROUP_ID = "austinLogGroup";
     public static final String TOPIC_NAME = "austinLog";
-    public static final String BROKER = "austin.flink";
+    public static final String BROKER = "austin.kafka";
 
     /**
      * redis 配置

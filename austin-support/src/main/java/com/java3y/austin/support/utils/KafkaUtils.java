@@ -29,13 +29,13 @@ public class KafkaUtils {
     private String tagIdKey;
 
     /**
-     * 发送kafka消息
+     * 发送kafka消息(不支持tag过滤）
      *
      * @param topicName
      * @param jsonMessage
      */
     public void send(String topicName, String jsonMessage) {
-        kafkaTemplate.send(topicName, jsonMessage, null);
+        send(topicName, jsonMessage, null);
     }
 
     /**
