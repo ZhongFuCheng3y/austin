@@ -1,12 +1,14 @@
-package com.java3y.austin.handler.receiver;
+package com.java3y.austin.handler.receiver.kafka;
 
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Header;
+import com.java3y.austin.support.constans.MessageQueuePipeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor;
@@ -29,8 +31,10 @@ import java.util.Optional;
  * @date 2021/12/4
  */
 @Service
+@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.KAFKA)
 @Slf4j
 public class ReceiverStart {
+
     @Autowired
     private ApplicationContext context;
     @Autowired

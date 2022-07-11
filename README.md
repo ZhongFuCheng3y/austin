@@ -63,9 +63,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/`Kafka`(**大概需要4G内存**)，**弱依赖**`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 
-
 > 实在想要`clone`项目后不用自己部署环境直接在本地启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=735778370&lang=zh_CN#rd)，**直连**部署好的服务器
-
 
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
@@ -74,7 +72,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **3**、执行`sql`文件夹下的`austin.sql`创建对应的表以及插入测试数据
 
-**4**、填写`application.properties`中`austin-kafka`对应的`ip`/`port`信息
+**4**、如果配置`austin-mq-pipeline=kafka`，需要填写`application.properties`中`austin-kafka`对应的`ip`/`port`信息
 
 **5**、填写`application.properties`中`austin-redis`对应的`ip`/`port`信息
 
@@ -100,7 +98,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
 
-**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建)
+**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并使用Kafka作为消息队列实现)
 
 **13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-xxl-job-ip`和`austin-xxl-job-port`
 
@@ -127,6 +125,25 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 5、除了项目，还可以问我些学习经验、学习路线、简历编写、面试经验等等问题，技术和学习上的知识**知无不言**
 
 详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=319992632&lang=zh_CN#rd)
+
+
+## 项目交流
+
+由于austin项目交流群已经超过了两百人，添加我的**个人微信**备注：【**项目**】，我空的时候会拉进项目交流群里
+
+
+<img align="center" src='https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/60efe6b0f4354b838244b96a15efdf49~tplv-k3u1fbpfcp-watermark.image' width=300px height=300px />
+
+## 如何准备面试？
+
+**对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
+
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c4a6cae132244355b9da6bd74d38d1ee~tplv-k3u1fbpfcp-zoom-1.image)
+
+想要获取这份电子书，**点击关注**下方公众号，回复「**对线**」得到我的联系方式即可进群获取电子书
+
+<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 ## 里程碑
 
@@ -159,27 +176,11 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 - [x] 接入云片短信渠道，并短信支持流量配置，拉取腾讯云短信回执
 - [x] 完成接入钉钉机器人渠道所有类型的消息
 - [x] 完成接入钉钉工作渠道所有类型的消息，包括对文件素材的上传功能
+- [x] Kafka消息支持tag过滤
+- [x] MQ层支持可插拔，默认使用eventbus单机队列，Kafka变为弱依赖
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
 
-**近期更新时间**：6月27号
+**近期更新时间**：7月11号
 
-**近期更新功能**：飞书机器人、企业微信机器人部分消息类型接入
-
-## 项目交流
-
-由于austin项目交流群已经超过了两百人，添加我的**个人微信**备注：【**项目**】，我空的时候会拉进项目交流群里
-
-
-<img align="center" src='https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/60efe6b0f4354b838244b96a15efdf49~tplv-k3u1fbpfcp-watermark.image' width=300px height=300px />
-
-## 如何准备面试？
-
-**对线面试官**公众号持续更新**面试系列**文章（对线面试官系列），深受各大开发的好评，已有不少的同学通过对线面试官系列得到BATTMD等一线大厂的的offer。一个**讲人话的面试系列**，八股文不再是背诵。
-
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c4a6cae132244355b9da6bd74d38d1ee~tplv-k3u1fbpfcp-zoom-1.image)
-
-想要获取这份电子书，**点击关注**下方公众号，回复「**对线**」得到我的联系方式即可进群获取电子书
-
-<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
+**近期更新功能**：MQ层可插拔重构
