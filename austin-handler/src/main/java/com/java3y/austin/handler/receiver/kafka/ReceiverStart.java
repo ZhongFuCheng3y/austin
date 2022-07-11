@@ -1,7 +1,9 @@
-package com.java3y.austin.handler.receiver;
+package com.java3y.austin.handler.receiver.kafka;
 
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
+import com.java3y.austin.support.constans.MessageQueuePipeline;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor;
@@ -18,7 +20,9 @@ import java.util.List;
  * @date 2021/12/4
  */
 @Service
+@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.KAFKA)
 public class ReceiverStart {
+
     @Autowired
     private ApplicationContext context;
 
