@@ -153,6 +153,12 @@
                 <version>${flink.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+
             <!--微信服务号第三方SDK-->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -189,7 +195,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 
 </project>
