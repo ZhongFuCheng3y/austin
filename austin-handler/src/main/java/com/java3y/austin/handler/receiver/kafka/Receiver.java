@@ -42,10 +42,11 @@ public class Receiver {
     private ConsumeService consumeService;
     /**
      * 发送消息
+     *
      * @param consumerRecord
      * @param topicGroupId
      */
-    @KafkaListener(topics = "#{'${austin.business.topic.name}'}")
+    @KafkaListener(topics = "#{'${austin.business.topic.name}'}", containerFactory = "filterContainerFactory")
     public void consumer(ConsumerRecord<?, String> consumerRecord, @Header(KafkaHeaders.GROUP_ID) String topicGroupId) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if (kafkaMessage.isPresent()) {
@@ -65,7 +66,7 @@ public class Receiver {
      * 撤回消息
      * @param consumerRecord
      */
-    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}")
+    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}",containerFactory = "filterContainerFactory")
     public void recall(ConsumerRecord<?,String> consumerRecord){
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
         if(kafkaMessage.isPresent()){
