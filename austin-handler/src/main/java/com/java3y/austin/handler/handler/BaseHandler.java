@@ -1,16 +1,13 @@
 package com.java3y.austin.handler.handler;
 
-import com.google.common.util.concurrent.RateLimiter;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
-import com.java3y.austin.handler.enums.RateLimitStrategy;
+import com.java3y.austin.handler.flowcontrol.FlowControlFactory;
 import com.java3y.austin.handler.flowcontrol.FlowControlParam;
-import com.java3y.austin.handler.flowcontrol.FlowControlService;
 import com.java3y.austin.support.utils.LogUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author 3y
@@ -22,7 +19,7 @@ public abstract class BaseHandler implements Handler {
     @Autowired
     private LogUtils logUtils;
     @Autowired
-    private FlowControlService flowControlService;
+    private FlowControlFactory flowControlFactory;
 
     /**
      * 标识渠道的Code
@@ -52,7 +49,7 @@ public abstract class BaseHandler implements Handler {
     public void flowControl(TaskInfo taskInfo) {
         // 只有子类指定了限流参数，才需要限流
         if (flowControlParam != null) {
-            flowControlService.flowControl(taskInfo, flowControlParam);
+            flowControlFactory.flowControl(taskInfo, flowControlParam);
         }
     }
     @Override

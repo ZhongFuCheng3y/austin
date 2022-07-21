@@ -29,7 +29,7 @@ public class SimpleLimitService extends AbstractLimitService {
     public Set<String> limitFilter(AbstractDeduplicationService service, TaskInfo taskInfo, DeduplicationParam param) {
         Set<String> filterReceiver = new HashSet<>(taskInfo.getReceiver().size());
         // 获取redis记录
-        Map<String, String> readyPutRedisReceiver = new HashMap(taskInfo.getReceiver().size());
+        Map<String, String> readyPutRedisReceiver = new HashMap<>(taskInfo.getReceiver().size());
         //redis数据隔离
         List<String> keys = deduplicationAllKey(service, taskInfo).stream().map(key -> LIMIT_TAG + key).collect(Collectors.toList());
         Map<String, String> inRedisValue = redisUtils.mGet(keys);
@@ -59,7 +59,7 @@ public class SimpleLimitService extends AbstractLimitService {
      * @param readyPutRedisReceiver
      */
     private void putInRedis(Map<String, String> readyPutRedisReceiver,
-                            Map<String, String> inRedisValue, Long deduplicationTime) {
+        Map<String, String> inRedisValue, Long deduplicationTime) {
         Map<String, String> keyValues = new HashMap<>(readyPutRedisReceiver.size());
         for (Map.Entry<String, String> entry : readyPutRedisReceiver.entrySet()) {
             String key = entry.getValue();
