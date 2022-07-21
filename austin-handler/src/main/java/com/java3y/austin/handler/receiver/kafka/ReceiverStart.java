@@ -1,17 +1,28 @@
 package com.java3y.austin.handler.receiver.kafka;
 
+import com.alibaba.fastjson.JSON;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.header.Header;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListenerAnnotationBeanPostProcessor;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 启动消费者
@@ -21,10 +32,13 @@ import java.util.List;
  */
 @Service
 @ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.KAFKA)
+@Slf4j
 public class ReceiverStart {
 
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private ConsumerFactory consumerFactory;
 
     /**
      * receiver的消费方法常量
@@ -66,5 +80,31 @@ public class ReceiverStart {
             }
             return attrs;
         };
+    }
+
+    /**
+     * 针对tag消息过滤
+     * producer 将tag写进header里
+     * @return
+     */
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory filterContainerFactory(@Value("${austin.business.tagId.key}") String tagIdKey,
+                                                                          @Value("${austin.business.tagId.value}") String tagIdValue) {
+        ConcurrentKafkaListenerContainerFactory factory = new ConcurrentKafkaListenerContainerFactory();
+        factory.setConsumerFactory(consumerFactory);
+        factory.setAckDiscarded(true);
+
+        factory.setRecordFilterStrategy(consumerRecord -> {
+            if (Optional.ofNullable(consumerRecord.value()).isPresent()) {
+                for (Header header : consumerRecord.headers()) {
+                    if (header.key().equals(tagIdKey) && new String(header.value()).equals(new String(tagIdValue.getBytes(StandardCharsets.UTF_8)))) {
+                        return false;
+                    }
+                }
+            }
+            //返回true将会被丢弃
+            return true;
+        });
+        return factory;
     }
 }

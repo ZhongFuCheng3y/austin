@@ -153,10 +153,11 @@
                 <version>${flink.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-rabbitmq -->
             <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>2.1.0</version>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-rabbitmq</artifactId>
+                <version>1.15.1</version>
             </dependency>
 
             <!--微信服务号第三方SDK-->
@@ -193,8 +194,16 @@
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
                 <version>2.0.0</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+
 
 
 </project>

@@ -36,6 +36,7 @@ public class SendMqAction implements BusinessProcess<SendTaskModel> {
     @Value("${austin.business.tagId.value}")
     private String tagId;
 
+
     @Override
     public void process(ProcessContext<SendTaskModel> context) {
         SendTaskModel sendTaskModel = context.getProcessModel();
