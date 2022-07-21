@@ -1,0 +1,18 @@
+spring:
+  application:
+    name:
+  profiles:
+    active:
+  cloud:
+    nacos:
+      # 配置中心
+      config:
+        server-addr:
+        username:
+        password:
+        namespace: ${spring.profiles.active}
+        file-extension: yaml
+        extension-configs:
+          - dataId: ${spring.profiles.active}.yaml
+            group: ${spring.profiles.active}
+            refresh: true
