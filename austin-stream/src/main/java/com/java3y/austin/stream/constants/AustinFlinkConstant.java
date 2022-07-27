@@ -13,7 +13,7 @@ public class AustinFlinkConstant {
      * （如果想要自己监听到所有的消息，改掉groupId）
      */
     public static final String GROUP_ID = "austinLogGroup";
-    public static final String TOPIC_NAME = "austinLog";
+    public static final String TOPIC_NAME = "austinTraceLog";
     public static final String BROKER = "ip:port";
 
     /**
