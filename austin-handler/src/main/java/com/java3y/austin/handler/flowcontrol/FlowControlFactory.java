@@ -1,4 +1,4 @@
-package com.java3y.austin.handler.flowcontrol.impl;
+package com.java3y.austin.handler.flowcontrol;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -7,11 +7,18 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.enums.RateLimitStrategy;
-import com.java3y.austin.handler.flowcontrol.FlowControlParam;
-import com.java3y.austin.handler.flowcontrol.FlowControlService;
+import com.java3y.austin.handler.flowcontrol.annotations.LocalRateLimit;
 import com.java3y.austin.support.service.ConfigService;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,22 +27,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class FlowControlServiceImpl implements FlowControlService {
+public class FlowControlFactory implements ApplicationContextAware {
 
     private static final String FLOW_CONTROL_KEY = "flowControlRule";
     private static final String FLOW_CONTROL_PREFIX = "flow_control_";
 
+    private final Map<RateLimitStrategy, FlowControlService> flowControlServiceMap = new ConcurrentHashMap<>();
+
     @Autowired
     private ConfigService config;
 
+    private ApplicationContext applicationContext;
 
     @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
     public void flowControl(TaskInfo taskInfo, FlowControlParam flowControlParam) {
-        RateLimiter rateLimiter = flowControlParam.getRateLimiter();
+        RateLimiter rateLimiter;
         Double rateInitValue = flowControlParam.getRateInitValue();
-
-        double costTime = 0;
-
         // 对比 初始限流值 与 配置限流值，以 配置中心的限流值为准
         Double rateLimitConfig = getRateLimitConfig(taskInfo.getSendChannel());
         if (rateLimitConfig != null && !rateInitValue.equals(rateLimitConfig)) {
@@ -43,16 +54,15 @@ public class FlowControlServiceImpl implements FlowControlService {
             flowControlParam.setRateInitValue(rateLimitConfig);
             flowControlParam.setRateLimiter(rateLimiter);
         }
-        if (RateLimitStrategy.REQUEST_RATE_LIMIT.equals(flowControlParam.getRateLimitStrategy())) {
-            costTime = rateLimiter.acquire(1);
+        FlowControlService flowControlService = flowControlServiceMap.get(flowControlParam.getRateLimitStrategy());
+        if (Objects.isNull(flowControlService)) {
+            log.error("没有找到对应的单机限流策略");
+            return;
         }
-        if (RateLimitStrategy.SEND_USER_NUM_RATE_LIMIT.equals(flowControlParam.getRateLimitStrategy())) {
-            costTime = rateLimiter.acquire(taskInfo.getReceiver().size());
-        }
-
+        double costTime = flowControlService.flowControl(taskInfo, flowControlParam);
         if (costTime > 0) {
             log.info("consumer {} flow control time {}",
-                    ChannelType.getEnumByCode(taskInfo.getSendChannel()).getDescription(), costTime);
+                ChannelType.getEnumByCode(taskInfo.getSendChannel()).getDescription(), costTime);
         }
     }
 
@@ -72,5 +82,18 @@ public class FlowControlServiceImpl implements FlowControlService {
             return null;
         }
         return jsonObject.getDouble(FLOW_CONTROL_PREFIX + channelCode);
+    }
+
+    @PostConstruct
+    private void init() {
+        Map<String, Object> serviceMap = this.applicationContext.getBeansWithAnnotation(LocalRateLimit.class);
+        serviceMap.forEach((name, service) -> {
+            if (service instanceof FlowControlService) {
+                LocalRateLimit localRateLimit = AopUtils.getTargetClass(service).getAnnotation(LocalRateLimit.class);
+                RateLimitStrategy rateLimitStrategy = localRateLimit.rateLimitStrategy();
+                //通常情况下 实现的限流service与rateLimitStrategy一一对应
+                flowControlServiceMap.put(rateLimitStrategy, (FlowControlService) service);
+            }
+        });
     }
 }

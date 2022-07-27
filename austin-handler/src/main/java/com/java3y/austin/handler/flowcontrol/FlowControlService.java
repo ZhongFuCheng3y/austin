@@ -15,6 +15,6 @@ public interface FlowControlService {
      * @param taskInfo
      * @param flowControlParam
      */
-    void flowControl(TaskInfo taskInfo, FlowControlParam flowControlParam);
+    Double flowControl(TaskInfo taskInfo, FlowControlParam flowControlParam);
 
 }
