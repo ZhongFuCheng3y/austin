@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+  nacos1:
+    container_name: nacos-server-1
+    hostname: nacos-server01
+    image: nacos/nacos-server
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos-server01:8848 nacos-server02:8848 nacos-server03:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVICE_DB_NAME=nacos-db
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    volumes:
+      - /home/nacos/cluster-logs/nacos-server01:/home/nacos/logs
+      - /home/nacos/init.d:/home/nacos/init.d
+    ports:
+      - 8846:8848
+      - 9555:9555
+    restart: on-failure
+
+  nacos2:
+    container_name: nacos-server-2
+    hostname: nacos-server02
+    image: nacos/nacos-server
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos-server01:8848 nacos-server02:8848 nacos-server03:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVICE_DB_NAME=nacos-db
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    volumes:
+      - /home/nacos/cluster-logs/nacos-server02:/home/nacos/logs
+      - /home/nacos/init.d:/home/nacos/init.d
+    ports:
+      - 8847:8848
+    restart: on-failure
+
+  nacos3:
+    container_name: nacos-server-3
+    hostname: nacos-server03
+    image: nacos/nacos-server
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos-server01:8848 nacos-server02:8848 nacos-server03:8848
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVICE_DB_NAME=nacos-db
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    volumes:
+      - /home/nacos/cluster-logs/nacos-server03:/home/nacos/logs
+      - /home/nacos/init.d:/home/nacos/init.d
+    ports:
+      - 8848:8848
+    restart: on-failure

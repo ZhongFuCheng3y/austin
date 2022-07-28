@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  nacos1:
+    container_name: nacos-server
+    hostname: nacos-server
+    image: nacos/nacos-server
+    environment:
+      - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVICE_DB_NAME=nacos-db
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    volumes:
+      - /home/nacos/single-logs/nacos-server:/home/nacos/logs
+      - /home/nacos/init.d:/home/nacos/init.d
+    ports:
+      - 8848:8848
+    restart: on-failure
