@@ -47,7 +47,7 @@ public class ConfigServiceImpl implements ConfigService {
             Config config = com.ctrip.framework.apollo.ConfigService.getConfig(namespaces.split(StrUtil.COMMA)[0]);
             return config.getProperty(key, defaultValue);
         } else if (enableNacos) {
-            return nacosUtils.getProperty(key);
+            return nacosUtils.getProperty(key, defaultValue);
         } else {
             return props.getProperty(key, defaultValue);
         }
