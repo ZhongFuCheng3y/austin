@@ -16,7 +16,7 @@ import java.util.List;
  * @author 3y
  */
 @Component
-@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.EVENT_BUS)
+@ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.EVENT_BUS)
 public class EventBusReceiver implements EventBusListener {
 
     @Autowired

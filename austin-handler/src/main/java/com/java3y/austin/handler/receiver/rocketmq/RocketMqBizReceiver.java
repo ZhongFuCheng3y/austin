@@ -21,9 +21,9 @@ import java.util.List;
  * create date: 2022/7/16
  */
 @Component
-@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.ROCKET_MQ)
+@ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.ROCKET_MQ)
 @RocketMQMessageListener(topic = "${austin.business.topic.name}",
-        consumerGroup = "${austin-rocketmq-biz-consumer-group}",
+        consumerGroup = "${austin.rocketmq.biz.consumer.group}",
         selectorType = SelectorType.TAG,
         selectorExpression = "${austin.business.tagId.value}"
 )

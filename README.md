@@ -72,9 +72,9 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **3**、执行`sql`文件夹下的`austin.sql`创建对应的表以及插入测试数据
 
-**4**、如果配置`austin-mq-pipeline=kafka`，需要填写`application.properties`中`austin-kafka`对应的`ip`/`port`信息
+**4**、如果配置`austin.mq.pipeline=kafka`，需要填写`application.properties`中`austin.kafka`对应的`ip`/`port`信息
 
-**5**、填写`application.properties`中`austin-redis`对应的`ip`/`port`信息
+**5**、填写`application.properties`中`austin.redis`对应的`ip`/`port`信息
 
 **6**、检查消息队列topic：`austin.business.topic.name`(我的topicName为：austinBusiness)
 
@@ -100,9 +100,9 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 **12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并使用Kafka作为消息队列实现)
 
-**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin-xxl-job-ip`和`austin-xxl-job-port`
+**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin.xxl.job.ip`和`austin.xxl.job.port`
 
-**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin-grayLog-ip`
+**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin.grayLog.ip`
 
 **14**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表
 

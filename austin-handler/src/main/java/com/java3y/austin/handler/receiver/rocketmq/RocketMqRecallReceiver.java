@@ -19,9 +19,9 @@ import org.springframework.stereotype.Component;
  * create date: 2022/7/16
  */
 @Component
-@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.ROCKET_MQ)
+@ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.ROCKET_MQ)
 @RocketMQMessageListener(topic = "${austin.business.recall.topic.name}",
-        consumerGroup = "${austin-rocketmq-recall-consumer-group}",
+        consumerGroup = "${austin.rocketmq.recall.consumer.group}",
         selectorType = SelectorType.TAG,
         selectorExpression = "${austin.business.tagId.value}"
 )

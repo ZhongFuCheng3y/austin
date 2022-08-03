@@ -31,7 +31,7 @@ import java.util.Optional;
  * @date 2021/12/4
  */
 @Service
-@ConditionalOnProperty(name = "austin-mq-pipeline", havingValue = MessageQueuePipeline.KAFKA)
+@ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.KAFKA)
 @Slf4j
 public class ReceiverStart {
 
