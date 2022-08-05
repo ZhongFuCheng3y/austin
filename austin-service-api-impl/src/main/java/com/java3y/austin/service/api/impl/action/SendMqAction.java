@@ -36,6 +36,9 @@ public class SendMqAction implements BusinessProcess<SendTaskModel> {
     @Value("${austin.business.tagId.value}")
     private String tagId;
 
+    @Value("${austin.mq.pipeline}")
+    private String mqPipeline;
+
 
     @Override
     public void process(ProcessContext<SendTaskModel> context) {
@@ -50,7 +53,7 @@ public class SendMqAction implements BusinessProcess<SendTaskModel> {
             }
         } catch (Exception e) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR));
-            log.error("send kafka fail! e:{},params:{}", Throwables.getStackTraceAsString(e)
+            log.error("send {} fail! e:{},params:{}", mqPipeline, Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(CollUtil.getFirst(sendTaskModel.getTaskInfo().listIterator())));
         }
     }
