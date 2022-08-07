@@ -36,9 +36,6 @@ public class ReceiverStart {
     @Autowired
     private ConsumerFactory consumerFactory;
 
-    @Value("${austin.nacos.enabled}")
-    private Boolean nacosEnabled;
-
     /**
      * receiver的消费方法常量
      */
