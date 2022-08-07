@@ -13,5 +13,5 @@ EXPOSE 8080
 # 运行jar包
 ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS austin.jar $PARAMS"]
 
-
-# docker run -e PARAMS="--austin.database.ip= --austin.database.port=3306 --austin.redis.ip= --austin.mq.pipeline=eventbus  " -p 8080:8080 --name austin:1.0
+# docker build -t austin:0.1 .
+# docker run -e PARAMS="--austin.database.ip= --austin.database.port=3306 --austin.redis.ip= --austin.mq.pipeline=eventbus  " -p 8080:8080 --name austin:0.1

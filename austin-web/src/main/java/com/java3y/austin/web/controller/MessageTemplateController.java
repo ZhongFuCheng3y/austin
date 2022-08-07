@@ -136,7 +136,7 @@ public class MessageTemplateController {
     }
 
     /**
-     * 测试发送接口
+     * 撤回接口
      */
     @PostMapping("recall/{id}")
     @ApiOperation("/撤回消息接口")

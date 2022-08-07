@@ -13,6 +13,7 @@
         <module>austin-handler</module>
         <module>austin-cron</module>
         <module>austin-stream</module>
+        <module>austin-client</module>
     </modules>
 
     <parent>
