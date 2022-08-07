@@ -59,13 +59,7 @@ public class ReceiverStart {
      */
     @PostConstruct
     public void init() {
-        int total = groupIds.size();
-        if (nacosEnabled) {
-            // 当nacos开启时 会导致Receiver提前加载 所以这里getBean次数-1
-            // nacos issue: https://github.com/nacos-group/nacos-spring-project/issues/249
-            total -= 1;
-        }
-        for (int i = 0; i < total; i++) {
+        for (int i = 0; i < groupIds.size(); i++) {
             context.getBean(Receiver.class);
         }
     }
