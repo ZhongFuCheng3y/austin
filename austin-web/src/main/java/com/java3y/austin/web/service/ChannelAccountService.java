@@ -1,9 +1,7 @@
 package com.java3y.austin.web.service;
 
 
-import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.ChannelAccount;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,5 +28,20 @@ public interface ChannelAccountService {
      * @return
      */
     List<ChannelAccount> queryByChannelType(Integer channelType);
+
+
+    /**
+     * 列表信息 无条件
+     *
+     * @return
+     */
+    List<ChannelAccount> list();
+
+    /**
+     * 软删除(deleted=1)
+     *
+     * @param ids
+     */
+    void deleteByIds(List<Long> ids);
 
 }

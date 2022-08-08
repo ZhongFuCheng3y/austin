@@ -32,4 +32,14 @@ public class ChannelAccountServiceImpl implements ChannelAccountService {
     public List<ChannelAccount> queryByChannelType(Integer channelType) {
         return channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, channelType);
     }
+
+    @Override
+    public List<ChannelAccount> list() {
+        return channelAccountDao.findAll();
+    }
+
+    @Override
+    public void deleteByIds(List<Long> ids) {
+        channelAccountDao.deleteAllById(ids);
+    }
 }

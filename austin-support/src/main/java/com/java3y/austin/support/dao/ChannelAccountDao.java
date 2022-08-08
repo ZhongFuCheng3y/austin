@@ -5,6 +5,7 @@ import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author 3y
  */
-public interface ChannelAccountDao extends CrudRepository<ChannelAccount, Long> {
+public interface ChannelAccountDao extends JpaRepository<ChannelAccount, Long> {
 
 
     /**
