@@ -1,0 +1,41 @@
+version: '3'
+services:
+  austin-mysql:
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: "root123_A"
+    restart: always
+    container_name: austin-mysql
+    image: mysql:5.7
+    hostname: austin-mysql
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 23306:3306
+    networks:
+      - app
+  austin-redis:
+    image: redis:3.2
+    ports:
+      - 16379:6379
+    restart: always
+    container_name: austin-redis
+    networks:
+      - app
+  austin:
+    build:
+      context: ./
+    ports:
+      - 8080:8080
+    restart: always
+    container_name: austin
+    depends_on:
+      - austin-redis
+      - austin-mysql
+    networks:
+      - app
+networks:
+  app:
