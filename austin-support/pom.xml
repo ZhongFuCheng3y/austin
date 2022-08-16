@@ -103,6 +103,11 @@
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
         <!--nacos-->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
