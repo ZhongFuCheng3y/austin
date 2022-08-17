@@ -184,3 +184,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 **近期更新时间**：7月11号
 
 **近期更新功能**：MQ层可插拔重构
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
