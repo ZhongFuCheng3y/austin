@@ -3,12 +3,16 @@ package com.java3y.austin.support.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ctrip.framework.apollo.Config;
-import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
+import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.support.dao.ChannelAccountDao;
+import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.service.ConfigService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * 获取账号信息工具类
@@ -16,10 +20,15 @@ import org.springframework.stereotype.Component;
  * @author 3y
  */
 @Component
+@Slf4j
 public class AccountUtils {
 
     @Autowired
     private ConfigService config;
+
+    @Autowired
+    private ChannelAccountDao channelAccountDao;
+
 
     /**
      * (key:smsAccount)短信参数示例：[{"sms_10":{"url":"sms.tencentcloudapi.com","region":"ap-guangzhou","secretId":"AKIDhDxxxxxxxx1WljQq","secretKey":"B4hwww39yxxxrrrrgxyi","smsSdkAppId":"1423123125","templateId":"1182097","signName":"Java3y公众号","supplierId":10,"supplierName":"腾讯云"}},{"sms_20":{"url":"https://sms.yunpian.com/v2/sms/tpl_batch_send.json","apikey":"caffff8234234231b5cd7","tpl_id":"523333332","supplierId":20,"supplierName":"云片"}}]
@@ -30,12 +39,27 @@ public class AccountUtils {
      * (key:officialAccount) 微信服务号模板消息参数示例：[{"official_10":{"appId":"wxecb4693d2eef1ea7","secret":"624asdfsa1640d769ba20120821","templateId":"JHUk6eE9T5Ts7asdfsadfiKNDQsk-Q","url":"http://weixin.qq.com/download","miniProgramId":"xiaochengxuappid12345","path":"index?foo=bar"}}]
      * (key:miniProgramAccount) 微信小程序订阅消息参数示例：[{"mini_program_10":{"appId":"wxecb4693d2eef1ea7","appSecret":"6240870f4d91701640d769ba20120821","templateId":"JHUk6eE9T5TasdfCrQsk-Q","grantType":"client_credential","miniProgramState":"trial","page":"index?foo=bar"}}]
      */
-    public <T> T getAccount(Integer sendAccount, String apolloKey, String prefix, Class<T> clazz) {
+    public <T> T getAccount(Integer sendAccountId, String apolloKey, String prefix, Class<T> clazz) {
+
+        /**
+         * 优先读数据库的，数据库没有才读配置
+         */
+        try {
+            Optional<ChannelAccount> optionalChannelAccount = channelAccountDao.findById(Long.valueOf(sendAccountId));
+            if (optionalChannelAccount.isPresent()) {
+                ChannelAccount channelAccount = optionalChannelAccount.get();
+                return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
+            }
+        } catch (Exception e) {
+            log.warn("AccountUtils#getAccount not found:{}", Throwables.getStackTraceAsString(e));
+        }
+
+
         String accountValues = config.getProperty(apolloKey, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_ARRAY);
         JSONArray jsonArray = JSON.parseArray(accountValues);
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            T object = jsonObject.getObject(prefix + sendAccount, clazz);
+            T object = jsonObject.getObject(prefix + sendAccountId, clazz);
             if (object != null) {
                 return object;
             }

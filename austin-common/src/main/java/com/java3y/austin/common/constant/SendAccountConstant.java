@@ -88,7 +88,6 @@ public class SendAccountConstant {
     /**
      * 短信账号code
      */
-    public static final Integer TENCENT_SMS_CODE = 10;
     public static final Integer YUN_PIAN_SMS_CODE = 20;
 
 

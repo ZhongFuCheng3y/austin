@@ -56,7 +56,9 @@ public class SmsHandler extends BaseHandler implements Handler {
                 .phones(taskInfo.getReceiver())
                 .content(getSmsContent(taskInfo))
                 .messageTemplateId(taskInfo.getMessageTemplateId())
+                .sendAccountId(taskInfo.getSendAccount())
                 .build();
+
         try {
             /**
              * 1、动态配置做流量负载

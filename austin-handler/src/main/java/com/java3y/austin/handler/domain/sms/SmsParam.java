@@ -25,6 +25,12 @@ public class SmsParam {
     private Set<String> phones;
 
     /**
+     * 发送渠道账号的Id
+     */
+    private Integer sendAccountId;
+
+
+    /**
      * 发送文案
      */
     private String content;

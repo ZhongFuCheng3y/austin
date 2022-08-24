@@ -7,7 +7,7 @@
     <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 后面是可以读配置的 -->
     <property name="log.path" value="logs"/>
 
-    <springProperty scope="context" name="grayLogIp" source="austin.business.graylog.ip"/>
+    <springProperty scope="context" name="grayLogIp" source="austin.grayLog.ip"/>
 
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

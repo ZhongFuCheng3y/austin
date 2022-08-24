@@ -49,7 +49,7 @@ public class TencentSmsScript extends BaseSmsScript implements SmsScript {
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
         try {
-            TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(SendAccountConstant.TENCENT_SMS_CODE, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
+            TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccountId(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
             SmsClient client = init(tencentSmsAccount);
             SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
             SendSmsResponse response = client.SendSms(request);

@@ -5,64 +5,95 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.dto.account.TencentSmsAccount;
+import com.java3y.austin.common.dto.account.YunPianSmsAccount;
+import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SmsStatus;
-import com.java3y.austin.support.config.SupportThreadPoolConfig;
+import com.java3y.austin.common.enums.SmsSupplier;
+import com.java3y.austin.support.dao.ChannelAccountDao;
 import com.java3y.austin.support.dao.SmsRecordDao;
+import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.domain.SmsRecord;
-import com.java3y.austin.support.utils.AccountUtils;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20210111.SmsClient;
-import com.tencentcloudapi.sms.v20210111.models.*;
+import com.tencentcloudapi.sms.v20210111.models.PullSmsSendStatus;
+import com.tencentcloudapi.sms.v20210111.models.PullSmsSendStatusRequest;
+import com.tencentcloudapi.sms.v20210111.models.PullSmsSendStatusResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 /**
- * 拉取腾讯云短信回执信息
+ * 拉取短信回执信息
  *
  * @author 3y
  */
 @Component
 @Slf4j
-public class TencentSmsReceipt {
-
+public class SmsPullReceipt {
 
     @Autowired
-    private AccountUtils accountUtils;
+    private ChannelAccountDao channelAccountDao;
 
     @Autowired
     private SmsRecordDao smsRecordDao;
 
-
     /**
      * 拉取消息并入库
+     * <p>
+     * eg accountList：[{"sms_10":{"url":"sms.tencentcloudapi.com","region":"ap-guangzhou","secretId":"234234","secretKey":"234324324","smsSdkAppId":"2343242","templateId":"234234","signName":"Java3y公众号","supplierId":10,"supplierName":"腾讯云"}},{"sms_20":{"url":"https://sms.yunpian.com/v2/sms/tpl_batch_send.json","apikey":"23423432","tpl_id":"23423432","supplierId":20,"supplierName":"云片"}}]
      */
     public void pull() {
+        List<ChannelAccount> channelAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, ChannelType.SMS.getCode());
+        for (ChannelAccount channelAccount : channelAccountList) {
+            Integer supplierId = JSON.parseObject(channelAccount.getAccountConfig()).getInteger("supplierId");
+            if (SmsSupplier.TENCENT.getCode().equals(supplierId)) {
+                TencentSmsAccount tencentSmsAccount = JSON.parseObject(channelAccount.getAccountConfig(), TencentSmsAccount.class);
+                pullTencent(tencentSmsAccount);
+            } else if (SmsSupplier.YUN_PAIN.getCode().equals(supplierId)) {
+                YunPianSmsAccount yunPianSmsAccount = JSON.parseObject(channelAccount.getAccountConfig(), YunPianSmsAccount.class);
+                pullYunPain(yunPianSmsAccount);
+            }
+        }
+    }
 
-        // 获取腾讯云账号信息
-        TencentSmsAccount account = accountUtils.getAccount(10, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
+    /**
+     * 拉取腾讯的回执
+     *
+     * @param account
+     */
+    private void pullTencent(TencentSmsAccount account) {
         try {
-            SmsClient client = getSmsClient(account);
+            /**
+             * 初始化客户端
+             */
+            HttpProfile httpProfile = new HttpProfile();
+            httpProfile.setEndpoint(account.getUrl());
+            ClientProfile clientProfile = new ClientProfile();
+            clientProfile.setHttpProfile(httpProfile);
+            SmsClient client = new SmsClient(new Credential(account.getSecretId(), account.getSecretKey()), account.getRegion(), clientProfile);
 
-            // 每次拉取10条
+            /**
+             * 每次拉取10条
+             */
             PullSmsSendStatusRequest req = new PullSmsSendStatusRequest();
             req.setLimit(10L);
             req.setSmsSdkAppId(account.getSmsSdkAppId());
 
+            /**
+             * 拉取回执后入库
+             */
             PullSmsSendStatusResponse resp = client.PullSmsSendStatus(req);
             List<SmsRecord> smsRecordList = new ArrayList<>();
             if (resp != null && resp.getPullSmsSendStatusSet() != null && resp.getPullSmsSendStatusSet().length > 0) {
-                log.debug("receipt sms:{}", JSON.toJSONString(resp.getPullSmsSendStatusSet()));
                 for (PullSmsSendStatus pullSmsSendStatus : resp.getPullSmsSendStatusSet()) {
                     SmsRecord smsRecord = SmsRecord.builder()
                             .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))
@@ -89,20 +120,7 @@ public class TencentSmsReceipt {
         }
     }
 
-    /**
-     * 构造smsClient
-     *
-     * @param account
-     * @return
-     */
-    private SmsClient getSmsClient(TencentSmsAccount account) {
-        Credential cred = new Credential(account.getSecretId(), account.getSecretKey());
-        HttpProfile httpProfile = new HttpProfile();
-        httpProfile.setEndpoint(account.getUrl());
-        ClientProfile clientProfile = new ClientProfile();
-        clientProfile.setHttpProfile(httpProfile);
-        return new SmsClient(cred, account.getRegion(), clientProfile);
+    private void pullYunPain(YunPianSmsAccount yunPianSmsAccount) {
+
     }
-
-
 }
