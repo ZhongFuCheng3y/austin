@@ -18,4 +18,14 @@ public interface ConfigService {
      */
     String getProperty(String key, String defaultValue);
 
+    /**
+     * 读取配置
+     * 1、当启动使用了mysql，apollo或者nacos，优先读取远程配置
+     * 2、当没有启动远程配置，读取本地 local.properties 配置文件的内容
+     * @param sendAccount
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    String getProperty(Integer sendAccount, String key, String defaultValue);
 }

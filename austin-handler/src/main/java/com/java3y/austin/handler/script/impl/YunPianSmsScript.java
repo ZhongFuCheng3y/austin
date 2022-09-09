@@ -39,7 +39,7 @@ public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
     public List<SmsRecord> send(SmsParam smsParam) {
 
         try {
-            YunPianSmsAccount account = accountUtils.getAccount(SendAccountConstant.YUN_PIAN_SMS_CODE, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, YunPianSmsAccount.class);
+            YunPianSmsAccount account = accountUtils.getSmsAccount(SendAccountConstant.YUN_PIAN_SMS_CODE, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, YunPianSmsAccount.class);
             Map<String, Object> params = assembleParam(smsParam, account);
 
             String result = HttpRequest.post(account.getUrl())

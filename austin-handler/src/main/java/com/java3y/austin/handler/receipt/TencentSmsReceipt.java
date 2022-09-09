@@ -50,7 +50,7 @@ public class TencentSmsReceipt {
     public void pull() {
 
         // 获取腾讯云账号信息
-        TencentSmsAccount account = accountUtils.getAccount(10, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
+        TencentSmsAccount account = accountUtils.getSmsAccount(10, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
         try {
             SmsClient client = getSmsClient(account);
 
