@@ -196,6 +196,13 @@
                 <version>${weixin-java}</version>
             </dependency>
 
+            <!-- 支付宝sdk https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>4.33.39.ALL</version>
+            </dependency>
+
             <!--阿里云 钉钉 SDK-->
             <dependency>
                 <groupId>com.aliyun</groupId>
