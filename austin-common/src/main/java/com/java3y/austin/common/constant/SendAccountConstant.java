@@ -79,6 +79,12 @@ public class SendAccountConstant {
     public static final String WECHAT_MINI_PROGRAM_PREFIX = "mini_program_";
 
     /**
+     * 支付宝小程序 应用消息 账号
+     */
+    public static final String ALIPAY_MINI_PROGRAM_ACCOUNT_KEY = "alipayMiniProgramAccount";
+    public static final String ALIPAY_MINI_PROGRAM_PREFIX = "alipay_mini_program_";
+
+    /**
      * 短信 账号
      */
     public static final String SMS_ACCOUNT_KEY = "smsAccount";
