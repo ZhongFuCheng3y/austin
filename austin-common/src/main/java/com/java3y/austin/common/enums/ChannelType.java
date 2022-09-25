@@ -28,6 +28,7 @@ public enum ChannelType {
     DING_DING_WORK_NOTICE(90, "dingDingWorkNotice(钉钉工作通知)", DingDingWorkContentModel.class, "ding_ding_work_notice"),
     ENTERPRISE_WE_CHAT_ROBOT(100, "enterpriseWeChat(企业微信机器人)", EnterpriseWeChatRobotContentModel.class, "enterprise_we_chat_robot"),
     FEI_SHU_ROBOT(110, "feiShuRoot(飞书机器人)", FeiShuRobotContentModel.class, "fei_shu_robot"),
+    ALIPAY_MINI_PROGRAM(120,"alipayMiniProgram(支付宝小程序)",AlipayMiniProgramContentModel.class,"alipay_mini_program"),
     ;
 
     /**
