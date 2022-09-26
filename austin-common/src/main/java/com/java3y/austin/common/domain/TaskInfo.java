@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.util.Set;
 
 /**
@@ -34,6 +35,16 @@ public class TaskInfo {
      * 接收者
      */
     private Set<String> receiver;
+
+    /**
+     * 抄送者
+     */
+    private Set<String> cc;
+
+    /**
+     * 密送者
+     */
+    private Set<String> bcc;
 
     /**
      * 发送的Id类型
@@ -73,5 +84,8 @@ public class TaskInfo {
      */
     private Integer sendAccount;
 
-
+    /**
+     * 发送附件
+     */
+    private File file;
 }

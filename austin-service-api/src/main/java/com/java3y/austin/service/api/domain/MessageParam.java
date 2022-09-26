@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -27,6 +28,21 @@ public class MessageParam {
      * 必传
      */
     private String receiver;
+
+    /**
+     * 抄送者（邮件专用）
+     */
+    private String cc;
+
+    /**
+     * 密送者（邮件专用）
+     */
+    private String bcc;
+
+    /**
+     * 附件（邮件专用）
+     */
+    private File file;
 
     /**
      * @Description: 消息内容中的可变部分(占位符替换)

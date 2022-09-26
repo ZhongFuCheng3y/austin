@@ -48,8 +48,13 @@ public class EmailHandler extends BaseHandler implements Handler {
         EmailContentModel emailContentModel = (EmailContentModel) taskInfo.getContentModel();
         MailAccount account = getAccountConfig(taskInfo.getSendAccount());
         try {
-            MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(),
-                    emailContentModel.getContent(), true, null);
+            if(taskInfo.getFile() != null) {
+                MailUtil.send(account, taskInfo.getReceiver(), taskInfo.getCc(), taskInfo.getBcc(), emailContentModel.getTitle(),
+                        emailContentModel.getContent(), true, taskInfo.getFile());
+            }else {
+                 MailUtil.send(account, taskInfo.getReceiver(), taskInfo.getCc(), taskInfo.getBcc(), emailContentModel.getTitle(),
+                         emailContentModel.getContent(), true, null);
+            }
         } catch (Exception e) {
             log.error("EmailHandler#handler fail!{},params:{}", Throwables.getStackTraceAsString(e), taskInfo);
             return false;
@@ -60,7 +65,7 @@ public class EmailHandler extends BaseHandler implements Handler {
     /**
      * 获取账号信息合配置
      *
-     * @return
+     * @return account
      */
     private MailAccount getAccountConfig(Integer sendAccount) {
         MailAccount account = accountUtils.getAccount(sendAccount, SendAccountConstant.EMAIL_ACCOUNT_KEY, SendAccountConstant.EMAIL_ACCOUNT_PREFIX, MailAccount.class);

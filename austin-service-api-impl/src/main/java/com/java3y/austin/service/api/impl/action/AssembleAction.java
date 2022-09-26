@@ -1,5 +1,6 @@
 package com.java3y.austin.service.api.impl.action;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -68,27 +70,133 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
     /**
      * 组装 TaskInfo 任务消息
      *
-     * @param sendTaskModel
-     * @param messageTemplate
+     * @param sendTaskModel 发送消息任务模型
+     * @param messageTemplate 消息模板DO
      */
     private List<TaskInfo> assembleTaskInfo(SendTaskModel sendTaskModel, MessageTemplate messageTemplate) {
         List<MessageParam> messageParamList = sendTaskModel.getMessageParamList();
         List<TaskInfo> taskInfoList = new ArrayList<>();
 
         for (MessageParam messageParam : messageParamList) {
-
-            TaskInfo taskInfo = TaskInfo.builder()
-                    .messageTemplateId(messageTemplate.getId())
-                    .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
-                    .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
-                    .idType(messageTemplate.getIdType())
-                    .sendChannel(messageTemplate.getSendChannel())
-                    .templateType(messageTemplate.getTemplateType())
-                    .msgType(messageTemplate.getMsgType())
-                    .shieldType(messageTemplate.getShieldType())
-                    .sendAccount(messageTemplate.getSendAccount())
-                    .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
-
+            TaskInfo taskInfo ;
+            if(StrUtil.isEmpty(messageParam.getCc()) && StrUtil.isEmpty(messageParam.getBcc()) && FileUtil.isEmpty(messageParam.getFile())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (StrUtil.isEmpty(messageParam.getCc()) && StrUtil.isEmpty(messageParam.getBcc())){
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (StrUtil.isEmpty(messageParam.getCc()) && FileUtil.isEmpty(messageParam.getFile())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+//                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (StrUtil.isEmpty(messageParam.getBcc()) && FileUtil.isEmpty(messageParam.getFile())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+//                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (FileUtil.isEmpty(messageParam.getFile())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+//                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (StrUtil.isEmpty(messageParam.getBcc())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            } else if (StrUtil.isEmpty(messageParam.getCc())) {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+//                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            }else {
+                taskInfo = TaskInfo.builder()
+                        .messageTemplateId(messageTemplate.getId())
+                        .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
+                        .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .cc(new HashSet<>(Arrays.asList(messageParam.getCc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .bcc(new HashSet<>(Arrays.asList(messageParam.getBcc().split(String.valueOf(StrUtil.C_COMMA)))))
+                        .idType(messageTemplate.getIdType())
+                        .sendChannel(messageTemplate.getSendChannel())
+                        .templateType(messageTemplate.getTemplateType())
+                        .msgType(messageTemplate.getMsgType())
+                        .shieldType(messageTemplate.getShieldType())
+                        .sendAccount(messageTemplate.getSendAccount())
+                        .file(messageParam.getFile())
+                        .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+            }
             taskInfoList.add(taskInfo);
         }
 
