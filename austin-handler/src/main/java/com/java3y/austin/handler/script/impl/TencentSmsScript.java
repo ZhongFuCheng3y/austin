@@ -10,9 +10,7 @@ import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.TencentSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
-import com.java3y.austin.handler.script.BaseSmsScript;
 import com.java3y.austin.handler.script.SmsScript;
-import com.java3y.austin.handler.script.SmsScriptHandler;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.tencentcloudapi.common.Credential;
@@ -24,6 +22,7 @@ import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import com.tencentcloudapi.sms.v20210111.models.SendStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,8 +37,8 @@ import java.util.List;
  */
 
 @Slf4j
-@SmsScriptHandler("TencentSmsScript")
-public class TencentSmsScript extends BaseSmsScript implements SmsScript {
+@Component("TencentSmsScript")
+public class TencentSmsScript implements SmsScript {
 
     private static final Integer PHONE_NUM = 11;
 
