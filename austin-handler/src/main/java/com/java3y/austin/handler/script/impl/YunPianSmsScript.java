@@ -13,14 +13,13 @@ import com.java3y.austin.common.dto.account.YunPianSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.handler.domain.sms.YunPianSendResult;
-import com.java3y.austin.handler.script.BaseSmsScript;
 import com.java3y.austin.handler.script.SmsScript;
-import com.java3y.austin.handler.script.SmsScriptHandler;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -30,8 +29,8 @@ import java.util.*;
  * 发送短信接入文档：https://www.yunpian.com/official/document/sms/zh_CN/domestic_list
  */
 @Slf4j
-@SmsScriptHandler("YunPianSmsScript")
-public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
+@Component("YunPianSmsScript")
+public class YunPianSmsScript implements SmsScript {
     @Autowired
     private AccountUtils accountUtils;
 
