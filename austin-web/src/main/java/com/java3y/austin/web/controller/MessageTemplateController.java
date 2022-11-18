@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,7 +74,7 @@ public class MessageTemplateController {
      */
     @GetMapping("/list")
     @ApiOperation("/列表页")
-    public BasicResultVO queryList(MessageTemplateParam messageTemplateParam) {
+    public BasicResultVO queryList(@Validated MessageTemplateParam messageTemplateParam) {
         List<Map<String, Object>> result = ConvertMap.flatList(messageTemplateService.queryList(messageTemplateParam));
 
         long count = messageTemplateService.count();
