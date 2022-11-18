@@ -50,13 +50,14 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
             return;
         }
-        sendTaskModel.setMessageParamList(resultMessageParamList);
 
         // 3.过滤receiver大于100的请求
-        if (messageParamList.stream().anyMatch(messageParam -> messageParam.getReceiver().split(StrUtil.COMMA).length > BATCH_RECEIVER_SIZE)) {
+        if (resultMessageParamList.stream().anyMatch(messageParam -> messageParam.getReceiver().split(StrUtil.COMMA).length > BATCH_RECEIVER_SIZE)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TOO_MANY_RECEIVER));
             return;
         }
+
+        sendTaskModel.setMessageParamList(resultMessageParamList);
 
     }
 }
