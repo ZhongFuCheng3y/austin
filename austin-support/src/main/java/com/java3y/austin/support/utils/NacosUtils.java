@@ -24,6 +24,10 @@ import java.util.Properties;
 public class NacosUtils {
     @Value("${austin.nacos.server}")
     private String nacosServer;
+    @Value("${austin.nacos.username}")
+    private String nacosUsername;
+    @Value("${austin.nacos.password}")
+    private String nacosPassword;
     @Value("${austin.nacos.group}")
     private String nacosGroup;
     @Value("${austin.nacos.dataId}")
@@ -51,6 +55,8 @@ public class NacosUtils {
         try {
             request.put(PropertyKeyConst.SERVER_ADDR, nacosServer);
             request.put(PropertyKeyConst.NAMESPACE, nacosNamespace);
+            request.put(PropertyKeyConst.USERNAME,nacosUsername);
+            request.put(PropertyKeyConst.PASSWORD,nacosPassword);
             context = NacosFactory.createConfigService(request)
                     .getConfig(nacosDataId, nacosGroup, 5000);
         } catch (NacosException e) {
