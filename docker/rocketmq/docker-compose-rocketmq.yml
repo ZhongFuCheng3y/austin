@@ -1,0 +1,59 @@
+version: '3.5'
+services:
+  # mq服务
+  rocketmq_server:
+    image: foxiswho/rocketmq:server
+    container_name: rocketmq_server
+    ports:
+      - 9876:9876
+    volumes:
+      - ./rocketmq/rocketmq_server/logs:/opt/logs
+      - ./rocketmq/rocketmq_server/store:/opt/store
+    networks:
+      rocketmq:
+        aliases:
+          - rocketmq_server
+
+  # mq中间件
+  rocketmq_broker:
+    image: foxiswho/rocketmq:broker
+    container_name: rocketmq_broker
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - ./rocketmq/rocketmq_broker/logs:/opt/logs
+      - ./rocketmq/rocketmq_broker/store:/opt/store
+      - ./rocketmq/rocketmq_broker/conf/broker.conf:/etc/rocketmq/broker.conf
+    environment:
+      NAMESRV_ADDR: "rocketmq_server:9876"
+      JAVA_OPTS: " -Duser.home=/opt"
+      JAVA_OPT_EXT: "-server -Xms128m -Xmx128m -Xmn128m"
+    command: mqbroker -c /etc/rocketmq/broker.conf
+    depends_on:
+      - rocketmq_server
+    networks:
+      rocketmq:
+        aliases:
+          - rocketmq_broker
+
+  # mq可视化控制台
+  rocketmq_console_ng:
+    image: styletang/rocketmq-console-ng
+    container_name: rocketmq_console_ng
+    ports:
+      - 9002:8080
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=rocketmq_server:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    depends_on:
+      - rocketmq_server
+    networks:
+      rocketmq:
+        aliases:
+          - rocketmq_console_ng
+
+#容器通信network
+networks:
+  rocketmq:
+    name: rocketmq
+    driver: bridge
