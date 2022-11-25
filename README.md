@@ -124,7 +124,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 5、除了项目，还可以问我些学习经验、学习路线、简历编写、面试经验等等问题，技术和学习上的知识**知无不言**
 
-详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=319992632&lang=zh_CN#rd)
+详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247507166&idx=1&sn=d4437089c2db18b90a6d3ec742380554&chksm=ebd49ddfdca314c94d49a02da2ecb1358ac08d86616b6f1fce34720cc96e81d3006a51e86beb&token=28465847&lang=zh_CN#rd)
 
 
 ## 项目交流

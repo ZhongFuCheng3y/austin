@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.enums.AuditStatus;
 import com.java3y.austin.common.enums.MessageStatus;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -44,12 +45,12 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public List<MessageTemplate> queryList(MessageTemplateParam param) {
         PageRequest pageRequest = PageRequest.of(param.getPage() - 1, param.getPerPage());
-        return messageTemplateDao.findAllByIsDeletedEquals(AustinConstant.FALSE, pageRequest);
+        return messageTemplateDao.findAllByIsDeletedEqualsOrderByUpdatedDesc(CommonConstant.FALSE, pageRequest);
     }
 
     @Override
     public Long count() {
-        return messageTemplateDao.countByIsDeletedEquals(AustinConstant.FALSE);
+        return messageTemplateDao.countByIsDeletedEquals(CommonConstant.FALSE);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public void deleteByIds(List<Long> ids) {
         Iterable<MessageTemplate> messageTemplates = messageTemplateDao.findAllById(ids);
-        messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(AustinConstant.TRUE));
+        messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(CommonConstant.TRUE));
         for (MessageTemplate messageTemplate : messageTemplates) {
             if (messageTemplate.getCronTaskId()!=null && messageTemplate.getCronTaskId() > 0) {
                 cronTaskService.deleteCronTask(messageTemplate.getCronTaskId());
@@ -137,7 +138,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode())
                 .setCreator("Java3y").setUpdator("Java3y").setTeam("公众号Java3y").setAuditor("3y")
                 .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
-                .setIsDeleted(AustinConstant.FALSE);
+                .setIsDeleted(CommonConstant.FALSE);
 
     }
 

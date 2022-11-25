@@ -1,0 +1,18 @@
+version: '3'
+services:
+  rabbitmq:
+    image: registry.cn-hangzhou.aliyuncs.com/zhengqing/rabbitmq:3.7.8-management        # 原镜像`rabbitmq:3.7.8-management` 【 注：该版本包含了web控制页面 】
+    container_name: rabbitmq            # 容器名为'rabbitmq'
+    hostname: my-rabbit
+    restart: unless-stopped                                       # 指定容器退出后的重启策略为始终重启，但是不考虑在Docker守护进程启动时就已经停止了的容器
+    environment:                        # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+      RABBITMQ_DEFAULT_VHOST: my_vhost  # 主机名
+      RABBITMQ_DEFAULT_USER: admin      # 登录账号
+      RABBITMQ_DEFAULT_PASS: admin      # 登录密码
+    volumes: # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - "./rabbitmq/data:/var/lib/rabbitmq"
+    ports:                              # 映射端口
+      - "5672:5672"
+      - "15672:15672"

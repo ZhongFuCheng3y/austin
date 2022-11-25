@@ -23,6 +23,8 @@ public class SwaggerConfiguration {
     /**
      * 对C端用户的接口文档
      *
+     * 地址：http://localhost:8080/swagger-ui/index.html
+     *
      * @return
      */
     @Bean

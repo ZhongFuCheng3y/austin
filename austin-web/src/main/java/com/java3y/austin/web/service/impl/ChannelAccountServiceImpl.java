@@ -2,6 +2,7 @@ package com.java3y.austin.web.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.support.dao.ChannelAccountDao;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.service.ChannelAccountService;
@@ -22,7 +23,7 @@ public class ChannelAccountServiceImpl implements ChannelAccountService {
     public ChannelAccount save(ChannelAccount channelAccount) {
         if (channelAccount.getId() == null) {
             channelAccount.setCreated(Math.toIntExact(DateUtil.currentSeconds()));
-            channelAccount.setIsDeleted(AustinConstant.FALSE);
+            channelAccount.setIsDeleted(CommonConstant.FALSE);
         }
         channelAccount.setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
         return channelAccountDao.save(channelAccount);
@@ -30,7 +31,7 @@ public class ChannelAccountServiceImpl implements ChannelAccountService {
 
     @Override
     public List<ChannelAccount> queryByChannelType(Integer channelType) {
-        return channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, channelType);
+        return channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, channelType);
     }
 
     @Override

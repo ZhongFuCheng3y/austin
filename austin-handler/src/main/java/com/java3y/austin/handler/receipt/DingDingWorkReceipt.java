@@ -32,7 +32,7 @@ public class DingDingWorkReceipt {
     public void pull() {
 //        try {
 //            for (int index = SendAccountConstant.START; true; index = index + SendAccountConstant.STEP) {
-//                DingDingWorkNoticeAccount account = accountUtils.getAccount(index, SendAccountConstant.DING_DING_WORK_NOTICE_ACCOUNT_KEY, SendAccountConstant.DING_DING_WORK_NOTICE_PREFIX, DingDingWorkNoticeAccount.class);
+//                DingDingWorkNoticeAccount account = accountUtils.getAccountById(index, SendAccountConstant.DING_DING_WORK_NOTICE_ACCOUNT_KEY, SendAccountConstant.DING_DING_WORK_NOTICE_PREFIX, DingDingWorkNoticeAccount.class);
 //                if (account == null) {
 //                    break;
 //                }

@@ -8,6 +8,7 @@ import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.common.enums.ChannelType;
@@ -51,14 +52,12 @@ public class RefreshGeTuiAccessTokenHandler {
     public void execute() {
         log.info("refreshGeTuiAccessTokenJob#execute!");
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
-            List<ChannelAccount> accountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, ChannelType.PUSH.getCode());
-            for (int index = SendAccountConstant.START; true; index = index + SendAccountConstant.STEP) {
-                for (ChannelAccount channelAccount : accountList) {
-                    GeTuiAccount account = JSON.parseObject(channelAccount.getAccountConfig(), GeTuiAccount.class);
-                    String accessToken = getAccessToken(account);
-                    if (StrUtil.isNotBlank(accessToken)) {
-                        redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + index, accessToken);
-                    }
+            List<ChannelAccount> accountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.PUSH.getCode());
+            for (ChannelAccount channelAccount : accountList) {
+                GeTuiAccount account = JSON.parseObject(channelAccount.getAccountConfig(), GeTuiAccount.class);
+                String accessToken = getAccessToken(account);
+                if (StrUtil.isNotBlank(accessToken)) {
+                    redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
                 }
             }
         });

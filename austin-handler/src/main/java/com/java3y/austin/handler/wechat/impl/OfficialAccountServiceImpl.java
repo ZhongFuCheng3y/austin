@@ -31,7 +31,7 @@ public class OfficialAccountServiceImpl implements OfficialAccountService {
 
     @Override
     public List<String> send(WeChatOfficialParam officialParam) throws Exception {
-        WeChatOfficialAccount officialAccount = accountUtils.getAccount(officialParam.getSendAccount(), SendAccountConstant.WECHAT_OFFICIAL_ACCOUNT_KEY, SendAccountConstant.WECHAT_OFFICIAL__PREFIX, WeChatOfficialAccount.class);
+        WeChatOfficialAccount officialAccount = accountUtils.getAccountById(officialParam.getSendAccount(),WeChatOfficialAccount.class);
         WxMpService wxMpService = initService(officialAccount);
         List<WxMpTemplateMessage> messages = assembleReq(officialParam, officialAccount);
         List<String> messageIds = new ArrayList<>(messages.size());

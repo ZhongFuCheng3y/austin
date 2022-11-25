@@ -5,9 +5,9 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.AustinConstant;
-import com.java3y.austin.common.dto.account.TencentSmsAccount;
-import com.java3y.austin.common.dto.account.YunPianSmsAccount;
+import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.dto.account.sms.TencentSmsAccount;
+import com.java3y.austin.common.dto.account.sms.YunPianSmsAccount;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.common.enums.SmsSupplier;
@@ -52,7 +52,7 @@ public class SmsPullReceipt {
      * eg accountList：[{"sms_10":{"url":"sms.tencentcloudapi.com","region":"ap-guangzhou","secretId":"234234","secretKey":"234324324","smsSdkAppId":"2343242","templateId":"234234","signName":"Java3y公众号","supplierId":10,"supplierName":"腾讯云"}},{"sms_20":{"url":"https://sms.yunpian.com/v2/sms/tpl_batch_send.json","apikey":"23423432","tpl_id":"23423432","supplierId":20,"supplierName":"云片"}}]
      */
     public void pull() {
-        List<ChannelAccount> channelAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, ChannelType.SMS.getCode());
+        List<ChannelAccount> channelAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.SMS.getCode());
         for (ChannelAccount channelAccount : channelAccountList) {
             Integer supplierId = JSON.parseObject(channelAccount.getAccountConfig()).getInteger("supplierId");
             if (SmsSupplier.TENCENT.getCode().equals(supplierId)) {

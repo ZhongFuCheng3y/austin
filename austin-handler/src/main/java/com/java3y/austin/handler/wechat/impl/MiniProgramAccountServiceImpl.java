@@ -33,9 +33,7 @@ public class MiniProgramAccountServiceImpl implements MiniProgramAccountService 
 
     @Override
     public void send(WeChatMiniProgramParam miniProgramParam) throws Exception {
-        WeChatMiniProgramAccount miniProgramAccount = accountUtils.getAccount(miniProgramParam.getSendAccount(),
-                SendAccountConstant.WECHAT_MINI_PROGRAM_ACCOUNT_KEY,
-                SendAccountConstant.WECHAT_MINI_PROGRAM_PREFIX,
+        WeChatMiniProgramAccount miniProgramAccount = accountUtils.getAccountById(miniProgramParam.getSendAccount(),
                 WeChatMiniProgramAccount.class);
 
         WxMaSubscribeService wxMaSubscribeService = initService(miniProgramAccount);

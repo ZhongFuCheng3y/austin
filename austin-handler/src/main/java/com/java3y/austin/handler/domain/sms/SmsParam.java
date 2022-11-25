@@ -25,9 +25,9 @@ public class SmsParam {
     private Set<String> phones;
 
     /**
-     * 发送渠道账号的Id
+     * 发送渠道账号的脚本名标识
      */
-    private Integer sendAccountId;
+    private String scriptName;
 
 
     /**

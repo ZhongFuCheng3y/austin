@@ -6,6 +6,7 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.DingDingRobotAccount;
@@ -48,7 +49,7 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
     @Override
     public boolean handler(TaskInfo taskInfo) {
         try {
-            DingDingRobotAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.DING_DING_ROBOT_ACCOUNT_KEY, SendAccountConstant.DING_DING_ROBOT_PREFIX, DingDingRobotAccount.class);
+            DingDingRobotAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), DingDingRobotAccount.class);
             DingDingRobotParam dingDingRobotParam = assembleParam(taskInfo);
             String httpResult = HttpUtil.post(assembleParamUrl(account), JSON.toJSONString(dingDingRobotParam));
             DingDingRobotResult dingDingRobotResult = JSON.parseObject(httpResult, DingDingRobotResult.class);
@@ -126,10 +127,10 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
         String sign = "";
         try {
             String stringToSign = currentTimeMillis + String.valueOf(StrUtil.C_LF) + secret;
-            Mac mac = Mac.getInstance(AustinConstant.HMAC_SHA256_ENCRYPTION_ALGO);
-            mac.init(new SecretKeySpec(secret.getBytes(AustinConstant.CHARSET_NAME), AustinConstant.HMAC_SHA256_ENCRYPTION_ALGO));
-            byte[] signData = mac.doFinal(stringToSign.getBytes(AustinConstant.CHARSET_NAME));
-            sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), AustinConstant.CHARSET_NAME);
+            Mac mac = Mac.getInstance(CommonConstant.HMAC_SHA256_ENCRYPTION_ALGO);
+            mac.init(new SecretKeySpec(secret.getBytes(CommonConstant.CHARSET_NAME), CommonConstant.HMAC_SHA256_ENCRYPTION_ALGO));
+            byte[] signData = mac.doFinal(stringToSign.getBytes(CommonConstant.CHARSET_NAME));
+            sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), CommonConstant.CHARSET_NAME);
         } catch (Exception e) {
             log.error("DingDingHandler#assembleSign fail!:{}", Throwables.getStackTraceAsString(e));
         }

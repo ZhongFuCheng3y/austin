@@ -1,6 +1,7 @@
 package com.java3y.austin.web.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.web.service.DataService;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/trace")
 @Api("获取数据接口（全链路追踪)")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 public class DataController {
     @Autowired
     private DataService dataService;

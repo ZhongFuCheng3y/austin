@@ -7,6 +7,7 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiMediaUploadRequest;
 import com.dingtalk.api.response.OapiMediaUploadResponse;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.FileType;
@@ -26,15 +27,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 素材管理接口
+ *
  * @author 3y
  */
 @Slf4j
 @RestController
 @RequestMapping("/material")
 @Api("素材管理接口")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
-public class MaterialController {
+@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 
+public class MaterialController {
 
     @Autowired
     private MaterialService materialService;

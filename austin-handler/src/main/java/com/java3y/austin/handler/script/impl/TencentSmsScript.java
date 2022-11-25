@@ -6,13 +6,10 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
-import com.java3y.austin.common.dto.account.TencentSmsAccount;
+import com.java3y.austin.common.dto.account.sms.TencentSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
-import com.java3y.austin.handler.script.BaseSmsScript;
 import com.java3y.austin.handler.script.SmsScript;
-import com.java3y.austin.handler.script.SmsScriptHandler;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.tencentcloudapi.common.Credential;
@@ -24,6 +21,7 @@ import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import com.tencentcloudapi.sms.v20210111.models.SendStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,8 +36,8 @@ import java.util.List;
  */
 
 @Slf4j
-@SmsScriptHandler("TencentSmsScript")
-public class TencentSmsScript extends BaseSmsScript implements SmsScript {
+@Component("TencentSmsScript")
+public class TencentSmsScript implements SmsScript {
 
     private static final Integer PHONE_NUM = 11;
 
@@ -49,7 +47,7 @@ public class TencentSmsScript extends BaseSmsScript implements SmsScript {
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
         try {
-            TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(smsParam.getSendAccountId(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
+            TencentSmsAccount tencentSmsAccount = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), TencentSmsAccount.class);
             SmsClient client = init(tencentSmsAccount);
             SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
             SendSmsResponse response = client.SendSms(request);

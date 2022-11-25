@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.cron.config.CronAsyncThreadPoolConfig;
 import com.java3y.austin.cron.constants.PendingConstant;
 import com.java3y.austin.cron.vo.CrowdInfoVo;
@@ -40,9 +41,9 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
 
     public CrowdBatchTaskPending() {
         PendingParam<CrowdInfoVo> pendingParam = new PendingParam<>();
-        pendingParam.setNumThreshold(PendingConstant.NUM_THRESHOLD)
-                .setQueue(new LinkedBlockingQueue(PendingConstant.QUEUE_SIZE))
+        pendingParam.setQueue(new LinkedBlockingQueue(PendingConstant.QUEUE_SIZE))
                 .setTimeThreshold(PendingConstant.TIME_THRESHOLD)
+                .setNumThreshold(AustinConstant.BATCH_RECEIVER_SIZE)
                 .setExecutorService(CronAsyncThreadPoolConfig.getConsumePendingThreadPool());
         this.pendingParam = pendingParam;
     }

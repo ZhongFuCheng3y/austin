@@ -2,6 +2,7 @@ package com.java3y.austin.handler.deduplication.limit;
 
 import cn.hutool.core.collection.CollUtil;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import com.java3y.austin.handler.deduplication.service.AbstractDeduplicationService;
@@ -66,7 +67,7 @@ public class SimpleLimitService extends AbstractLimitService {
             if (inRedisValue.get(key) != null) {
                 keyValues.put(key, String.valueOf(Integer.valueOf(inRedisValue.get(key)) + 1));
             } else {
-                keyValues.put(key, String.valueOf(AustinConstant.TRUE));
+                keyValues.put(key, String.valueOf(CommonConstant.TRUE));
             }
         }
         if (CollUtil.isNotEmpty(keyValues)) {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.util.concurrent.RateLimiter;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.enums.RateLimitStrategy;
@@ -76,7 +77,7 @@ public class FlowControlFactory implements ApplicationContextAware {
      * @param channelCode
      */
     private Double getRateLimitConfig(Integer channelCode) {
-        String flowControlConfig = config.getProperty(FLOW_CONTROL_KEY, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_OBJECT);
+        String flowControlConfig = config.getProperty(FLOW_CONTROL_KEY, CommonConstant.EMPTY_JSON_OBJECT);
         JSONObject jsonObject = JSON.parseObject(flowControlConfig);
         if (jsonObject.getDouble(FLOW_CONTROL_PREFIX + channelCode) == null) {
             return null;

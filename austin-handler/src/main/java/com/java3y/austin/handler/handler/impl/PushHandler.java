@@ -58,7 +58,7 @@ public class PushHandler extends BaseHandler implements Handler {
     public boolean handler(TaskInfo taskInfo) {
 
         try {
-            GeTuiAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.GE_TUI_ACCOUNT_KEY, SendAccountConstant.GE_TUI_ACCOUNT_PREFIX, GeTuiAccount.class);
+            GeTuiAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(),GeTuiAccount.class);
             String token = redisTemplate.opsForValue().get(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
             PushParam pushParam = PushParam.builder().token(token).appId(account.getAppId()).taskInfo(taskInfo).build();
 

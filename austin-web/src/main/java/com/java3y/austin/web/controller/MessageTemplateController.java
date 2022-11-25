@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.MessageParam;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +44,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/messageTemplate")
 @Api("发送消息")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 public class MessageTemplateController {
 
     @Autowired
@@ -73,7 +75,7 @@ public class MessageTemplateController {
      */
     @GetMapping("/list")
     @ApiOperation("/列表页")
-    public BasicResultVO queryList(MessageTemplateParam messageTemplateParam) {
+    public BasicResultVO queryList(@Validated MessageTemplateParam messageTemplateParam) {
         List<Map<String, Object>> result = ConvertMap.flatList(messageTemplateService.queryList(messageTemplateParam));
 
         long count = messageTemplateService.count();

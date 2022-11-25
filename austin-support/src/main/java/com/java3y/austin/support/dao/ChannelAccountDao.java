@@ -35,4 +35,5 @@ public interface ChannelAccountDao extends JpaRepository<ChannelAccount, Long> {
      * @return
      */
     Long countByIsDeletedEquals(Integer deleted);
+
 }

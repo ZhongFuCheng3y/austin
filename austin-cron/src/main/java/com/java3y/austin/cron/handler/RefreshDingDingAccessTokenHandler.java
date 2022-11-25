@@ -8,6 +8,7 @@ import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
 import com.java3y.austin.common.enums.ChannelType;
@@ -52,7 +53,7 @@ public class RefreshDingDingAccessTokenHandler {
     public void execute() {
         log.info("refreshAccessTokenJob#execute!");
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
-            List<ChannelAccount> accountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(AustinConstant.FALSE, ChannelType.DING_DING_WORK_NOTICE.getCode());
+            List<ChannelAccount> accountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.DING_DING_WORK_NOTICE.getCode());
             for (ChannelAccount channelAccount : accountList) {
                 DingDingWorkNoticeAccount account = JSON.parseObject(channelAccount.getAccountConfig(), DingDingWorkNoticeAccount.class);
                 String accessToken = getAccessToken(account);
@@ -76,7 +77,7 @@ public class RefreshDingDingAccessTokenHandler {
             OapiGettokenRequest req = new OapiGettokenRequest();
             req.setAppkey(account.getAppKey());
             req.setAppsecret(account.getAppSecret());
-            req.setHttpMethod(AustinConstant.REQUEST_METHOD_GET);
+            req.setHttpMethod(CommonConstant.REQUEST_METHOD_GET);
             OapiGettokenResponse rsp = client.execute(req);
             accessToken = rsp.getAccessToken();
         } catch (Exception e) {

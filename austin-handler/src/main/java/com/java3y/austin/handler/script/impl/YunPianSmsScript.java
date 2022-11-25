@@ -8,19 +8,18 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
-import com.java3y.austin.common.dto.account.YunPianSmsAccount;
+import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.dto.account.sms.YunPianSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.handler.domain.sms.YunPianSendResult;
-import com.java3y.austin.handler.script.BaseSmsScript;
 import com.java3y.austin.handler.script.SmsScript;
-import com.java3y.austin.handler.script.SmsScriptHandler;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -30,8 +29,8 @@ import java.util.*;
  * 发送短信接入文档：https://www.yunpian.com/official/document/sms/zh_CN/domestic_list
  */
 @Slf4j
-@SmsScriptHandler("YunPianSmsScript")
-public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
+@Component("YunPianSmsScript")
+public class YunPianSmsScript implements SmsScript {
     @Autowired
     private AccountUtils accountUtils;
 
@@ -39,7 +38,7 @@ public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
     public List<SmsRecord> send(SmsParam smsParam) {
 
         try {
-            YunPianSmsAccount account = accountUtils.getAccount(smsParam.getSendAccountId(), SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, YunPianSmsAccount.class);
+            YunPianSmsAccount account = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), YunPianSmsAccount.class);
             Map<String, Object> params = assembleParam(smsParam, account);
 
             String result = HttpRequest.post(account.getUrl())
@@ -91,7 +90,7 @@ public class YunPianSmsScript extends BaseSmsScript implements SmsScript {
                     .msgContent(smsParam.getContent())
                     .seriesId(datum.getSid())
                     .chargingNum(Math.toIntExact(datum.getCount()))
-                    .status("0".equals(datum.getCode()) ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
+                    .status(CommonConstant.ZERO.equals(datum.getCode()) ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
                     .reportContent(datum.getMsg())
                     .created(Math.toIntExact(DateUtil.currentSeconds()))
                     .updated(Math.toIntExact(DateUtil.currentSeconds()))
