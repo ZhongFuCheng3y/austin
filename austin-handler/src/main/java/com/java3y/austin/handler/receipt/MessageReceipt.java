@@ -1,15 +1,18 @@
 package com.java3y.austin.handler.receipt;
 
 
+import com.google.common.base.Throwables;
+import com.java3y.austin.handler.receipt.stater.ReceiptMessageStater;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
- * 拉取回执信息
+ * 拉取回执信息 入口
  *
  * @author 3y
  */
@@ -18,18 +21,20 @@ import javax.annotation.PostConstruct;
 public class MessageReceipt {
 
     @Autowired
-    private SmsPullReceipt smsPullReceipt;
+    private List<ReceiptMessageStater> receiptMessageStaterList;
 
     @PostConstruct
     private void init() {
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
             while (true) {
-                // TODO 回执这里自行打开(免得报错)
-                // smsPullReceipt.pull();
                 try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    for (ReceiptMessageStater receiptMessageStater : receiptMessageStaterList) {
+                        // 拉取回执需要打开下面一行注释
+                        //receiptMessageStater.start();
+                    }
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    log.error("MessageReceiptApplication#fail:{}", Throwables.getStackTraceAsString(e));
                 }
             }
         });

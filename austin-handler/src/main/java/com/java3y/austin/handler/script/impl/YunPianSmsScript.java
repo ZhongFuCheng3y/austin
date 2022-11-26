@@ -56,6 +56,13 @@ public class YunPianSmsScript implements SmsScript {
 
     }
 
+    @Override
+    public List<SmsRecord> pull(String scriptName) {
+        YunPianSmsAccount account = accountUtils.getSmsAccountByScriptName(scriptName, YunPianSmsAccount.class);
+        // .....
+        return null;
+    }
+
     /**
      * 组装参数
      *

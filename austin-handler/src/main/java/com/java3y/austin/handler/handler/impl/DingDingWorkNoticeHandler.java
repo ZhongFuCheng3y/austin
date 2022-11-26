@@ -59,6 +59,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
 
     private static final String SEND_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2";
     private static final String RECALL_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/recall";
+    private static final String PULL_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/getsendresult";
     private static final String DING_DING_RECALL_KEY_PREFIX = "RECALL_";
     private static final String RECALL_BIZ_TYPE = "DingDingWorkNoticeHandler#recall";
 
@@ -194,6 +195,24 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
                 log.error("DingDingWorkNoticeHandler#recall fail:{}", Throwables.getStackTraceAsString(e));
             }
         });
+    }
+
+    /**
+     * 拉取回执
+     */
+    public void pull(Long accountId) {
+        try {
+//            DingDingWorkNoticeAccount account = accountUtils.getAccountById(accountId, DingDingWorkNoticeAccount.class);
+//            String accessToken = redisTemplate.opsForValue().get(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + accountId);
+//            DingTalkClient client = new DefaultDingTalkClient(PULL_URL);
+//            OapiMessageCorpconversationGetsendresultRequest req = new OapiMessageCorpconversationGetsendresultRequest();
+//            req.setAgentId(Long.valueOf(account.getAgentId()));
+//            req.setTaskId(456L);
+//            OapiMessageCorpconversationGetsendresultResponse rsp = client.execute(req, accessToken);
+//            System.out.println(rsp.getBody());
+        } catch (Exception e) {
+            log.error("DingDingWorkNoticeHandler#pull fail:{}", Throwables.getStackTraceAsString(e));
+        }
     }
 }
 

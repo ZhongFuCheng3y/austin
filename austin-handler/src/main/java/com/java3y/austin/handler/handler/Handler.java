@@ -24,5 +24,4 @@ public interface Handler {
      */
     void recall(MessageTemplate messageTemplate);
 
-
 }
