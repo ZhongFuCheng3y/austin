@@ -63,14 +63,14 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 
-> 实在想要`clone`项目后不用自己部署环境直接在本地启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247505577&idx=1&sn=5114f8f583755899c2946fbea0b22e4b&chksm=ebd497a8dca31ebe8f98344483a00c860863dfc3586e51eed95b25988151427fee8101311f4f&token=735778370&lang=zh_CN#rd)，**直连**部署好的服务器
+> 实在想要`clone`项目后不用自己部署环境直接在本地启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)，**直连**部署好的服务器
 
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
 **2**、填写`application.properties`中`austin-database`对应的`ip/port/username/password`信息
 
-**3**、执行`sql`文件夹下的`austin.sql`创建对应的表以及插入测试数据
+**3**、执行`sql`文件夹下的`austin.sql`创建对应的表
 
 **4**、如果配置`austin.mq.pipeline=kafka`，需要填写`application.properties`中`austin.kafka`对应的`ip`/`port`信息
 
@@ -80,15 +80,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **7**、以上配置信息都在`application.properties`文件中修改。(`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`可选)
 
-**8**、发送渠道**账号的信息**都配置在**local.properties**，配置的示例参照`com.java3y.austin.support.utils#getAccount`中的注释
-
-**10**、调用http接口`com.java3y.austin.web.controller#send`给自己发一条邮件或短信感受(**邮件门槛相对较低，建议配置邮件**)
-
-```shell
-curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"code":"send","messageParam":{"extra":null,"receiver":"13719333899"},"messageTemplateId":1}'
-```
-
-**11**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看 
+**8**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看 
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a023d9082fa644bda9b50144e02985cb~tplv-k3u1fbpfcp-zoom-1.image) 
 
@@ -97,6 +89,14 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4adde725eeee443baf96f286f5429f05~tplv-k3u1fbpfcp-zoom-1.image)
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
+
+**9**、发送渠道**账号的信息**都在**账号**，配置的示例可参照对应的提示案例
+
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2039b96045494ded8e6f55528eb20b1d~tplv-k3u1fbpfcp-watermark.image?)
+
+**10**、新建一个模板消息(**邮件门槛相对较低，建议配置邮件**)
+
+**11**、测试发送一条消息
 
 **12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并使用Kafka作为消息队列实现)
 
@@ -124,7 +124,7 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 
 5、除了项目，还可以问我些学习经验、学习路线、简历编写、面试经验等等问题，技术和学习上的知识**知无不言**
 
-详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247507166&idx=1&sn=d4437089c2db18b90a6d3ec742380554&chksm=ebd49ddfdca314c94d49a02da2ecb1358ac08d86616b6f1fce34720cc96e81d3006a51e86beb&token=28465847&lang=zh_CN#rd)
+详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)
 
 
 ## 项目交流
@@ -146,6 +146,8 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 ## 里程碑
+
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/80fc1c550ee145eda95cfac4bd617a04~tplv-k3u1fbpfcp-watermark.image?)
 
 - [x] Maven+SpringBoot项目搭建
 - [x] logback日志记录项目运行时信息，引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
@@ -178,9 +180,10 @@ curl -XPOST "127.0.0.1:8080/send"  -H 'Content-Type: application/json'  -d '{"co
 - [x] 完成接入钉钉工作渠道所有类型的消息，包括对文件素材的上传功能
 - [x] Kafka消息支持tag过滤
 - [x] MQ层支持可插拔，默认使用eventbus单机队列，Kafka变为弱依赖
+- [x] 渠道账号改为读取数据库，优化短信回执拉取功能
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
 
-**近期更新时间**：7月11号
+**近期更新时间**：11月27号
 
-**近期更新功能**：MQ层可插拔重构
+**近期更新功能**：渠道账号改为读取数据库，优化短信回执拉取功能
