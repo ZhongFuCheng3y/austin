@@ -6,6 +6,7 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.service.ChannelAccountService;
+import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -47,14 +48,12 @@ public class ChannelAccountController {
     @GetMapping("/queryByChannelType")
     @ApiOperation("/根据渠道标识查询相关的记录")
     public BasicResultVO query(Integer channelType) {
-        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType);
+        List<CommonAmisVo> result = new ArrayList<>();
 
-        List<Map<String, String>> result = new ArrayList<>();
+        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType);
         for (ChannelAccount channelAccount : channelAccounts) {
-            HashMap<String, String> optionKV = new HashMap<>();
-            optionKV.put("label", channelAccount.getName());
-            optionKV.put("value", String.valueOf(channelAccount.getId()));
-            result.add(optionKV);
+            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
+            result.add(commonAmisVo);
         }
         return BasicResultVO.success(result);
     }

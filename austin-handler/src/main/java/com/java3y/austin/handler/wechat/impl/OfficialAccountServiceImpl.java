@@ -1,10 +1,10 @@
 package com.java3y.austin.handler.wechat.impl;
 
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.WeChatOfficialAccount;
 import com.java3y.austin.handler.domain.wechat.WeChatOfficialParam;
 import com.java3y.austin.handler.wechat.OfficialAccountService;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.support.utils.WxServiceUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
@@ -31,8 +31,8 @@ public class OfficialAccountServiceImpl implements OfficialAccountService {
 
     @Override
     public List<String> send(WeChatOfficialParam officialParam) throws Exception {
-        WeChatOfficialAccount officialAccount = accountUtils.getAccountById(officialParam.getSendAccount(),WeChatOfficialAccount.class);
-        WxMpService wxMpService = initService(officialAccount);
+        WxMpService wxMpService = WxServiceUtils.wxMpServiceMap.get(officialParam.getSendAccount());
+        WeChatOfficialAccount officialAccount = WxServiceUtils.accountHashMap.get(officialParam.getSendAccount());
         List<WxMpTemplateMessage> messages = assembleReq(officialParam, officialAccount);
         List<String> messageIds = new ArrayList<>(messages.size());
         for (WxMpTemplateMessage wxMpTemplateMessage : messages) {
