@@ -3,6 +3,7 @@ package com.java3y.austin.support.utils;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
@@ -170,7 +171,7 @@ public class RedisUtils {
         try {
             Long execute = redisTemplate.execute(redisScript, keys, args);
 
-            return AustinConstant.TRUE.equals(execute.intValue());
+            return CommonConstant.TRUE.equals(execute.intValue());
         } catch (Exception e) {
 
             log.error("redis execLimitLua fail! e:{}", Throwables.getStackTraceAsString(e));

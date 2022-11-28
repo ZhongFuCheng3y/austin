@@ -8,8 +8,8 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
-import com.java3y.austin.common.dto.account.YunPianSmsAccount;
+import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.dto.account.sms.YunPianSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.handler.domain.sms.YunPianSendResult;
@@ -38,7 +38,7 @@ public class YunPianSmsScript implements SmsScript {
     public List<SmsRecord> send(SmsParam smsParam) {
 
         try {
-            YunPianSmsAccount account = accountUtils.getAccount(SendAccountConstant.YUN_PIAN_SMS_CODE, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, YunPianSmsAccount.class);
+            YunPianSmsAccount account = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), YunPianSmsAccount.class);
             Map<String, Object> params = assembleParam(smsParam, account);
 
             String result = HttpRequest.post(account.getUrl())
@@ -54,6 +54,13 @@ public class YunPianSmsScript implements SmsScript {
             return null;
         }
 
+    }
+
+    @Override
+    public List<SmsRecord> pull(String scriptName) {
+        YunPianSmsAccount account = accountUtils.getSmsAccountByScriptName(scriptName, YunPianSmsAccount.class);
+        // .....
+        return null;
     }
 
     /**
@@ -90,7 +97,7 @@ public class YunPianSmsScript implements SmsScript {
                     .msgContent(smsParam.getContent())
                     .seriesId(datum.getSid())
                     .chargingNum(Math.toIntExact(datum.getCount()))
-                    .status("0".equals(datum.getCode()) ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
+                    .status(CommonConstant.ZERO.equals(datum.getCode()) ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
                     .reportContent(datum.getMsg())
                     .created(Math.toIntExact(DateUtil.currentSeconds()))
                     .updated(Math.toIntExact(DateUtil.currentSeconds()))

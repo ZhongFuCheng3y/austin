@@ -25,6 +25,12 @@ public class SmsParam {
     private Set<String> phones;
 
     /**
+     * 渠道账号的脚本名标识
+     */
+    private String scriptName;
+
+
+    /**
      * 发送文案
      */
     private String content;

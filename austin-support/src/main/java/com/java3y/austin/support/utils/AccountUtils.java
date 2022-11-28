@@ -1,14 +1,18 @@
 package com.java3y.austin.support.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.ctrip.framework.apollo.Config;
-import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
-import com.java3y.austin.common.constant.AustinConstant;
-import com.java3y.austin.support.service.ConfigService;
+import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.dto.account.sms.SmsAccount;
+import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.support.dao.ChannelAccountDao;
+import com.java3y.austin.support.domain.ChannelAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 获取账号信息工具类
@@ -16,10 +20,12 @@ import org.springframework.stereotype.Component;
  * @author 3y
  */
 @Component
+@Slf4j
 public class AccountUtils {
 
     @Autowired
-    private ConfigService config;
+    private ChannelAccountDao channelAccountDao;
+
 
     /**
      * local.properties配置格式
@@ -32,16 +38,48 @@ public class AccountUtils {
      * (key:miniProgramAccount) 微信小程序订阅消息参数示例：[{"mini_program_10":{"appId":"wxecb4693d2eef1ea7","appSecret":"6240870f4d91701640d769ba20120821","templateId":"JHUk6eE9T5TasdfCrQsk-Q","grantType":"client_credential","miniProgramState":"trial","page":"index?foo=bar"}}]
      * (key:alipayMiniProgramAccount) 支付宝小程序订阅消息参数实例：[{"alipay_mini_program_10":{"privateKey":"MIIEvQIBADANB......","alipayPublicKey":"MIIBIjANBg...","appId":"2014********7148","userTemplateId":"MDI4YzIxMDE2M2I5YTQzYjUxNWE4MjA4NmU1MTIyYmM=","page":"page/component/index"}}]
      */
-    public <T> T getAccount(Integer sendAccount, String apolloKey, String prefix, Class<T> clazz) {
-        String accountValues = config.getProperty(apolloKey, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_ARRAY);
-        JSONArray jsonArray = JSON.parseArray(accountValues);
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            T object = jsonObject.getObject(prefix + sendAccount, clazz);
-            if (object != null) {
-                return object;
+    public <T> T getAccountById(Integer sendAccountId, Class<T> clazz) {
+
+        try {
+            Optional<ChannelAccount> optionalChannelAccount = channelAccountDao.findById(Long.valueOf(sendAccountId));
+            if (optionalChannelAccount.isPresent()) {
+                ChannelAccount channelAccount = optionalChannelAccount.get();
+                return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
             }
+        } catch (Exception e) {
+            log.error("AccountUtils#getAccount fail!", Throwables.getStackTraceAsString(e));
         }
+
+        log.error("AccountUtils#getAccount not found!:{}", sendAccountId);
         return null;
     }
+
+    /**
+     * 通过脚本名 匹配到对应的短信账号
+     *
+     * @param scriptName 脚本名
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T> T getSmsAccountByScriptName(String scriptName, Class<T> clazz) {
+        try {
+            List<ChannelAccount> channelAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.SMS.getCode());
+            for (ChannelAccount channelAccount : channelAccountList) {
+                try {
+                    SmsAccount smsAccount = JSON.parseObject(channelAccount.getAccountConfig(), SmsAccount.class);
+                    if (smsAccount.getScriptName().equals(scriptName)) {
+                        return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
+                    }
+                } catch (Exception e) {
+                    log.error("AccountUtils#getSmsAccount parse fail! e:{},account:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(channelAccount));
+                }
+            }
+        } catch (Exception e) {
+            log.error("AccountUtils#getSmsAccount fail! e:{}", Throwables.getStackTraceAsString(e));
+        }
+        log.error("AccountUtils#getSmsAccount not found!:{}", scriptName);
+        return null;
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.java3y.austin.handler.handler.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.EnterpriseWeChatContentModel;
@@ -38,11 +40,6 @@ import java.util.Map;
 @Slf4j
 public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
 
-    /**
-     * 切割userId 的分隔符
-     */
-    private static final String DELIMITER = "|";
-
     @Autowired
     private AccountUtils accountUtils;
 
@@ -53,7 +50,7 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
     @Override
     public boolean handler(TaskInfo taskInfo) {
         try {
-            WxCpDefaultConfigImpl accountConfig = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.ENTERPRISE_WECHAT_ACCOUNT_KEY, SendAccountConstant.ENTERPRISE_WECHAT_PREFIX, WxCpDefaultConfigImpl.class);
+            WxCpDefaultConfigImpl accountConfig = accountUtils.getAccountById(taskInfo.getSendAccount(), WxCpDefaultConfigImpl.class);
             WxCpMessageServiceImpl messageService = new WxCpMessageServiceImpl(initService(accountConfig));
             WxCpMessageSendResult result = messageService.send(buildWxCpMessage(taskInfo, accountConfig.getAgentId()));
             if (Integer.valueOf(WxMpErrorMsgEnum.CODE_0.getCode()).equals(result.getErrCode())) {
@@ -93,7 +90,7 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
         if (AustinConstant.SEND_ALL.equals(CollUtil.getFirst(taskInfo.getReceiver()))) {
             userId = CollUtil.getFirst(taskInfo.getReceiver());
         } else {
-            userId = StringUtils.join(taskInfo.getReceiver(), DELIMITER);
+            userId = StringUtils.join(taskInfo.getReceiver(), CommonConstant.RADICAL);
         }
         EnterpriseWeChatContentModel contentModel = (EnterpriseWeChatContentModel) taskInfo.getContentModel();
 

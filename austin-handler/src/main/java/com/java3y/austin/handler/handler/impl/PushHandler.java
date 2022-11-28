@@ -58,7 +58,7 @@ public class PushHandler extends BaseHandler implements Handler {
     public boolean handler(TaskInfo taskInfo) {
 
         try {
-            GeTuiAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.GE_TUI_ACCOUNT_KEY, SendAccountConstant.GE_TUI_ACCOUNT_PREFIX, GeTuiAccount.class);
+            GeTuiAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), GeTuiAccount.class);
             String token = redisTemplate.opsForValue().get(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
             PushParam pushParam = PushParam.builder().token(token).appId(account.getAppId()).taskInfo(taskInfo).build();
 
@@ -83,6 +83,7 @@ public class PushHandler extends BaseHandler implements Handler {
 
     /**
      * 单推
+     *
      * @param pushParam
      * @return http result
      */
@@ -101,7 +102,7 @@ public class PushHandler extends BaseHandler implements Handler {
     /**
      * 批量推送
      *
-     * @param taskId  个推 返回的任务Id
+     * @param taskId    个推 返回的任务Id
      * @param pushParam
      * @return
      */
@@ -122,6 +123,7 @@ public class PushHandler extends BaseHandler implements Handler {
 
     /**
      * 群推前需要构建taskId
+     *
      * @param pushParam
      * @return http result
      */
@@ -161,6 +163,7 @@ public class PushHandler extends BaseHandler implements Handler {
         }
         return param;
     }
+
     @Override
     public void recall(MessageTemplate messageTemplate) {
 

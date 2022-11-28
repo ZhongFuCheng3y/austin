@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.MessageParam;
@@ -43,7 +44,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/messageTemplate")
 @Api("发送消息")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 public class MessageTemplateController {
 
     @Autowired

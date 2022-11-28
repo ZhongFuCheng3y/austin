@@ -2,17 +2,18 @@ package com.java3y.austin.web.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.service.ChannelAccountService;
+import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/account")
 @Api("渠道账号管理接口")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 public class ChannelAccountController {
 
     @Autowired
@@ -47,7 +48,14 @@ public class ChannelAccountController {
     @GetMapping("/queryByChannelType")
     @ApiOperation("/根据渠道标识查询相关的记录")
     public BasicResultVO query(Integer channelType) {
-        return BasicResultVO.success(channelAccountService.queryByChannelType(channelType));
+        List<CommonAmisVo> result = new ArrayList<>();
+
+        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType);
+        for (ChannelAccount channelAccount : channelAccounts) {
+            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
+            result.add(commonAmisVo);
+        }
+        return BasicResultVO.success(result);
     }
 
     /**

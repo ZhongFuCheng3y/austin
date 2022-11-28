@@ -3,6 +3,7 @@ package com.java3y.austin.cron.xxl.utils;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.cron.xxl.constants.XxlJobConstant;
@@ -44,8 +45,8 @@ public class XxlJobUtils {
 
         String scheduleConf = messageTemplate.getExpectPushTime();
         // 如果没有指定cron表达式，说明立即执行(给到xxl-job延迟5秒的cron表达式)
-        if (messageTemplate.getExpectPushTime().equals(String.valueOf(AustinConstant.FALSE))) {
-            scheduleConf = DateUtil.format(DateUtil.offsetSecond(new Date(), XxlJobConstant.DELAY_TIME), AustinConstant.CRON_FORMAT);
+        if (messageTemplate.getExpectPushTime().equals(String.valueOf(CommonConstant.FALSE))) {
+            scheduleConf = DateUtil.format(DateUtil.offsetSecond(new Date(), XxlJobConstant.DELAY_TIME), CommonConstant.CRON_FORMAT);
         }
 
         XxlJobInfo xxlJobInfo = XxlJobInfo.builder()
@@ -61,7 +62,7 @@ public class XxlJobUtils {
                 .executorTimeout(XxlJobConstant.TIME_OUT)
                 .executorFailRetryCount(XxlJobConstant.RETRY_COUNT)
                 .glueType(GlueTypeEnum.BEAN.name())
-                .triggerStatus(AustinConstant.FALSE)
+                .triggerStatus(CommonConstant.FALSE)
                 .glueRemark(StrUtil.EMPTY)
                 .glueSource(StrUtil.EMPTY)
                 .alarmEmail(StrUtil.EMPTY)
@@ -80,7 +81,7 @@ public class XxlJobUtils {
     private Integer queryJobGroupId() {
         BasicResultVO basicResultVO = cronTaskService.getGroupId(appName, jobHandlerName);
         if (basicResultVO.getData() == null) {
-            XxlJobGroup xxlJobGroup = XxlJobGroup.builder().appname(appName).title(jobHandlerName).addressType(AustinConstant.FALSE).build();
+            XxlJobGroup xxlJobGroup = XxlJobGroup.builder().appname(appName).title(jobHandlerName).addressType(CommonConstant.FALSE).build();
             if (RespStatusEnum.SUCCESS.getCode().equals(cronTaskService.createGroup(xxlJobGroup).getStatus())) {
                 return (int) cronTaskService.getGroupId(appName, jobHandlerName).getData();
             }

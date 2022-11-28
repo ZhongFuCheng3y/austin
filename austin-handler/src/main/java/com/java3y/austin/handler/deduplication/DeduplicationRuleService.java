@@ -1,6 +1,7 @@
 package com.java3y.austin.handler.deduplication;
 
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.DeduplicationType;
 import com.java3y.austin.support.service.ConfigService;
@@ -27,7 +28,7 @@ public class DeduplicationRuleService {
 
     public void duplication(TaskInfo taskInfo) {
         // 配置样例：{"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
-        String deduplicationConfig = config.getProperty(DEDUPLICATION_RULE_KEY, AustinConstant.APOLLO_DEFAULT_VALUE_JSON_OBJECT);
+        String deduplicationConfig = config.getProperty(DEDUPLICATION_RULE_KEY, CommonConstant.EMPTY_JSON_OBJECT);
 
         // 去重
         List<Integer> deduplicationList = DeduplicationType.getDeduplicationList();

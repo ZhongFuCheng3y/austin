@@ -51,7 +51,7 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
     @Override
     public boolean handler(TaskInfo taskInfo) {
         try {
-            EnterpriseWeChatRobotAccount account = accountUtils.getAccount(taskInfo.getSendAccount(), SendAccountConstant.ENTERPRISE_WECHAT_ROBOT_ACCOUNT_KEY, SendAccountConstant.ENTERPRISE_WECHAT_ROBOT_PREFIX, EnterpriseWeChatRobotAccount.class);
+            EnterpriseWeChatRobotAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(),  EnterpriseWeChatRobotAccount.class);
             EnterpriseWeChatRobotParam enterpriseWeChatRobotParam = assembleParam(taskInfo);
             String result = HttpRequest.post(account.getWebhook()).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
                     .body(JSON.toJSONString(enterpriseWeChatRobotParam))

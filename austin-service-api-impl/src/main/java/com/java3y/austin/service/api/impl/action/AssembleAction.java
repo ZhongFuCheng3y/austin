@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.ContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -38,6 +39,8 @@ import java.util.*;
 @Service
 public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
+    private static final String LINK_NAME = "url";
+
     @Autowired
     private MessageTemplateDao messageTemplateDao;
 
@@ -48,7 +51,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
         try {
             Optional<MessageTemplate> messageTemplate = messageTemplateDao.findById(messageTemplateId);
-            if (!messageTemplate.isPresent() || messageTemplate.get().getIsDeleted().equals(AustinConstant.TRUE)) {
+            if (!messageTemplate.isPresent() || messageTemplate.get().getIsDeleted().equals(CommonConstant.TRUE)) {
                 context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TEMPLATE_NOT_FOUND));
                 return;
             }
@@ -126,10 +129,10 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
         }
 
         // 如果 url 字段存在，则在url拼接对应的埋点参数
-        String url = (String) ReflectUtil.getFieldValue(contentModel, "url");
+        String url = (String) ReflectUtil.getFieldValue(contentModel, LINK_NAME);
         if (StrUtil.isNotBlank(url)) {
             String resultUrl = TaskInfoUtils.generateUrl(url, messageTemplate.getId(), messageTemplate.getTemplateType());
-            ReflectUtil.setFieldValue(contentModel, "url", resultUrl);
+            ReflectUtil.setFieldValue(contentModel, LINK_NAME, resultUrl);
         }
         return contentModel;
     }

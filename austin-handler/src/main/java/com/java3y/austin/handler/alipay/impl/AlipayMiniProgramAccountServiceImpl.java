@@ -38,10 +38,7 @@ public class AlipayMiniProgramAccountServiceImpl implements AlipayMiniProgramAcc
      */
     @Override
     public void send(AlipayMiniProgramParam miniProgramParam) throws AlipayApiException {
-        AlipayMiniProgramAccount miniProgramAccount = accountUtils.getAccount(miniProgramParam.getSendAccount(),
-                SendAccountConstant.ALIPAY_MINI_PROGRAM_ACCOUNT_KEY,
-                SendAccountConstant.ALIPAY_MINI_PROGRAM_PREFIX,
-                AlipayMiniProgramAccount.class);
+        AlipayMiniProgramAccount miniProgramAccount = accountUtils.getAccountById(miniProgramParam.getSendAccount(), AlipayMiniProgramAccount.class);
 
         AlipayClient client = initService(miniProgramAccount);
         List<AlipayOpenAppMiniTemplatemessageSendRequest> request = assembleReq(miniProgramParam, miniProgramAccount);

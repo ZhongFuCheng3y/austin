@@ -20,7 +20,7 @@ public interface MessageTemplateDao extends JpaRepository<MessageTemplate, Long>
      * @param pageable 分页对象
      * @return
      */
-    List<MessageTemplate> findAllByIsDeletedEquals(Integer deleted, Pageable pageable);
+    List<MessageTemplate> findAllByIsDeletedEqualsOrderByUpdatedDesc(Integer deleted, Pageable pageable);
 
 
     /**

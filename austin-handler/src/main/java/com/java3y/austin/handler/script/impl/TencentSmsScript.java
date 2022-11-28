@@ -6,8 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
-import com.java3y.austin.common.dto.account.TencentSmsAccount;
+import com.java3y.austin.common.dto.account.sms.TencentSmsAccount;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.handler.script.SmsScript;
@@ -17,9 +16,7 @@ import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20210111.SmsClient;
-import com.tencentcloudapi.sms.v20210111.models.SendSmsRequest;
-import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
-import com.tencentcloudapi.sms.v20210111.models.SendStatus;
+import com.tencentcloudapi.sms.v20210111.models.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,19 +45,40 @@ public class TencentSmsScript implements SmsScript {
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
         try {
-            TencentSmsAccount tencentSmsAccount = accountUtils.getAccount(SendAccountConstant.TENCENT_SMS_CODE, SendAccountConstant.SMS_ACCOUNT_KEY, SendAccountConstant.SMS_PREFIX, TencentSmsAccount.class);
+            TencentSmsAccount tencentSmsAccount = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), TencentSmsAccount.class);
             SmsClient client = init(tencentSmsAccount);
-            SendSmsRequest request = assembleReq(smsParam, tencentSmsAccount);
+            SendSmsRequest request = assembleSendReq(smsParam, tencentSmsAccount);
             SendSmsResponse response = client.SendSms(request);
-            return assembleSmsRecord(smsParam, response, tencentSmsAccount);
+            return assembleSendSmsRecord(smsParam, response, tencentSmsAccount);
         } catch (Exception e) {
             log.error("TencentSmsScript#send fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
             return null;
         }
     }
 
+    @Override
+    public List<SmsRecord> pull(String scriptName) {
+        try {
+            TencentSmsAccount account = accountUtils.getSmsAccountByScriptName(scriptName, TencentSmsAccount.class);
+            SmsClient client = init(account);
+            PullSmsSendStatusRequest req = assemblePullReq(account);
+            PullSmsSendStatusResponse resp = client.PullSmsSendStatus(req);
+            return assemblePullSmsRecord(account, resp);
+        } catch (Exception e) {
+            log.error("TencentSmsReceipt#pull fail!{}", Throwables.getStackTraceAsString(e));
+            return null;
+        }
+    }
 
-    private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsAccount tencentSmsAccount) {
+    /**
+     * 组装 发送消息的 返回值
+     *
+     * @param smsParam
+     * @param response
+     * @param tencentSmsAccount
+     * @return
+     */
+    private List<SmsRecord> assembleSendSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsAccount tencentSmsAccount) {
         if (response == null || ArrayUtil.isEmpty(response.getSendStatusSet())) {
             return null;
         }
@@ -95,7 +113,7 @@ public class TencentSmsScript implements SmsScript {
     /**
      * 组装发送短信参数
      */
-    private SendSmsRequest assembleReq(SmsParam smsParam, TencentSmsAccount account) {
+    private SendSmsRequest assembleSendReq(SmsParam smsParam, TencentSmsAccount account) {
         SendSmsRequest req = new SendSmsRequest();
         String[] phoneNumberSet1 = smsParam.getPhones().toArray(new String[smsParam.getPhones().size() - 1]);
         req.setPhoneNumberSet(phoneNumberSet1);
@@ -122,6 +140,51 @@ public class TencentSmsScript implements SmsScript {
         SmsClient client = new SmsClient(cred, account.getRegion(), clientProfile);
         return client;
     }
+
+    /**
+     * 组装 拉取回执信息
+     *
+     * @param account
+     * @param resp
+     * @return
+     */
+    private List<SmsRecord> assemblePullSmsRecord(TencentSmsAccount account, PullSmsSendStatusResponse resp) {
+        List<SmsRecord> smsRecordList = new ArrayList<>();
+        if (resp != null && resp.getPullSmsSendStatusSet() != null && resp.getPullSmsSendStatusSet().length > 0) {
+            for (PullSmsSendStatus pullSmsSendStatus : resp.getPullSmsSendStatusSet()) {
+                SmsRecord smsRecord = SmsRecord.builder()
+                        .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))
+                        .messageTemplateId(0L)
+                        .phone(Long.valueOf(pullSmsSendStatus.getSubscriberNumber()))
+                        .supplierId(account.getSupplierId())
+                        .supplierName(account.getSupplierName())
+                        .msgContent("")
+                        .seriesId(pullSmsSendStatus.getSerialNo())
+                        .chargingNum(0)
+                        .status("SUCCESS".equals(pullSmsSendStatus.getReportStatus()) ? SmsStatus.RECEIVE_SUCCESS.getCode() : SmsStatus.RECEIVE_FAIL.getCode())
+                        .reportContent(pullSmsSendStatus.getDescription())
+                        .updated(Math.toIntExact(pullSmsSendStatus.getUserReceiveTime()))
+                        .created(Math.toIntExact(DateUtil.currentSeconds()))
+                        .build();
+                smsRecordList.add(smsRecord);
+            }
+        }
+        return smsRecordList;
+    }
+
+    /**
+     * 组装 拉取回执 入参
+     *
+     * @param account
+     * @return
+     */
+    private PullSmsSendStatusRequest assemblePullReq(TencentSmsAccount account) {
+        PullSmsSendStatusRequest req = new PullSmsSendStatusRequest();
+        req.setLimit(10L);
+        req.setSmsSdkAppId(account.getSmsSdkAppId());
+        return req;
+    }
+
 
 }
 
