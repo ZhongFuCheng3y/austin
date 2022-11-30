@@ -147,7 +147,8 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 ## 里程碑
 
-![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/80fc1c550ee145eda95cfac4bd617a04~tplv-k3u1fbpfcp-watermark.image?)
+
+![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cb89cd766d94fc5ba7d3c6f9cbe2c4c~tplv-k3u1fbpfcp-watermark.image?)
 
 - [x] Maven+SpringBoot项目搭建
 - [x] logback日志记录项目运行时信息，引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
@@ -172,7 +173,7 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 - [x] 钉钉渠道接入
 - [x] 单机限流实现
 - [x] 引入单测框架，编写部分单测用例
-- [x] 接入微信服务号渠道(已有pull request代码)
+- [x] 接入微信服务号渠道(已有pull request代码，待调试)
 - [x] 接入微信小程序渠道(已有pull request代码)
 - [x] 接入PUSH渠道
 - [x] 接入云片短信渠道，并短信支持流量配置，拉取腾讯云短信回执
@@ -181,9 +182,10 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 - [x] Kafka消息支持tag过滤
 - [x] MQ层支持可插拔，默认使用eventbus单机队列，Kafka变为弱依赖
 - [x] 渠道账号改为读取数据库，优化短信回执拉取功能
+- [x] 接入微信服务号渠道（发送模板消息）完成
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
 
-**近期更新时间**：11月27号
+**近期更新时间**：11月30号
 
-**近期更新功能**：渠道账号改为读取数据库，优化短信回执拉取功能
+**近期更新功能**：接入微信服务号渠道（发送模板消息）完成
