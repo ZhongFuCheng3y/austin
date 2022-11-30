@@ -5,16 +5,20 @@ import com.google.common.base.Throwables;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.OfficialAccountsContentModel;
 import com.java3y.austin.common.enums.ChannelType;
-import com.java3y.austin.handler.domain.wechat.WeChatOfficialParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.handler.wechat.OfficialAccountService;
 import com.java3y.austin.support.domain.MessageTemplate;
+import com.java3y.austin.support.utils.WxServiceUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zyg
@@ -24,34 +28,58 @@ import java.util.List;
 @Slf4j
 public class OfficialAccountHandler extends BaseHandler implements Handler {
 
-    @Autowired
-    private OfficialAccountService officialAccountService;
-
     public OfficialAccountHandler() {
         channelCode = ChannelType.OFFICIAL_ACCOUNT.getCode();
     }
 
     @Override
     public boolean handler(TaskInfo taskInfo) {
-        // 构建微信模板消息
-        OfficialAccountsContentModel contentModel = (OfficialAccountsContentModel) taskInfo.getContentModel();
-        WeChatOfficialParam officialParam = WeChatOfficialParam.builder()
-                .openIds(taskInfo.getReceiver())
-                .messageTemplateId(taskInfo.getMessageTemplateId())
-                .sendAccount(taskInfo.getSendAccount())
-                .data(contentModel.getMap())
-                .build();
-
-        // 微信模板消息需要记录响应结果
         try {
-            List<String> messageIds = officialAccountService.send(officialParam);
-            log.info("OfficialAccountHandler#handler successfully messageIds:{}", messageIds);
+            OfficialAccountsContentModel contentModel = (OfficialAccountsContentModel) taskInfo.getContentModel();
+            WxMpService wxMpService = WxServiceUtils.wxMpServiceMap.get(taskInfo.getSendAccount().longValue());
+            List<WxMpTemplateMessage> messages = assembleReq(taskInfo.getReceiver(), contentModel);
+            for (WxMpTemplateMessage message : messages) {
+                try {
+                    wxMpService.getTemplateMsgService().sendTemplateMsg(message);
+                } catch (Exception e) {
+                    log.info("OfficialAccountHandler#handler fail! param:{},e:{}", JSON.toJSONString(taskInfo), Throwables.getStackTraceAsString(e));
+                }
+            }
             return true;
         } catch (Exception e) {
-            log.error("OfficialAccountHandler#handler fail:{},params:{}",
-                    Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
+            log.error("OfficialAccountHandler#handler fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
         }
         return false;
+    }
+
+
+    /**
+     * 组装发送模板信息参数
+     */
+    private List<WxMpTemplateMessage> assembleReq(Set<String> receiver, OfficialAccountsContentModel contentModel) {
+        List<WxMpTemplateMessage> wxMpTemplateMessages = new ArrayList<>(receiver.size());
+        for (String openId : receiver) {
+            WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
+                    .toUser(openId)
+                    .templateId(contentModel.getTemplateId())
+                    .url(contentModel.getUrl())
+                    .data(getWxMpTemplateData(contentModel.getOfficialAccountParam()))
+                    .miniProgram(new WxMpTemplateMessage.MiniProgram(contentModel.getMiniProgramId(), contentModel.getPath(), false))
+                    .build();
+            wxMpTemplateMessages.add(templateMessage);
+        }
+        return wxMpTemplateMessages;
+    }
+
+    /**
+     * 构建模板消息参数
+     *
+     * @return
+     */
+    private List<WxMpTemplateData> getWxMpTemplateData(Map<String, String> data) {
+        List<WxMpTemplateData> templateDataList = new ArrayList<>(data.size());
+        data.forEach((k, v) -> templateDataList.add(new WxMpTemplateData(k, v)));
+        return templateDataList;
     }
 
     @Override

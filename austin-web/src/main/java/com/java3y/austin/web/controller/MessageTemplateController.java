@@ -16,9 +16,10 @@ import com.java3y.austin.service.api.service.RecallService;
 import com.java3y.austin.service.api.service.SendService;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.service.MessageTemplateService;
-import com.java3y.austin.web.utils.ConvertMap;
+import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.vo.MessageTemplateParam;
 import com.java3y.austin.web.vo.MessageTemplateVo;
+import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -76,7 +77,7 @@ public class MessageTemplateController {
     @GetMapping("/list")
     @ApiOperation("/列表页")
     public BasicResultVO queryList(@Validated MessageTemplateParam messageTemplateParam) {
-        List<Map<String, Object>> result = ConvertMap.flatList(messageTemplateService.queryList(messageTemplateParam));
+        List<Map<String, Object>> result = Convert4Amis.flatListMap(messageTemplateService.queryList(messageTemplateParam));
 
         long count = messageTemplateService.count();
         MessageTemplateVo messageTemplateVo = MessageTemplateVo.builder().count(count).rows(result).build();
@@ -89,7 +90,7 @@ public class MessageTemplateController {
     @GetMapping("query/{id}")
     @ApiOperation("/根据Id查找")
     public BasicResultVO queryById(@PathVariable("id") Long id) {
-        Map<String, Object> result = ConvertMap.flatSingle(messageTemplateService.queryById(id));
+        Map<String, Object> result = Convert4Amis.flatSingleMap(messageTemplateService.queryById(id));
         return BasicResultVO.success(result);
     }
 
@@ -136,6 +137,21 @@ public class MessageTemplateController {
         }
         return BasicResultVO.success(response);
     }
+
+    /**
+     * 获取需要测试的模板占位符，透出给Amis
+     */
+    @PostMapping("test/content")
+    @ApiOperation("/测试发送接口")
+    public BasicResultVO test(Long id) {
+        MessageTemplate messageTemplate = messageTemplateService.queryById(id);
+        CommonAmisVo commonAmisVo = Convert4Amis.getTestContent(messageTemplate.getMsgContent());
+        if (commonAmisVo != null) {
+            return BasicResultVO.success(commonAmisVo);
+        }
+        return BasicResultVO.success();
+    }
+
 
     /**
      * 撤回接口

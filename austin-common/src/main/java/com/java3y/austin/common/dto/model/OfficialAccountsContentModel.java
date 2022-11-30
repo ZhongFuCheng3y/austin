@@ -19,11 +19,26 @@ public class OfficialAccountsContentModel extends ContentModel {
     /**
      * 模板消息发送的数据
      */
-    Map<String, String> map;
+    private Map<String, String> officialAccountParam;
 
     /**
      * 模板消息跳转的url
      */
-    String url;
+    private String url;
+
+    /**
+     * 模板Id
+     */
+    private String templateId;
+
+    /**
+     * 模板消息跳转小程序的appid
+     */
+    private String miniProgramId;
+
+    /**
+     * 模板消息跳转小程序的页面路径
+     */
+    private String path;
 
 }

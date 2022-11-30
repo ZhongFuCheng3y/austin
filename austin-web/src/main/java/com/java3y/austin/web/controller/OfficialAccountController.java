@@ -1,12 +1,12 @@
 package com.java3y.austin.web.controller;
 
 
-import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.WxServiceUtils;
+import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,7 +71,7 @@ public class OfficialAccountController {
         try {
             WxMpService wxMpService = WxServiceUtils.wxMpServiceMap.get(id);
             List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
-            CommonAmisVo wxMpTemplateParam = getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
+            CommonAmisVo wxMpTemplateParam = Convert4Amis.getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
             return BasicResultVO.success(wxMpTemplateParam);
         } catch (Exception e) {
             log.error("OfficialAccountController#queryList fail:{}", Throwables.getStackTraceAsString(e));
@@ -80,43 +80,5 @@ public class OfficialAccountController {
     }
 
 
-    /**
-     * 这个方法不用看，纯粹为了适配amis前端
-     *
-     * @param wxTemplateId
-     * @param allPrivateTemplate
-     * @return
-     */
-    private CommonAmisVo getWxMpTemplateParam(String wxTemplateId, List<WxMpTemplate> allPrivateTemplate) {
-        CommonAmisVo officialAccountParam = null;
-        for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
-            if (wxTemplateId.equals(wxMpTemplate.getTemplateId())) {
-                String[] data = wxMpTemplate.getContent().split(StrUtil.LF);
-                officialAccountParam = CommonAmisVo.builder()
-                        .type("input-table")
-                        .name("officialAccountParam")
-                        .label("新增一行，输入模板对应的文案")
-                        .addable(true)
-                        .editable(true)
-                        .needConfirm(false)
-                        .build();
-                List<CommonAmisVo.ColumnsDTO> columnsDTOS = new ArrayList<>();
-                for (String datum : data) {
-                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
-                    CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder().name(name).type("input-text").required(true).quickEdit(true);
-                    if (datum.contains("first")) {
-                        dtoBuilder.label("名字");
-                    } else if (datum.contains("remark")) {
-                        dtoBuilder.label("备注");
-                    } else {
-                        dtoBuilder.label(datum.split("：")[0]);
-                    }
-                    columnsDTOS.add(dtoBuilder.build());
-                }
-                officialAccountParam.setColumns(columnsDTOS);
 
-            }
-        }
-        return officialAccountParam;
-    }
 }
