@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ import java.util.Set;
 @Slf4j
 public class OfficialAccountHandler extends BaseHandler implements Handler {
 
+    @Autowired
+    private WxServiceUtils wxServiceUtils;
+
     public OfficialAccountHandler() {
         channelCode = ChannelType.OFFICIAL_ACCOUNT.getCode();
     }
@@ -36,7 +40,7 @@ public class OfficialAccountHandler extends BaseHandler implements Handler {
     public boolean handler(TaskInfo taskInfo) {
         try {
             OfficialAccountsContentModel contentModel = (OfficialAccountsContentModel) taskInfo.getContentModel();
-            WxMpService wxMpService = WxServiceUtils.wxMpServiceMap.get(taskInfo.getSendAccount().longValue());
+            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(taskInfo.getSendAccount().longValue());
             List<WxMpTemplateMessage> messages = assembleReq(taskInfo.getReceiver(), contentModel);
             for (WxMpTemplateMessage message : messages) {
                 try {

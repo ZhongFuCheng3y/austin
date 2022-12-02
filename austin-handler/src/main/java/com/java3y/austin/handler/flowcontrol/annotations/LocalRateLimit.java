@@ -1,17 +1,15 @@
 package com.java3y.austin.handler.flowcontrol.annotations;
 
 import com.java3y.austin.handler.enums.RateLimitStrategy;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import org.springframework.stereotype.Service;
+
+import java.lang.annotation.*;
 
 /**
  * 单机限流注解
  * Created by TOM
  * On 2022/7/21 17:03
+ * @author TOM
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

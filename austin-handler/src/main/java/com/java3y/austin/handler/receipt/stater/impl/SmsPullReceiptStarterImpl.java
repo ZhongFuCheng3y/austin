@@ -41,6 +41,7 @@ public class SmsPullReceiptStarterImpl implements ReceiptMessageStater {
     /**
      * 拉取消息并入库
      */
+    @Override
     public void start() {
         try {
             List<ChannelAccount> channelAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.SMS.getCode());

@@ -1,5 +1,9 @@
 package com.java3y.austin.common.constant;
 
+
+/**
+ * @author 3y
+ */
 public class CommonConstant {
 
     public final static String PERIOD = ".";

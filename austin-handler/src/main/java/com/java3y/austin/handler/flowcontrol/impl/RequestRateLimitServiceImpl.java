@@ -9,10 +9,11 @@ import com.java3y.austin.handler.flowcontrol.annotations.LocalRateLimit;
 
 /**
  * Created by TOM
- * On 2022/7/21 17:14
+ * On 2022/7/21 17:05
+ * @author TOM
  */
-@LocalRateLimit(rateLimitStrategy = RateLimitStrategy.SEND_USER_NUM_RATE_LIMIT)
-public class SendUserNumRateLimitService implements FlowControlService {
+@LocalRateLimit(rateLimitStrategy = RateLimitStrategy.REQUEST_RATE_LIMIT)
+public class RequestRateLimitServiceImpl implements FlowControlService {
 
   /**
    * 根据渠道进行流量控制
@@ -23,6 +24,6 @@ public class SendUserNumRateLimitService implements FlowControlService {
   @Override
   public Double flowControl(TaskInfo taskInfo, FlowControlParam flowControlParam) {
     RateLimiter rateLimiter = flowControlParam.getRateLimiter();
-    return rateLimiter.acquire(taskInfo.getReceiver().size());
+    return rateLimiter.acquire(1);
   }
 }

@@ -1,6 +1,7 @@
 package com.java3y.austin.web.controller;
 
 
+import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -11,8 +12,7 @@ import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
+import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,38 +26,32 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/officialAccount")
+@RequestMapping("/miniProgram")
 @Api("微信服务号")
-@CrossOrigin(origins = {AustinConstant.ORIGIN_VALUE, "https://aisuda.bce.baidu.com", "http://localhost:8080"}
-        , allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET})
-public class OfficialAccountController {
+@CrossOrigin(origins = {AustinConstant.ORIGIN_VALUE}, allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET})
+public class MiniProgramController {
 
     @Autowired
     private WxServiceUtils wxServiceUtils;
 
-    /**
-     * @param id 账号Id
-     * @return
-     */
     @GetMapping("/template/list")
     @ApiOperation("/根据账号Id获取模板列表")
     public BasicResultVO queryList(Long id) {
         try {
             List<CommonAmisVo> result = new ArrayList<>();
-            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(id);
-
-            List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
-            for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
-                CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(wxMpTemplate.getTitle()).value(wxMpTemplate.getTemplateId()).build();
+            WxMaSubscribeService wxMaSubscribeService = wxServiceUtils.getMiniProgramServiceMap().get(id);
+            List<TemplateInfo> templateList = wxMaSubscribeService.getTemplateList();
+            for (TemplateInfo templateInfo : templateList) {
+                CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(templateInfo.getTitle()).value(templateInfo.getPriTmplId()).build();
                 result.add(commonAmisVo);
             }
             return BasicResultVO.success(result);
         } catch (Exception e) {
-            log.error("OfficialAccountController#queryList fail:{}", Throwables.getStackTraceAsString(e));
+            log.error("MiniProgramController#queryList fail:{}", Throwables.getStackTraceAsString(e));
             return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
         }
-    }
 
+    }
 
     /**
      * 根据账号Id和模板ID获取模板列表
@@ -71,12 +65,12 @@ public class OfficialAccountController {
             return BasicResultVO.success(RespStatusEnum.CLIENT_BAD_PARAMETERS);
         }
         try {
-            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(id);
-            List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
-            CommonAmisVo wxMpTemplateParam = Convert4Amis.getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
+            WxMaSubscribeService wxMaSubscribeService = wxServiceUtils.getMiniProgramServiceMap().get(id);
+            List<TemplateInfo> templateList = wxMaSubscribeService.getTemplateList();
+            CommonAmisVo wxMpTemplateParam = Convert4Amis.getWxMaTemplateParam(wxTemplateId, templateList);
             return BasicResultVO.success(wxMpTemplateParam);
         } catch (Exception e) {
-            log.error("OfficialAccountController#queryDetailList fail:{}", Throwables.getStackTraceAsString(e));
+            log.error("MiniProgramController#queryDetailList fail:{}", Throwables.getStackTraceAsString(e));
             return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
         }
     }

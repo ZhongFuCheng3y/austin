@@ -14,6 +14,7 @@ public interface FlowControlService {
      *
      * @param taskInfo
      * @param flowControlParam
+     * @return 耗费的时间
      */
     Double flowControl(TaskInfo taskInfo, FlowControlParam flowControlParam);
 

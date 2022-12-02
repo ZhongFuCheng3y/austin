@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
+import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 
 import java.lang.reflect.Field;
@@ -24,12 +25,19 @@ import java.util.stream.Collectors;
  */
 public class Convert4Amis {
 
-    // 标识忽略
-    public static final int ignoreTg = 0;
-    // 标识已读取到'$'字符
-    public static final int startTg = 1;
-    // 标识已读取到'{'字符
-    public static final int readTg = 2;
+    /**
+     * 标识忽略
+     */
+    public static final int IGNORE_TG = 0;
+    /**
+     * 标识已读取到'$'字符
+     */
+    public static final int START_TG = 1;
+    /**
+     * 标识已读取到'{'字符
+     */
+    public static final int READ_TG = 2;
+
     /**
      * 需要打散的字段(将json字符串打散为一个一个字段返回）
      * (主要是用于回显数据)
@@ -45,7 +53,7 @@ public class Convert4Amis {
     /**
      * (前端是一个JSONObject传递进来，返回一个JSONArray回去)
      */
-    private static final List<String> PARSE_JSON_OBJ_TO_ARRAY = Arrays.asList("officialAccountParam");
+    private static final List<String> PARSE_JSON_OBJ_TO_ARRAY = Arrays.asList("officialAccountParam","miniProgramParam");
 
     /**
      * 钉钉工作消息OA实际的映射
@@ -128,6 +136,7 @@ public class Convert4Amis {
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
      *
+     * 得到模板的参数 组装好 返回给前端展示
      * @param wxTemplateId
      * @param allPrivateTemplate
      * @return
@@ -209,31 +218,31 @@ public class Convert4Amis {
         // 存储占位符 位置信息集合
         List<String> placeholderList = new ArrayList<>();
         // 当前标识
-        int modeTg = ignoreTg;
+        int modeTg = IGNORE_TG;
         for (int m = 0; m < textChars.length; m++) {
             char c = textChars[m];
             textSofar.append(c);
             switch (c) {
                 case '{': {
-                    modeTg = startTg;
+                    modeTg = START_TG;
                     sb.append(c);
                 }
                 break;
                 case '$': {
-                    if (modeTg == startTg) {
+                    if (modeTg == START_TG) {
                         sb.append(c);
-                        modeTg = readTg;
+                        modeTg = READ_TG;
                     } else {
-                        if (modeTg == readTg) {
+                        if (modeTg == READ_TG) {
                             sb = new StringBuilder();
-                            modeTg = ignoreTg;
+                            modeTg = IGNORE_TG;
                         }
                     }
                 }
                 break;
                 case '}': {
-                    if (modeTg == readTg) {
-                        modeTg = ignoreTg;
+                    if (modeTg == READ_TG) {
+                        modeTg = IGNORE_TG;
                         sb.append(c);
                         String str = sb.toString();
                         if (StrUtil.isNotEmpty(str)) {
@@ -241,16 +250,17 @@ public class Convert4Amis {
                             textSofar = new StringBuilder();
                         }
                         sb = new StringBuilder();
-                    } else if (modeTg == startTg) {
-                        modeTg = ignoreTg;
+                    } else if (modeTg == START_TG) {
+                        modeTg = IGNORE_TG;
                         sb = new StringBuilder();
                     }
+                    break;
                 }
                 default: {
-                    if (modeTg == readTg) {
+                    if (modeTg == READ_TG) {
                         sb.append(c);
-                    } else if (modeTg == startTg) {
-                        modeTg = ignoreTg;
+                    } else if (modeTg == START_TG) {
+                        modeTg = IGNORE_TG;
                         sb = new StringBuilder();
                     }
                 }
@@ -260,4 +270,39 @@ public class Convert4Amis {
         return result;
     }
 
+    /**
+     * 【这个方法不用看】，纯粹为了适配amis前端
+     *
+     * 得到模板的参数 组装好 返回给前端展示
+     * @param wxTemplateId
+     * @param templateList
+     * @return
+     */
+    public static CommonAmisVo getWxMaTemplateParam(String wxTemplateId, List<TemplateInfo> templateList) {
+        CommonAmisVo officialAccountParam = null;
+        for (TemplateInfo templateInfo : templateList) {
+            if (wxTemplateId.equals(templateInfo.getPriTmplId())) {
+                String[] data = templateInfo.getContent().split(StrUtil.LF);
+                officialAccountParam = CommonAmisVo.builder()
+                        .type("input-table")
+                        .name("miniProgramParam")
+                        .addable(true)
+                        .editable(true)
+                        .needConfirm(false)
+                        .build();
+                List<CommonAmisVo.ColumnsDTO> columnsDTOS = new ArrayList<>();
+                for (String datum : data) {
+                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
+                    String label = datum.split(":")[0];
+                    CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
+                            .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
+                    columnsDTOS.add(columnsDTO);
+                }
+                officialAccountParam.setColumns(columnsDTOS);
+
+            }
+        }
+        return officialAccountParam;
+
+    }
 }
