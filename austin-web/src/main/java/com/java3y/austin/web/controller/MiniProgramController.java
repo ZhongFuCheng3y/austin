@@ -2,6 +2,7 @@ package com.java3y.austin.web.controller;
 
 
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
+import cn.hutool.http.HttpUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -75,5 +76,20 @@ public class MiniProgramController {
         }
     }
 
+    /**
+     * 登录凭证校验
+     *
+     * @return
+     */
+    @GetMapping("/sync/openid")
+    @ApiOperation("登录凭证校验")
+    public BasicResultVO syncOpenId(String code) {
+        String appId = "xxx";
+        String secret = "xxxxx";
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
+        String result = HttpUtil.get(url);
+        System.out.println(result);
+        return BasicResultVO.success(result);
+    }
 
 }
