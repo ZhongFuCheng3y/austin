@@ -6,7 +6,6 @@ import com.alipay.api.AlipayConfig;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayOpenAppMiniTemplatemessageSendModel;
 import com.alipay.api.request.AlipayOpenAppMiniTemplatemessageSendRequest;
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.AlipayMiniProgramAccount;
 import com.java3y.austin.handler.alipay.AlipayMiniProgramAccountService;
 import com.java3y.austin.handler.domain.alipay.AlipayMiniProgramParam;

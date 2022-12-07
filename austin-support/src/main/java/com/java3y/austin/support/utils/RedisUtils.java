@@ -170,13 +170,14 @@ public class RedisUtils {
 
         try {
             Long execute = redisTemplate.execute(redisScript, keys, args);
-
+            if (execute == null) {
+                return false;
+            }
             return CommonConstant.TRUE.equals(execute.intValue());
         } catch (Exception e) {
 
             log.error("redis execLimitLua fail! e:{}", Throwables.getStackTraceAsString(e));
         }
-
         return false;
     }
 
