@@ -1,7 +1,7 @@
 # 使用openjdk8的镜像
 FROM openjdk:8-jre
 
-ENV PARAMS=""
+ENV PARAMS="--spring.profiles.active=docker"
 
 # 设置工作目录
 WORKDIR /build

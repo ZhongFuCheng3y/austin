@@ -2,7 +2,6 @@ package com.java3y.austin.web.controller;
 
 
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.WxServiceUtils;
@@ -28,8 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/officialAccount")
 @Api("微信服务号")
-@CrossOrigin(origins = {AustinConstant.ORIGIN_VALUE, "https://aisuda.bce.baidu.com", "http://localhost:8080"}
-        , allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET})
 public class OfficialAccountController {
 
     @Autowired

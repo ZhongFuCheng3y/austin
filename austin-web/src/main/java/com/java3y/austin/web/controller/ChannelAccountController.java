@@ -2,7 +2,6 @@ package com.java3y.austin.web.controller;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.service.ChannelAccountService;
@@ -13,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/account")
 @Api("渠道账号管理接口")
-@CrossOrigin(origins = AustinConstant.ORIGIN_VALUE, allowCredentials = "true", allowedHeaders = "*")
 public class ChannelAccountController {
 
     @Autowired

@@ -4,7 +4,6 @@ package com.java3y.austin.web.controller;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import cn.hutool.http.HttpUtil;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.WxServiceUtils;
@@ -29,7 +28,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/miniProgram")
 @Api("微信服务号")
-@CrossOrigin(origins = {AustinConstant.ORIGIN_VALUE}, allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET})
 public class MiniProgramController {
 
     @Autowired
@@ -78,17 +76,16 @@ public class MiniProgramController {
 
     /**
      * 登录凭证校验
+     * <p>
+     * 临时给小程序登录使用，正常消息推送平台不会有此接口
      *
      * @return
      */
     @GetMapping("/sync/openid")
     @ApiOperation("登录凭证校验")
-    public BasicResultVO syncOpenId(String code) {
-        String appId = "xxx";
-        String secret = "xxxxx";
+    public BasicResultVO syncOpenId(String code, String appId, String secret) {
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
         String result = HttpUtil.get(url);
-        System.out.println(result);
         return BasicResultVO.success(result);
     }
 
