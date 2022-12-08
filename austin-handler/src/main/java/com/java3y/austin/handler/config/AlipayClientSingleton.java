@@ -5,6 +5,9 @@ import com.alipay.api.AlipayConfig;
 import com.alipay.api.DefaultAlipayClient;
 import com.java3y.austin.common.dto.account.AlipayMiniProgramAccount;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 初始化支付宝小程序 单例
  *
@@ -13,15 +16,17 @@ import com.java3y.austin.common.dto.account.AlipayMiniProgramAccount;
  */
 public class AlipayClientSingleton {
 
-    private volatile static DefaultAlipayClient alipayClientSingleton;
+    private static volatile DefaultAlipayClient alipayClientSingleton;
+
+    private static Map<String, DefaultAlipayClient> alipayClientMap = new HashMap<>();
 
     private AlipayClientSingleton() {
     }
 
     public static DefaultAlipayClient getSingleton(AlipayMiniProgramAccount alipayMiniProgramAccount) throws AlipayApiException {
-        if (alipayClientSingleton == null) {
+        if (!alipayClientMap.containsKey(alipayMiniProgramAccount.getAppId())) {
             synchronized (DefaultAlipayClient.class) {
-                if (alipayClientSingleton == null) {
+                if (!alipayClientMap.containsKey(alipayMiniProgramAccount.getAppId())) {
                     AlipayConfig alipayConfig = new AlipayConfig();
                     alipayConfig.setServerUrl("https://openapi.alipaydev.com/gateway.do");
                     alipayConfig.setAppId(alipayMiniProgramAccount.getAppId());
@@ -31,9 +36,11 @@ public class AlipayClientSingleton {
                     alipayConfig.setCharset("utf-8");
                     alipayConfig.setSignType("RSA2");
                     alipayClientSingleton = new DefaultAlipayClient(alipayConfig);
+                    alipayClientMap.put(alipayMiniProgramAccount.getAppId(), alipayClientSingleton);
+                    return alipayClientSingleton;
                 }
             }
         }
-        return alipayClientSingleton;
+        return alipayClientMap.get(alipayMiniProgramAccount.getAppId());
     }
 }
