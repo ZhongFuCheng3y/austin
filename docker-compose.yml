@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mysql:
+  austin-mysql:
     environment:
       TZ: Asia/Shanghai
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
@@ -17,12 +17,12 @@ services:
       - 23306:3306
     networks:
       - app
-  redis:
+  austin-redis:
     image: redis:3.2
     ports:
       - 16379:6379
     restart: always
-    container_name: redis
+    container_name: austin-redis
     networks:
       - app
   austin:
