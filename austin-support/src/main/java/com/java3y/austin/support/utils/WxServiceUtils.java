@@ -22,9 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 微信服务号/微信小程序 工具类
@@ -36,11 +36,11 @@ import java.util.Map;
 @Data
 public class WxServiceUtils {
 
-    private Map<Long, WxMpService> officialAccountServiceMap = new HashMap<>();
-    private Map<Long, WxMaSubscribeService> miniProgramServiceMap = new HashMap<>();
+    private Map<Long, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
+    private Map<Long, WxMaSubscribeService> miniProgramServiceMap = new ConcurrentHashMap<>();
 
-    private Map<Long, WeChatOfficialAccount> officialAccountHashMap = new HashMap<>();
-    private Map<Long, WeChatMiniProgramAccount> miniProgramHashMap = new HashMap<>();
+    private Map<Long, WeChatOfficialAccount> officialAccountHashMap = new ConcurrentHashMap<>();
+    private Map<Long, WeChatMiniProgramAccount> miniProgramHashMap = new ConcurrentHashMap<>();
 
     @Autowired
     private ChannelAccountDao channelAccountDao;
@@ -49,6 +49,9 @@ public class WxServiceUtils {
     public void init() {
         initOfficialAccount();
         initMiniProgram();
+    }
+    public void fresh() {
+        init();
     }
 
 
@@ -80,6 +83,7 @@ public class WxServiceUtils {
         WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
         config.setAppId(officialAccount.getAppId());
         config.setSecret(officialAccount.getSecret());
+        config.setToken(officialAccount.getToken());
         wxMpService.setWxMpConfigStorage(config);
         return wxMpService;
     }

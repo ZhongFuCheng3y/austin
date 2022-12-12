@@ -42,8 +42,8 @@ public class YunPianSmsScript implements SmsScript {
             Map<String, Object> params = assembleParam(smsParam, account);
 
             String result = HttpRequest.post(account.getUrl())
-                    .header(Header.CONTENT_TYPE.getValue(), "application/x-www-form-urlencoded;charset=utf-8;")
-                    .header(Header.ACCEPT.getValue(), "application/json;charset=utf-8;")
+                    .header(Header.CONTENT_TYPE.getValue(), CommonConstant.CONTENT_TYPE_FORM_URL_ENCODE)
+                    .header(Header.ACCEPT.getValue(), CommonConstant.CONTENT_TYPE_JSON)
                     .form(params)
                     .timeout(2000)
                     .execute().body();

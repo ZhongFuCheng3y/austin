@@ -24,5 +24,6 @@ public class WeChatOfficialAccount {
      */
     private String appId;
     private String secret;
+    private String token;
 
 }

@@ -305,4 +305,14 @@ public class Convert4Amis {
         return officialAccountParam;
 
     }
+
+    /**
+     * 【这个方法不用看】，纯粹为了适配amis前端
+     *
+     * 得到微信服务号的【带参数】二维码返回给前端
+     * @return
+     */
+    public static CommonAmisVo getWxMpQrCode(String url) {
+        return CommonAmisVo.builder().type("image").imageMode("original").width("450px").height("450px").title("扫描关注服务号-登录").src(url).build();
+    }
 }

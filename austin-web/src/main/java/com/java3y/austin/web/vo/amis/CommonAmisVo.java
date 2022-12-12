@@ -38,6 +38,17 @@ public class CommonAmisVo {
 
     private boolean needConfirm;
 
+    private String width;
+
+    private String height;
+
+    private String src;
+
+
+    private String title;
+
+    private String imageMode;
+
     /**
      * columns
      */
