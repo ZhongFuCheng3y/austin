@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 微信服务号/微信小程序 工具类
+ * 微信服务号/微信小程序 服务初始化工具类
  *
  * @author 3y
  */
@@ -36,11 +36,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class WxServiceUtils {
 
+    /**
+     * 推送消息的小程序/微信服务号 账号
+     */
     private Map<Long, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
     private Map<Long, WxMaSubscribeService> miniProgramServiceMap = new ConcurrentHashMap<>();
-
-    private Map<Long, WeChatOfficialAccount> officialAccountHashMap = new ConcurrentHashMap<>();
-    private Map<Long, WeChatMiniProgramAccount> miniProgramHashMap = new ConcurrentHashMap<>();
 
     @Autowired
     private ChannelAccountDao channelAccountDao;
@@ -50,27 +50,36 @@ public class WxServiceUtils {
         initOfficialAccount();
         initMiniProgram();
     }
+
+
+    /**
+     * 当账号存在变更/新增时，刷新Map
+     */
     public void fresh() {
         init();
     }
 
-
+    /**
+     * 得到所有的小程序账号
+     */
     private void initMiniProgram() {
         List<ChannelAccount> miniProgram = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.MINI_PROGRAM.getCode());
         for (ChannelAccount channelAccount : miniProgram) {
             WeChatMiniProgramAccount weChatMiniProgramAccount = JSON.parseObject(channelAccount.getAccountConfig(), WeChatMiniProgramAccount.class);
             miniProgramServiceMap.put(channelAccount.getId(), initMiniProgramService(weChatMiniProgramAccount));
-            miniProgramHashMap.put(channelAccount.getId(), weChatMiniProgramAccount);
         }
     }
 
+    /**
+     * 得到所有的微信服务号账号
+     */
     private void initOfficialAccount() {
         List<ChannelAccount> officialAccountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.OFFICIAL_ACCOUNT.getCode());
         for (ChannelAccount channelAccount : officialAccountList) {
             WeChatOfficialAccount weChatOfficialAccount = JSON.parseObject(channelAccount.getAccountConfig(), WeChatOfficialAccount.class);
             officialAccountServiceMap.put(channelAccount.getId(), initOfficialAccountService(weChatOfficialAccount));
-            officialAccountHashMap.put(channelAccount.getId(), weChatOfficialAccount);
         }
+
     }
 
     /**
