@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 /**
  * 获取数据接口（全链路追踪)
  *
@@ -49,7 +51,7 @@ public class DataController {
     @ApiOperation("/获取短信下发数据")
     public BasicResultVO getSmsData(@RequestBody DataParam dataParam) {
         if (dataParam == null || dataParam.getDateTime() == null || dataParam.getReceiver() == null) {
-            return new BasicResultVO<>(RespStatusEnum.SUCCESS, new SmsTimeLineVo());
+            return new BasicResultVO<>(RespStatusEnum.SUCCESS, SmsTimeLineVo.builder().items(new ArrayList<>()).build());
         }
 
         SmsTimeLineVo smsTimeLineVo = dataService.getTraceSmsInfo(dataParam);

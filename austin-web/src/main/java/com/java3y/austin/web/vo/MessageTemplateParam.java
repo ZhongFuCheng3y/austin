@@ -24,13 +24,13 @@ public class MessageTemplateParam {
      * 当前页码
      */
     @NotNull
-    private Integer page;
+    private Integer page = 1;
 
     /**
      * 当前页大小
      */
     @NotNull
-    private Integer perPage;
+    private Integer perPage = 10;
 
     /**
      * 模板ID

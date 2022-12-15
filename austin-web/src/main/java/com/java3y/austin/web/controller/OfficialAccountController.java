@@ -7,23 +7,22 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
-import com.java3y.austin.common.dto.account.WeChatOfficialAccount;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.WxServiceUtils;
+import com.java3y.austin.web.config.WeChatLoginConfig;
 import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
-import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +47,11 @@ public class OfficialAccountController {
     @Autowired
     private WxServiceUtils wxServiceUtils;
 
-    String appId = "wx2xxxxxb325";
-    String secret = "203xxx6db46fa99";
-    String token = "austin123";
+    @Autowired
+    private WeChatLoginConfig configService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     /**
      * @param id 账号Id
@@ -110,13 +111,7 @@ public class OfficialAccountController {
     @ApiOperation("/接收微信的事件消息")
     public String receiptMessage(HttpServletRequest request, HttpServletResponse response) {
         try {
-            WxMpService wxMpService = wxServiceUtils.initOfficialAccountService(WeChatOfficialAccount.builder().appId(appId).secret(secret).token(token).build());
-            WxMpMessageRouter wxMpMessageRouter = new WxMpMessageRouter(wxMpService);
-
-            WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
-            config.setAppId(appId);
-            config.setSecret(secret);
-            config.setToken(token);
+            WxMpService wxMpService = configService.getOfficialAccountLoginService();
 
             String echoStr = request.getParameter(OfficialAccountParamConstant.ECHO_STR);
             String signature = request.getParameter(OfficialAccountParamConstant.SIGNATURE);
@@ -137,14 +132,14 @@ public class OfficialAccountController {
             if (OfficialAccountParamConstant.RAW.equals(encryptType)) {
                 WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(request.getInputStream());
                 log.info("raw inMessage:{}", JSON.toJSONString(inMessage));
-                WxMpXmlOutMessage outMessage = wxMpMessageRouter.route(inMessage);
+                WxMpXmlOutMessage outMessage = configService.getWxMpMessageRouter().route(inMessage);
                 response.getWriter().write(outMessage.toXml());
             } else if (OfficialAccountParamConstant.AES.equals(encryptType)) {
                 String msgSignature = request.getParameter(OfficialAccountParamConstant.MSG_SIGNATURE);
-                WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), config, timestamp, nonce, msgSignature);
+                WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), configService.getConfig(), timestamp, nonce, msgSignature);
                 log.info("aes inMessage:{}", JSON.toJSONString(inMessage));
-                WxMpXmlOutMessage outMessage = wxMpMessageRouter.route(inMessage);
-                response.getWriter().write(outMessage.toEncryptedXml(config));
+                WxMpXmlOutMessage outMessage = configService.getWxMpMessageRouter().route(inMessage);
+                response.getWriter().write(outMessage.toEncryptedXml(configService.getConfig()));
             }
             return RespStatusEnum.SUCCESS.getMsg();
         } catch (Exception e) {
@@ -163,15 +158,10 @@ public class OfficialAccountController {
     @ApiOperation("/生成 服务号 二维码")
     public BasicResultVO getQrCode() {
         try {
-
             String id = IdUtil.getSnowflake().nextIdStr();
-
-            // 获取服务号二维码
-            WxMpService wxMpService = wxServiceUtils.initOfficialAccountService(WeChatOfficialAccount.builder().appId(appId).secret(secret).build());
+            WxMpService wxMpService = configService.getOfficialAccountLoginService();
             WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(id, 2592000);
             String url = wxMpService.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
-
-            // 存入Redis做校验
             return BasicResultVO.success(Convert4Amis.getWxMpQrCode(url));
         } catch (Exception e) {
             log.error("OfficialAccountController#getQrCode fail:{}", Throwables.getStackTraceAsString(e));

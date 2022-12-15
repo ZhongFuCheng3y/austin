@@ -1,9 +1,11 @@
-package com.java3y.austin.support.config;
+package com.java3y.austin.web.config;
 
+import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.common.dto.account.WeChatOfficialAccount;
 import com.java3y.austin.support.utils.WxServiceUtils;
 import lombok.Data;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 
 /**
@@ -26,7 +29,7 @@ import javax.annotation.PostConstruct;
 @Configuration
 @ConditionalOnProperty(name = "austin.login.officialAccount.enable", havingValue = "true")
 @Data
-public class WeChatLoginAccountConfig {
+public class WeChatLoginConfig {
 
     @Value("${austin.login.official.account.appId}")
     private String appId;
@@ -38,9 +41,15 @@ public class WeChatLoginAccountConfig {
     @Autowired
     private WxServiceUtils wxServiceUtils;
 
+    /**
+     * 微信服务号 登录 相关对象
+     */
     private WxMpService officialAccountLoginService;
     private WxMpDefaultConfigImpl config;
     private WxMpMessageRouter wxMpMessageRouter;
+
+    @Autowired
+    private Map<String, WxMpMessageHandler> WxMpMessageHandlers;
 
 
     @PostConstruct
@@ -53,11 +62,13 @@ public class WeChatLoginAccountConfig {
 
     /**
      * 初始化路由器
+     * 扫码、关注、取消关注
      */
     private void initRouter() {
         wxMpMessageRouter = new WxMpMessageRouter(officialAccountLoginService);
-        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SUBSCRIBE).handler(null).end();
-        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.UNSUBSCRIBE).handler(null).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SUBSCRIBE).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.SUBSCRIBE_HANDLER)).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SCAN).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.SCAN_HANDLER)).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.UNSUBSCRIBE).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.UNSUBSCRIBE_HANDLER)).end();
     }
 
     /**
