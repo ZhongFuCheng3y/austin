@@ -47,7 +47,7 @@ public class OfficialAccountController {
     @Autowired
     private WxServiceUtils wxServiceUtils;
 
-    @Autowired
+    //@Autowired
     private WeChatLoginConfig configService;
 
     @Autowired
