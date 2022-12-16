@@ -21,16 +21,26 @@ import java.util.List;
 public class CommonAmisVo {
 
     private String type;
+    private String id;
 
     private String label;
 
     private String value;
+    private String api;
+    private String schemaApi;
 
+    private String mode;
     private String name;
+    private boolean fixedSize;
+    private String fixedSizeClassName;
+    private String frameImage;
+    private String originalSrc;
+    private Integer interval;
 
     private boolean required;
 
     private String size;
+    private String target;
 
     private boolean addable;
 
@@ -44,10 +54,13 @@ public class CommonAmisVo {
 
     private String src;
 
-
     private String title;
 
     private String imageMode;
+
+    private String varParam;
+
+    private List<CommonAmisVo> body;
 
     /**
      * columns

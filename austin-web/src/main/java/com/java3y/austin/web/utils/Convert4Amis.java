@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  * @author 3y
  * @date 2022/1/23
  */
+@Slf4j
 public class Convert4Amis {
 
     /**
@@ -53,7 +55,7 @@ public class Convert4Amis {
     /**
      * (前端是一个JSONObject传递进来，返回一个JSONArray回去)
      */
-    private static final List<String> PARSE_JSON_OBJ_TO_ARRAY = Arrays.asList("officialAccountParam","miniProgramParam");
+    private static final List<String> PARSE_JSON_OBJ_TO_ARRAY = Arrays.asList("officialAccountParam", "miniProgramParam");
 
     /**
      * 钉钉工作消息OA实际的映射
@@ -135,8 +137,9 @@ public class Convert4Amis {
 
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
-     *
+     * <p>
      * 得到模板的参数 组装好 返回给前端展示
+     *
      * @param wxTemplateId
      * @param allPrivateTemplate
      * @return
@@ -272,8 +275,9 @@ public class Convert4Amis {
 
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
-     *
+     * <p>
      * 得到模板的参数 组装好 返回给前端展示
+     *
      * @param wxTemplateId
      * @param templateList
      * @return
@@ -308,11 +312,35 @@ public class Convert4Amis {
 
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
-     *
+     * <p>
      * 得到微信服务号的【带参数】二维码返回给前端
+     *
      * @return
      */
-    public static CommonAmisVo getWxMpQrCode(String url) {
-        return CommonAmisVo.builder().type("image").imageMode("original").width("450px").height("450px").title("扫描关注服务号-登录").src(url).build();
+    public static CommonAmisVo getWxMpQrCode(String url, String id) {
+        CommonAmisVo image = CommonAmisVo.builder().type("static-image").value(url).originalSrc(url).name("image").label("扫描关注").fixedSize(true).fixedSizeClassName(url).fixedSizeClassName("h-32").build();
+        CommonAmisVo service = CommonAmisVo.builder().type("service").api("${ls:backend_url}/officialAccount/check/login?sceneId=" + id).interval(2000).build();
+        return CommonAmisVo.builder().type("form").title("登录").mode("horizontal").body(Arrays.asList(image,service)).build();
+    }
+
+    /**
+     * 【这个方法不用看】，纯粹为了适配amis前端
+     * <p>
+     * 得到微信服务号的【带参数】二维码返回给前端
+     *
+     * @return
+     */
+    public static String getLoginJsonp(String userInfo) {
+        if (StrUtil.isBlank(userInfo)) {
+            log.error("can't get userInfo!");
+            return "(function() {})();";
+        } else {
+            return "(function() {\n" +
+                    "\tlocalStorage.setItem(\"openId\", \"123\");\n" +
+                    "\tlocalStorage.setItem(\"userName\", \"333\");\n" +
+                    "\twindow.location.href='index.html';\n" +
+                    "})();";
+        }
+
     }
 }

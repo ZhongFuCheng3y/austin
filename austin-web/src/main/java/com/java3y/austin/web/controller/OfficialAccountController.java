@@ -22,6 +22,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,8 +48,8 @@ public class OfficialAccountController {
     @Autowired
     private WxServiceUtils wxServiceUtils;
 
-    //@Autowired
-    private WeChatLoginConfig configService;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -111,6 +112,10 @@ public class OfficialAccountController {
     @ApiOperation("/接收微信的事件消息")
     public String receiptMessage(HttpServletRequest request, HttpServletResponse response) {
         try {
+            WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
+            if (configService == null) {
+                return RespStatusEnum.NOT_LOGIN.getMsg();
+            }
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
 
             String echoStr = request.getParameter(OfficialAccountParamConstant.ECHO_STR);
@@ -128,7 +133,6 @@ public class OfficialAccountController {
             }
 
             String encryptType = StrUtil.isBlank(request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE)) ? OfficialAccountParamConstant.RAW : request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE);
-
             if (OfficialAccountParamConstant.RAW.equals(encryptType)) {
                 WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(request.getInputStream());
                 log.info("raw inMessage:{}", JSON.toJSONString(inMessage));
@@ -151,6 +155,7 @@ public class OfficialAccountController {
 
     /**
      * 临时给微信服务号登录使用（生成二维码），正常消息推送平台不会有此接口
+     * 返回二维码图片url 和 sceneId
      *
      * @return
      */
@@ -158,15 +163,35 @@ public class OfficialAccountController {
     @ApiOperation("/生成 服务号 二维码")
     public BasicResultVO getQrCode() {
         try {
+            WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
+            if (configService == null) {
+                return BasicResultVO.fail(RespStatusEnum.NOT_LOGIN);
+            }
             String id = IdUtil.getSnowflake().nextIdStr();
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
             WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(id, 2592000);
             String url = wxMpService.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
-            return BasicResultVO.success(Convert4Amis.getWxMpQrCode(url));
+            return BasicResultVO.success(Convert4Amis.getWxMpQrCode(url, id));
         } catch (Exception e) {
             log.error("OfficialAccountController#getQrCode fail:{}", Throwables.getStackTraceAsString(e));
             return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
+    /**
+     * 临时给微信服务号登录使用（给前端轮询检查是否已登录），正常消息推送平台不会有此接口
+     *
+     * @return
+     */
+    @RequestMapping("/check/login")
+    @ApiOperation("/检查是否已经登录")
+    public String checkLogin(String sceneId) {
+        try {
+            String userInfo = redisTemplate.opsForValue().get(sceneId);
+            return Convert4Amis.getLoginJsonp(userInfo);
+        } catch (Exception e) {
+            log.error("OfficialAccountController#checkLogin fail:{}", Throwables.getStackTraceAsString(e));
+            return null;
+        }
+    }
 }

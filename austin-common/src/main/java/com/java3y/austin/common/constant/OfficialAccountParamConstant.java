@@ -24,4 +24,16 @@ public class OfficialAccountParamConstant {
     public static final String UNSUBSCRIBE_HANDLER = "unSubscribeHandler";
 
 
+    /**
+     * 配置的beanName名
+     */
+    public static final String WE_CHAT_LOGIN_CONFIG = "weChatLoginConfig";
+
+
+    /**
+     * 二维码场景值的前缀
+     */
+    public static final String QR_CODE_SCENE_PREFIX = "qrscene_";
+
+
 }

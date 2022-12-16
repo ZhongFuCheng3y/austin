@@ -26,8 +26,8 @@ import java.util.Map;
  * @author 3y
  */
 @Profile("test")
-@Configuration
-@ConditionalOnProperty(name = "austin.login.officialAccount.enable", havingValue = "true")
+@Configuration("weChatLoginConfig")
+@ConditionalOnProperty(name = "austin.login.official.account.enable", havingValue = "true")
 @Data
 public class WeChatLoginConfig {
 
@@ -75,6 +75,7 @@ public class WeChatLoginConfig {
      * 初始化配置信息
      */
     private void initConfig() {
+        config = new WxMpDefaultConfigImpl();
         config.setAppId(appId);
         config.setToken(token);
         config.setSecret(secret);
