@@ -4,6 +4,7 @@ package com.java3y.austin.web.service;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.vo.MessageTemplateParam;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface MessageTemplateService {
      * @param messageTemplateParam
      * @return
      */
-    List<MessageTemplate> queryList(MessageTemplateParam messageTemplateParam);
+    Page<MessageTemplate> queryList(MessageTemplateParam messageTemplateParam);
 
     /**
      * 统计未删除的条数

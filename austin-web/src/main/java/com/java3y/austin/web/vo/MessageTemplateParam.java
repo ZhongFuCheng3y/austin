@@ -46,4 +46,9 @@ public class MessageTemplateParam {
      * 下发参数信息
      */
     private String msgContent;
+
+    /**
+     * 模版名称
+     */
+    private String keywords;
 }

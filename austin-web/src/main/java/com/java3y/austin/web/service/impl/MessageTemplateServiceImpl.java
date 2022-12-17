@@ -18,9 +18,16 @@ import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.service.MessageTemplateService;
 import com.java3y.austin.web.vo.MessageTemplateParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,9 +50,22 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     private XxlJobUtils xxlJobUtils;
 
     @Override
-    public List<MessageTemplate> queryList(MessageTemplateParam param) {
+    public Page<MessageTemplate> queryList(MessageTemplateParam param) {
         PageRequest pageRequest = PageRequest.of(param.getPage() - 1, param.getPerPage());
-        return messageTemplateDao.findAllByIsDeletedEqualsOrderByUpdatedDesc(CommonConstant.FALSE, pageRequest);
+        return messageTemplateDao.findAll((Specification<MessageTemplate>) (root, query, cb) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            // 加搜索条件
+            if (StrUtil.isNotBlank(param.getKeywords())) {
+                predicateList.add(cb.like(root.get("name").as(String.class), "%" + param.getKeywords() + "%"));
+            }
+            predicateList.add(cb.equal(root.get("isDeleted").as(Integer.class), CommonConstant.FALSE));
+            Predicate[] p = new Predicate[predicateList.size()];
+            // 查询
+            query.where(cb.and(predicateList.toArray(p)));
+            // 排序
+            query.orderBy(cb.desc(root.get("updated")));
+            return query.getRestriction();
+        }, pageRequest);
     }
 
     @Override
