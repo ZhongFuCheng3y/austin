@@ -27,7 +27,8 @@ public enum RespStatusEnum {
     CLIENT_BAD_PARAMETERS("A0001", "客户端参数错误"),
     TEMPLATE_NOT_FOUND("A0002", "找不到模板或模板已被删除"),
     TOO_MANY_RECEIVER("A0003", "传入的接收者大于100个"),
-    NOT_LOGIN("A0004", "非测试环境，无须登录"),
+    DO_NOT_NEED_LOGIN("A0004", "非测试环境，无须登录"),
+    NO_LOGIN("A0005", "还未登录"),
 
     /**
      * 系统

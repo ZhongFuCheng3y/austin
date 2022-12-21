@@ -20,6 +20,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,11 +110,11 @@ public class OfficialAccountController {
      */
     @RequestMapping(value = "/receipt", produces = {CommonConstant.CONTENT_TYPE_XML})
     @ApiOperation("/接收微信的事件消息")
-    public String receiptMessage(HttpServletRequest request, HttpServletResponse response) {
+    public String receiptMessage(HttpServletRequest request) {
         try {
             WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
             if (configService == null) {
-                return RespStatusEnum.NOT_LOGIN.getMsg();
+                return RespStatusEnum.DO_NOT_NEED_LOGIN.getMsg();
             }
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
 
@@ -137,13 +137,13 @@ public class OfficialAccountController {
                 WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(request.getInputStream());
                 log.info("raw inMessage:{}", JSON.toJSONString(inMessage));
                 WxMpXmlOutMessage outMessage = configService.getWxMpMessageRouter().route(inMessage);
-                response.getWriter().write(outMessage.toXml());
+                return outMessage.toXml();
             } else if (OfficialAccountParamConstant.AES.equals(encryptType)) {
                 String msgSignature = request.getParameter(OfficialAccountParamConstant.MSG_SIGNATURE);
                 WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(request.getInputStream(), configService.getConfig(), timestamp, nonce, msgSignature);
                 log.info("aes inMessage:{}", JSON.toJSONString(inMessage));
                 WxMpXmlOutMessage outMessage = configService.getWxMpMessageRouter().route(inMessage);
-                response.getWriter().write(outMessage.toEncryptedXml(configService.getConfig()));
+                return outMessage.toEncryptedXml(configService.getConfig());
             }
             return RespStatusEnum.SUCCESS.getMsg();
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class OfficialAccountController {
         try {
             WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
             if (configService == null) {
-                return BasicResultVO.fail(RespStatusEnum.NOT_LOGIN);
+                return BasicResultVO.fail(RespStatusEnum.DO_NOT_NEED_LOGIN);
             }
             String id = IdUtil.getSnowflake().nextIdStr();
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
@@ -185,10 +185,14 @@ public class OfficialAccountController {
      */
     @RequestMapping("/check/login")
     @ApiOperation("/检查是否已经登录")
-    public String checkLogin(String sceneId) {
+    public BasicResultVO checkLogin(String sceneId) {
         try {
+
             String userInfo = redisTemplate.opsForValue().get(sceneId);
-            return Convert4Amis.getLoginJsonp(userInfo);
+            if (StrUtil.isBlank(userInfo)) {
+                return BasicResultVO.success(RespStatusEnum.NO_LOGIN);
+            }
+            return BasicResultVO.success(JSON.parseObject(userInfo, WxMpUser.class));
         } catch (Exception e) {
             log.error("OfficialAccountController#checkLogin fail:{}", Throwables.getStackTraceAsString(e));
             return null;

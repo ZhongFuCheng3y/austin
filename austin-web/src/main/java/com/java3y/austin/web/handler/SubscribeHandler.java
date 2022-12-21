@@ -1,7 +1,5 @@
 package com.java3y.austin.web.handler;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
@@ -44,7 +42,6 @@ public class SubscribeHandler implements WxMpMessageHandler {
      */
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) {
-        String content = DateUtil.now() + StrUtil.COLON + wxMessage.getFromUser() + StrUtil.COLON + OfficialAccountParamConstant.SUBSCRIBE_HANDLER;
         try {
             WxMpUser user = wxMpService.getUserService().userInfo(wxMessage.getFromUser());
             String eventKey = wxMessage.getEventKey().replaceAll(OfficialAccountParamConstant.QR_CODE_SCENE_PREFIX, CommonConstant.EMPTY_STRING);
@@ -53,6 +50,6 @@ public class SubscribeHandler implements WxMpMessageHandler {
             log.error("SubscribeHandler#handle fail:{}", Throwables.getStackTraceAsString(e));
         }
         return WxMpXmlOutMessage.TEXT().fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
-                .content(content).build();
+                .content(OfficialAccountParamConstant.SUBSCRIBE_TIPS).build();
     }
 }

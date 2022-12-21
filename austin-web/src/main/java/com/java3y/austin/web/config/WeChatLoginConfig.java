@@ -35,7 +35,7 @@ public class WeChatLoginConfig {
     private String appId;
     @Value("${austin.login.official.account.secret}")
     private String secret;
-    @Value("${austin.login.official.account.secret}")
+    @Value("${austin.login.official.account.token}")
     private String token;
 
     @Autowired

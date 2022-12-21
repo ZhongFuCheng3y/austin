@@ -36,4 +36,11 @@ public class OfficialAccountParamConstant {
     public static final String QR_CODE_SCENE_PREFIX = "qrscene_";
 
 
+    /**
+     * 关注后服务号的：文案
+     */
+    public static final String SUBSCRIBE_TIPS = "关注公众号：Java3y 回复 austin 可获取项目笔记哟！";
+
+
+
 }

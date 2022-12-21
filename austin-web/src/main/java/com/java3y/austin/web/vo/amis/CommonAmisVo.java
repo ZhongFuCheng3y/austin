@@ -26,8 +26,8 @@ public class CommonAmisVo {
     private String label;
 
     private String value;
-    private String api;
     private String schemaApi;
+
 
     private String mode;
     private String name;
@@ -38,6 +38,7 @@ public class CommonAmisVo {
     private Integer interval;
 
     private boolean required;
+    private boolean silentPolling;
 
     private String size;
     private String target;
@@ -62,6 +63,7 @@ public class CommonAmisVo {
 
     private List<CommonAmisVo> body;
 
+    private ApiDTO api;
     /**
      * columns
      */
@@ -108,4 +110,34 @@ public class CommonAmisVo {
         private Boolean quickEdit;
 
     }
+
+    /**
+     * ApiDTO
+     */
+    @NoArgsConstructor
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class ApiDTO {
+        /**
+         * adaptor
+         */
+        @JSONField(name = "adaptor")
+        private String adaptor;
+
+        /**
+         * adaptor
+         */
+        @JSONField(name = "requestAdaptor")
+        private String requestAdaptor;
+
+        /**
+         * url
+         */
+        @JSONField(name = "url")
+        private String url;
+
+    }
+
+
 }
