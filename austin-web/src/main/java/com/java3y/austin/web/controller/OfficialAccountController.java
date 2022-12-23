@@ -12,6 +12,7 @@ import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.WxServiceUtils;
 import com.java3y.austin.web.config.WeChatLoginConfig;
 import com.java3y.austin.web.utils.Convert4Amis;
+import com.java3y.austin.web.utils.LoginUtils;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +24,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +49,7 @@ public class OfficialAccountController {
     private WxServiceUtils wxServiceUtils;
 
     @Autowired
-    private ApplicationContext applicationContext;
+    private LoginUtils loginUtils;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -112,7 +112,7 @@ public class OfficialAccountController {
     @ApiOperation("/接收微信的事件消息")
     public String receiptMessage(HttpServletRequest request) {
         try {
-            WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
+            WeChatLoginConfig configService = loginUtils.getLoginConfig();
             if (configService == null) {
                 return RespStatusEnum.DO_NOT_NEED_LOGIN.getMsg();
             }
@@ -163,7 +163,7 @@ public class OfficialAccountController {
     @ApiOperation("/生成 服务号 二维码")
     public BasicResultVO getQrCode() {
         try {
-            WeChatLoginConfig configService = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
+            WeChatLoginConfig configService = loginUtils.getLoginConfig();
             if (configService == null) {
                 return BasicResultVO.fail(RespStatusEnum.DO_NOT_NEED_LOGIN);
             }

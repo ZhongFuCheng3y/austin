@@ -2,17 +2,19 @@ package com.java3y.austin.web.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.service.ChannelAccountService;
-import com.java3y.austin.web.vo.amis.CommonAmisVo;
+import com.java3y.austin.web.utils.Convert4Amis;
+import com.java3y.austin.web.utils.LoginUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +33,8 @@ public class ChannelAccountController {
     @Autowired
     private ChannelAccountService channelAccountService;
 
+    @Autowired
+    private LoginUtils loginUtils;
 
     /**
      * 如果Id存在，则修改
@@ -39,6 +43,11 @@ public class ChannelAccountController {
     @PostMapping("/save")
     @ApiOperation("/保存数据")
     public BasicResultVO saveOrUpdate(@RequestBody ChannelAccount channelAccount) {
+        if (loginUtils.needLogin() && StrUtil.isBlank(channelAccount.getCreator())) {
+            return BasicResultVO.fail(RespStatusEnum.NO_LOGIN);
+        }
+        channelAccount.setCreator(StrUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
+
         return BasicResultVO.success(channelAccountService.save(channelAccount));
     }
 
@@ -47,15 +56,14 @@ public class ChannelAccountController {
      */
     @GetMapping("/queryByChannelType")
     @ApiOperation("/根据渠道标识查询相关的记录")
-    public BasicResultVO query(Integer channelType) {
-        List<CommonAmisVo> result = new ArrayList<>();
-
-        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType);
-        for (ChannelAccount channelAccount : channelAccounts) {
-            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
-            result.add(commonAmisVo);
+    public BasicResultVO query(Integer channelType, String creator) {
+        if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
+            return BasicResultVO.fail(RespStatusEnum.NO_LOGIN);
         }
-        return BasicResultVO.success(result);
+        creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
+
+        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType, creator);
+        return BasicResultVO.success(Convert4Amis.getChannelAccountVo(channelAccounts));
     }
 
     /**
@@ -63,8 +71,13 @@ public class ChannelAccountController {
      */
     @GetMapping("/list")
     @ApiOperation("/渠道账号列表信息")
-    public BasicResultVO list() {
-        return BasicResultVO.success(channelAccountService.list());
+    public BasicResultVO list(String creator) {
+        if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
+            return BasicResultVO.fail(RespStatusEnum.NO_LOGIN);
+        }
+        creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
+
+        return BasicResultVO.success(channelAccountService.list(creator));
     }
 
     /**

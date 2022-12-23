@@ -33,5 +33,15 @@ public class AustinConstant {
     public static final String SEND_ALL = "@all";
 
 
+    /**
+     * 默认的常量，如果新建模板/账号时，没传入则用该常量
+     */
+    public static final String DEFAULT_CREATOR = "Java3y";
+    public static final String DEFAULT_UPDATOR = "Java3y";
+    public static final String DEFAULT_TEAM = "Java3y公众号";
+    public static final String DEFAULT_AUDITOR = "Java3y";
+
+
+
 
 }

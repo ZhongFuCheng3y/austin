@@ -38,6 +38,11 @@ public class MessageTemplateParam {
     private Long id;
 
     /**
+     * 当前用户
+     */
+    private String creator;
+
+    /**
      * 消息接收者(测试发送时使用)
      */
     private String receiver;

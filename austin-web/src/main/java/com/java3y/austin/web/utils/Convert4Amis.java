@@ -6,6 +6,7 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
@@ -341,6 +342,22 @@ public class Convert4Amis {
                 .adaptor(adaptor).requestAdaptor(requestAdaptor).build()).interval(2000).silentPolling(true).build();
 
         return CommonAmisVo.builder().type("form").title("登录").mode("horizontal").body(Arrays.asList(image, service)).build();
+    }
+
+    /**
+     * 【这个方法不用看】，纯粹为了适配amis前端
+     * <p>
+     * 得到渠道账号信息，返回给前端做展示
+     *
+     * @return
+     */
+    public static List<CommonAmisVo> getChannelAccountVo(List<ChannelAccount> channelAccounts) {
+        List<CommonAmisVo> result = new ArrayList<>();
+        for (ChannelAccount channelAccount : channelAccounts) {
+            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
+            result.add(commonAmisVo);
+        }
+        return result;
     }
 
 }

@@ -28,7 +28,7 @@ public enum RespStatusEnum {
     TEMPLATE_NOT_FOUND("A0002", "找不到模板或模板已被删除"),
     TOO_MANY_RECEIVER("A0003", "传入的接收者大于100个"),
     DO_NOT_NEED_LOGIN("A0004", "非测试环境，无须登录"),
-    NO_LOGIN("A0005", "还未登录"),
+    NO_LOGIN("A0005", "还未登录，请先登录"),
 
     /**
      * 系统

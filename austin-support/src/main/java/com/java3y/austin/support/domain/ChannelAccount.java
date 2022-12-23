@@ -49,6 +49,11 @@ public class ChannelAccount {
     private Integer isDeleted;
 
     /**
+     * 账号拥有者
+     */
+    private String creator;
+
+    /**
      * 创建时间 单位 s
      */
     private Integer created;

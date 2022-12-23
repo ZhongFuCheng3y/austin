@@ -23,10 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +49,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public Page<MessageTemplate> queryList(MessageTemplateParam param) {
         PageRequest pageRequest = PageRequest.of(param.getPage() - 1, param.getPerPage());
+        String creator = StrUtil.isBlank(param.getCreator()) ? AustinConstant.DEFAULT_CREATOR : param.getCreator();
         return messageTemplateDao.findAll((Specification<MessageTemplate>) (root, query, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
             // 加搜索条件
@@ -59,6 +57,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
                 predicateList.add(cb.like(root.get("name").as(String.class), "%" + param.getKeywords() + "%"));
             }
             predicateList.add(cb.equal(root.get("isDeleted").as(Integer.class), CommonConstant.FALSE));
+            predicateList.add(cb.equal(root.get("creator").as(String.class), creator));
             Predicate[] p = new Predicate[predicateList.size()];
             // 查询
             query.where(cb.and(predicateList.toArray(p)));
@@ -91,7 +90,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         Iterable<MessageTemplate> messageTemplates = messageTemplateDao.findAllById(ids);
         messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(CommonConstant.TRUE));
         for (MessageTemplate messageTemplate : messageTemplates) {
-            if (messageTemplate.getCronTaskId()!=null && messageTemplate.getCronTaskId() > 0) {
+            if (messageTemplate.getCronTaskId() != null && messageTemplate.getCronTaskId() > 0) {
                 cronTaskService.deleteCronTask(messageTemplate.getCronTaskId());
             }
         }
@@ -149,14 +148,16 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     /**
      * 初始化状态信息
-     * TODO 创建者 修改者 团队
      *
      * @param messageTemplate
      */
     private void initStatus(MessageTemplate messageTemplate) {
         messageTemplate.setFlowId(StrUtil.EMPTY)
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode())
-                .setCreator("Java3y").setUpdator("Java3y").setTeam("公众号Java3y").setAuditor("3y")
+                .setCreator(StrUtil.isBlank(messageTemplate.getCreator()) ? AustinConstant.DEFAULT_CREATOR : messageTemplate.getCreator())
+                .setUpdator(StrUtil.isBlank(messageTemplate.getUpdator()) ? AustinConstant.DEFAULT_UPDATOR : messageTemplate.getUpdator())
+                .setTeam(StrUtil.isBlank(messageTemplate.getTeam()) ? AustinConstant.DEFAULT_TEAM : messageTemplate.getTeam())
+                .setAuditor(StrUtil.isBlank(messageTemplate.getAuditor()) ? AustinConstant.DEFAULT_AUDITOR : messageTemplate.getAuditor())
                 .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
                 .setIsDeleted(CommonConstant.FALSE);
 

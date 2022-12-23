@@ -72,4 +72,14 @@ public class CommonConstant {
      */
     public final static String CRON_FORMAT = "ss mm HH dd MM ? yyyy-yyyy";
 
+    /**
+     * 环境常量
+     */
+    public final static String ENV_DEV = "dev";
+    public final static String ENV_TEST = "test";
+
+
+
+
+
 }
