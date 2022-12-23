@@ -95,7 +95,7 @@ services:
     depends_on:
       - austin-redis
       - austin-mysql
-      - austin-zookepper
+      - austin-zookeeper
       - austin-kafka
     networks:
       - app
