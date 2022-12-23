@@ -4,7 +4,7 @@ database austin;
 use
 austin;
 
-
+drop table IF EXISTS message_template
 CREATE TABLE `message_template`
 (
     `id`               bigint(20) NOT NULL AUTO_INCREMENT,
@@ -61,7 +61,7 @@ CREATE TABLE `sms_record`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='短信记录信息';
 
-
+drop table IF EXISTS channel_account
 CREATE TABLE `channel_account`
 (
     `id`             bigint(20) NOT NULL AUTO_INCREMENT,
