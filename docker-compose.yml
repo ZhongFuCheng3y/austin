@@ -26,7 +26,34 @@ services:
     volumes:
       - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:rw
     command:
-        /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf"
+      /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf"
+    networks:
+      - app
+  austin-kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "austinBusiness:1:1,austinRecall:1:1,austinTraceLog:1:1"
+      KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
+    ports:
+      - "9092:9092"
+    depends_on:
+      - austin-zookepper
+    networks:
+      - app
+  austin-zookepper:
+    image: wurstmeister/zookeeper
+    container_name: austin-zookepper
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+    ports:
+      - "2181:2181"
     networks:
       - app
   austin:
@@ -39,6 +66,7 @@ services:
     depends_on:
       - austin-redis
       - austin-mysql
+      - austin-kafka
     networks:
       - app
 networks:
