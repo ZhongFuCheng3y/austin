@@ -1,8 +1,8 @@
-create
-database austin;
+drop databases austin if exists;
 
-use
-austin;
+create database austin;
+
+use austin;
 
 drop table IF EXISTS message_template;
 
