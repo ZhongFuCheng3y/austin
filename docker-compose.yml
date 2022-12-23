@@ -62,6 +62,8 @@ services:
       - "8081:8081"
     command:
       - jobmanager
+      - docker cp ./austin-stream/target/austin-stream-0.0.1-SNAPSHOT.jar austin_jobmanager_1:/opt/
+      - docker exec -ti austin_jobmanager_1 bash
       - flink run /opt/austin-stream-0.0.1-SNAPSHOT.jar
     environment:
       - |
@@ -70,8 +72,6 @@ services:
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
-    volumes:
-      - ./austin-stream/target/austin-stream-0.0.1-SNAPSHOT.jar:/opt/austin-stream-0.0.1-SNAPSHOT.jar:rw
     depends_on:
       - austin-zookeeper
       - austin-kafka
