@@ -31,14 +31,14 @@ services:
       - app
   austin-kafka:
     image: wurstmeister/kafka
-    container_name: kafka
+    container_name: ausitn-kafka
     volumes:
       - "/etc/localtime:/etc/localtime"
     environment:
       KAFKA_BROKER_ID: 0
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: austin-zookepper:2181
       KAFKA_CREATE_TOPICS: "austinBusiness:1:1,austinRecall:1:1,austinTraceLog:1:1"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
     ports:
