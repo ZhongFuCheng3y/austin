@@ -31,7 +31,7 @@ services:
       - app
   austin-kafka:
     image: wurstmeister/kafka
-    container_name: ausitn-kafka
+    container_name: austin-kafka
     volumes:
       - "/etc/localtime:/etc/localtime"
     environment:
@@ -68,6 +68,8 @@ services:
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
+    networks:
+      - app
   taskmanager:
     image: flink:latest
     depends_on:
@@ -81,6 +83,8 @@ services:
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
+    networks:
+      - app
   austin:
     build:
       context: ./
