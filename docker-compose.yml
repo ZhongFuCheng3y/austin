@@ -56,7 +56,7 @@ services:
       - "2181:2181"
     networks:
       - app
-  austin-jobmanager:
+  jobmanager:
     image: flink:latest
     ports:
       - "8081:8081"
@@ -64,20 +64,20 @@ services:
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: austin-jobmanager
+        jobmanager.rpc.address: jobmanager
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
-  austin-taskmanager:
+  taskmanager:
     image: flink:latest
     depends_on:
-      - austin-jobmanager
+      - jobmanager
     command: taskmanager
     scale: 1
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: austin-jobmanager
+        jobmanager.rpc.address: jobmanager
         taskmanager.numberOfTaskSlots: 1
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
