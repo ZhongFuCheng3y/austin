@@ -1,4 +1,4 @@
-drop databases austin if exists;
+drop database if exists austin;
 
 create database austin;
 

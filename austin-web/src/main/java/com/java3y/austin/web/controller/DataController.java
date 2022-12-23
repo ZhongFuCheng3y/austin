@@ -50,7 +50,7 @@ public class DataController {
     @PostMapping("/sms")
     @ApiOperation("/获取短信下发数据")
     public BasicResultVO getSmsData(@RequestBody DataParam dataParam) {
-        if (dataParam == null || dataParam.getDateTime() == null || dataParam.getReceiver() == null) {
+        if (dataParam == null || dataParam.getDateTime() == null || StrUtil.isBlank(dataParam.getReceiver())) {
             return new BasicResultVO<>(RespStatusEnum.SUCCESS, SmsTimeLineVo.builder().items(new ArrayList<>()).build());
         }
 
