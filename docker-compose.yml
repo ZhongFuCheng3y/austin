@@ -60,7 +60,9 @@ services:
     image: flink:latest
     ports:
       - "8081:8081"
-    command: jobmanager
+    command:
+      - jobmanager
+      - flink run /opt/austin-stream-0.0.1-SNAPSHOT.jar
     environment:
       - |
         FLINK_PROPERTIES=
@@ -68,6 +70,8 @@ services:
       - SET_CONTAINER_TIMEZONE=true
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
+    volumes:
+      - ./austin-stream/target/austin-stream-0.0.1-SNAPSHOT.jar:/opt/austin-stream-0.0.1-SNAPSHOT.jar:rw
     networks:
       - app
   taskmanager:
