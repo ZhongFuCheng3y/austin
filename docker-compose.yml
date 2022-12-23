@@ -36,7 +36,7 @@ services:
       - "/etc/localtime:/etc/localtime"
     environment:
       KAFKA_BROKER_ID: 0
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://austin-kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: austin-zookepper:2181
       KAFKA_CREATE_TOPICS: "austinBusiness:1:1,austinRecall:1:1,austinTraceLog:1:1"
@@ -56,6 +56,32 @@ services:
       - "2181:2181"
     networks:
       - app
+  austin-jobmanager:
+    image: flink:latest
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: austin-jobmanager
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
+  austin-taskmanager:
+    image: flink:latest
+    depends_on:
+      - austin-jobmanager
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: austin-jobmanager
+        taskmanager.numberOfTaskSlots: 1
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
   austin:
     build:
       context: ./
