@@ -11,15 +11,14 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
-import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.dao.MessageTemplateDao;
 import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.RedisUtils;
 import com.java3y.austin.support.utils.TaskInfoUtils;
-import com.java3y.austin.web.constants.AmisVoConstant;
 import com.java3y.austin.web.service.DataService;
+import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.vo.DataParam;
 import com.java3y.austin.web.vo.amis.EchartsVo;
 import com.java3y.austin.web.vo.amis.SmsTimeLineVo;
@@ -104,81 +103,34 @@ public class DataServiceImpl implements DataService {
     @Override
     public EchartsVo getTraceMessageTemplateInfo(String businessId) {
 
-        // 1. 获取businessId并获取模板信息
+        // 获取businessId并获取模板信息
         businessId = getRealBusinessId(businessId);
         Optional<MessageTemplate> optional = messageTemplateDao.findById(TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(businessId)));
         if (!optional.isPresent()) {
             return null;
         }
-        MessageTemplate messageTemplate = optional.get();
-
-        List<String> xAxisList = new ArrayList<>();
-        List<Integer> actualData = new ArrayList<>();
 
         /**
+         * 获取redis清洗好的数据
          * key：state
          * value:stateCount
          */
         Map<Object, Object> anchorResult = redisUtils.hGetAll(getRealBusinessId(businessId));
-        if (CollUtil.isNotEmpty(anchorResult)) {
-            anchorResult = MapUtil.sort(anchorResult);
-            for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = AnchorState.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())));
-                xAxisList.add(description);
-                actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
-            }
-        }
 
-
-        String title = "【" + messageTemplate.getName() + "】在" + TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)) + "的下发情况：";
-
-        return EchartsVo.builder()
-                .title(EchartsVo.TitleVO.builder().text(title).build())
-                .legend(EchartsVo.LegendVO.builder().data(Arrays.asList(AmisVoConstant.LEGEND_TITLE)).build())
-                .xAxis(EchartsVo.XAxisVO.builder().data(xAxisList).build())
-                .series(Arrays.asList(EchartsVo.SeriesVO.builder().name(AmisVoConstant.LEGEND_TITLE).type(AmisVoConstant.TYPE).data(actualData).build()))
-                .yAxis(EchartsVo.YAxisVO.builder().build())
-                .tooltip(EchartsVo.TooltipVO.builder().build())
-                .build();
-
+        return Convert4Amis.getEchartsVo(anchorResult, optional.get().getName(), businessId);
     }
 
     @Override
     public SmsTimeLineVo getTraceSmsInfo(DataParam dataParam) {
 
-        ArrayList<SmsTimeLineVo.ItemsVO> itemsVOS = new ArrayList<>();
-        SmsTimeLineVo smsTimeLineVo = SmsTimeLineVo.builder().items(itemsVOS).build();
-
-        Integer sendDate = Integer.valueOf(DateUtil.format(new Date(dataParam.getDateTime() * 1000L)
-                , DatePattern.PURE_DATE_PATTERN));
+        Integer sendDate = Integer.valueOf(DateUtil.format(new Date(dataParam.getDateTime() * 1000L), DatePattern.PURE_DATE_PATTERN));
         List<SmsRecord> smsRecordList = smsRecordDao.findByPhoneAndSendDate(Long.valueOf(dataParam.getReceiver()), sendDate);
-
         if (CollUtil.isEmpty(smsRecordList)) {
-            return smsTimeLineVo;
+            return SmsTimeLineVo.builder().items(Arrays.asList(SmsTimeLineVo.ItemsVO.builder().build())).build();
         }
 
         Map<String, List<SmsRecord>> maps = smsRecordList.stream().collect(Collectors.groupingBy((o) -> o.getPhone() + o.getSeriesId()));
-
-        for (Map.Entry<String, List<SmsRecord>> entry : maps.entrySet()) {
-            SmsTimeLineVo.ItemsVO itemsVO = SmsTimeLineVo.ItemsVO.builder().build();
-            for (SmsRecord smsRecord : entry.getValue()) {
-                // 发送记录 messageTemplateId >0 ,回执记录 messageTemplateId =0
-                if (smsRecord.getMessageTemplateId() > 0) {
-                    itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
-                    itemsVO.setContent(smsRecord.getMsgContent());
-                    itemsVO.setSendType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
-                    itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated()*1000L)), DatePattern.NORM_DATETIME_PATTERN));
-
-                } else {
-                    itemsVO.setReceiveType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
-                    itemsVO.setReceiveContent(smsRecord.getReportContent());
-                    itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated()*1000L)), DatePattern.NORM_DATETIME_PATTERN));
-                }
-            }
-            itemsVOS.add(itemsVO);
-        }
-
-        return smsTimeLineVo;
+        return Convert4Amis.getSmsTimeLineVo(maps);
     }
 
     /**
