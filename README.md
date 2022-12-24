@@ -1,5 +1,4 @@
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/108bca55a5364a73b3fd50b8bde304d1~tplv-k3u1fbpfcp-watermark.image?)
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewctl2q0j31hc0u0wff.jpg)
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
@@ -8,63 +7,59 @@
   <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
   <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a>
   <a href="https://github.com/ZhongFuCheng3y/austin-admin"><img src="https://img.shields.io/badge/austin前端-GitHub-green.svg" alt="作者"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/项目-交流-red.svg" alt="项目交流"></a>
-  <a href="https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119"><img src="https://img.shields.io/badge/项目-视频-green.svg" alt="Bilibili"></a>
-  <a href="#如何准备面试"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/项目群-交流-red.svg" alt="项目群交流"></a>
+  <a href="https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119"><img src="https://img.shields.io/badge/免费项目-视频-green.svg" alt="Bilibili"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/github/issues/ZhongFuCheng3y/austin" alt="issue-open"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/github/issues-closed/ZhongFuCheng3y/austin" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/github/issues-pr/ZhongFuCheng3y/austin" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/github/issues-pr-closed/ZhongFuCheng3y/austin" alt="issue-close"></a>
 </p>
 
-最近我已经在**bilibili**更新Austin的视频了哟，**求关注和三连**！这是我更新的动力！！
+:fire:项目在线演示地址：[http://139.9.73.20:3000/](http://139.9.73.20:3000/)
 
-[https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119](https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119)
+:fire:项目视频我正在**[bilibili](https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119)**更新（**三连越多，更新越有动力哟**）
 
+:fire:项目笔记关注公众号**Java3y**回复「austin」即可获取，还能**加项目交流群**哟！
 
+## 消息推送平台austin介绍
 
-## 项目介绍
+**核心功能**：统一的接口发送各种类型消息，对消息生命周期全链路追踪。
 
-austin项目**核心功能**：统一的接口发送各种类型消息，对消息生命周期全链路追踪
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5436b2e3d6cd471db9aafbd436198ca7~tplv-k3u1fbpfcp-zoom-1.image)
-
-**项目出现意义**：只要公司内有发送消息的需求，都应该要有类似`austin`的项目，对各类消息进行统一发送处理。这有利于对功能的收拢，以及提高业务需求开发的效率
+**意义**：只要公司内部有发送消息的需求，都应该要有类似`austin`的项目。消息推送平台对各类消息进行统一发送处理，这有利于对功能的收拢，以及提高业务需求开发的效率。
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c267ebb2ff234243b8665312dbb46310~tplv-k3u1fbpfcp-zoom-1.image)
 
-## 系统项目架构
-
-austin项目**核心流程**：`austin-api`接收到发送消息请求，直接将请求进`MQ`。`austin-handler`消费`MQ`消息后由各类消息的Handler进行发送处理
-
-
-![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5d4dfde0f164805a6e85a86498b0cd7~tplv-k3u1fbpfcp-watermark.image?)
-
-**Question** ：为什么发个消息需要MQ？
-
-**Answer**：发送消息实际上是调用各个服务提供的API，假设某消息的服务超时，`austin-api`如果是直接调用服务，那存在**超时**风险，拖垮整个接口性能。MQ在这是为了做异步和解耦，并且在一定程度上抗住业务流量。
-
-**Question**：能简单说下接入层做了什么事吗？
-
-**Answer**：
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c94059a008784a69bd10b98caa46d683~tplv-k3u1fbpfcp-zoom-1.image)
-
-**Question**：`austin-stream`和`austin-datahouse`的作用？
-
-**Answer**：`austin-handler`在发送消息的过程中会做些**通用业务处理**以及**发送消息**，这个过程会产生大量的日志数据。日志数据会被收集至MQ，由`austin-stream`流式处理模块进行消费并最后将数据写入至`austin-datahouse`
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4bd420001c549ebad922637f7b2e38a~tplv-k3u1fbpfcp-zoom-1.image)
-
-**Question**：`austin-admin`和`austin-web`和`austin-cron`的作用？
-
-**Answer**：`autsin-admin`是`austin`项目的前端项目，可通过它实现对管理消息以及查看消息下发的情况，而`austin-web`则是提供相关的接口给到`austin-admin`进行调用（austin项目是前后端分离的）
-
-业务方可操作`austin-admin`管理后台调用`austin-web`创建**定时**发送消息，`austin-cron`就承载着定时任务处理的工作
-
 ## 使用姿势
 
-目前引用的中间件教程的安装姿势均基于`Centos 7.6`，austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
+**1**、创建需要发送的渠道账号
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewh0wd40j32gi0mw784.jpg)
+
+**2**、创建消息模板
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewkdp87bj31rj0u00vz.jpg)
+
+**3**、测试发送消息是否正常
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewmivoslj32hi0pojva.jpg)
+
+**4**、查看消息下发情况
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewo73zjfj32rg0kin1c.jpg)
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewprc1shj32ri0ocady.jpg)
+
+**5**、亦可在新见模板时选择**定时任务**，通过上传[csv文件](https://www.yuque.com/office/yuque/0/2022/csv/1285871/1671865125068-b5385387-b4a4-41ac-a43e-bab54ee49d88.csv?from=https%3A%2F%2Fwww.yuque.com%2Fu1047901%2Fniffsu%2Fqqtese%2Fedit)和指定cron表达式实现下发消息
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewv7fq96j31br0u0n0y.jpg)
+
+## 部署姿势
+
+austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 
-> 实在想要`clone`项目后不用自己部署环境直接在本地启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)，**直连**部署好的服务器
-
+> 实在想要`clone`项目后不用自己部署环境直接在**本地**启动`debug`，我这提供了**[会员服务](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)**，**直连**部署好的服务器。
 
 **1**、austin使用的MySQL版本**5.7x**。如果目前使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本
 
@@ -72,41 +67,21 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 **3**、执行`sql`文件夹下的`austin.sql`创建对应的表
 
-**4**、如果配置`austin.mq.pipeline=kafka`，需要填写`application.properties`中`austin.kafka`对应的`ip`/`port`信息
+**4**、填写`application.properties`中`austin.redis`对应的`ip`/`port`信息
 
-**5**、填写`application.properties`中`austin.redis`对应的`ip`/`port`信息
+**5**、以上配置信息都在`application.properties`文件中修改。(`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`/`kafka`可选)
 
-**6**、检查消息队列topic：`austin.business.topic.name`(我的topicName为：austinBusiness)
+**6**、**austin前端管理系统部署**，戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)跳转至对应的仓库
 
-**7**、以上配置信息都在`application.properties`文件中修改。(`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`可选)
+**7**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注意：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并**使用Kafka**作为消息队列实现)
 
-**8**、austin前端管理系统部署（一分钟即能打开），戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)查看 
+**8**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin.xxl.job.ip`和`austin.xxl.job.port`
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a023d9082fa644bda9b50144e02985cb~tplv-k3u1fbpfcp-zoom-1.image) 
+**9**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin.grayLog.ip`。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7125184e9fbf4de8b522aecbd4e791df~tplv-k3u1fbpfcp-zoom-1.image)
+**10**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4adde725eeee443baf96f286f5429f05~tplv-k3u1fbpfcp-zoom-1.image)
-
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01d028359e6e4229825a7fd8cc22c6c7~tplv-k3u1fbpfcp-zoom-1.image)
-
-**9**、发送渠道**账号的信息**都在**账号**，配置的示例可参照对应的提示案例
-
-![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2039b96045494ded8e6f55528eb20b1d~tplv-k3u1fbpfcp-watermark.image?)
-
-**10**、新建一个模板消息(**邮件门槛相对较低，建议配置邮件**)
-
-**11**、测试发送一条消息
-
-**12**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并使用Kafka作为消息队列实现)
-
-**13**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin.xxl.job.ip`和`austin.xxl.job.port`
-
-**14**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin.grayLog.ip`
-
-**14**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表
-
-**15**、正常使用**动态配置中心**需要部署`apollo`，根据[部署文档](INSTALL.md)启动`apollo`,通过docker-compose启动需要在AustinApplication注入对应的ip和port(可看注释)
+**11**、正常使用**动态配置中心**需要部署`apollo`，根据[部署文档](INSTALL.md)启动`apollo`，通过docker-compose启动需要在AustinApplication注入对应的ip和port(可看注释)。
 
 ## 会员服务
 
@@ -116,15 +91,17 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 
 我会告诉你怎么开始学这个开源项目，哪些是重点需要掌握的，如何利用最短的时间把握整个系统架构和编码的设计，把时间节省下来去做其他事情。
 
-2、一个生产环境的系统肯定会依赖各种中间件，《消息推送平台-Austin》也是一样的。我专门买了两台服务器已经搭建好必要的依赖，付费的可以**使用我的远程服务器**，在**本地就可以直接启动运行体验和学习**
+2、一个生产环境的系统肯定会依赖各种中间件，《消息推送平台-Austin》也是一样的。我专门买了两台服务器已经搭建好必要的依赖，付费的可以**使用我的远程服务器**，在**本地就能直接启动运行体验和学习**
 
-3、项目在编写的过程中也经历多次的重构迭代，迭代的内容我是不会将以往文章内容重新修正发布，但语雀的文档内容一定是**及时同步**，文档跟代码是保持一致的
+3、项目在编写的过程中也经历多次的重构迭代，迭代的内容我是不会将以往文章内容重新修正发布，但**语雀的文档**内容一定是**及时同步**，文档跟代码是保持一致的
 
 4、干练清爽的项目commit，可一步一步跟着commit还原整个系统的过程
 
 5、除了项目，还可以问我些学习经验、学习路线、简历编写、面试经验等等问题，技术和学习上的知识**知无不言**
 
 详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)
+
+![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9exl2609tj30u02z3drh.jpg)
 
 
 ## 项目交流
@@ -146,8 +123,6 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 <img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f87f574e93964921a4d02146bf3ccdac~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
 
 ## 里程碑
-
-
 
 ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd3139ac1d4c4f56862415297ee89290~tplv-k3u1fbpfcp-watermark.image?)
 
@@ -185,10 +160,11 @@ austin项目**核心流程**：`austin-api`接收到发送消息请求，直接�
 - [x] 渠道账号改为读取数据库，优化短信回执拉取功能
 - [x] 接入微信服务号渠道（发送模板消息）完成
 - [x] 接入微信小程序渠道（发送订阅消息）完成
-- [x] 使用docker-compose部署项目
+- [x] 测试环境完成微信服务号扫码登录功能
+- [x] 测试环境docker-compose完成接入MySQL/Redis/Flink/xxl-job/Kafka
+- [x] 在线演示第一版发布
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
+**近期更新时间**：12月24号
 
-**近期更新时间**：12月15号
-
-**近期更新功能**：接入微信小程序渠道（发送订阅消息）完成
+**近期更新功能**：在线演示第一版发布！
