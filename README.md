@@ -50,7 +50,7 @@
 
 ![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewprc1shj32ri0ocady.jpg)
 
-**5**、亦可在新见模板时选择**定时任务**，通过上传[csv文件](https://www.yuque.com/office/yuque/0/2022/csv/1285871/1671865125068-b5385387-b4a4-41ac-a43e-bab54ee49d88.csv?from=https%3A%2F%2Fwww.yuque.com%2Fu1047901%2Fniffsu%2Fqqtese%2Fedit)和指定cron表达式实现下发消息
+**5**、亦可在新建模板时选择**定时任务**，通过上传[csv文件](https://www.yuque.com/office/yuque/0/2022/csv/1285871/1671865125068-b5385387-b4a4-41ac-a43e-bab54ee49d88.csv?from=https%3A%2F%2Fwww.yuque.com%2Fu1047901%2Fniffsu%2Fqqtese%2Fedit)和指定cron表达式实现下发消息
 
 ![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewv7fq96j31br0u0n0y.jpg)
 
