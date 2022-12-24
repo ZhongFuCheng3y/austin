@@ -11,7 +11,8 @@ services:
     image: mysql:5.7
     hostname: mysql
     command: --init-file /docker-entrypoint-initdb.d/init.sql
-    volumes: ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 23306:3306
     networks:
