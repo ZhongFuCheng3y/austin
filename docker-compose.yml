@@ -111,6 +111,10 @@ services:
       - 7777:7777
     restart: always
     container_name: austin
+    environment:
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
     depends_on:
       - austin-redis
       - austin-mysql
