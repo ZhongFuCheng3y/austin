@@ -81,3 +81,6 @@ CREATE TABLE `channel_account`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='渠道账号信息';
+
+-- 初始化xxl-job的sql
+source /opt/sql/tables_xxl_job.sql
