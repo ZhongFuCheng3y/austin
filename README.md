@@ -18,7 +18,7 @@
 
 :fire:项目在线演示地址：[http://139.9.73.20:3000/](http://139.9.73.20:3000/)
 
-:fire:项目视频我正在**[bilibili](https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119)**更新（**三连越多，更新越有动力哟**）
+:fire:项目视频我正在[Bilibili](https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119)更新（**三连越多，更新越有动力哟**）
 
 :fire:项目笔记关注公众号**Java3y**回复「austin」即可获取，还能**加项目交流群**哟！
 
