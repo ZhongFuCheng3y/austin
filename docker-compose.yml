@@ -108,7 +108,7 @@ services:
     build:
       context: ./
     ports:
-      - 6666:6666
+      - 7777:7777
     restart: always
     container_name: austin
     depends_on:
