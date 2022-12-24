@@ -13,6 +13,7 @@ services:
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
       - ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/xxljob/tables_xxl_job.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 23306:3306
     networks:
@@ -62,7 +63,6 @@ services:
       - "8081:8081"
     command:
       - jobmanager
-      - /bin/bash -c "flink run /opt/austin-stream-0.0.1-SNAPSHOT.jar"
     environment:
       - |
         FLINK_PROPERTIES=
@@ -94,6 +94,17 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - app
+  austin-xxl-job:
+    image: xuxueli/xxl-job-admin:2.3.0
+    container_name: austin-xxl-job
+    ports:
+      - "6767:6767"
+    environment:
+      PARAMS: '--spring.datasource.url=jdbc:mysql://austin-mysql:3306/xxl_job?Unicode=true&characterEncoding=UTF-8 --spring.datasource.username=root  --spring.datasource.password=root123_A'
+    networks:
+      - app
+    depends_on:
+      - austin-mysql
   austin:
     build:
       context: ./
@@ -106,6 +117,7 @@ services:
       - austin-mysql
       - austin-zookeeper
       - austin-kafka
+      - austin-xxl-job
     networks:
       - app
 networks:
