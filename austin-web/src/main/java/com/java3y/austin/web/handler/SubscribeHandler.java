@@ -41,7 +41,8 @@ public class SubscribeHandler implements WxMpMessageHandler {
      * @return
      */
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) {
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService
+            , WxSessionManager sessionManager) {
         try {
             WxMpUser user = wxMpService.getUserService().userInfo(wxMessage.getFromUser());
             String eventKey = wxMessage.getEventKey().replaceAll(OfficialAccountParamConstant.QR_CODE_SCENE_PREFIX, CommonConstant.EMPTY_STRING);

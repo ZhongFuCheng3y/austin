@@ -347,7 +347,8 @@ public class Convert4Amis {
                 "return payload;";
 
 
-        CommonAmisVo service = CommonAmisVo.builder().type("service").api(CommonAmisVo.ApiDTO.builder().url("${ls:backend_url}/officialAccount/check/login?sceneId=" + id)
+        CommonAmisVo service = CommonAmisVo.builder().type("service")
+                .api(CommonAmisVo.ApiDTO.builder().url("${ls:backend_url}/officialAccount/check/login?sceneId=" + id)
                 .adaptor(adaptor).requestAdaptor(requestAdaptor).build()).interval(2000).silentPolling(true).build();
 
         return CommonAmisVo.builder().type("form").title("登录").mode("horizontal").body(Arrays.asList(image, service)).build();

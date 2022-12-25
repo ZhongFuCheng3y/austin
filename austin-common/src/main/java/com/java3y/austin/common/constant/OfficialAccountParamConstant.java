@@ -37,9 +37,11 @@ public class OfficialAccountParamConstant {
 
 
     /**
-     * 关注后服务号的：文案
+     * 扫码/关注后/取消关注后的服务号文案
      */
     public static final String SUBSCRIBE_TIPS = "关注公众号：Java3y 回复 austin 可获取项目笔记哟！";
+    public static final String SCAN_TIPS = "咋又扫码啦？重新关注一波吧！";
+    public static final String UNSUBSCRIBE_TIPS = "老乡别走！";
 
 
 
