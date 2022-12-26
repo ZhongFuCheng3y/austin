@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 钉钉自定义机器人 入参
- *
- * https://open.dingtalk.com/document/group/custom-robot-access
+ * 企业微信自定义机器人 入参
+ * https://developer.work.weixin.qq.com/document/path/91770#%E6%96%87%E6%9C%AC%E7%B1%BB%E5%9E%8B
  *
  * @author 3y
  */
@@ -97,6 +96,7 @@ public class EnterpriseWeChatRobotParam {
         @JSONField(name = "content")
         private String content;
     }
+
     /**
      * ImageDTO
      */

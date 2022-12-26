@@ -13,7 +13,6 @@ import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.TaskInfoUtils;
-import com.java3y.austin.web.constants.AmisVoConstant;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import com.java3y.austin.web.vo.amis.EchartsVo;
 import com.java3y.austin.web.vo.amis.SmsTimeLineVo;
@@ -36,6 +35,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class Convert4Amis {
+
 
     /**
      * 标识忽略
@@ -60,7 +60,7 @@ public class Convert4Amis {
      * 需要格式化为jsonArray返回的字段
      * (前端是一个JSONArray传递进来)
      */
-    private static final List<String> PARSE_JSON_ARRAY = Arrays.asList("feedCards", "btns");
+    private static final List<String> PARSE_JSON_ARRAY = Arrays.asList("feedCards", "btns","articles");
 
     /**
      * (前端是一个JSONObject传递进来，返回一个JSONArray回去)
@@ -393,9 +393,9 @@ public class Convert4Amis {
 
         return EchartsVo.builder()
                 .title(EchartsVo.TitleVO.builder().text(title).build())
-                .legend(EchartsVo.LegendVO.builder().data(Arrays.asList(AmisVoConstant.LEGEND_TITLE)).build())
+                .legend(EchartsVo.LegendVO.builder().data(Arrays.asList("人数")).build())
                 .xAxis(EchartsVo.XAxisVO.builder().data(xAxisList).build())
-                .series(Arrays.asList(EchartsVo.SeriesVO.builder().name(AmisVoConstant.LEGEND_TITLE).type(AmisVoConstant.TYPE).data(actualData).build()))
+                .series(Arrays.asList(EchartsVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
                 .yAxis(EchartsVo.YAxisVO.builder().build())
                 .tooltip(EchartsVo.TooltipVO.builder().build())
                 .build();

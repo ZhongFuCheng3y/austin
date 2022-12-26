@@ -28,6 +28,16 @@ public class EnterpriseWeChatRobotContentModel extends ContentModel {
     private String content;
 
     /**
+     * 图片内容（base64编码前）的md5值
+     */
+    private String md5;
+
+    /**
+     * 图片内容的base64编码
+     */
+    private String base64;
+
+    /**
      * 媒体Id
      */
     private String mediaId;
