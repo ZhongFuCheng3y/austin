@@ -20,12 +20,12 @@ public enum FileType {
     VIDEO("40", "video"),
     ;
     private String code;
-    private String dingDingName;
+    private String name;
 
-    public static String dingDingNameByCode(String code) {
+    public static String getNameByCode(String code) {
         for (FileType fileType : FileType.values()) {
             if (fileType.getCode().equals(code)) {
-                return fileType.getDingDingName();
+                return fileType.getName();
             }
         }
         return null;

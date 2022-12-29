@@ -29,12 +29,11 @@ public class MessageReceipt {
             while (true) {
                 try {
                     for (ReceiptMessageStater receiptMessageStater : receiptMessageStaterList) {
-                        // 拉取回执需要打开下面一行注释
-                        //receiptMessageStater.start();
+                        receiptMessageStater.start();
                     }
                     Thread.sleep(2000);
                 } catch (Exception e) {
-                    log.error("MessageReceiptApplication#fail:{}", Throwables.getStackTraceAsString(e));
+                    log.error("MessageReceipt#init fail:{}", Throwables.getStackTraceAsString(e));
                 }
             }
         });

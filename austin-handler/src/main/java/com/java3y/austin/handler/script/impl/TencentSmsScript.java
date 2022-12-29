@@ -65,7 +65,7 @@ public class TencentSmsScript implements SmsScript {
             PullSmsSendStatusResponse resp = client.PullSmsSendStatus(req);
             return assemblePullSmsRecord(account, resp);
         } catch (Exception e) {
-            log.error("TencentSmsReceipt#pull fail!{}", Throwables.getStackTraceAsString(e));
+            // log.error("TencentSmsReceipt#pull fail!{}", Throwables.getStackTraceAsString(e));
             return null;
         }
     }

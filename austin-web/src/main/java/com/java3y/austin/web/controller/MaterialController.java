@@ -41,6 +41,10 @@ public class MaterialController {
     public BasicResultVO uploadMaterial(@RequestParam("file") MultipartFile file, String sendAccount, Integer sendChannel, String fileType) {
         if (ChannelType.DING_DING_WORK_NOTICE.getCode().equals(sendChannel)) {
             return materialService.dingDingMaterialUpload(file, sendAccount, fileType);
+        } else if (ChannelType.ENTERPRISE_WE_CHAT_ROBOT.getCode().equals(sendChannel)) {
+            return materialService.enterpriseWeChatRootMaterialUpload(file, sendAccount, fileType);
+        } else if (ChannelType.ENTERPRISE_WE_CHAT.getCode().equals(sendChannel)) {
+            return materialService.enterpriseWeChatMaterialUpload(file, sendAccount, fileType);
         }
         return BasicResultVO.success();
     }
