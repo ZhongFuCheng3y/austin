@@ -1,26 +1,26 @@
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewctl2q0j31hc0u0wff.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1992e010510f4930923869be65fb8241~tplv-k3u1fbpfcp-zoom-1.image)
 
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/Author-3y-orange.svg" alt="作者"></a>
+  <a href="#"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1bba5ad9b193475eae5377b97dbe0d19~tplv-k3u1fbpfcp-zoom-1.image" alt="作者"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/项目群-交流-red.svg" alt="项目群交流"></a>
   <a href="https://space.bilibili.com/198434865/channel/collectiondetail?sid=435119"><img src="https://img.shields.io/badge/免费项目-视频-green.svg" alt="Bilibili"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/如何准备-面试-yellow.svg" alt="对线面试官"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/star.svg?theme=dark" alt="Gitee Starts"></a>
-  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://gitee.com/zhongfucheng/austin/badge/fork.svg?theme=dark" alt="Gitee Starts"></a>
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/forks/ZhongFuCheng3y/austin.svg?style=flat&label=GithubFork"></a> 
-  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://img.shields.io/github/stars/ZhongFuCheng3y/austin.svg?style=flat&label=GithubStars"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/github/issues/ZhongFuCheng3y/austin" alt="issue-open"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/github/issues-closed/ZhongFuCheng3y/austin" alt="issue-close"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/github/issues-pr/ZhongFuCheng3y/austin" alt="issue-close"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/github/issues-pr-closed/ZhongFuCheng3y/austin" alt="issue-close"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/github/license/ZhongFuCheng3y/austin" alt="issue-close"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/JDK-8-red.svg" alt="jdk版本"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/SpringBoot-2.5.6-green.svg" alt="SpringBoot版本"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/Centos-7.6-blue.svg" alt="Centos版本"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/MySQL-5.7.x-orange.svg" alt="MySQL版本"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/maven-3.6.x-red.svg" alt="maven版本"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/ORM-SpringDataJPA-blue.svg" alt="ORM框架"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/Cache-Redis-orange.svg" alt="ORM框架"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d01c5c36c98f4b8185d95e7fbcf5de4c~tplv-k3u1fbpfcp-zoom-1.image" alt="Gitee Starts"></a>
+  <a href="https://gitee.com/zhongfucheng/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9049a25975204d0fb3eedff74a2195db~tplv-k3u1fbpfcp-zoom-1.image" alt="Gitee Starts"></a>
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a6e0c1d8af74096af70dec716a1f270~tplv-k3u1fbpfcp-zoom-1.image"></a> 
+  <a href="https://github.com/ZhongFuCheng3y/austin"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f432f61dbac54ecda2a60364ca6e83cb~tplv-k3u1fbpfcp-zoom-1.image"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6834377c27bb48eeb8dfbd9d9b830218~tplv-k3u1fbpfcp-zoom-1.image" alt="issue-open"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fe75139b76c84c7aae9410de1d8cffd9~tplv-k3u1fbpfcp-zoom-1.image" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3fb3be74618d4d23a421d7b5ba93be00~tplv-k3u1fbpfcp-zoom-1.image" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/63ede0c627fc4ba5b99ea95240af76e0~tplv-k3u1fbpfcp-zoom-1.image" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dfbbf03b9d3e499a990c44674b4f891e~tplv-k3u1fbpfcp-zoom-1.image" alt="issue-close"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/05b59172d65c4af9a5682f1e959c05d2~tplv-k3u1fbpfcp-zoom-1.image" alt="jdk版本"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a7c7a7a94444ab9ba12ae4185e0cf57~tplv-k3u1fbpfcp-zoom-1.image" alt="SpringBoot版本"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01810d46e181430eb9fea33f05fd16a5~tplv-k3u1fbpfcp-zoom-1.image" alt="Centos版本"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/afa4060a6d914ce79ca2d04fd4cb4432~tplv-k3u1fbpfcp-zoom-1.image" alt="MySQL版本"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/164b8009443846b5b21f4b946a902cbf~tplv-k3u1fbpfcp-zoom-1.image" alt="maven版本"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1c97a5fa60ad46e3b21c6bad9a8ced9c~tplv-k3u1fbpfcp-zoom-1.image" alt="ORM框架"></a>
+  <a href="#项目交流"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2f72b37596247879d08a3dc7820fe4e~tplv-k3u1fbpfcp-zoom-1.image" alt="ORM框架"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/分布式定时任务-xxljob-green.svg" alt="分布式定时任务"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/分布式配置中心-Apollo&Nacos-blue.svg" alt="分布式配置中心"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/分布式消息队列-Kafka-red.svg" alt="分布式消息队列"></a>
@@ -50,25 +50,25 @@
 
 **1**、创建需要发送的渠道账号
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewh0wd40j32gi0mw784.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1720f1e9c6b546a18b13a84fabe1f562~tplv-k3u1fbpfcp-zoom-1.image)
 
 **2**、创建消息模板
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewkdp87bj31rj0u00vz.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b387c53663d04796a20fda2d4ba925ac~tplv-k3u1fbpfcp-zoom-1.image)
 
 **3**、测试发送消息是否正常
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewmivoslj32hi0pojva.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e58637c9a00a482f91d1a84ab7a17c51~tplv-k3u1fbpfcp-zoom-1.image)
 
 **4**、查看消息下发情况
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewo73zjfj32rg0kin1c.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2dd1369fa8a4f40abcbb5c02ed21893~tplv-k3u1fbpfcp-zoom-1.image)
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewprc1shj32ri0ocady.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b49be4a87f44621b5b916114b17bd28~tplv-k3u1fbpfcp-zoom-1.image)
 
 **5**、亦可在新建模板时选择**定时任务**，通过上传[csv文件](https://www.yuque.com/office/yuque/0/2022/csv/1285871/1671865125068-b5385387-b4a4-41ac-a43e-bab54ee49d88.csv?from=https%3A%2F%2Fwww.yuque.com%2Fu1047901%2Fniffsu%2Fqqtese%2Fedit)和指定cron表达式实现下发消息
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9ewv7fq96j31br0u0n0y.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/42ecf9c743bd4e3493e092d525cbffe7~tplv-k3u1fbpfcp-zoom-1.image)
 
 ## 部署姿势
 
@@ -117,7 +117,7 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 
 详情可以看戳：[我开通了付费渠道](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)
 
-![](https://tva1.sinaimg.cn/large/008vxvgGgy1h9exl2609tj30u02z3drh.jpg)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2d6dd728e9d4427ab6a47c647f4bdb78~tplv-k3u1fbpfcp-zoom-1.image)
 
 
 ## 项目交流
@@ -140,7 +140,8 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 
 ## 里程碑
 
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd3139ac1d4c4f56862415297ee89290~tplv-k3u1fbpfcp-watermark.image?)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7a5a59681a404ac1a9e92f651ba9a39c~tplv-k3u1fbpfcp-watermark.image?)
 
 - [x] Maven+SpringBoot项目搭建
 - [x] logback日志记录项目运行时信息，引入common/guava/Hutool/Lombok/fastjson/OkHttp工具包
@@ -181,6 +182,5 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 - [x] 在线演示第一版发布
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
-**近期更新时间**：12月24号
-
-**近期更新功能**：在线演示第一版发布！
+**近期更新时间**：12月29号
+**近期更新功能**：完善企业微信（应用消息）和企业微信（机器人）所支持的消息类型，以及素材的上传
