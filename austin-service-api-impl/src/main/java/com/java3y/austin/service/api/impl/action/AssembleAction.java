@@ -107,8 +107,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
         // 得到真正的ContentModel 类型
         Integer sendChannel = messageTemplate.getSendChannel();
-        Class contentModelClass = ChannelType.getChanelModelClassByCode(sendChannel);
-
+        Class<? extends ContentModel> contentModelClass = ChannelType.getChanelModelClassByCode(sendChannel);
 
         // 得到模板的 msgContent 和 入参
         Map<String, String> variables = messageParam.getVariables();
@@ -117,7 +116,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
 
         // 通过反射 组装出 contentModel
         Field[] fields = ReflectUtil.getFields(contentModelClass);
-        ContentModel contentModel = (ContentModel) ReflectUtil.newInstance(contentModelClass);
+        ContentModel contentModel = ReflectUtil.newInstance(contentModelClass);
         for (Field field : fields) {
             String originValue = jsonObject.getString(field.getName());
 
