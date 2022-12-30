@@ -40,7 +40,7 @@ public class SimpleLimitService extends AbstractLimitService {
             String value = inRedisValue.get(key);
 
             // 符合条件的用户
-            if (value != null && Integer.parseInt(value) >= param.getCountNum()) {
+            if (Objects.nonNull(value) && Integer.parseInt(value) >= param.getCountNum()) {
                 filterReceiver.add(receiver);
             } else {
                 readyPutRedisReceiver.put(receiver, key);
@@ -64,8 +64,8 @@ public class SimpleLimitService extends AbstractLimitService {
         Map<String, String> keyValues = new HashMap<>(readyPutRedisReceiver.size());
         for (Map.Entry<String, String> entry : readyPutRedisReceiver.entrySet()) {
             String key = entry.getValue();
-            if (inRedisValue.get(key) != null) {
-                keyValues.put(key, String.valueOf(Integer.valueOf(inRedisValue.get(key)) + 1));
+            if (Objects.nonNull(inRedisValue.get(key))) {
+                keyValues.put(key, String.valueOf(Integer.parseInt(inRedisValue.get(key)) + 1));
             } else {
                 keyValues.put(key, String.valueOf(CommonConstant.TRUE));
             }

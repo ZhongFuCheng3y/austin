@@ -8,6 +8,7 @@ import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author huskey
@@ -23,7 +24,7 @@ public class FrequencyDeduplicationBuilder extends AbstractDeduplicationBuilder 
     @Override
     public DeduplicationParam build(String deduplication, TaskInfo taskInfo) {
         DeduplicationParam deduplicationParam = getParamsFromConfig(deduplicationType, deduplication, taskInfo);
-        if (deduplicationParam == null) {
+        if (Objects.isNull(deduplicationParam)) {
             return null;
         }
         deduplicationParam.setDeduplicationTime((DateUtil.endOfDay(new Date()).getTime() - DateUtil.current()) / 1000);

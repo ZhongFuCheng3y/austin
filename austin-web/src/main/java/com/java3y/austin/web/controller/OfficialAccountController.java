@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 微信服务号
@@ -86,7 +87,7 @@ public class OfficialAccountController {
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
     public BasicResultVO queryDetailList(Long id, String wxTemplateId) {
-        if (id == null || wxTemplateId == null) {
+        if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
             return BasicResultVO.success(RespStatusEnum.CLIENT_BAD_PARAMETERS);
         }
         try {
@@ -113,7 +114,7 @@ public class OfficialAccountController {
     public String receiptMessage(HttpServletRequest request) {
         try {
             WeChatLoginConfig configService = loginUtils.getLoginConfig();
-            if (configService == null) {
+            if (Objects.isNull(configService)) {
                 return RespStatusEnum.DO_NOT_NEED_LOGIN.getMsg();
             }
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
@@ -164,7 +165,7 @@ public class OfficialAccountController {
     public BasicResultVO getQrCode() {
         try {
             WeChatLoginConfig configService = loginUtils.getLoginConfig();
-            if (configService == null) {
+            if (Objects.isNull(configService)) {
                 return BasicResultVO.fail(RespStatusEnum.DO_NOT_NEED_LOGIN);
             }
             String id = IdUtil.getSnowflake().nextIdStr();

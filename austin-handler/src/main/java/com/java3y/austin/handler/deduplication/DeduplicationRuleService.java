@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 3y.
@@ -34,7 +35,7 @@ public class DeduplicationRuleService {
         List<Integer> deduplicationList = DeduplicationType.getDeduplicationList();
         for (Integer deduplicationType : deduplicationList) {
             DeduplicationParam deduplicationParam = deduplicationHolder.selectBuilder(deduplicationType).build(deduplicationConfig, taskInfo);
-            if (deduplicationParam != null) {
+            if (Objects.nonNull(deduplicationParam)) {
                 deduplicationHolder.selectService(deduplicationType).deduplication(deduplicationParam);
             }
         }

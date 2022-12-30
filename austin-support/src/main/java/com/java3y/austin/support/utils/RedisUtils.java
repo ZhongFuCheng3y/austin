@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 3y
@@ -170,7 +171,7 @@ public class RedisUtils {
 
         try {
             Long execute = redisTemplate.execute(redisScript, keys, args);
-            if (execute == null) {
+            if (Objects.isNull(execute)) {
                 return false;
             }
             return CommonConstant.TRUE.equals(execute.intValue());

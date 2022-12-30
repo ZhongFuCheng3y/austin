@@ -6,6 +6,8 @@ import com.java3y.austin.common.enums.DeduplicationType;
 import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 
 /**
  * @author huskey
@@ -21,7 +23,7 @@ public class ContentDeduplicationBuilder extends AbstractDeduplicationBuilder im
     @Override
     public DeduplicationParam build(String deduplication, TaskInfo taskInfo) {
         DeduplicationParam deduplicationParam = getParamsFromConfig(deduplicationType, deduplication, taskInfo);
-        if (deduplicationParam == null) {
+        if (Objects.isNull(deduplicationParam)) {
            return null;
         }
         deduplicationParam.setAnchorState(AnchorState.CONTENT_DEDUPLICATION);

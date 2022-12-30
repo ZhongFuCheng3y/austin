@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * 获取数据接口（全链路追踪)
@@ -50,7 +51,7 @@ public class DataController {
     @PostMapping("/sms")
     @ApiOperation("/获取短信下发数据")
     public BasicResultVO getSmsData(@RequestBody DataParam dataParam) {
-        if (dataParam == null || dataParam.getDateTime() == null || StrUtil.isBlank(dataParam.getReceiver())) {
+        if (Objects.isNull(dataParam) || Objects.isNull(dataParam.getDateTime()) || StrUtil.isBlank(dataParam.getReceiver())) {
             return new BasicResultVO<>(RespStatusEnum.SUCCESS, SmsTimeLineVo.builder().items(new ArrayList<>()).build());
         }
 

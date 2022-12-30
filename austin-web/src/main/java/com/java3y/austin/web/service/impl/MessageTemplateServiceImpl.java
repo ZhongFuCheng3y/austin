@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 消息模板管理 Service
@@ -74,7 +75,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     @Override
     public MessageTemplate saveOrUpdate(MessageTemplate messageTemplate) {
-        if (messageTemplate.getId() == null) {
+        if (Objects.isNull(messageTemplate.getId())) {
             initStatus(messageTemplate);
         } else {
             resetStatus(messageTemplate);
@@ -90,7 +91,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         Iterable<MessageTemplate> messageTemplates = messageTemplateDao.findAllById(ids);
         messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(CommonConstant.TRUE));
         for (MessageTemplate messageTemplate : messageTemplates) {
-            if (messageTemplate.getCronTaskId() != null && messageTemplate.getCronTaskId() > 0) {
+            if (Objects.nonNull(messageTemplate.getCronTaskId()) && messageTemplate.getCronTaskId() > 0) {
                 cronTaskService.deleteCronTask(messageTemplate.getCronTaskId());
             }
         }
@@ -120,12 +121,12 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         // 3.获取taskId(如果本身存在则复用原有任务，如果不存在则得到新建后任务ID)
         Integer taskId = messageTemplate.getCronTaskId();
         BasicResultVO basicResultVO = cronTaskService.saveCronTask(xxlJobInfo);
-        if (taskId == null && RespStatusEnum.SUCCESS.getCode().equals(basicResultVO.getStatus()) && basicResultVO.getData() != null) {
+        if (Objects.isNull(taskId) && RespStatusEnum.SUCCESS.getCode().equals(basicResultVO.getStatus()) && Objects.nonNull(basicResultVO.getData())) {
             taskId = Integer.valueOf(String.valueOf(basicResultVO.getData()));
         }
 
         // 4. 启动定时任务
-        if (taskId != null) {
+        if (Objects.nonNull(taskId)) {
             cronTaskService.startCronTask(taskId);
             MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.RUN.getCode()).setCronTaskId(taskId).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
             messageTemplateDao.save(clone);
@@ -173,7 +174,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         messageTemplate.setUpdator(messageTemplate.getUpdator())
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode());
 
-        if (messageTemplate.getCronTaskId() != null && TemplateType.CLOCKING.getCode().equals(messageTemplate.getTemplateType())) {
+        if (Objects.nonNull(messageTemplate.getCronTaskId()) && TemplateType.CLOCKING.getCode().equals(messageTemplate.getTemplateType())) {
             XxlJobInfo xxlJobInfo = xxlJobUtils.buildXxlJobInfo(messageTemplate);
             cronTaskService.saveCronTask(xxlJobInfo);
             cronTaskService.stopCronTask(messageTemplate.getCronTaskId());

@@ -3,6 +3,8 @@ package com.java3y.austin.support.exception;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.support.pipeline.ProcessContext;
 
+import java.util.Objects;
+
 /**
  * @author SamLee
  * @since 2022-03-29
@@ -26,7 +28,7 @@ public class ProcessException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        if (this.processContext != null) {
+        if (Objects.nonNull(this.processContext)) {
             return this.processContext.getResponse().getMsg();
         } else {
             return RespStatusEnum.CONTEXT_IS_NULL.getMsg();

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 流程控制器
@@ -66,7 +67,7 @@ public class ProcessController {
      */
     private void preCheck(ProcessContext context) throws ProcessException {
         // 上下文
-        if (context == null) {
+        if (Objects.isNull(context)) {
             context = new ProcessContext();
             context.setResponse(BasicResultVO.fail(RespStatusEnum.CONTEXT_IS_NULL));
             throw new ProcessException(context);
@@ -81,7 +82,7 @@ public class ProcessController {
 
         // 执行模板
         ProcessTemplate processTemplate = templateConfig.get(businessCode);
-        if (processTemplate == null) {
+        if (Objects.isNull(processTemplate)) {
             context.setResponse(BasicResultVO.fail(RespStatusEnum.PROCESS_TEMPLATE_IS_NULL));
             throw new ProcessException(context);
         }

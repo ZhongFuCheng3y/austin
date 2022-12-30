@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +34,7 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
         List<MessageParam> messageParamList = sendTaskModel.getMessageParamList();
 
         // 1.没有传入 消息模板Id 或者 messageParam
-        if (messageTemplateId == null || CollUtil.isEmpty(messageParamList)) {
+        if (Objects.isNull(messageTemplateId) || CollUtil.isEmpty(messageParamList)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
             return;
         }
