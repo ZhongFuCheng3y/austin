@@ -24,8 +24,8 @@ public enum MessageStatus {
     SEND_SUCCESS(60, "发送成功"),
     SEND_FAIL(70, "发送失败");
 
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 
 }

@@ -33,28 +33,28 @@ public enum SendMessageType {
 
     ;
 
-    private String code;
-    private String description;
+    private final String code;
+    private final String description;
 
     /**
      * 钉钉工作消息的类型值
      */
-    private String dingDingRobotType;
+    private final String dingDingRobotType;
 
     /**
      * 钉钉机器人消息的类型值
      */
-    private String dingDingWorkType;
+    private final String dingDingWorkType;
 
     /**
      * 企业微信机器人的类型值
      */
-    private String enterpriseWeChatRobotType;
+    private final String enterpriseWeChatRobotType;
 
     /**
      * 飞书机器人类型值
      */
-    private String feiShuRobotType;
+    private final String feiShuRobotType;
 
 
     /**
