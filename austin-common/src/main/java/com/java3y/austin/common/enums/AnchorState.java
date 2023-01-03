@@ -29,8 +29,8 @@ public enum AnchorState {
     ;
 
 
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
     /**
      * 通过code获取描述

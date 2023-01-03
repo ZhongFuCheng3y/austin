@@ -7,6 +7,7 @@ import com.java3y.austin.handler.deduplication.DeduplicationParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 /**
  * @author 3y
@@ -26,11 +27,11 @@ public abstract class AbstractDeduplicationBuilder implements Builder {
 
     public DeduplicationParam getParamsFromConfig(Integer key, String duplicationConfig, TaskInfo taskInfo) {
         JSONObject object = JSONObject.parseObject(duplicationConfig);
-        if (object == null) {
+        if (Objects.isNull(object)) {
             return null;
         }
         DeduplicationParam deduplicationParam = JSONObject.parseObject(object.getString(DEDUPLICATION_CONFIG_PRE + key), DeduplicationParam.class);
-        if (deduplicationParam == null) {
+        if (Objects.isNull(deduplicationParam)) {
             return null;
         }
         deduplicationParam.setTaskInfo(taskInfo);

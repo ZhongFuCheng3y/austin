@@ -19,8 +19,8 @@ public enum FileType {
     COMMON_FILE("30", "file"),
     VIDEO("40", "video"),
     ;
-    private String code;
-    private String name;
+    private final String code;
+    private final String name;
 
     public static String getNameByCode(String code) {
         for (FileType fileType : FileType.values()) {

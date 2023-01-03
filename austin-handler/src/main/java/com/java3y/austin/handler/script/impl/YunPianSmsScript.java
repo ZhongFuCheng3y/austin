@@ -81,7 +81,7 @@ public class YunPianSmsScript implements SmsScript {
 
 
     private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, YunPianSendResult response, YunPianSmsAccount account) {
-        if (response == null || ArrayUtil.isEmpty(response.getData())) {
+        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getData())) {
             return null;
         }
 

@@ -21,10 +21,10 @@ public enum BusinessCode {
 
 
     /** code 关联着责任链的模板 */
-    private String code;
+    private final String code;
 
     /** 类型说明 */
-    private String description;
+    private final String description;
 
 
 }
