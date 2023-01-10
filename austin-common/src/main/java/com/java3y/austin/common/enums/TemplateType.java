@@ -17,7 +17,7 @@ public enum TemplateType {
     REALTIME(20, "实时类的模板(接口实时调用)"),
     ;
 
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 }

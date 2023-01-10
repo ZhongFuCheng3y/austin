@@ -10,10 +10,7 @@ import com.java3y.austin.cron.vo.CrowdInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 读取人群文件 工具类
@@ -97,7 +94,7 @@ public class ReadFileUtils {
         List<CrowdInfoVo> result = new ArrayList<>();
         try {
             CsvData data = CsvUtil.getReader().read(FileUtil.file(path));
-            if (data == null || data.getRow(0) == null || data.getRow(1) == null) {
+            if (Objects.isNull(data) || Objects.isNull(data.getRow(0)) || Objects.isNull(data.getRow(1))) {
                 log.error("read csv file empty!,path:{}", path);
             }
             // 第一行为默认为头信息,所以遍历从第二行开始,第一列默认为接收者Id(不处理)

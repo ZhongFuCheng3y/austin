@@ -17,8 +17,8 @@ public enum SmsSupplier {
 
     TENCENT(10,"腾讯渠道商"),
     YUN_PAIN(20,"云片渠道商");
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 
     /**

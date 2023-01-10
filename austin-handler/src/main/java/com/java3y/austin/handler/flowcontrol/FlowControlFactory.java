@@ -50,7 +50,7 @@ public class FlowControlFactory implements ApplicationContextAware {
         Double rateInitValue = flowControlParam.getRateInitValue();
         // 对比 初始限流值 与 配置限流值，以 配置中心的限流值为准
         Double rateLimitConfig = getRateLimitConfig(taskInfo.getSendChannel());
-        if (rateLimitConfig != null && !rateInitValue.equals(rateLimitConfig)) {
+        if (Objects.nonNull(rateLimitConfig) && !rateInitValue.equals(rateLimitConfig)) {
             rateLimiter = RateLimiter.create(rateLimitConfig);
             flowControlParam.setRateInitValue(rateLimitConfig);
             flowControlParam.setRateLimiter(rateLimiter);
@@ -79,7 +79,7 @@ public class FlowControlFactory implements ApplicationContextAware {
     private Double getRateLimitConfig(Integer channelCode) {
         String flowControlConfig = config.getProperty(FLOW_CONTROL_KEY, CommonConstant.EMPTY_JSON_OBJECT);
         JSONObject jsonObject = JSON.parseObject(flowControlConfig);
-        if (jsonObject.getDouble(FLOW_CONTROL_PREFIX + channelCode) == null) {
+        if (Objects.isNull(jsonObject.getDouble(FLOW_CONTROL_PREFIX + channelCode))) {
             return null;
         }
         return jsonObject.getDouble(FLOW_CONTROL_PREFIX + channelCode);

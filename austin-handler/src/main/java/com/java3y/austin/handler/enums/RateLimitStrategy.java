@@ -19,8 +19,8 @@ public enum RateLimitStrategy {
     SEND_USER_NUM_RATE_LIMIT(20, "根据发送用户数限流"),
     ;
 
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 
 }

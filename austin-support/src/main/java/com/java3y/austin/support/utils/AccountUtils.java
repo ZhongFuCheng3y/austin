@@ -35,7 +35,7 @@ public class AccountUtils {
                 return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
             }
         } catch (Exception e) {
-            log.error("AccountUtils#getAccount fail!", Throwables.getStackTraceAsString(e));
+            log.error("AccountUtils#getAccount fail! e:{}", Throwables.getStackTraceAsString(e));
         }
         return null;
     }

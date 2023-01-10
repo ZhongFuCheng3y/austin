@@ -25,8 +25,8 @@ public enum IdType {
     FEI_SHU_USER_ID(90, "fei_shu_user_id"),
     ;
 
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * xxlJob工具类
@@ -68,7 +69,7 @@ public class XxlJobUtils {
                 .alarmEmail(StrUtil.EMPTY)
                 .childJobId(StrUtil.EMPTY).build();
 
-        if (messageTemplate.getCronTaskId() != null) {
+        if (Objects.nonNull(messageTemplate.getCronTaskId())) {
             xxlJobInfo.setId(messageTemplate.getCronTaskId());
         }
         return xxlJobInfo;
@@ -80,7 +81,7 @@ public class XxlJobUtils {
      */
     private Integer queryJobGroupId() {
         BasicResultVO basicResultVO = cronTaskService.getGroupId(appName, jobHandlerName);
-        if (basicResultVO.getData() == null) {
+        if (Objects.isNull(basicResultVO.getData())) {
             XxlJobGroup xxlJobGroup = XxlJobGroup.builder().appname(appName).title(jobHandlerName).addressType(CommonConstant.FALSE).build();
             if (RespStatusEnum.SUCCESS.getCode().equals(cronTaskService.createGroup(xxlJobGroup).getStatus())) {
                 return (int) cronTaskService.getGroupId(appName, jobHandlerName).getData();

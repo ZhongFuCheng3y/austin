@@ -9,6 +9,8 @@ import com.java3y.austin.support.utils.LogUtils;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Objects;
+
 /**
  * @author 3y
  * 发送各个渠道的handler
@@ -48,7 +50,7 @@ public abstract class BaseHandler implements Handler {
      */
     public void flowControl(TaskInfo taskInfo) {
         // 只有子类指定了限流参数，才需要限流
-        if (flowControlParam != null) {
+        if (Objects.nonNull(flowControlParam)) {
             flowControlFactory.flowControl(taskInfo, flowControlParam);
         }
     }

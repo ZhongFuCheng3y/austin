@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 微信服务号
@@ -60,7 +61,7 @@ public class MiniProgramController {
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
     public BasicResultVO queryDetailList(Long id, String wxTemplateId) {
-        if (id == null || wxTemplateId == null) {
+        if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
             return BasicResultVO.success(RespStatusEnum.CLIENT_BAD_PARAMETERS);
         }
         try {

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * @author 3y
  * @date 2022/12/22
@@ -47,7 +49,7 @@ public class LoginUtils {
     public boolean needLogin() {
         try {
             WeChatLoginConfig bean = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
-            if (CommonConstant.ENV_TEST.equals(env) && bean != null) {
+            if (CommonConstant.ENV_TEST.equals(env) && Objects.nonNull(bean)) {
                 return true;
             }
         } catch (Exception e) {

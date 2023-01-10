@@ -21,6 +21,7 @@ import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 3y
@@ -42,7 +43,7 @@ public class CronTaskServiceImpl implements CronTaskService {
     @Override
     public BasicResultVO saveCronTask(XxlJobInfo xxlJobInfo) {
         Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobInfo), Map.class);
-        String path = xxlJobInfo.getId() == null ? xxlAddresses + XxlJobConstant.INSERT_URL
+        String path = Objects.isNull(xxlJobInfo.getId()) ? xxlAddresses + XxlJobConstant.INSERT_URL
                 : xxlAddresses + XxlJobConstant.UPDATE_URL;
 
         HttpResponse response;
@@ -145,7 +146,7 @@ public class CronTaskServiceImpl implements CronTaskService {
         try {
             response = HttpRequest.post(path).form(params).cookie(getCookie()).execute();
             Integer id = JSON.parseObject(response.body()).getJSONArray("data").getJSONObject(0).getInteger("id");
-            if (response.isOk() && id != null) {
+            if (response.isOk() && Objects.nonNull(id)) {
                 return BasicResultVO.success(id);
             }
         } catch (Exception e) {

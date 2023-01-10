@@ -19,8 +19,8 @@ public enum DeduplicationType {
     CONTENT(10, "N分钟相同内容去重"),
     FREQUENCY(20, "一天内N次相同渠道去重"),
     ;
-    private Integer code;
-    private String description;
+    private final Integer code;
+    private final String description;
 
 
     /**

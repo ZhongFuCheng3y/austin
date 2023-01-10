@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 3y
@@ -79,7 +80,7 @@ public class TencentSmsScript implements SmsScript {
      * @return
      */
     private List<SmsRecord> assembleSendSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsAccount tencentSmsAccount) {
-        if (response == null || ArrayUtil.isEmpty(response.getSendStatusSet())) {
+        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getSendStatusSet())) {
             return null;
         }
 
@@ -150,7 +151,7 @@ public class TencentSmsScript implements SmsScript {
      */
     private List<SmsRecord> assemblePullSmsRecord(TencentSmsAccount account, PullSmsSendStatusResponse resp) {
         List<SmsRecord> smsRecordList = new ArrayList<>();
-        if (resp != null && resp.getPullSmsSendStatusSet() != null && resp.getPullSmsSendStatusSet().length > 0) {
+        if (Objects.nonNull(resp) && Objects.nonNull(resp.getPullSmsSendStatusSet()) && resp.getPullSmsSendStatusSet().length > 0) {
             for (PullSmsSendStatus pullSmsSendStatus : resp.getPullSmsSendStatusSet()) {
                 SmsRecord smsRecord = SmsRecord.builder()
                         .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))

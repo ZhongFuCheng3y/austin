@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -56,7 +57,7 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
         for (CrowdInfoVo crowdInfoVo : crowdInfoVos) {
             String receiver = crowdInfoVo.getReceiver();
             Map<String, String> vars = crowdInfoVo.getParams();
-            if (paramMap.get(vars) == null) {
+            if (Objects.isNull(paramMap.get(vars))) {
                 paramMap.put(vars, receiver);
             } else {
                 String newReceiver = StringUtils.join(new String[]{

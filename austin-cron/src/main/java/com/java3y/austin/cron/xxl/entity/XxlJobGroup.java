@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 执行器组信息
@@ -44,7 +41,7 @@ public class XxlJobGroup {
     private List<String> registryList;
 
     public List<String> getRegistryList() {
-        if (addressList != null && addressList.trim().length() > 0) {
+        if (Objects.nonNull(addressList) && addressList.trim().length() > 0) {
             registryList = new ArrayList<String>(Arrays.asList(addressList.split(",")));
         }
         return registryList;
