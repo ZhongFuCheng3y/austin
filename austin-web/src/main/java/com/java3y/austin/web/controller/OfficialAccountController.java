@@ -3,6 +3,7 @@ package com.java3y.austin.web.controller;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
@@ -31,9 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 微信服务号
@@ -196,6 +195,37 @@ public class OfficialAccountController {
             return BasicResultVO.success(JSON.parseObject(userInfo, WxMpUser.class));
         } catch (Exception e) {
             log.error("OfficialAccountController#checkLogin fail:{}", Throwables.getStackTraceAsString(e));
+            return null;
+        }
+    }
+
+    /**
+     * 原因：微信测试号最多只能拥有100个测试用户
+     * <p>
+     * 临时 删除测试号的用户，避免正常有问题
+     * <p>
+     * 【正常消息推送平台不会有这个接口】
+     *
+     * @return
+     */
+    @RequestMapping("/delete/test/user")
+    @ApiOperation("/删除测试号的测试用户")
+    public BasicResultVO deleteTestUser(HttpServletRequest  request ) {
+        try {
+            String cookie = request.getHeader("Cookie");
+            List<String> openIds = loginUtils.getLoginConfig()
+                    .getOfficialAccountLoginService().getUserService().userList(null).getOpenids();
+            for (String openId : openIds) {
+                Map<String, Object> params = new HashMap<>(4);
+                params.put("openid", openId);
+                params.put("random", "0.859336489537766");
+                params.put("action", "delfan");
+                HttpUtil.createPost("http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo")
+                        .header("Cookie", cookie).form(params).execute();
+            }
+            return BasicResultVO.success();
+        } catch (Exception e) {
+            log.error("OfficialAccountController#deleteTestUser fail:{}", Throwables.getStackTraceAsString(e));
             return null;
         }
     }
