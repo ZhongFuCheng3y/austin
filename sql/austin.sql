@@ -82,12 +82,13 @@ CREATE TABLE `channel_account`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='渠道账号信息';
 
-------------------------------------- 初始化xxl-job的sql----------------------------------
 
 CREATE database if NOT EXISTS `xxl_job` default character set utf8mb4 collate utf8mb4_unicode_ci;
 use `xxl_job`;
 
 SET NAMES utf8mb4;
+
+drop table IF EXISTS xxl_job_info;
 
 CREATE TABLE `xxl_job_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -117,6 +118,7 @@ CREATE TABLE `xxl_job_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_log;
 CREATE TABLE `xxl_job_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `job_group` int(11) NOT NULL COMMENT '执行器主键ID',
@@ -138,6 +140,7 @@ CREATE TABLE `xxl_job_log` (
   KEY `I_handle_code` (`handle_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_log_report;
 CREATE TABLE `xxl_job_log_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `trigger_day` datetime DEFAULT NULL COMMENT '调度-时间',
@@ -149,6 +152,7 @@ CREATE TABLE `xxl_job_log_report` (
   UNIQUE KEY `i_trigger_day` (`trigger_day`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_logglue;
 CREATE TABLE `xxl_job_logglue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_id` int(11) NOT NULL COMMENT '任务，主键ID',
@@ -160,6 +164,7 @@ CREATE TABLE `xxl_job_logglue` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_registry;
 CREATE TABLE `xxl_job_registry` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `registry_group` varchar(50) NOT NULL,
@@ -170,6 +175,7 @@ CREATE TABLE `xxl_job_registry` (
   KEY `i_g_k_v` (`registry_group`,`registry_key`,`registry_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_group;
 CREATE TABLE `xxl_job_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_name` varchar(64) NOT NULL COMMENT '执行器AppName',
@@ -180,6 +186,7 @@ CREATE TABLE `xxl_job_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_user;
 CREATE TABLE `xxl_job_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '账号',
@@ -190,6 +197,7 @@ CREATE TABLE `xxl_job_user` (
   UNIQUE KEY `i_username` (`username`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+drop table IF EXISTS xxl_job_lock;
 CREATE TABLE `xxl_job_lock` (
   `lock_name` varchar(50) NOT NULL COMMENT '锁名称',
   PRIMARY KEY (`lock_name`)
@@ -201,5 +209,3 @@ INSERT INTO `xxl_job_user`(`id`, `username`, `password`, `role`, `permission`) V
 INSERT INTO `xxl_job_lock` ( `lock_name`) VALUES ( 'schedule_lock');
 
 commit;
-
-------------------------------------- 初始化xxl-job的sql----------------------------------

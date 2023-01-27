@@ -6,7 +6,7 @@
     <!--指定mysql数据库连接的database-->
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://3y_ip:5432/metastore?createDatabaseIfNotExist=true</value>
+        <value>jdbc:postgresql://hive_ip:5432/metastore?createDatabaseIfNotExist=true</value>
         <description>JDBC connect string for a JDBC metastore</description>
     </property>
 
@@ -30,7 +30,7 @@
 
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://3y_ip:9083</value>
+        <value>thrift://hive_ip:9083</value>
         <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.
         </description>
     </property>
@@ -40,32 +40,4 @@
         <value>true</value>
     </property>
 
-    <property>
-        <name>hive.server2.logging.operation.log.location</name>
-        <value>/root/sd/apache-hive-2.3.4-bin/tmp/operation_logs</value>
-        <description>Top level directory where operation logs are stored if logging functionality is enabled
-        </description>
-    </property>
-
-    <property>
-        <name>hive.exec.scratchdir</name>
-        <value>/root/sd/apache-hive-2.3.4-bin/tmp/hive</value>
-        <description>HDFS root scratch dir for Hive jobs which gets created with write all (733) permission. For each
-            connecting
-            user, an HDFS scratch dir: ${hive.exec.scratchdir}/&lt;username&gt; is created, with
-            ${hive.scratch.dir.permission}.
-        </description>
-    </property>
-
-    <property>
-        <name>hive.exec.local.scratchdir</name>
-        <value>/root/sd/apache-hive-2.3.4-bin/tmp/hive/local</value>
-        <description>Local scratch space for Hive jobs</description>
-    </property>
-
-    <property>
-        <name>hive.downloaded.resources.dir</name>
-        <value>/root/sd/apache-hive-2.3.4-bin/tmp/hive/resources</value>
-        <description>Temporary local directory for added resources in the remote file system.</description>
-    </property>
 </configuration>

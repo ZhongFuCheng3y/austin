@@ -1,40 +1,27 @@
 version: "2.2"
 services:
   jobmanager:
-    image: flink:1.14.3
+    image: flink:latest
     ports:
       - "8081:8081"
     command: jobmanager
-    volumes:
-      - ./sql-client-defaults.yaml:/opt/flink/conf/sql-client-defaults.yaml:rw
-      - ./hive-site.xml:/opt/flink/conf/hive-site.xml:rw
     environment:
       - |
         FLINK_PROPERTIES=
         jobmanager.rpc.address: jobmanager
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
   taskmanager:
-    image: flink:1.14.3
+    image: flink:latest
     depends_on:
       - jobmanager
     command: taskmanager
-    volumes:
-      - ./sql-client-defaults.yaml:/opt/flink/conf/sql-client-defaults.yaml:rw
-      - ./hive-site.xml:/opt/flink/conf/hive-site.xml:rw
     environment:
       - |
         FLINK_PROPERTIES=
         jobmanager.rpc.address: jobmanager
         taskmanager.numberOfTaskSlots: 2
-  sql-client:
-    image: flink:1.14.3
-    volumes:
-      - ./sql-client-defaults.yaml:/opt/flink/conf/sql-client-defaults.yaml:rw
-      - ./hive-site.xml:/opt/flink/conf/hive-site.xml:rw
-    command: ./bin/sql-client.sh embedded  ../conf/sql-client-defaults.yaml
-    depends_on:
-      - jobmanager
-    environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        rest.address: jobmanager
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai

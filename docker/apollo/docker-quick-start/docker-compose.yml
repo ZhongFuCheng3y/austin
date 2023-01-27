@@ -1,11 +1,12 @@
-version: '2'
+version: '2.1'
 
 services:
   apollo-quick-start:
     image: nobodyiam/apollo-quick-start
     container_name: apollo-quick-start
     depends_on:
-      - apollo-db
+      apollo-db:
+        condition: service_healthy
     ports:
       - "8080:8080"
       - "8090:8090"
@@ -14,11 +15,16 @@ services:
       - apollo-db
 
   apollo-db:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: apollo-db
     environment:
       TZ: Asia/Shanghai
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 1s
+      retries: 10
     depends_on:
       - apollo-dbdata
     ports:

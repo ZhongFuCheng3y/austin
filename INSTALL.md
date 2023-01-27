@@ -187,13 +187,13 @@ docker ps
 docker exec -it kafka sh
 ```
 
-创建两个topic(这里我的**topicName**就叫austinBusiness和austinLog，你们可以改成自己的)
+创建两个topic(这里我的**topicName**就叫austinBusiness、austinTraceLog、austinRecall，你们可以改成自己的)
 
 ```
 
 $KAFKA_HOME/bin/kafka-topics.sh --create --topic austinBusiness --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
 
-$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinLog --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
+$KAFKA_HOME/bin/kafka-topics.sh --create --topic austinTraceLog --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
 
 $KAFKA_HOME/bin/kafka-topics.sh --create --topic austinRecall --partitions 1 --zookeeper zookeeper:2181 --replication-factor 1
  

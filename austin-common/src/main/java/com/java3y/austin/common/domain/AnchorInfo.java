@@ -35,8 +35,8 @@ public class AnchorInfo {
 
 
     /**
-     * 生成时间
+     * 日志生成时间
      */
-    private long timestamp;
+    private long logTimestamp;
 
 }
