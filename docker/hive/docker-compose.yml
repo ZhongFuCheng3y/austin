@@ -45,11 +45,12 @@ services:
       - "9083:9083"
   hive-metastore-postgresql:
     image: bde2020/hive-metastore-postgresql:2.3.0
+    ports:
+      - "5432:5432"
   presto-coordinator:
     image: shawnzhu/prestodb:0.181
     ports:
       - "8080:8080"
-
 volumes:
   namenode:
   datanode:

@@ -3,7 +3,6 @@
 
 
 <configuration>
-    <!--指定mysql数据库连接的database-->
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
         <value>jdbc:postgresql://hive_ip:5432/metastore?createDatabaseIfNotExist=true</value>
