@@ -32,6 +32,7 @@ public class GroupIdMappingUtils {
 
     /**
      * 根据TaskInfo获取当前消息的groupId
+     *
      * @param taskInfo
      * @return
      */

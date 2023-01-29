@@ -14,6 +14,7 @@ public interface SendService {
 
     /**
      * 单文案发送接口
+     *
      * @param sendRequest
      * @return
      */
@@ -22,6 +23,7 @@ public interface SendService {
 
     /**
      * 多文案发送接口
+     *
      * @param batchSendRequest
      * @return
      */

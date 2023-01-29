@@ -12,7 +12,6 @@ import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.common.dto.model.PushContentModel;
 import com.java3y.austin.common.enums.ChannelType;
-
 import com.java3y.austin.handler.domain.push.PushParam;
 import com.java3y.austin.handler.domain.push.getui.BatchSendPushParam;
 import com.java3y.austin.handler.domain.push.getui.SendPushParam;

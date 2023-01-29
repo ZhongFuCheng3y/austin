@@ -20,6 +20,7 @@ import java.util.HashSet;
 
 /**
  * 屏蔽服务
+ *
  * @author 3y
  */
 @Service
@@ -50,7 +51,7 @@ public class ShieldServiceImpl implements ShieldService {
             }
             if (ShieldType.NIGHT_SHIELD_BUT_NEXT_DAY_SEND.getCode().equals(taskInfo.getShieldType())) {
                 redisUtils.lPush(NIGHT_SHIELD_BUT_NEXT_DAY_SEND_KEY, JSON.toJSONString(taskInfo,
-                        SerializerFeature.WriteClassName),
+                                SerializerFeature.WriteClassName),
                         (DateUtil.offsetDay(new Date(), 1).getTime() / 1000) - DateUtil.currentSeconds());
                 logUtils.print(AnchorInfo.builder().state(AnchorState.NIGHT_SHIELD_NEXT_SEND.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
             }
@@ -64,7 +65,7 @@ public class ShieldServiceImpl implements ShieldService {
      * @return
      */
     private boolean isNight() {
-       return LocalDateTime.now().getHour() < 8;
+        return LocalDateTime.now().getHour() < 8;
 
     }
 

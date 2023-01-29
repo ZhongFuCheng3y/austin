@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * 消息参数
  * single
+ *
  * @author 3y
  */
 @Data
@@ -38,5 +39,5 @@ public class MessageParam {
      * @Description: 扩展参数
      * 可选
      */
-    private Map<String,String> extra;
+    private Map<String, String> extra;
 }

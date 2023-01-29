@@ -33,6 +33,7 @@ public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
     public static final String EMAIL_REGEX_EXP = "^[A-Za-z0-9-_\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
     public static final HashMap<Integer, String> CHANNEL_REGEX_EXP = new HashMap<>();
+
     static {
         CHANNEL_REGEX_EXP.put(IdType.PHONE.getCode(), PHONE_REGEX_EXP);
         CHANNEL_REGEX_EXP.put(IdType.EMAIL.getCode(), EMAIL_REGEX_EXP);
@@ -55,6 +56,7 @@ public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
     /**
      * 如果指定类型是手机号，检测输入手机号是否合法
      * 如果指定类型是邮件，检测输入邮件是否合法
+     *
      * @param taskInfo
      */
     private void filterIllegalReceiver(List<TaskInfo> taskInfo) {

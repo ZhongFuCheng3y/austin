@@ -1,6 +1,5 @@
 package com.java3y.austin.service.api.service;
 
-import com.java3y.austin.service.api.domain.BatchSendRequest;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
 

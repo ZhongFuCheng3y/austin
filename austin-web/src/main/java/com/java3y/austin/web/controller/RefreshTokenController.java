@@ -27,6 +27,7 @@ public class RefreshTokenController {
 
     /**
      * 按照不同的渠道刷新对应的Token，channelType取值来源com.java3y.austin.common.enums.ChannelType
+     *
      * @param channelType
      * @return
      */

@@ -76,8 +76,8 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
             param.setFile(EnterpriseWeChatRobotParam.FileDTO.builder().mediaId(contentModel.getMediaId()).build());
         }
         if (SendMessageType.NEWS.getCode().equals(contentModel.getSendType())) {
-            List<EnterpriseWeChatRobotParam.NewsDTO.ArticlesDTO> articlesDTOS = JSON.parseArray(contentModel.getArticles(), EnterpriseWeChatRobotParam.NewsDTO.ArticlesDTO.class);
-            param.setNews(EnterpriseWeChatRobotParam.NewsDTO.builder().articles(articlesDTOS).build());
+            List<EnterpriseWeChatRobotParam.NewsDTO.ArticlesDTO> articlesDtoS = JSON.parseArray(contentModel.getArticles(), EnterpriseWeChatRobotParam.NewsDTO.ArticlesDTO.class);
+            param.setNews(EnterpriseWeChatRobotParam.NewsDTO.builder().articles(articlesDtoS).build());
         }
         if (SendMessageType.TEMPLATE_CARD.getCode().equals(contentModel.getSendType())) {
             //

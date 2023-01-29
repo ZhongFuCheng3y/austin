@@ -29,7 +29,7 @@ public class MessageReceipt {
             while (true) {
                 try {
                     for (ReceiptMessageStater receiptMessageStater : receiptMessageStaterList) {
-                        receiptMessageStater.start();
+                        //receiptMessageStater.start();
                     }
                     Thread.sleep(2000);
                 } catch (Exception e) {

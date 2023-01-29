@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
  * 模板消息参数
  * <p>
  * 参数示例：

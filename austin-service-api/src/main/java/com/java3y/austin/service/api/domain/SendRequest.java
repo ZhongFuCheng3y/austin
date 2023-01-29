@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 发送/撤回接口的参数
+ *
  * @author 3y
  */
 @Data
@@ -37,7 +38,6 @@ public class SendRequest {
      * 当业务类型为"send"，必传
      */
     private MessageParam messageParam;
-
 
 
 }

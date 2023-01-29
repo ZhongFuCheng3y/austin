@@ -2,6 +2,7 @@ package com.java3y.austin.stream.constants;
 
 /**
  * Flink常量信息
+ *
  * @author 3y
  */
 public class AustinFlinkConstant {

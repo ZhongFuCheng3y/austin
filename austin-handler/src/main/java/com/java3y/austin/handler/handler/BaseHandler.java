@@ -6,9 +6,9 @@ import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.handler.flowcontrol.FlowControlFactory;
 import com.java3y.austin.handler.flowcontrol.FlowControlParam;
 import com.java3y.austin.support.utils.LogUtils;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.Objects;
 
 /**
@@ -54,6 +54,7 @@ public abstract class BaseHandler implements Handler {
             flowControlFactory.flowControl(taskInfo, flowControlParam);
         }
     }
+
     @Override
     public void doHandler(TaskInfo taskInfo) {
         flowControl(taskInfo);
@@ -65,8 +66,6 @@ public abstract class BaseHandler implements Handler {
     }
 
 
-
-
     /**
      * 统一处理的handler接口
      *
@@ -74,7 +73,6 @@ public abstract class BaseHandler implements Handler {
      * @return
      */
     public abstract boolean handler(TaskInfo taskInfo);
-
 
 
 }

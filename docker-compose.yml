@@ -14,13 +14,13 @@ services:
     volumes:
       - ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 23306:3306
+      - "23306:3306"
     networks:
       - app
   austin-redis:
     image: redis:3.2
     ports:
-      - 16379:6379
+      - "16379:6379"
     restart: always
     container_name: austin-redis
     volumes:
@@ -104,11 +104,18 @@ services:
       - app
     depends_on:
       - austin-mysql
+  austin-metabase:
+    image: metabase:latest
+    container_name: austin-metabase
+    ports:
+      - "5001:3000"
+    networks:
+      - app
   austin:
     build:
       context: ./
     ports:
-      - 7777:7777
+      - "7777:7777"
     restart: always
     container_name: austin
     environment:

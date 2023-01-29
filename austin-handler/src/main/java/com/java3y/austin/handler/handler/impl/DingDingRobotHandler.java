@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.DingDingRobotAccount;
 import com.java3y.austin.common.dto.model.DingDingRobotContentModel;
@@ -65,7 +64,6 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
     }
 
 
-
     private DingDingRobotParam assembleParam(TaskInfo taskInfo) {
 
         // 接收者相关
@@ -91,13 +89,13 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
             param.setLink(DingDingRobotParam.LinkVO.builder().title(contentModel.getTitle()).text(contentModel.getContent()).messageUrl(contentModel.getUrl()).picUrl(contentModel.getPicUrl()).build());
         }
         if (SendMessageType.NEWS.getCode().equals(contentModel.getSendType())) {
-            List<DingDingRobotParam.FeedCardVO.LinksVO> linksVOS = JSON.parseArray(contentModel.getFeedCards(), DingDingRobotParam.FeedCardVO.LinksVO.class);
-            DingDingRobotParam.FeedCardVO feedCardVO = DingDingRobotParam.FeedCardVO.builder().links(linksVOS).build();
+            List<DingDingRobotParam.FeedCardVO.LinksVO> linksVoS = JSON.parseArray(contentModel.getFeedCards(), DingDingRobotParam.FeedCardVO.LinksVO.class);
+            DingDingRobotParam.FeedCardVO feedCardVO = DingDingRobotParam.FeedCardVO.builder().links(linksVoS).build();
             param.setFeedCard(feedCardVO);
         }
         if (SendMessageType.ACTION_CARD.getCode().equals(contentModel.getSendType())) {
-            List<DingDingRobotParam.ActionCardVO.BtnsVO> btnsVOS = JSON.parseArray(contentModel.getBtns(), DingDingRobotParam.ActionCardVO.BtnsVO.class);
-            DingDingRobotParam.ActionCardVO actionCardVO = DingDingRobotParam.ActionCardVO.builder().title(contentModel.getTitle()).text(contentModel.getContent()).btnOrientation(contentModel.getBtnOrientation()).btns(btnsVOS).build();
+            List<DingDingRobotParam.ActionCardVO.BtnsVO> btnsVoS = JSON.parseArray(contentModel.getBtns(), DingDingRobotParam.ActionCardVO.BtnsVO.class);
+            DingDingRobotParam.ActionCardVO actionCardVO = DingDingRobotParam.ActionCardVO.builder().title(contentModel.getTitle()).text(contentModel.getContent()).btnOrientation(contentModel.getBtnOrientation()).btns(btnsVoS).build();
             param.setActionCard(actionCardVO);
         }
 

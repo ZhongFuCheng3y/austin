@@ -38,12 +38,12 @@ public class EchartsVo {
      * xAxis x轴
      */
     @JsonProperty
-    private XAxisVO xAxis;
+    private XaxisVO xAxis;
     /**
      * yAxis y轴
      */
     @JsonProperty
-    private YAxisVO yAxis;
+    private YaxisVO yAxis;
     /**
      * series 系列列表
      * <p>
@@ -91,7 +91,7 @@ public class EchartsVo {
     @Data
     @Builder
 
-    public static class XAxisVO {
+    public static class XaxisVO {
         /**
          * data
          */
@@ -103,7 +103,7 @@ public class EchartsVo {
      */
     @Data
     @Builder
-    public static class YAxisVO {
+    public static class YaxisVO {
         private String type;
     }
 

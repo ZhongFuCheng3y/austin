@@ -2,24 +2,16 @@ package com.java3y.austin.handler.receiver.kafka;
 
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
-import com.java3y.austin.common.domain.AnchorInfo;
-import com.java3y.austin.common.domain.LogParam;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.common.enums.AnchorState;
-import com.java3y.austin.handler.handler.HandlerHolder;
-import com.java3y.austin.handler.pending.Task;
-import com.java3y.austin.handler.pending.TaskPendingHolder;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import com.java3y.austin.support.domain.MessageTemplate;
-import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -40,6 +32,7 @@ import java.util.Optional;
 public class Receiver {
     @Autowired
     private ConsumeService consumeService;
+
     /**
      * 发送消息
      *
@@ -64,12 +57,13 @@ public class Receiver {
 
     /**
      * 撤回消息
+     *
      * @param consumerRecord
      */
-    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}",groupId = "#{'${austin.business.recall.group.name}'}",containerFactory = "filterContainerFactory")
-    public void recall(ConsumerRecord<?,String> consumerRecord){
+    @KafkaListener(topics = "#{'${austin.business.recall.topic.name}'}", groupId = "#{'${austin.business.recall.group.name}'}", containerFactory = "filterContainerFactory")
+    public void recall(ConsumerRecord<?, String> consumerRecord) {
         Optional<String> kafkaMessage = Optional.ofNullable(consumerRecord.value());
-        if(kafkaMessage.isPresent()){
+        if (kafkaMessage.isPresent()) {
             MessageTemplate messageTemplate = JSON.parseObject(kafkaMessage.get(), MessageTemplate.class);
             consumeService.consume2recall(messageTemplate);
         }

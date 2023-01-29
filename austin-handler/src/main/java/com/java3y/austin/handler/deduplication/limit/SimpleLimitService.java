@@ -1,7 +1,6 @@
 package com.java3y.austin.handler.deduplication.limit;
 
 import cn.hutool.core.collection.CollUtil;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.deduplication.DeduplicationParam;
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * 采用普通的计数去重方法，限制的是每天发送的条数。
+ *
  * @author cao
  * @date 2022-04-20 13:41
  */
@@ -60,7 +60,7 @@ public class SimpleLimitService extends AbstractLimitService {
      * @param readyPutRedisReceiver
      */
     private void putInRedis(Map<String, String> readyPutRedisReceiver,
-        Map<String, String> inRedisValue, Long deduplicationTime) {
+                            Map<String, String> inRedisValue, Long deduplicationTime) {
         Map<String, String> keyValues = new HashMap<>(readyPutRedisReceiver.size());
         for (Map.Entry<String, String> entry : readyPutRedisReceiver.entrySet()) {
             String key = entry.getValue();

@@ -210,7 +210,7 @@ public class OfficialAccountController {
      */
     @RequestMapping("/delete/test/user")
     @ApiOperation("/删除测试号的测试用户")
-    public BasicResultVO deleteTestUser(HttpServletRequest  request ) {
+    public BasicResultVO deleteTestUser(HttpServletRequest request) {
         try {
             String cookie = request.getHeader("Cookie");
             List<String> openIds = loginUtils.getLoginConfig()

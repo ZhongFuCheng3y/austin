@@ -66,6 +66,7 @@ public interface MessageTemplateService {
 
     /**
      * 启动模板的定时任务
+     *
      * @param id
      * @return
      */
@@ -73,6 +74,7 @@ public interface MessageTemplateService {
 
     /**
      * 暂停模板的定时任务
+     *
      * @param id
      * @return
      */

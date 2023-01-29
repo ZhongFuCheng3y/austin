@@ -34,7 +34,7 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
         AlipayMiniProgramParam miniProgramParam = buildMiniProgramParam(taskInfo);
         try {
             alipayMiniProgramAccountService.send(miniProgramParam);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("AlipayMiniProgramAccountHandler#handler fail:{},params:{}",
                     Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
             return false;
@@ -48,7 +48,7 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
      * @param taskInfo 任务信息
      * @return AlipayMiniProgramParam
      */
-    private AlipayMiniProgramParam buildMiniProgramParam(TaskInfo taskInfo){
+    private AlipayMiniProgramParam buildMiniProgramParam(TaskInfo taskInfo) {
         AlipayMiniProgramParam param = AlipayMiniProgramParam.builder()
                 .toUserId(taskInfo.getReceiver())
                 .messageTemplateId(taskInfo.getMessageTemplateId())

@@ -6,6 +6,7 @@ import lombok.ToString;
 
 /**
  * 发送的消息类型
+ *
  * @author 3y
  */
 @Getter
@@ -13,10 +14,18 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum MessageType {
 
-    NOTICE(10,"通知类消息","notice"),
-    MARKETING(20,"营销类消息","marketing"),
-    AUTH_CODE(30,"验证码消息","auth_code")
-    ;
+    /**
+     * 通知类消息
+     */
+    NOTICE(10, "通知类消息", "notice"),
+    /**
+     * 营销类消息
+     */
+    MARKETING(20, "营销类消息", "marketing"),
+    /**
+     * 验证码消息
+     */
+    AUTH_CODE(30, "验证码消息", "auth_code");
 
     /**
      * 编码值
@@ -37,6 +46,7 @@ public enum MessageType {
 
     /**
      * 通过code获取enum
+     *
      * @param code
      * @return
      */

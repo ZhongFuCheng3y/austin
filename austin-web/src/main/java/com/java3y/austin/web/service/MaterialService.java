@@ -14,6 +14,7 @@ public interface MaterialService {
 
     /**
      * 钉钉素材上传
+     *
      * @param file
      * @param sendAccount
      * @param fileType
@@ -24,6 +25,7 @@ public interface MaterialService {
 
     /**
      * 企业微信（机器人）素材上传
+     *
      * @param file
      * @param sendAccount
      * @param fileType
@@ -33,6 +35,7 @@ public interface MaterialService {
 
     /**
      * 企业微信（应用消息）素材上传
+     *
      * @param file
      * @param sendAccount
      * @param fileType

@@ -48,14 +48,14 @@ public class TaskHandlerImpl implements TaskHandler {
         CrowdBatchTaskPending crowdBatchTaskPending = context.getBean(CrowdBatchTaskPending.class);
         ReadFileUtils.getCsvRow(messageTemplate.getCronCrowdPath(), row -> {
             if (CollUtil.isEmpty(row.getFieldMap())
-                || StrUtil.isBlank(row.getFieldMap().get(ReadFileUtils.RECEIVER_KEY))) {
+                    || StrUtil.isBlank(row.getFieldMap().get(ReadFileUtils.RECEIVER_KEY))) {
                 return;
             }
 
             // 3. 每一行处理交给LazyPending
             HashMap<String, String> params = ReadFileUtils.getParamFromLine(row.getFieldMap());
             CrowdInfoVo crowdInfoVo = CrowdInfoVo.builder().receiver(row.getFieldMap().get(ReadFileUtils.RECEIVER_KEY))
-                .params(params).messageTemplateId(messageTemplateId).build();
+                    .params(params).messageTemplateId(messageTemplateId).build();
             crowdBatchTaskPending.pending(crowdInfoVo);
 
             // 4. 判断是否读取文件完成回收资源且更改状态

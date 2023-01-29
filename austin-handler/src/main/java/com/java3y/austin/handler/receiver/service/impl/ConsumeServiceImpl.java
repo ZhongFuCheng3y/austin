@@ -1,7 +1,6 @@
 package com.java3y.austin.handler.receiver.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.LogParam;
 import com.java3y.austin.common.domain.TaskInfo;

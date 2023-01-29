@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author 3y
  * support 线程池配置类
- *
  */
 public class SupportThreadPoolConfig {
 

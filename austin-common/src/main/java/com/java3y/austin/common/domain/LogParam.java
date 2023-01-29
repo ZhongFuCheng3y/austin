@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
  * 日志参数
+ *
  * @author 3y
  */
 @Data

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
  * 小程序订阅消息参数
  * <p>
  * 参数示例：

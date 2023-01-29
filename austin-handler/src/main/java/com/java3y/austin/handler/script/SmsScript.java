@@ -25,6 +25,7 @@ public interface SmsScript {
 
     /**
      * 拉取回执
+     *
      * @param scriptName 标识账号的脚本名
      * @return 渠道商回执接口返回值
      */

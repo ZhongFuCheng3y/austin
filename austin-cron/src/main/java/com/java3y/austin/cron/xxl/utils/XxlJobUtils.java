@@ -2,7 +2,6 @@ package com.java3y.austin.cron.xxl.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
@@ -77,6 +76,7 @@ public class XxlJobUtils {
 
     /**
      * 根据就配置文件的内容获取jobGroupId，没有则创建
+     *
      * @return
      */
     private Integer queryJobGroupId() {

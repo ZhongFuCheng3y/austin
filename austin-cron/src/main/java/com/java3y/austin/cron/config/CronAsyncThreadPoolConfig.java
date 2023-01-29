@@ -27,6 +27,7 @@ public class CronAsyncThreadPoolConfig {
      * 业务：消费pending队列实际的线程池
      * 配置：核心线程可以被回收，当线程池无被引用且无核心线程数，应当被回收
      * 动态线程池且被Spring管理：false
+     *
      * @return
      */
     public static ExecutorService getConsumePendingThreadPool() {

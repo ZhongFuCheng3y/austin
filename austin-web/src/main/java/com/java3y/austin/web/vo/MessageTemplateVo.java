@@ -22,7 +22,7 @@ public class MessageTemplateVo {
     /**
      * 返回List列表
      */
-    private List<Map<String,Object>> rows;
+    private List<Map<String, Object>> rows;
 
     /**
      * 总条数

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class HandlerThreadPoolConfig {
 
     private static final String PRE_FIX = "austin.";
+
     /**
      * 业务：处理某个渠道的某种类型消息的线程池
      * 配置：不丢弃消息，核心线程数不会随着keepAliveTime而减少(不会被回收)

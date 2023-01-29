@@ -25,15 +25,16 @@ public interface ChannelAccountService {
      * 根据渠道标识查询账号信息
      *
      * @param channelType 渠道标识
-     * @param creator 创建者
+     * @param creator     创建者
      * @return
      */
-    List<ChannelAccount> queryByChannelType(Integer channelType,String creator);
+    List<ChannelAccount> queryByChannelType(Integer channelType, String creator);
 
 
     /**
      * 列表信息
      *
+     * @param creator
      * @return
      */
     List<ChannelAccount> list(String creator);

@@ -27,7 +27,7 @@ import java.io.Serializable;
 public class MessageTemplate implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -143,7 +143,6 @@ public class MessageTemplate implements Serializable {
      * 更新时间 单位s
      */
     private Integer updated;
-
 
 
 }

@@ -44,5 +44,4 @@ public class OfficialAccountParamConstant {
     public static final String UNSUBSCRIBE_TIPS = "老乡别走！";
 
 
-
 }

@@ -30,7 +30,7 @@ public class AustinHiveBootStrap {
         // 2.创建Kafka源表
         String kafkaSourceTableCreate = "DROP TABLE IF EXISTS " + DataHouseConstant.CATALOG_DEFAULT_DATABASE + "." + DataHouseConstant.KAFKA_SOURCE_TABLE_NAME;
         tableEnv.executeSql(kafkaSourceTableCreate);
-        String kafkaSourceTableDDL = "CREATE TABLE <CATALOG_DEFAULT_DATABASE>.<KAFKA_SOURCE_TABLE_NAME> (\n" +
+        String kafkaSourceTableDdl = "CREATE TABLE <CATALOG_DEFAULT_DATABASE>.<KAFKA_SOURCE_TABLE_NAME> (\n" +
                 "`ids` String,\n" +
                 "`state` String,\n" +
                 "`businessId` String,\n" +
@@ -45,17 +45,17 @@ public class AustinHiveBootStrap {
                 " 'json.ignore-parse-errors' = 'false',\n" +
                 " 'scan.topic-partition-discovery.interval'='1s',\n" +
                 " 'scan.startup.mode' = 'latest-offset')";
-        kafkaSourceTableDDL = kafkaSourceTableDDL.replace("<CATALOG_DEFAULT_DATABASE>", DataHouseConstant.CATALOG_DEFAULT_DATABASE)
+        kafkaSourceTableDdl = kafkaSourceTableDdl.replace("<CATALOG_DEFAULT_DATABASE>", DataHouseConstant.CATALOG_DEFAULT_DATABASE)
                 .replace("<KAFKA_SOURCE_TABLE_NAME>", DataHouseConstant.KAFKA_SOURCE_TABLE_NAME)
                 .replace("<KAFKA_IP_PORT>", DataHouseConstant.KAFKA_IP_PORT)
                 .replace("<KAFKA_TOPIC>", DataHouseConstant.KAFKA_TOPIC);
 
-        tableEnv.executeSql(kafkaSourceTableDDL);
+        tableEnv.executeSql(kafkaSourceTableDdl);
 
         // 创建写入hive的表
         tableEnv.getConfig().setSqlDialect(SqlDialect.HIVE);
         tableEnv.executeSql("DROP TABLE IF EXISTS " + DataHouseConstant.CATALOG_DEFAULT_DATABASE + "." + DataHouseConstant.KAFKA_SINK_TABLE_NAME);
-        String kafkaSinkTableDDL = "CREATE TABLE IF NOT EXISTS  <CATALOG_DEFAULT_DATABASE>.<KAFKA_SINK_TABLE_NAME> (\n" +
+        String kafkaSinkTableDdl = "CREATE TABLE IF NOT EXISTS  <CATALOG_DEFAULT_DATABASE>.<KAFKA_SINK_TABLE_NAME> (\n" +
                 "`ids` String,\n" +
                 "`state` String,\n" +
                 "`businessId` String,\n" +
@@ -68,9 +68,9 @@ public class AustinHiveBootStrap {
                 "  'sink.buffer-flush.max-rows'='10',\n" +
                 "  'sink.buffer-flush.interval' = '5s'\n" +
                 ")";
-        kafkaSinkTableDDL = kafkaSinkTableDDL.replace("<CATALOG_DEFAULT_DATABASE>", DataHouseConstant.CATALOG_DEFAULT_DATABASE)
+        kafkaSinkTableDdl = kafkaSinkTableDdl.replace("<CATALOG_DEFAULT_DATABASE>", DataHouseConstant.CATALOG_DEFAULT_DATABASE)
                 .replace("<KAFKA_SINK_TABLE_NAME>", DataHouseConstant.KAFKA_SINK_TABLE_NAME);
-        tableEnv.executeSql(kafkaSinkTableDDL);
+        tableEnv.executeSql(kafkaSinkTableDdl);
 
         // 3. 将kafka_source 数据写入到kafka_sink 完成
         tableEnv.getConfig().setSqlDialect(SqlDialect.DEFAULT);

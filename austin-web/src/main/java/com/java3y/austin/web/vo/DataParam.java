@@ -37,6 +37,4 @@ public class DataParam {
     private Long dateTime;
 
 
-
-
 }

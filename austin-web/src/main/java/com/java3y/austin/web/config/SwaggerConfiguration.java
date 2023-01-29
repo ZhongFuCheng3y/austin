@@ -14,6 +14,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * swagger配置类
+ *
  * @author 3y
  */
 @Component
@@ -22,7 +23,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SwaggerConfiguration {
     /**
      * 对C端用户的接口文档
-     *
+     * <p>
      * 地址：http://localhost:8080/swagger-ui/index.html
      *
      * @return
@@ -42,6 +43,7 @@ public class SwaggerConfiguration {
                 //.paths(PathSelectors.ant("/api/**"))
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("austin平台")

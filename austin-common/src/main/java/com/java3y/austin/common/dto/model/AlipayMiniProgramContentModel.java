@@ -15,7 +15,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlipayMiniProgramContentModel extends ContentModel{
+public class AlipayMiniProgramContentModel extends ContentModel {
 
     /**
      * 模板消息发送的数据

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * @author 3y
  * <p>
  * 短信内容模型
- *
+ * <p>
  * 在前端填写的时候分开，但最后处理的时候会将url拼接在content上
  */
 @Data

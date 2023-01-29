@@ -49,7 +49,7 @@ public class OkHttpConfiguration {
                 .connectionPool(pool())
                 .connectTimeout(connectTimeout, TimeUnit.SECONDS)
                 .readTimeout(readTimeout, TimeUnit.SECONDS)
-                .writeTimeout(writeTimeout,TimeUnit.SECONDS)
+                .writeTimeout(writeTimeout, TimeUnit.SECONDS)
                 .hostnameVerifier((hostname, session) -> true)
                 .build();
     }
@@ -61,10 +61,12 @@ public class OkHttpConfiguration {
             public void checkClientTrusted(X509Certificate[] chain, String authType)
                     throws CertificateException {
             }
+
             @Override
             public void checkServerTrusted(X509Certificate[] chain, String authType)
                     throws CertificateException {
             }
+
             @Override
             public X509Certificate[] getAcceptedIssuers() {
                 return new X509Certificate[0];

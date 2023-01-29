@@ -1,5 +1,6 @@
 package com.java3y.austin.handler.domain.dingding;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import java.util.List;
 
 /**
  * 钉钉自定义机器人 入参
- *
+ * <p>
  * https://open.dingtalk.com/document/group/custom-robot-access
  *
  * @author 3y
@@ -168,7 +169,8 @@ public class DingDingRobotParam {
             /**
              * actionURL
              */
-            private String actionURL;
+            @JSONField(name = "actionURL")
+            private String actionUrl;
         }
     }
 
@@ -200,11 +202,13 @@ public class DingDingRobotParam {
             /**
              * messageURL
              */
-            private String messageURL;
+            @JSONField(name = "messageURL")
+            private String messageUrl;
             /**
              * picURL
              */
-            private String picURL;
+            @JSONField(name = "picURL")
+            private String picUrl;
         }
     }
 }

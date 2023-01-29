@@ -60,7 +60,7 @@ public class Convert4Amis {
      * 需要格式化为jsonArray返回的字段
      * (前端是一个JSONArray传递进来)
      */
-    private static final List<String> PARSE_JSON_ARRAY = Arrays.asList("feedCards", "btns","articles");
+    private static final List<String> PARSE_JSON_ARRAY = Arrays.asList("feedCards", "btns", "articles");
 
     /**
      * (前端是一个JSONObject传递进来，返回一个JSONArray回去)
@@ -166,7 +166,7 @@ public class Convert4Amis {
                         .editable(true)
                         .needConfirm(false)
                         .build();
-                List<CommonAmisVo.ColumnsDTO> columnsDTOS = new ArrayList<>();
+                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
                 for (String datum : data) {
                     String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
                     CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder().name(name).type("input-text").required(true).quickEdit(true);
@@ -177,9 +177,9 @@ public class Convert4Amis {
                     } else {
                         dtoBuilder.label(datum.split("：")[0]);
                     }
-                    columnsDTOS.add(dtoBuilder.build());
+                    columnsDtoS.add(dtoBuilder.build());
                 }
-                officialAccountParam.setColumns(columnsDTOS);
+                officialAccountParam.setColumns(columnsDtoS);
 
             }
         }
@@ -209,12 +209,12 @@ public class Convert4Amis {
                 .editable(true)
                 .needConfirm(false)
                 .build();
-        List<CommonAmisVo.ColumnsDTO> columnsDTOS = new ArrayList<>();
+        List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
         for (String param : placeholderList) {
             CommonAmisVo.ColumnsDTO dto = CommonAmisVo.ColumnsDTO.builder().name(param).label(param).type("input-text").required(true).quickEdit(true).build();
-            columnsDTOS.add(dto);
+            columnsDtoS.add(dto);
         }
-        testParam.setColumns(columnsDTOS);
+        testParam.setColumns(columnsDtoS);
         return testParam;
     }
 
@@ -304,15 +304,15 @@ public class Convert4Amis {
                         .editable(true)
                         .needConfirm(false)
                         .build();
-                List<CommonAmisVo.ColumnsDTO> columnsDTOS = new ArrayList<>();
+                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
                 for (String datum : data) {
                     String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
                     String label = datum.split(":")[0];
                     CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
                             .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
-                    columnsDTOS.add(columnsDTO);
+                    columnsDtoS.add(columnsDTO);
                 }
-                officialAccountParam.setColumns(columnsDTOS);
+                officialAccountParam.setColumns(columnsDtoS);
 
             }
         }
@@ -349,7 +349,7 @@ public class Convert4Amis {
 
         CommonAmisVo service = CommonAmisVo.builder().type("service")
                 .api(CommonAmisVo.ApiDTO.builder().url("${ls:backend_url}/officialAccount/check/login?sceneId=" + id)
-                .adaptor(adaptor).requestAdaptor(requestAdaptor).build()).interval(2000).silentPolling(true).build();
+                        .adaptor(adaptor).requestAdaptor(requestAdaptor).build()).interval(2000).silentPolling(true).build();
 
         return CommonAmisVo.builder().type("form").title("登录").mode("horizontal").body(Arrays.asList(image, service)).build();
     }
@@ -373,6 +373,7 @@ public class Convert4Amis {
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
      * 获取 EchartsVo
+     *
      * @param anchorResult
      * @param businessId
      * @return
@@ -394,9 +395,9 @@ public class Convert4Amis {
         return EchartsVo.builder()
                 .title(EchartsVo.TitleVO.builder().text(title).build())
                 .legend(EchartsVo.LegendVO.builder().data(Arrays.asList("人数")).build())
-                .xAxis(EchartsVo.XAxisVO.builder().data(xAxisList).build())
+                .xAxis(EchartsVo.XaxisVO.builder().data(xAxisList).build())
                 .series(Arrays.asList(EchartsVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
-                .yAxis(EchartsVo.YAxisVO.builder().build())
+                .yAxis(EchartsVo.YaxisVO.builder().build())
                 .tooltip(EchartsVo.TooltipVO.builder().build())
                 .build();
 
@@ -405,12 +406,13 @@ public class Convert4Amis {
     /**
      * 【这个方法不用看】，纯粹为了适配amis前端
      * 获取 SmsTimeLineVo
+     *
      * @return
      */
     public static SmsTimeLineVo getSmsTimeLineVo(Map<String, List<SmsRecord>> maps) {
 
-        ArrayList<SmsTimeLineVo.ItemsVO> itemsVOS = new ArrayList<>();
-        SmsTimeLineVo smsTimeLineVo = SmsTimeLineVo.builder().items(itemsVOS).build();
+        ArrayList<SmsTimeLineVo.ItemsVO> itemsVoS = new ArrayList<>();
+        SmsTimeLineVo smsTimeLineVo = SmsTimeLineVo.builder().items(itemsVoS).build();
 
         for (Map.Entry<String, List<SmsRecord>> entry : maps.entrySet()) {
             SmsTimeLineVo.ItemsVO itemsVO = SmsTimeLineVo.ItemsVO.builder().build();
@@ -427,7 +429,7 @@ public class Convert4Amis {
                     itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
                 }
             }
-            itemsVOS.add(itemsVO);
+            itemsVoS.add(itemsVO);
         }
 
         return smsTimeLineVo;

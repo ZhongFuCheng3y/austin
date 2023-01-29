@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 发送消息后的返回值
+ *
  * @author 3y
  * https://docs.getui.com/getui/server/rest_v2/common_args/?id=doc-title-1
  */

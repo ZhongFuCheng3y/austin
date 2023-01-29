@@ -2,7 +2,6 @@ package com.java3y.austin.support.utils;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.constant.CommonConstant;
 
 import java.util.Date;
@@ -33,6 +32,7 @@ public class TaskInfoUtils {
     public static Long getMessageTemplateIdFromBusinessId(Long businessId) {
         return Long.valueOf(String.valueOf(businessId).substring(1, 8));
     }
+
     /**
      * 从businessId切割出日期
      */

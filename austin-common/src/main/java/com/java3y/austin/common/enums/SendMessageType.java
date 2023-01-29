@@ -14,24 +14,70 @@ import lombok.ToString;
 @AllArgsConstructor
 public enum SendMessageType {
 
-    TEXT("10", "文本", "text", "text","text","text"),
-    VOICE("20", "语音", null, "voice",null,null),
-    VIDEO("30", "视频", null, null,null,null),
-    NEWS("40", "图文", "feedCard", null,"news",null),
-    TEXT_CARD("50", "文本卡片", null, null,null,null),
-    FILE("60", "文件", null, "file","file",null),
-    MINI_PROGRAM_NOTICE("70", "小程序通知", null, null,null,null),
-    MARKDOWN("80", "markdown", "markdown", "markdown","markdown",null),
-    TEMPLATE_CARD("90", "模板卡片", null, null,"template_card",null),
-    IMAGE("100", "图片", null, "image","image","image"),
-    LINK("110", "链接消息", "link", "link",null,null),
-    ACTION_CARD("120", "跳转卡片消息", "actionCard", "action_card",null,"interactive"),
-    OA("130", "OA消息", null, "oa",null,null),
-    MP_NEWS("140", "图文消息(mpNews)", null, null,null,null),
-    RICH_TEXT("150", "富文本", null, null,null,"post"),
-    SHARE_CHAT("160", "群名片", null, null,null,"share_chat")
-
-    ;
+    /**
+     * 文本类型的消息
+     */
+    TEXT("10", "文本", "text", "text", "text", "text"),
+    /**
+     * 语音类型的消息
+     */
+    VOICE("20", "语音", null, "voice", null, null),
+    /**
+     * 视频类型的消息
+     */
+    VIDEO("30", "视频", null, null, null, null),
+    /**
+     * 图文类型的消息
+     */
+    NEWS("40", "图文", "feedCard", null, "news", null),
+    /**
+     * 文本卡片类型的消息
+     */
+    TEXT_CARD("50", "文本卡片", null, null, null, null),
+    /**
+     * 文件类型的消息
+     */
+    FILE("60", "文件", null, "file", "file", null),
+    /**
+     * 小程序通知类型的消息
+     */
+    MINI_PROGRAM_NOTICE("70", "小程序通知", null, null, null, null),
+    /**
+     * markdown类型的消息
+     */
+    MARKDOWN("80", "markdown", "markdown", "markdown", "markdown", null),
+    /**
+     * 模板卡片类型的消息
+     */
+    TEMPLATE_CARD("90", "模板卡片", null, null, "template_card", null),
+    /**
+     * 图片类型的消息
+     */
+    IMAGE("100", "图片", null, "image", "image", "image"),
+    /**
+     * 链接消息类型的消息
+     */
+    LINK("110", "链接消息", "link", "link", null, null),
+    /**
+     * 跳转卡片消息类型的消息
+     */
+    ACTION_CARD("120", "跳转卡片消息", "actionCard", "action_card", null, "interactive"),
+    /**
+     * OA消息类型的消息
+     */
+    OA("130", "OA消息", null, "oa", null, null),
+    /**
+     * 图文消息(mpNews)类型的消息
+     */
+    MP_NEWS("140", "图文消息(mpNews)", null, null, null, null),
+    /**
+     * 富文本类型的消息
+     */
+    RICH_TEXT("150", "富文本", null, null, null, "post"),
+    /**
+     * 群名片类型的消息
+     */
+    SHARE_CHAT("160", "群名片", null, null, null, "share_chat");
 
     private final String code;
     private final String description;
@@ -101,6 +147,7 @@ public enum SendMessageType {
         }
         return null;
     }
+
     /**
      * 通过code获取企业微信机器人的Type值
      *

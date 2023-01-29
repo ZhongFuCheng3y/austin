@@ -5,7 +5,6 @@ import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.RateLimiter;
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.EmailContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -74,6 +73,7 @@ public class EmailHandler extends BaseHandler implements Handler {
         }
         return account;
     }
+
     @Override
     public void recall(MessageTemplate messageTemplate) {
 

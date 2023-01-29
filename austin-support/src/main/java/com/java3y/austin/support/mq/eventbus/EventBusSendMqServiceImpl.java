@@ -7,7 +7,6 @@ import com.java3y.austin.support.constans.MessageQueuePipeline;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.mq.SendMqService;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -30,8 +29,10 @@ public class EventBusSendMqServiceImpl implements SendMqService {
     private String sendTopic;
     @Value("${austin.business.recall.topic.name}")
     private String recallTopic;
+
     /**
      * 单机 队列默认不支持 tagId过滤（单机无必要）
+     *
      * @param topic
      * @param jsonValue
      * @param tagId
@@ -45,6 +46,7 @@ public class EventBusSendMqServiceImpl implements SendMqService {
             eventBus.post(JSON.parseObject(jsonValue, MessageTemplate.class));
         }
     }
+
     @Override
     public void send(String topic, String jsonValue) {
         send(topic, jsonValue, null);

@@ -7,8 +7,10 @@ import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
+import com.dingtalk.api.request.OapiMessageCorpconversationGetsendresultRequest;
 import com.dingtalk.api.request.OapiMessageCorpconversationRecallRequest;
 import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
+import com.dingtalk.api.response.OapiMessageCorpconversationGetsendresultResponse;
 import com.dingtalk.api.response.OapiMessageCorpconversationRecallResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
@@ -202,14 +204,13 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
      */
     public void pull(Long accountId) {
         try {
-//            DingDingWorkNoticeAccount account = accountUtils.getAccountById(accountId, DingDingWorkNoticeAccount.class);
-//            String accessToken = redisTemplate.opsForValue().get(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + accountId);
-//            DingTalkClient client = new DefaultDingTalkClient(PULL_URL);
-//            OapiMessageCorpconversationGetsendresultRequest req = new OapiMessageCorpconversationGetsendresultRequest();
-//            req.setAgentId(Long.valueOf(account.getAgentId()));
-//            req.setTaskId(456L);
-//            OapiMessageCorpconversationGetsendresultResponse rsp = client.execute(req, accessToken);
-//            System.out.println(rsp.getBody());
+            DingDingWorkNoticeAccount account = accountUtils.getAccountById(accountId.intValue(), DingDingWorkNoticeAccount.class);
+            String accessToken = redisTemplate.opsForValue().get(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + accountId);
+            DingTalkClient client = new DefaultDingTalkClient(PULL_URL);
+            OapiMessageCorpconversationGetsendresultRequest req = new OapiMessageCorpconversationGetsendresultRequest();
+            req.setAgentId(Long.valueOf(account.getAgentId()));
+            req.setTaskId(456L);
+            OapiMessageCorpconversationGetsendresultResponse rsp = client.execute(req, accessToken);
         } catch (Exception e) {
             log.error("DingDingWorkNoticeHandler#pull fail:{}", Throwables.getStackTraceAsString(e));
         }

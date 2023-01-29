@@ -3,7 +3,8 @@ package com.java3y.austin.handler.deduplication.limit;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.deduplication.service.AbstractDeduplicationService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author cao

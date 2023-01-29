@@ -49,7 +49,7 @@ public class WeChatLoginConfig {
     private WxMpMessageRouter wxMpMessageRouter;
 
     @Autowired
-    private Map<String, WxMpMessageHandler> WxMpMessageHandlers;
+    private Map<String, WxMpMessageHandler> wxMpMessageHandlers;
 
 
     @PostConstruct
@@ -66,9 +66,9 @@ public class WeChatLoginConfig {
      */
     private void initRouter() {
         wxMpMessageRouter = new WxMpMessageRouter(officialAccountLoginService);
-        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SUBSCRIBE).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.SUBSCRIBE_HANDLER)).end();
-        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SCAN).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.SCAN_HANDLER)).end();
-        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.UNSUBSCRIBE).handler(WxMpMessageHandlers.get(OfficialAccountParamConstant.UNSUBSCRIBE_HANDLER)).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SUBSCRIBE).handler(wxMpMessageHandlers.get(OfficialAccountParamConstant.SUBSCRIBE_HANDLER)).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.SCAN).handler(wxMpMessageHandlers.get(OfficialAccountParamConstant.SCAN_HANDLER)).end();
+        wxMpMessageRouter.rule().async(false).msgType(WxConsts.XmlMsgType.EVENT).event(WxConsts.EventType.UNSUBSCRIBE).handler(wxMpMessageHandlers.get(OfficialAccountParamConstant.UNSUBSCRIBE_HANDLER)).end();
     }
 
     /**

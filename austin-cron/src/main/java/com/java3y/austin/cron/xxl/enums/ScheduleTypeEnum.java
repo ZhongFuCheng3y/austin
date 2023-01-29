@@ -7,6 +7,9 @@ package com.java3y.austin.cron.xxl.enums;
  */
 public enum ScheduleTypeEnum {
 
+    /**
+     * NONE
+     */
     NONE,
     /**
      * schedule by cron

@@ -2,6 +2,7 @@ package com.java3y.austin.cron.xxl.enums;
 
 /**
  * 执行阻塞队列
+ *
  * @author 3y
  */
 public enum ExecutorBlockStrategyEnum {

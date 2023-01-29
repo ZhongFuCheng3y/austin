@@ -24,7 +24,7 @@ public class ContentDeduplicationBuilder extends AbstractDeduplicationBuilder im
     public DeduplicationParam build(String deduplication, TaskInfo taskInfo) {
         DeduplicationParam deduplicationParam = getParamsFromConfig(deduplicationType, deduplication, taskInfo);
         if (Objects.isNull(deduplicationParam)) {
-           return null;
+            return null;
         }
         deduplicationParam.setAnchorState(AnchorState.CONTENT_DEDUPLICATION);
         return deduplicationParam;
