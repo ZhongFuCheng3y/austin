@@ -28,7 +28,7 @@
   <a href="#项目交流"><img src="https://img.shields.io/badge/分布式计算引擎-Flink-red.svg" alt="计算引擎"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/监控组件-Promethus-blue.svg" alt="系统监控"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/监控可视化-Grafana-green.svg" alt="系统监控"></a>
-  <a href="#项目交流"><img src="https://img.shields.io/badge/系统部署-Docker&DockerCompose-yellow.svg" alt="部署"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/系统部署-Docker & DockerCompose-yellow.svg" alt="部署"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/大数据环境-Hadoop-red.svg" alt="部署"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/数据仓库-Hive-orange.svg" alt="部署"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/大数据可视化-Metabase-green.svg" alt="部署"></a>
@@ -76,7 +76,7 @@
 
 ## 部署姿势
 
-austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
+austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`/`hive`(**完全部署所有的服务，大概8G+内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
 
 > 实在想要`clone`项目后不用自己部署环境直接在**本地**启动`debug`，我这提供了[会员服务](https://mp.weixin.qq.com/s/4cOhNG5JBSvBkbSKTfw7eQ)，**直连**部署好的服务器。
@@ -89,21 +89,21 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 
 **4**、填写`application.properties`中`austin.redis`对应的`ip`/`port`信息
 
-**5**、以上配置信息都在`application.properties`文件中修改。(`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`/`kafka`可选)
+**5**、以上配置信息都在`application.properties`文件中修改。(`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`/`kafka`/`hive`可选)
 
 **6**、**austin前端管理系统部署**，戳[GitHub](https://github.com/ZhongFuCheng3y/austin-admin)或[Gitee](https://gitee.com/zhongfucheng/austin-admin)跳转至对应的仓库
 
-**7**、正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注意：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并**使用Kafka**作为消息队列实现)
+**7**、（可选）正常使用**数据管理**(查看实时数据链路下发)需要将`austin-stream`的`jar`包上传至`Flink`，根据[部署文档](INSTALL.md)启动Flink。在打`jar`包前需要填写`com.java3y.austin.stream.constants.AustinFlinkConstant`中的`redis`和`kafka`的`ip/port`（注意：日志的topic在`application.properties`中的`austin.business.log.topic.name`。如果没有该topic，需要提前创建，并**使用Kafka**作为消息队列实现)
 
-**8**、正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin.xxl.job.ip`和`austin.xxl.job.port`
+**8**、（可选）正常使用**定时任务**需要部署`xxl-job`，根据[部署文档](INSTALL.md)启动xxl的调度中心，并在`application.properteis`中填写  `austin.xxl.job.ip`和`austin.xxl.job.port`
 
-**9**、正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin.grayLog.ip`。
+**9**、（可选）正常使用**分布式日志采集**需要部署`graylog`，根据[部署文档](INSTALL.md)启动`graylog`，并在`application.properteis`中填写  `austin.grayLog.ip`。
 
-**10**、正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表。
+**10**、（可选）正常使用**系统监控**需要部署`promethus`和`grafana`，根据[部署文档](INSTALL.md)配置`grafana`图表。
 
-**11**、正常使用**动态配置中心**需要部署`apollo`，根据[部署文档](INSTALL.md)启动`apollo`，通过docker-compose启动需要在AustinApplication注入对应的ip和port(可看注释)。
+**11**、（可选）正常使用**动态配置中心**需要部署`apollo`，根据[部署文档](INSTALL.md)启动`apollo`，通过docker-compose启动需要在AustinApplication注入对应的ip和port(可看注释)。
 
-**12**、正常使用**数据仓库**需要部署`hive`，根据[部署文档](INSTALL.md)通过`flink`把数据写入到`hive`中（`flink`环境也要安装好），将`austin-data-house`的`jar`包提交到`flink`执行
+**12**、（可选）正常使用**数据仓库**需要部署`hive`，根据[部署文档](INSTALL.md)通过`flink`把数据写入到`hive`中（`flink`环境也要安装好），将`austin-data-house`的`jar`包提交到`flink`执行
 
 ## 会员服务
 
