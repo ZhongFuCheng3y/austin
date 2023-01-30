@@ -29,6 +29,9 @@
   <a href="#项目交流"><img src="https://img.shields.io/badge/监控组件-Promethus-blue.svg" alt="系统监控"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/监控可视化-Grafana-green.svg" alt="系统监控"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/系统部署-Docker&DockerCompose-yellow.svg" alt="部署"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/大数据环境-Hadoop-red.svg" alt="部署"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/数据仓库-Hive-orange.svg" alt="部署"></a>
+  <a href="#项目交流"><img src="https://img.shields.io/badge/大数据可视化-Metabase-green.svg" alt="部署"></a>
   <a href="#项目交流"><img src="https://img.shields.io/badge/前端页面-amis-red.svg" alt="前端"></a>
 </p>
 
