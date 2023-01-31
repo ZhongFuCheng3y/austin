@@ -10,7 +10,7 @@ import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
-import com.java3y.austin.support.utils.WxServiceUtils;
+import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.web.config.WeChatLoginConfig;
 import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.utils.LoginUtils;
@@ -46,7 +46,7 @@ import java.util.*;
 public class OfficialAccountController {
 
     @Autowired
-    private WxServiceUtils wxServiceUtils;
+    private AccountUtils accountUtils;
 
     @Autowired
     private LoginUtils loginUtils;
@@ -60,10 +60,10 @@ public class OfficialAccountController {
      */
     @GetMapping("/template/list")
     @ApiOperation("/根据账号Id获取模板列表")
-    public BasicResultVO queryList(Long id) {
+    public BasicResultVO queryList(Integer id) {
         try {
             List<CommonAmisVo> result = new ArrayList<>();
-            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(id);
+            WxMpService wxMpService = accountUtils.getAccountById(id, WxMpService.class);
 
             List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
             for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
@@ -85,12 +85,12 @@ public class OfficialAccountController {
      */
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
-    public BasicResultVO queryDetailList(Long id, String wxTemplateId) {
+    public BasicResultVO queryDetailList(Integer id, String wxTemplateId) {
         if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
             return BasicResultVO.success(RespStatusEnum.CLIENT_BAD_PARAMETERS);
         }
         try {
-            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(id);
+            WxMpService wxMpService = accountUtils.getAccountById(id, WxMpService.class);
             List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
             CommonAmisVo wxMpTemplateParam = Convert4Amis.getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
             return BasicResultVO.success(wxMpTemplateParam);

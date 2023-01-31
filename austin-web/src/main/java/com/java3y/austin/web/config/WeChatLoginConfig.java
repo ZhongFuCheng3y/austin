@@ -2,7 +2,7 @@ package com.java3y.austin.web.config;
 
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.common.dto.account.WeChatOfficialAccount;
-import com.java3y.austin.support.utils.WxServiceUtils;
+import com.java3y.austin.support.utils.AccountUtils;
 import lombok.Data;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
@@ -39,7 +39,7 @@ public class WeChatLoginConfig {
     private String token;
 
     @Autowired
-    private WxServiceUtils wxServiceUtils;
+    private AccountUtils accountUtils;
 
     /**
      * 微信服务号 登录 相关对象
@@ -55,7 +55,7 @@ public class WeChatLoginConfig {
     @PostConstruct
     private void init() {
         WeChatOfficialAccount account = WeChatOfficialAccount.builder().appId(appId).secret(secret).token(token).build();
-        officialAccountLoginService = wxServiceUtils.initOfficialAccountService(account);
+        officialAccountLoginService = accountUtils.initOfficialAccountService(account);
         initConfig();
         initRouter();
     }

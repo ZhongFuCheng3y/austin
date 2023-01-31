@@ -8,7 +8,7 @@ import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.domain.MessageTemplate;
-import com.java3y.austin.support.utils.WxServiceUtils;
+import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class OfficialAccountHandler extends BaseHandler implements Handler {
 
     @Autowired
-    private WxServiceUtils wxServiceUtils;
+    private AccountUtils accountUtils;
 
     public OfficialAccountHandler() {
         channelCode = ChannelType.OFFICIAL_ACCOUNT.getCode();
@@ -40,7 +40,7 @@ public class OfficialAccountHandler extends BaseHandler implements Handler {
     public boolean handler(TaskInfo taskInfo) {
         try {
             OfficialAccountsContentModel contentModel = (OfficialAccountsContentModel) taskInfo.getContentModel();
-            WxMpService wxMpService = wxServiceUtils.getOfficialAccountServiceMap().get(taskInfo.getSendAccount().longValue());
+            WxMpService wxMpService = accountUtils.getAccountById(taskInfo.getSendAccount(), WxMpService.class);
             List<WxMpTemplateMessage> messages = assembleReq(taskInfo.getReceiver(), contentModel);
             for (WxMpTemplateMessage message : messages) {
                 try {

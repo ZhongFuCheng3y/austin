@@ -30,9 +30,9 @@ public class ProcessException extends RuntimeException {
     public String getMessage() {
         if (Objects.nonNull(this.processContext)) {
             return this.processContext.getResponse().getMsg();
-        } else {
-            return RespStatusEnum.CONTEXT_IS_NULL.getMsg();
         }
+        return RespStatusEnum.CONTEXT_IS_NULL.getMsg();
+
     }
 
     public ProcessContext getProcessContext() {

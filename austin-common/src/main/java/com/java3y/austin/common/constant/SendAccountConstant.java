@@ -18,5 +18,15 @@ public class SendAccountConstant {
      */
     public static final String GE_TUI_ACCESS_TOKEN_PREFIX = "ge_tui_access_token_";
 
+    /**
+     * 微信服务号
+     */
+    public static final String OFFICIAL_ACCOUNT_ACCESS_TOKEN_PREFIX = "official_account";
+
+    /**
+     * 微信小程序
+     */
+    public static final String MINI_PROGRAM_TOKEN_PREFIX = "mini_program";
+
 
 }
