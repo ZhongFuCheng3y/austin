@@ -2,7 +2,9 @@ package com.java3y.austin.web.controller;
 
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.Header;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
@@ -53,6 +55,7 @@ public class OfficialAccountController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
 
     /**
      * @param id 账号Id
@@ -212,16 +215,19 @@ public class OfficialAccountController {
     @ApiOperation("/删除测试号的测试用户")
     public BasicResultVO deleteTestUser(HttpServletRequest request) {
         try {
-            String cookie = request.getHeader("Cookie");
-            List<String> openIds = loginUtils.getLoginConfig()
-                    .getOfficialAccountLoginService().getUserService().userList(null).getOpenids();
+
+            // 删除粉丝
+            String testUrl = "http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo";
+            String action = "delfan";
+
+            String cookie = request.getHeader(Header.COOKIE.getValue());
+            List<String> openIds = loginUtils.getLoginConfig().getOfficialAccountLoginService().getUserService().userList(null).getOpenids();
             for (String openId : openIds) {
                 Map<String, Object> params = new HashMap<>(4);
                 params.put("openid", openId);
-                params.put("random", "0.859336489537766");
-                params.put("action", "delfan");
-                HttpUtil.createPost("http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo")
-                        .header("Cookie", cookie).form(params).execute();
+                params.put("random", RandomUtil.randomDouble());
+                params.put("action", action);
+                HttpUtil.createPost(testUrl).header(Header.COOKIE, cookie).form(params).execute();
             }
             return BasicResultVO.success();
         } catch (Exception e) {
