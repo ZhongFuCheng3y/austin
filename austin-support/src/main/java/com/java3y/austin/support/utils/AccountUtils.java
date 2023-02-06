@@ -24,9 +24,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 获取账号信息工具类
@@ -45,8 +45,8 @@ public class AccountUtils {
     /**
      * 消息的小程序/微信服务号账号
      */
-    private Map<ChannelAccount, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
-    private Map<ChannelAccount, WxMaService> miniProgramServiceMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<ChannelAccount, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<ChannelAccount, WxMaService> miniProgramServiceMap = new ConcurrentHashMap<>();
 
     @Bean
     public RedisTemplateWxRedisOps redisTemplateWxRedisOps() {
@@ -63,15 +63,16 @@ public class AccountUtils {
      * @param <T>
      * @return
      */
+    @SuppressWarnings("unchecked")
     public <T> T getAccountById(Integer sendAccountId, Class<T> clazz) {
         try {
             Optional<ChannelAccount> optionalChannelAccount = channelAccountDao.findById(Long.valueOf(sendAccountId));
             if (optionalChannelAccount.isPresent()) {
                 ChannelAccount channelAccount = optionalChannelAccount.get();
                 if (clazz.equals(WxMaService.class)) {
-                    return (T) miniProgramServiceMap.computeIfAbsent(channelAccount, account -> initMiniProgramService(JSON.parseObject(account.getAccountConfig(), WeChatMiniProgramAccount.class)));
+                    return (T)ConcurrentHashMapUtils.computeIfAbsent(miniProgramServiceMap, channelAccount, account -> initMiniProgramService(JSON.parseObject(account.getAccountConfig(), WeChatMiniProgramAccount.class)));
                 } else if (clazz.equals(WxMpService.class)) {
-                    return (T) officialAccountServiceMap.computeIfAbsent(channelAccount, account -> initOfficialAccountService(JSON.parseObject(account.getAccountConfig(), WeChatOfficialAccount.class)));
+                    return (T)ConcurrentHashMapUtils.computeIfAbsent(officialAccountServiceMap, channelAccount, account -> initOfficialAccountService(JSON.parseObject(account.getAccountConfig(), WeChatOfficialAccount.class)));
                 } else {
                     return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
                 }
