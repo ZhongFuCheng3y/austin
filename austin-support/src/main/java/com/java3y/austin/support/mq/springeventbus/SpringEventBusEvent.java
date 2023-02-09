@@ -15,4 +15,22 @@ public class SpringEventBusEvent extends ApplicationEvent {
     public String jsonValue;
     public String tagId;
 
+    public SpringEventBusEvent(Object source, String topic, String jsonValue, String tagId) {
+        super(source);
+        this.topic = topic;
+        this.jsonValue = jsonValue;
+        this.tagId = tagId;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getJsonValue() {
+        return jsonValue;
+    }
+
+    public String getTagId() {
+        return tagId;
+    }
 }

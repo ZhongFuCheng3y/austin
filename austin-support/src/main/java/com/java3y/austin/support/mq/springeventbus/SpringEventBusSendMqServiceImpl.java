@@ -25,11 +25,7 @@ public class SpringEventBusSendMqServiceImpl implements SendMqService {
 
     @Override
     public void send(String topic, String jsonValue, String tagId) {
-        SpringEventBusEvent springEventBusEvent = new SpringEventBusEvent();
-        springEventBusEvent.setTopic(topic);
-        springEventBusEvent.setJsonValue(jsonValue);
-        springEventBusEvent.setTagId(tagId);
-        applicationContext.publishEvent(springEventBusEvent);
+        applicationContext.publishEvent(new SpringEventBusEvent(this, topic, jsonValue, tagId));
     }
 
     @Override
