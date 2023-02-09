@@ -24,8 +24,8 @@ public class ConcurrentHashMapUtils {
 
     /**
      * Java 8 ConcurrentHashMap#computeIfAbsent 存在性能问题的临时解决方案
-     * @see <a href="https://bugs.openjdk.java.net/browse/JDK-8161372">https://bugs.openjdk.java.net/browse/JDK-8161372</a>
      *
+     * @see <a href="https://bugs.openjdk.java.net/browse/JDK-8161372">https://bugs.openjdk.java.net/browse/JDK-8161372</a>
      */
     public static <K, V> V computeIfAbsent(ConcurrentMap<K, V> map, K key, Function<? super K, ? extends V> func) {
         if (IS_JAVA8) {
