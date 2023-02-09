@@ -14,6 +14,13 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum RespStatusEnum {
+
+    /**
+     * 错误
+     */
+    ERROR_500("500", "服务器未知错误"),
+    ERROR_400("400", "错误请求"),
+
     /**
      * OK：操作成功
      */
