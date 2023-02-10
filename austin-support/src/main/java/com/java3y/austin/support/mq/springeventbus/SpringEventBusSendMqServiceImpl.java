@@ -25,11 +25,13 @@ public class SpringEventBusSendMqServiceImpl implements SendMqService {
 
     @Override
     public void send(String topic, String jsonValue, String tagId) {
-        applicationContext.publishEvent(new SpringEventBusEvent(this, topic, jsonValue, tagId));
+        AustinSpringEventSource source = AustinSpringEventSource.builder().topic(topic).jsonValue(jsonValue).tagId(tagId).build();
+        AustinSpringEventBusEvent austinSpringEventBusEvent = new AustinSpringEventBusEvent(this, source);
+        applicationContext.publishEvent(austinSpringEventBusEvent);
     }
 
     @Override
     public void send(String topic, String jsonValue) {
-        send(topic,jsonValue,null);
+        send(topic, jsonValue, null);
     }
 }

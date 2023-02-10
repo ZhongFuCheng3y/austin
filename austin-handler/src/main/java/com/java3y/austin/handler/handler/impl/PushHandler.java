@@ -154,7 +154,7 @@ public class PushHandler extends BaseHandler implements Handler {
         SendPushParam param = SendPushParam.builder()
                 .requestId(String.valueOf(IdUtil.getSnowflake().nextId()))
                 .pushMessage(SendPushParam.PushMessageVO.builder().notification(SendPushParam.PushMessageVO.NotificationVO.builder()
-                                .title(pushContentModel.getTitle()).body(pushContentModel.getContent()).clickType("startapp").build())
+                        .title(pushContentModel.getTitle()).body(pushContentModel.getContent()).clickType("startapp").build())
                         .build())
                 .build();
         if (CollUtil.isNotEmpty(cid)) {

@@ -210,12 +210,19 @@
                 <version>2.0.0</version>
             </dependency>
 
+            <!--rocketmq-->
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>2.2.2</version>
             </dependency>
 
+            <!--七牛云 SDK （OSS）-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>[7.7.0, 7.10.99]</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

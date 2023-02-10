@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import com.java3y.austin.support.domain.MessageTemplate;
-import com.java3y.austin.support.mq.springeventbus.SpringEventBusEvent;
+import com.java3y.austin.support.mq.springeventbus.AustinSpringEventBusEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.SPRING_EVENT_BUS)
-public class SpringEventBusReceiverListener implements ApplicationListener<SpringEventBusEvent> {
+public class SpringEventBusReceiverListener implements ApplicationListener<AustinSpringEventBusEvent> {
 
     @Autowired
     private SpringEventBusReceiver springEventBusReceiver;
@@ -30,9 +30,9 @@ public class SpringEventBusReceiverListener implements ApplicationListener<Sprin
     private String recallTopic;
 
     @Override
-    public void onApplicationEvent(SpringEventBusEvent event) {
-        String  topic  = event.getTopic();
-        String jsonValue = event.getJsonValue();
+    public void onApplicationEvent(AustinSpringEventBusEvent event) {
+        String topic = event.getAustinSpringEventSource().getTopic();
+        String jsonValue = event.getAustinSpringEventSource().getJsonValue();
         if (topic.equals(sendTopic)) {
             springEventBusReceiver.consume(JSON.parseArray(jsonValue, TaskInfo.class));
         } else if (topic.equals(recallTopic)) {
