@@ -72,7 +72,10 @@ public class DataServiceImpl implements DataService {
         List<UserTimeLineVo.ItemsVO> items = new ArrayList<>();
         for (Map.Entry<String, List<SimpleAnchorInfo>> entry : map.entrySet()) {
             Long messageTemplateId = TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(entry.getKey()));
-            MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).get();
+            MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).orElse(null);
+            if (Objects.isNull(messageTemplate)) {
+                continue;
+            }
 
             StringBuilder sb = new StringBuilder();
             for (SimpleAnchorInfo simpleAnchorInfo : entry.getValue()) {

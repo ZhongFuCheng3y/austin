@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author 3y
@@ -35,7 +36,10 @@ public class TaskHandlerImpl implements TaskHandler {
     @Override
     public void handle(Long messageTemplateId) {
 
-        MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).get();
+        MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).orElse(null);
+        if (Objects.isNull(messageTemplate)) {
+            return;
+        }
         if (StrUtil.isBlank(messageTemplate.getCronCrowdPath())) {
             log.error("TaskHandler#handle crowdPath empty! messageTemplateId:{}", messageTemplateId);
             return;

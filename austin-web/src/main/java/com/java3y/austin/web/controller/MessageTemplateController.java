@@ -74,8 +74,7 @@ public class MessageTemplateController {
         if (loginUtils.needLogin() && StrUtil.isBlank(messageTemplate.getCreator())) {
             throw new CommonException(RespStatusEnum.NO_LOGIN);
         }
-        MessageTemplate info = messageTemplateService.saveOrUpdate(messageTemplate);
-        return info;
+        return messageTemplateService.saveOrUpdate(messageTemplate);
     }
 
     /**
@@ -89,8 +88,7 @@ public class MessageTemplateController {
         }
         Page<MessageTemplate> messageTemplates = messageTemplateService.queryList(messageTemplateParam);
         List<Map<String, Object>> result = Convert4Amis.flatListMap(messageTemplates.toList());
-        MessageTemplateVo messageTemplateVo = MessageTemplateVo.builder().count(messageTemplates.getTotalElements()).rows(result).build();
-        return messageTemplateVo;
+        return MessageTemplateVo.builder().count(messageTemplates.getTotalElements()).rows(result).build();
     }
 
     /**
