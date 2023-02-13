@@ -11,9 +11,10 @@ import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
-import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.config.WeChatLoginConfig;
+import com.java3y.austin.web.exception.CommonException;
 import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.utils.LoginUtils;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -42,6 +44,7 @@ import java.util.*;
  * @author 3y
  */
 @Slf4j
+@AustinResult
 @RequestMapping("/officialAccount")
 @RestController
 @Api("微信服务号")
@@ -63,7 +66,7 @@ public class OfficialAccountController {
      */
     @GetMapping("/template/list")
     @ApiOperation("/根据账号Id获取模板列表")
-    public BasicResultVO queryList(Integer id) {
+    public List<CommonAmisVo> queryList(Integer id) {
         try {
             List<CommonAmisVo> result = new ArrayList<>();
             WxMpService wxMpService = accountUtils.getAccountById(id, WxMpService.class);
@@ -73,10 +76,10 @@ public class OfficialAccountController {
                 CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(wxMpTemplate.getTitle()).value(wxMpTemplate.getTemplateId()).build();
                 result.add(commonAmisVo);
             }
-            return BasicResultVO.success(result);
+            return result;
         } catch (Exception e) {
             log.error("OfficialAccountController#queryList fail:{}", Throwables.getStackTraceAsString(e));
-            return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
+            throw new CommonException(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
@@ -88,18 +91,17 @@ public class OfficialAccountController {
      */
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
-    public BasicResultVO queryDetailList(Integer id, String wxTemplateId) {
+    public CommonAmisVo queryDetailList(Integer id, String wxTemplateId) {
         if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
-            return BasicResultVO.success(RespStatusEnum.CLIENT_BAD_PARAMETERS);
+            throw new CommonException(RespStatusEnum.CLIENT_BAD_PARAMETERS);
         }
         try {
             WxMpService wxMpService = accountUtils.getAccountById(id, WxMpService.class);
             List<WxMpTemplate> allPrivateTemplate = wxMpService.getTemplateMsgService().getAllPrivateTemplate();
-            CommonAmisVo wxMpTemplateParam = Convert4Amis.getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
-            return BasicResultVO.success(wxMpTemplateParam);
+            return Convert4Amis.getWxMpTemplateParam(wxTemplateId, allPrivateTemplate);
         } catch (Exception e) {
             log.error("OfficialAccountController#queryDetailList fail:{}", Throwables.getStackTraceAsString(e));
-            return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
+            throw new CommonException(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
@@ -164,20 +166,20 @@ public class OfficialAccountController {
      */
     @PostMapping("/qrCode")
     @ApiOperation("/生成 服务号 二维码")
-    public BasicResultVO getQrCode() {
+    public CommonAmisVo getQrCode() {
         try {
             WeChatLoginConfig configService = loginUtils.getLoginConfig();
             if (Objects.isNull(configService)) {
-                return BasicResultVO.fail(RespStatusEnum.DO_NOT_NEED_LOGIN);
+                throw new CommonException(RespStatusEnum.DO_NOT_NEED_LOGIN);
             }
             String id = IdUtil.getSnowflake().nextIdStr();
             WxMpService wxMpService = configService.getOfficialAccountLoginService();
             WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(id, 2592000);
             String url = wxMpService.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
-            return BasicResultVO.success(Convert4Amis.getWxMpQrCode(url, id));
+            return Convert4Amis.getWxMpQrCode(url, id);
         } catch (Exception e) {
             log.error("OfficialAccountController#getQrCode fail:{}", Throwables.getStackTraceAsString(e));
-            return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
+            throw new CommonException(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
@@ -188,14 +190,13 @@ public class OfficialAccountController {
      */
     @RequestMapping("/check/login")
     @ApiOperation("/检查是否已经登录")
-    public BasicResultVO checkLogin(String sceneId) {
+    public WxMpUser checkLogin(String sceneId) {
         try {
-
             String userInfo = redisTemplate.opsForValue().get(sceneId);
             if (StrUtil.isBlank(userInfo)) {
-                return BasicResultVO.success(RespStatusEnum.NO_LOGIN);
+                throw new CommonException(RespStatusEnum.NO_LOGIN);
             }
-            return BasicResultVO.success(JSON.parseObject(userInfo, WxMpUser.class));
+            return JSON.parseObject(userInfo, (Type) WxMpUser.class);
         } catch (Exception e) {
             log.error("OfficialAccountController#checkLogin fail:{}", Throwables.getStackTraceAsString(e));
             return null;
@@ -213,7 +214,7 @@ public class OfficialAccountController {
      */
     @RequestMapping("/delete/test/user")
     @ApiOperation("/删除测试号的测试用户")
-    public BasicResultVO deleteTestUser(HttpServletRequest request) {
+    public void deleteTestUser(HttpServletRequest request) {
         try {
 
             // 删除粉丝
@@ -229,10 +230,8 @@ public class OfficialAccountController {
                 params.put("action", action);
                 HttpUtil.createPost(testUrl).header(Header.COOKIE, cookie).form(params).execute();
             }
-            return BasicResultVO.success();
         } catch (Exception e) {
             log.error("OfficialAccountController#deleteTestUser fail:{}", Throwables.getStackTraceAsString(e));
-            return null;
         }
     }
 }

@@ -100,20 +100,25 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
 
     @Override
     public MessageTemplate queryById(Long id) {
-        return messageTemplateDao.findById(id).get();
+        return messageTemplateDao.findById(id).orElse(null);
     }
 
     @Override
     public void copy(Long id) {
-        MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
-        MessageTemplate clone = ObjectUtil.clone(messageTemplate).setId(null).setCronTaskId(null);
-        messageTemplateDao.save(clone);
+        MessageTemplate messageTemplate = messageTemplateDao.findById(id).orElse(null);
+        if (Objects.nonNull(messageTemplate)) {
+            MessageTemplate clone = ObjectUtil.clone(messageTemplate).setId(null).setCronTaskId(null);
+            messageTemplateDao.save(clone);
+        }
     }
 
     @Override
     public BasicResultVO startCronTask(Long id) {
         // 1.获取消息模板的信息
-        MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
+        MessageTemplate messageTemplate = messageTemplateDao.findById(id).orElse(null);
+        if (Objects.isNull(messageTemplate)) {
+            return BasicResultVO.fail();
+        }
 
         // 2.动态创建或更新定时任务
         XxlJobInfo xxlJobInfo = xxlJobUtils.buildXxlJobInfo(messageTemplate);
@@ -138,7 +143,10 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public BasicResultVO stopCronTask(Long id) {
         // 1.修改模板状态
-        MessageTemplate messageTemplate = messageTemplateDao.findById(id).get();
+        MessageTemplate messageTemplate = messageTemplateDao.findById(id).orElse(null);
+        if (Objects.isNull(messageTemplate)) {
+            return BasicResultVO.fail();
+        }
         MessageTemplate clone = ObjectUtil.clone(messageTemplate).setMsgStatus(MessageStatus.STOP.getCode()).setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
         messageTemplateDao.save(clone);
 
