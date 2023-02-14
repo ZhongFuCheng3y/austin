@@ -1,6 +1,7 @@
 package com.java3y.austin.handler.handler.impl;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
@@ -14,10 +15,14 @@ import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.support.utils.AustinFileUtils;
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
 
 /**
  * 邮件发送处理
@@ -30,6 +35,9 @@ public class EmailHandler extends BaseHandler implements Handler {
 
     @Autowired
     private AccountUtils accountUtils;
+
+    @Value("${austin.business.upload.crowd.path}")
+    private String dataPath;
 
     public EmailHandler() {
         channelCode = ChannelType.EMAIL.getCode();
@@ -47,8 +55,8 @@ public class EmailHandler extends BaseHandler implements Handler {
         EmailContentModel emailContentModel = (EmailContentModel) taskInfo.getContentModel();
         MailAccount account = getAccountConfig(taskInfo.getSendAccount());
         try {
-            MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(),
-                    emailContentModel.getContent(), true, null);
+            File file = StrUtil.isNotBlank(emailContentModel.getUrl()) ? AustinFileUtils.getRemoteUrl2File(dataPath, emailContentModel.getUrl()) : null;
+            MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true, file);
         } catch (Exception e) {
             log.error("EmailHandler#handler fail!{},params:{}", Throwables.getStackTraceAsString(e), taskInfo);
             return false;
