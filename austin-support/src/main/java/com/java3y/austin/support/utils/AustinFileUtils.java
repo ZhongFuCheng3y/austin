@@ -24,10 +24,11 @@ public class AustinFileUtils {
      */
     public static File getRemoteUrl2File(String path, String remoteUrl) {
         try {
-            new File(path).mkdirs();
             URL url = new URL(remoteUrl);
             File file = new File(path, url.getPath());
-            IoUtil.copy(url.openStream(), new FileOutputStream(file));
+            if (!file.exists()) {
+                IoUtil.copy(url.openStream(), new FileOutputStream(file));
+            }
             return file;
         } catch (Exception e) {
             log.error("AustinFileUtils#getRemoteUrl2File fail:{},remoteUrl:{}", Throwables.getStackTraceAsString(e), remoteUrl);
