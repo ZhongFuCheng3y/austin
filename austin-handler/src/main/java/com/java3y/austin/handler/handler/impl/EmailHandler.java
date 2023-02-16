@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-
+import java.util.Objects;
 /**
  * 邮件发送处理
  *
