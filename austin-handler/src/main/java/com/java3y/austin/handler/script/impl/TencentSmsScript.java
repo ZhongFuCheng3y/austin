@@ -46,7 +46,8 @@ public class TencentSmsScript implements SmsScript {
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
         try {
-            TencentSmsAccount tencentSmsAccount = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), TencentSmsAccount.class);
+            TencentSmsAccount tencentSmsAccount = Objects.nonNull(smsParam.getSendAccountId()) ? accountUtils.getAccountById(smsParam.getSendAccountId(), TencentSmsAccount.class)
+                    : accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), TencentSmsAccount.class);
             SmsClient client = init(tencentSmsAccount);
             SendSmsRequest request = assembleSendReq(smsParam, tencentSmsAccount);
             SendSmsResponse response = client.SendSms(request);

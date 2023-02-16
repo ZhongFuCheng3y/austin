@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.common.dto.account.sms.SmsAccount;
 import com.java3y.austin.common.dto.model.SmsContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.domain.sms.MessageTypeSmsConfig;
@@ -18,13 +19,12 @@ import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.service.ConfigService;
+import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 短信发送处理
@@ -48,6 +48,14 @@ public class SmsHandler extends BaseHandler implements Handler {
     @Autowired
     private Map<String, SmsScript> smsScripts;
 
+    @Autowired
+    private AccountUtils accountUtils;
+
+    /**
+     * 流量自动分配策略
+     */
+    private static final Integer AUTO_FLOW_RULE = 0;
+
     private static final String FLOW_KEY = "msgTypeSmsConfig";
     private static final String FLOW_KEY_PREFIX = "message_type_";
 
@@ -63,9 +71,10 @@ public class SmsHandler extends BaseHandler implements Handler {
              * 1、动态配置做流量负载
              * 2、发送短信
              */
-            MessageTypeSmsConfig[] messageTypeSmsConfigs = loadBalance(getMessageTypeSmsConfig(taskInfo.getMsgType()));
+            MessageTypeSmsConfig[] messageTypeSmsConfigs = loadBalance(getMessageTypeSmsConfig(taskInfo));
             for (MessageTypeSmsConfig messageTypeSmsConfig : messageTypeSmsConfigs) {
                 smsParam.setScriptName(messageTypeSmsConfig.getScriptName());
+                smsParam.setSendAccountId(messageTypeSmsConfig.getSendAccount());
                 List<SmsRecord> recordList = smsScripts.get(messageTypeSmsConfig.getScriptName()).send(smsParam);
                 if (CollUtil.isNotEmpty(recordList)) {
                     smsRecordDao.saveAll(recordList);
@@ -115,7 +124,9 @@ public class SmsHandler extends BaseHandler implements Handler {
     }
 
     /**
-     * 每种类型都会有其下发渠道账号的配置(流量占比也会配置里面)
+     * 如模板指定具体的明确账号，则优先发其账号，否则走到流量配置
+     * <p>
+     * 流量配置每种类型都会有其下发渠道账号的配置(流量占比也会配置里面)
      * <p>
      * 样例：
      * key：msgTypeSmsConfig
@@ -124,20 +135,31 @@ public class SmsHandler extends BaseHandler implements Handler {
      * 营销类短信只有一个发送渠道 YunPianSmsScript
      * 验证码短信只有一个发送渠道 TencentSmsScript
      *
-     * @param msgType
+     * @param taskInfo
      * @return
      */
-    private List<MessageTypeSmsConfig> getMessageTypeSmsConfig(Integer msgType) {
+    private List<MessageTypeSmsConfig> getMessageTypeSmsConfig(TaskInfo taskInfo) {
+
+        /**
+         * 如果模板指定了账号，则优先使用具体的账号进行发送
+         */
+        if (!taskInfo.getSendAccount().equals(AUTO_FLOW_RULE)) {
+            SmsAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), SmsAccount.class);
+            return Arrays.asList(MessageTypeSmsConfig.builder().sendAccount(taskInfo.getSendAccount()).scriptName(account.getScriptName()).weights(100).build());
+        }
+
+        /**
+         * 读取流量配置
+         */
         String property = config.getProperty(FLOW_KEY, CommonConstant.EMPTY_VALUE_JSON_ARRAY);
         JSONArray jsonArray = JSON.parseArray(property);
         for (int i = 0; i < jsonArray.size(); i++) {
-            JSONArray array = jsonArray.getJSONObject(i).getJSONArray(FLOW_KEY_PREFIX + msgType);
+            JSONArray array = jsonArray.getJSONObject(i).getJSONArray(FLOW_KEY_PREFIX + taskInfo.getMsgType());
             if (CollUtil.isNotEmpty(array)) {
-                List<MessageTypeSmsConfig> result = JSON.parseArray(JSON.toJSONString(array), MessageTypeSmsConfig.class);
-                return result;
+                return JSON.parseArray(JSON.toJSONString(array), MessageTypeSmsConfig.class);
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**

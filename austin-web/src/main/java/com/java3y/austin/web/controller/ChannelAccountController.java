@@ -66,7 +66,7 @@ public class ChannelAccountController {
         creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
 
         List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType, creator);
-        return Convert4Amis.getChannelAccountVo(channelAccounts);
+        return Convert4Amis.getChannelAccountVo(channelAccounts, channelType);
     }
 
     /**

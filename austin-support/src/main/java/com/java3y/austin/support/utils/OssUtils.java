@@ -21,14 +21,15 @@ public class OssUtils {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
         //upload();
-        String fmnBLE4QtkwlErXIAh9pYS029GZk = getFileUrl("FmnBLE4QtkwlErXIAh9pYS029GZk");
-        System.out.println(fmnBLE4QtkwlErXIAh9pYS029GZk);
+        String s = getFileUrl("FmnBLE4QtkwlErXIAh9pYS029GZk");
+        System.out.println(s);
     }
 
     private static void upload() {
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.autoRegion());
-        cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;// 指定分片上传版本
+        // 指定分片上传版本
+        cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;
 //...其他参数参考类注释
 
         UploadManager uploadManager = new UploadManager(cfg);

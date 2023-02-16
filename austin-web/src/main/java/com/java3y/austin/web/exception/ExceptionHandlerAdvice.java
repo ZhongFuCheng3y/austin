@@ -33,7 +33,7 @@ public class ExceptionHandlerAdvice {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
-        BasicResultVO result = BasicResultVO.fail(RespStatusEnum.ERROR_500,"\r\n" + sw + "\r\n");
+        BasicResultVO result = BasicResultVO.fail(RespStatusEnum.ERROR_500, "\r\n" + sw + "\r\n");
         log.error(e.getMessage(), e);
         return result;
     }

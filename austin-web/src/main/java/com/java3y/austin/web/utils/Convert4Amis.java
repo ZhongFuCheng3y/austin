@@ -9,6 +9,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.common.enums.AnchorState;
+import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.domain.SmsRecord;
@@ -361,8 +362,12 @@ public class Convert4Amis {
      *
      * @return
      */
-    public static List<CommonAmisVo> getChannelAccountVo(List<ChannelAccount> channelAccounts) {
+    public static List<CommonAmisVo> getChannelAccountVo(List<ChannelAccount> channelAccounts, Integer channelType) {
         List<CommonAmisVo> result = new ArrayList<>();
+        if (ChannelType.SMS.getCode().equals(channelType)) {
+            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label("AUTO").value("0").build();
+            result.add(commonAmisVo);
+        }
         for (ChannelAccount channelAccount : channelAccounts) {
             CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
             result.add(commonAmisVo);

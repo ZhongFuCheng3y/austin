@@ -23,6 +23,11 @@ public class MessageTypeSmsConfig {
     private Integer weights;
 
     /**
+     * 短信模板若指定了账号，则该字段有值
+     */
+    private Integer sendAccount;
+
+    /**
      * script名称
      */
     private String scriptName;
