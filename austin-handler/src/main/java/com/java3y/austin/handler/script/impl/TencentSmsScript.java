@@ -59,9 +59,9 @@ public class TencentSmsScript implements SmsScript {
     }
 
     @Override
-    public List<SmsRecord> pull(String scriptName) {
+    public List<SmsRecord> pull(Integer accountId) {
         try {
-            TencentSmsAccount account = accountUtils.getSmsAccountByScriptName(scriptName, TencentSmsAccount.class);
+            TencentSmsAccount account = accountUtils.getAccountById(accountId, TencentSmsAccount.class);
             SmsClient client = init(account);
             PullSmsSendStatusRequest req = assemblePullReq(account);
             PullSmsSendStatusResponse resp = client.PullSmsSendStatus(req);
