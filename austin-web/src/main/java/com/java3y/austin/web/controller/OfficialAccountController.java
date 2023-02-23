@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -196,16 +195,11 @@ public class OfficialAccountController {
     @ApiOperation("/检查是否已经登录")
     @AustinResult
     public WxMpUser checkLogin(String sceneId) {
-        try {
-            String userInfo = redisTemplate.opsForValue().get(sceneId);
-            if (StrUtil.isBlank(userInfo)) {
-                throw new CommonException(RespStatusEnum.NO_LOGIN);
-            }
-            return JSON.parseObject(userInfo, (Type) WxMpUser.class);
-        } catch (Exception e) {
-            log.error("OfficialAccountController#checkLogin fail:{}", Throwables.getStackTraceAsString(e));
-            return null;
+        String userInfo = redisTemplate.opsForValue().get(sceneId);
+        if (StrUtil.isBlank(userInfo)) {
+            throw new CommonException(RespStatusEnum.NO_LOGIN);
         }
+        return JSON.parseObject(userInfo, WxMpUser.class);
     }
 
     /**
