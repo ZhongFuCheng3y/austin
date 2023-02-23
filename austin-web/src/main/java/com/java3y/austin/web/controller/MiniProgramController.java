@@ -32,7 +32,6 @@ import java.util.Objects;
  */
 @Slf4j
 @AustinAspect
-@AustinResult
 @RestController
 @RequestMapping("/miniProgram")
 @Api("微信服务号")
@@ -43,6 +42,7 @@ public class MiniProgramController {
 
     @GetMapping("/template/list")
     @ApiOperation("/根据账号Id获取模板列表")
+    @AustinResult
     public List<CommonAmisVo> queryList(Integer id) {
         try {
             List<CommonAmisVo> result = new ArrayList<>();
@@ -67,6 +67,7 @@ public class MiniProgramController {
      */
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
+    @AustinResult
     public CommonAmisVo queryDetailList(Integer id, String wxTemplateId) {
         if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
             throw new CommonException(RespStatusEnum.CLIENT_BAD_PARAMETERS);

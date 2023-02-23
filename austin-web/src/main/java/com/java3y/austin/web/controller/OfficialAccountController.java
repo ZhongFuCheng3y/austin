@@ -46,7 +46,6 @@ import java.util.*;
  */
 @Slf4j
 @AustinAspect
-@AustinResult
 @RequestMapping("/officialAccount")
 @RestController
 @Api("微信服务号")
@@ -68,6 +67,7 @@ public class OfficialAccountController {
      */
     @GetMapping("/template/list")
     @ApiOperation("/根据账号Id获取模板列表")
+    @AustinResult
     public List<CommonAmisVo> queryList(Integer id) {
         try {
             List<CommonAmisVo> result = new ArrayList<>();
@@ -93,6 +93,7 @@ public class OfficialAccountController {
      */
     @PostMapping("/detailTemplate")
     @ApiOperation("/根据账号Id和模板ID获取模板列表")
+    @AustinResult
     public CommonAmisVo queryDetailList(Integer id, String wxTemplateId) {
         if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
             throw new CommonException(RespStatusEnum.CLIENT_BAD_PARAMETERS);
@@ -168,6 +169,7 @@ public class OfficialAccountController {
      */
     @PostMapping("/qrCode")
     @ApiOperation("/生成 服务号 二维码")
+    @AustinResult
     public CommonAmisVo getQrCode() {
         try {
             WeChatLoginConfig configService = loginUtils.getLoginConfig();
@@ -192,6 +194,7 @@ public class OfficialAccountController {
      */
     @RequestMapping("/check/login")
     @ApiOperation("/检查是否已经登录")
+    @AustinResult
     public WxMpUser checkLogin(String sceneId) {
         try {
             String userInfo = redisTemplate.opsForValue().get(sceneId);
@@ -216,6 +219,7 @@ public class OfficialAccountController {
      */
     @RequestMapping("/delete/test/user")
     @ApiOperation("/删除测试号的测试用户")
+    @AustinResult
     public void deleteTestUser(HttpServletRequest request) {
         try {
 

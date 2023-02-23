@@ -54,7 +54,7 @@ public class AustinAspect {
      * @param joinPoint
      */
     @Before("executeService()")
-    public void doBeforeAdvice(JoinPoint joinPoint){
+    public void doBeforeAdvice(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         this.printRequestLog(methodSignature, joinPoint.getArgs());
     }
@@ -97,7 +97,7 @@ public class AustinAspect {
         logVo.setReferer(request.getHeader("referer"));
         logVo.setRemoteAddr(request.getRemoteAddr());
         logVo.setUserAgent(request.getHeader("user-agent"));
-        log.info("austin-aspect-log,request:" + JSON.toJSONString(logVo));
+        log.info("austin-aspect-log,request:{}", JSON.toJSONString(logVo));
     }
 
     /**
@@ -108,6 +108,6 @@ public class AustinAspect {
     public void printExceptionLog(Throwable ex) {
         JSONObject logVo = new JSONObject();
         logVo.put("id", request.getAttribute(requestIdKey));
-        log.error("austin-aspect-log,exception:" + JSON.toJSONString(logVo), ex);
+        log.error("austin-aspect-log,exception:{}", JSON.toJSONString(logVo), ex);
     }
 }
