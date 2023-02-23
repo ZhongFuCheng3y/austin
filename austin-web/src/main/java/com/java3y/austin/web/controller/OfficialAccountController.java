@@ -12,6 +12,7 @@ import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.config.WeChatLoginConfig;
 import com.java3y.austin.web.exception.CommonException;
@@ -44,6 +45,7 @@ import java.util.*;
  * @author 3y
  */
 @Slf4j
+@AustinAspect
 @AustinResult
 @RequestMapping("/officialAccount")
 @RestController

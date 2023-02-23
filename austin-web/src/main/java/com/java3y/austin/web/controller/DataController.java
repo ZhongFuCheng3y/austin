@@ -1,6 +1,7 @@
 package com.java3y.austin.web.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.service.DataService;
 import com.java3y.austin.web.vo.DataParam;
@@ -25,6 +26,7 @@ import java.util.Objects;
  * @author 3y
  */
 @Slf4j
+@AustinAspect
 @AustinResult
 @RestController
 @RequestMapping("/trace")
