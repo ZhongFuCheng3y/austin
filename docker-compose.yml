@@ -104,13 +104,6 @@ services:
       - app
     depends_on:
       - austin-mysql
-  austin-metabase:
-    image: metabase:latest
-    container_name: austin-metabase
-    ports:
-      - "5001:3000"
-    networks:
-      - app
   austin:
     build:
       context: ./
