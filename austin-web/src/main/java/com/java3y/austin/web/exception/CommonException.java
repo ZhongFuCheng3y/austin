@@ -1,6 +1,7 @@
 package com.java3y.austin.web.exception;
 
 import com.java3y.austin.common.enums.RespStatusEnum;
+import lombok.Getter;
 
 /**
  * @author kl
@@ -8,8 +9,10 @@ import com.java3y.austin.common.enums.RespStatusEnum;
  * @description 通用异常
  * @date 2023/2/9 19:00
  */
+@Getter
 public class CommonException extends RuntimeException {
     private String code = RespStatusEnum.ERROR_400.getCode();
+    private RespStatusEnum respStatusEnum;
 
     public CommonException(String message) {
         super(message);
@@ -18,6 +21,7 @@ public class CommonException extends RuntimeException {
     public CommonException(RespStatusEnum respStatusEnum) {
         super(respStatusEnum.getMsg());
         this.code = respStatusEnum.getCode();
+        this.respStatusEnum = respStatusEnum;
     }
 
     public CommonException(String code, String message) {
@@ -34,7 +38,4 @@ public class CommonException extends RuntimeException {
         this.code = code;
     }
 
-    public String getCode() {
-        return code;
-    }
 }
