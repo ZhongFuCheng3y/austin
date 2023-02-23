@@ -14,6 +14,7 @@ import com.java3y.austin.service.api.enums.BusinessCode;
 import com.java3y.austin.service.api.service.RecallService;
 import com.java3y.austin.service.api.service.SendService;
 import com.java3y.austin.support.domain.MessageTemplate;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.exception.CommonException;
 import com.java3y.austin.web.service.MessageTemplateService;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
  * @author 3y
  */
 @Slf4j
+@AustinAspect
 @AustinResult
 @RestController
 @RequestMapping("/messageTemplate")

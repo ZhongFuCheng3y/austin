@@ -6,6 +6,7 @@ import cn.hutool.http.HttpUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.exception.CommonException;
 import com.java3y.austin.web.utils.Convert4Amis;
@@ -30,6 +31,7 @@ import java.util.Objects;
  * @author 3y
  */
 @Slf4j
+@AustinAspect
 @AustinResult
 @RestController
 @RequestMapping("/miniProgram")

@@ -4,6 +4,7 @@ package com.java3y.austin.web.controller;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
 import com.java3y.austin.service.api.service.SendService;
+import com.java3y.austin.web.annotation.AustinAspect;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"发送消息"})
 @RestController
+@AustinAspect
 public class SendController {
 
     @Autowired

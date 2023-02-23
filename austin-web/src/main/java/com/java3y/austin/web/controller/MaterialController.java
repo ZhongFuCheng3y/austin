@@ -3,6 +3,7 @@ package com.java3y.austin.web.controller;
 
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.vo.BasicResultVO;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.service.MaterialService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author 3y
  */
 @Slf4j
+@AustinAspect
 @RestController
 @RequestMapping("/material")
 @Api("素材管理接口")

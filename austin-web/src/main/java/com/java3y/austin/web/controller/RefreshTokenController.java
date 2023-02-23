@@ -4,6 +4,7 @@ package com.java3y.austin.web.controller;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.cron.handler.RefreshDingDingAccessTokenHandler;
 import com.java3y.austin.cron.handler.RefreshGeTuiAccessTokenHandler;
+import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author 3y
  */
 @AustinResult
+@AustinAspect
 @Api(tags = {"手动刷新token的接口"})
 @RestController
 public class RefreshTokenController {
