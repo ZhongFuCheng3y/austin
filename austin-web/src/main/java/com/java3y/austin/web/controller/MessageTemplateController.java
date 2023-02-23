@@ -74,7 +74,7 @@ public class MessageTemplateController {
     @ApiOperation("/保存数据")
     public MessageTemplate saveOrUpdate(@RequestBody MessageTemplate messageTemplate) {
         if (loginUtils.needLogin() && StrUtil.isBlank(messageTemplate.getCreator())) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         return messageTemplateService.saveOrUpdate(messageTemplate);
     }
@@ -86,7 +86,7 @@ public class MessageTemplateController {
     @ApiOperation("/列表页")
     public MessageTemplateVo queryList(@Validated MessageTemplateParam messageTemplateParam) {
         if (loginUtils.needLogin() && StrUtil.isBlank(messageTemplateParam.getCreator())) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         Page<MessageTemplate> messageTemplates = messageTemplateService.queryList(messageTemplateParam);
         List<Map<String, Object>> result = Convert4Amis.flatListMap(messageTemplates.toList());
@@ -160,8 +160,7 @@ public class MessageTemplateController {
     @PostMapping("recall/{id}")
     @ApiOperation("/撤回消息接口")
     public SendResponse recall(@PathVariable("id") String id) {
-        SendRequest sendRequest = SendRequest.builder().code(BusinessCode.RECALL.getCode()).
-                messageTemplateId(Long.valueOf(id)).build();
+        SendRequest sendRequest = SendRequest.builder().code(BusinessCode.RECALL.getCode()).messageTemplateId(Long.valueOf(id)).build();
         SendResponse response = recallService.recall(sendRequest);
         if (!Objects.equals(response.getCode(), RespStatusEnum.SUCCESS.getCode())) {
             throw new CommonException(response.getMsg());
@@ -194,9 +193,7 @@ public class MessageTemplateController {
     @PostMapping("upload")
     @ApiOperation("/上传人群文件")
     public HashMap<Object, Object> upload(@RequestParam("file") MultipartFile file) {
-        String filePath = dataPath +
-                IdUtil.fastSimpleUUID() +
-                file.getOriginalFilename();
+        String filePath = dataPath + IdUtil.fastSimpleUUID() + file.getOriginalFilename();
         try {
             File localFile = new File(filePath);
             if (!localFile.exists()) {

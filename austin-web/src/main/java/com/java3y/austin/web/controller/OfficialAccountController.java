@@ -197,7 +197,7 @@ public class OfficialAccountController {
     public WxMpUser checkLogin(String sceneId) {
         String userInfo = redisTemplate.opsForValue().get(sceneId);
         if (StrUtil.isBlank(userInfo)) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.SUCCESS.getCode(), RespStatusEnum.SUCCESS.getMsg(), RespStatusEnum.NO_LOGIN);
         }
         return JSON.parseObject(userInfo, WxMpUser.class);
     }

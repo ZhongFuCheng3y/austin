@@ -32,6 +32,11 @@ public final class BasicResultVO<T> {
      */
     private T data;
 
+    public BasicResultVO(String status, String msg) {
+        this.status = status;
+        this.msg = msg;
+    }
+
     public BasicResultVO(RespStatusEnum status) {
         this(status, null);
     }

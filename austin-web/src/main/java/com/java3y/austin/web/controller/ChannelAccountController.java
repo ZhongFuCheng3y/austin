@@ -49,7 +49,7 @@ public class ChannelAccountController {
     @ApiOperation("/保存数据")
     public ChannelAccount saveOrUpdate(@RequestBody ChannelAccount channelAccount) {
         if (loginUtils.needLogin() && StrUtil.isBlank(channelAccount.getCreator())) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         channelAccount.setCreator(StrUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
 
@@ -63,7 +63,7 @@ public class ChannelAccountController {
     @ApiOperation("/根据渠道标识查询相关的记录")
     public List<CommonAmisVo> query(Integer channelType, String creator) {
         if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
 
@@ -78,7 +78,8 @@ public class ChannelAccountController {
     @ApiOperation("/渠道账号列表信息")
     public List<ChannelAccount> list(String creator) {
         if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
-            throw new CommonException(RespStatusEnum.NO_LOGIN);
+            throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
+
         }
         creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
 
