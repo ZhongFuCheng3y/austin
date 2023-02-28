@@ -233,8 +233,9 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 - [x] 测试环境docker-compose完成接入MySQL/Redis/Flink/xxl-job/Kafka
 - [x] 在线演示第一版发布
 - [x] 数据仓库模块完成
+- [x] 邮件支持附件推送，短信支持指定账号和AUTO推送，access_token存储至Redis
 - [ ] 总体架构已完成，持续做基础建设和优化代码
 
-**近期更新时间**：2023年1月29号
+**近期更新时间**：2023年2月28号
 
-**近期更新功能**：数据仓库模块`austin-data-house`调试成功
+**近期更新功能**：access_token存储到Redis，短信支持指定账号和AUTO推送，邮件支持附件推送
