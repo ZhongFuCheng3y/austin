@@ -22,4 +22,6 @@ services:
       - /home/nacos/init.d:/home/nacos/init.d
     ports:
       - 8848:8848
+      - 9848:9848
+      - 9849:9849
     restart: on-failure
