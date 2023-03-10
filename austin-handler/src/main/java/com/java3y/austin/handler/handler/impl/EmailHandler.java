@@ -67,7 +67,7 @@ public class EmailHandler extends BaseHandler implements Handler {
     }
 
     /**
-     * 获取账号信息合配置
+     * 获取账号信息和配置
      *
      * @return
      */

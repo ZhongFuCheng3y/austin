@@ -27,6 +27,7 @@ public class AustinFileUtils {
             URL url = new URL(remoteUrl);
             File file = new File(path, url.getPath());
             if (!file.exists()) {
+                file.getParentFile().mkdirs();
                 IoUtil.copy(url.openStream(), new FileOutputStream(file));
             }
             return file;
