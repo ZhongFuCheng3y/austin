@@ -1,0 +1,46 @@
+package com.java3y.austin.common.dto.account.sms;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+/**
+ * <span>Form File</span>
+ * <p>Description</p>
+ * <p>Company:QQ 752340543</p>
+ *
+ * @author topsuder
+ * @version v1.0.0
+ * @DATE 2022/11/24-14:39
+ * @Description
+ * @see com.java3y.austin.common.dto.account austin
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class LinTongSmsAccount extends SmsAccount{
+    /**
+     * api相关
+     */
+    private String url;
+
+    /**
+     * 账号相关
+     */
+    private String userName;
+    private String password;
+
+    /**
+     * 标识渠道商Id
+     */
+    private Integer supplierId;
+
+    /**
+     * 标识渠道商名字
+     */
+    private String supplierName;
+}
