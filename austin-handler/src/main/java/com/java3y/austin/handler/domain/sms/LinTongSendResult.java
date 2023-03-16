@@ -27,7 +27,7 @@ public class LinTongSendResult {
 
     String message;
     @JSONField(name = "data")
-    List<DataDTO> dataDTOS;
+    List<DataDTO> dtoList;
 
     @Data
     @AllArgsConstructor

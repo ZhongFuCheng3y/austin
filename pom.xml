@@ -162,11 +162,11 @@
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-rabbitmq -->
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-connector-rabbitmq</artifactId>
-                <version>1.15.1</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.flink</groupId>-->
+<!--                <artifactId>flink-connector-rabbitmq</artifactId>-->
+<!--                <version>1.15.1</version>-->
+<!--            </dependency>-->
 
             <!--微信服务号第三方SDK-->
             <dependency>
@@ -215,13 +215,6 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>2.2.2</version>
-            </dependency>
-
-            <!--七牛云 SDK （OSS）-->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>[7.7.0, 7.10.99]</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

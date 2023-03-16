@@ -105,13 +105,13 @@ public class LinTongSmsScript implements SmsScript {
     }
 
     private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, LinTongSendResult response, LinTongSmsAccount account) {
-        if (response == null || ArrayUtil.isEmpty(response.getDataDTOS())) {
+        if (response == null || ArrayUtil.isEmpty(response.getDtoList())) {
             return null;
         }
 
         List<SmsRecord> smsRecordList = new ArrayList<>();
 
-        for (LinTongSendResult.DataDTO datum : response.getDataDTOS()) {
+        for (LinTongSendResult.DataDTO datum : response.getDtoList()) {
             SmsRecord smsRecord = SmsRecord.builder()
                     .sendDate(Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN)))
                     .messageTemplateId(smsParam.getMessageTemplateId())
