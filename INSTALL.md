@@ -29,13 +29,13 @@ grep "password" /var/log/mysqld.log
 mysql -uroot -p
 ```
 
-**五**、修改默认密码（设置密码需要有大小写符号组合—安全性)，把下面的`my passrod`替换成自己的密码
+**五**、修改默认密码（设置密码需要有大小写符号组合—安全性)，把下面的`my password`替换成自己的密码
 
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'my password';
 ```
 
-**六**、开启远程访问 (把下面的`my passrod`替换成自己的密码)
+**六**、开启远程访问 (把下面的`my password`替换成自己的密码)
 
 ```
 grant all privileges on *.* to 'root'@'%' identified by 'my password' with grant option;
