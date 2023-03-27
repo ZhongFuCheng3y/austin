@@ -118,6 +118,15 @@
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-miniapp</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.github.ZhongFuCheng3y</groupId>-->
+<!--            <artifactId>hades-nacos-starter</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>io.github.ZhongFuCheng3y</groupId>
+            <artifactId>hades-apollo-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

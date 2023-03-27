@@ -216,6 +216,16 @@
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>2.2.2</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.ZhongFuCheng3y</groupId>
+                <artifactId>hades-nacos-starter</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.ZhongFuCheng3y</groupId>
+                <artifactId>hades-apollo-starter</artifactId>
+                <version>1.0.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -4,16 +4,16 @@ services:
   nacos1:
     container_name: nacos-server
     hostname: nacos-server
-    image: nacos/nacos-server
+    image: nacos/nacos-server:v2.1.0
     environment:
       - MODE=standalone
       - PREFER_HOST_MODE=hostname
       - SPRING_DATASOURCE_PLATFORM=mysql
-      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_HOST=austin-mysql
       - MYSQL_SERVICE_PORT=3306
       - MYSQL_SERVICE_USER=root
-      - MYSQL_SERVICE_PASSWORD=123456
-      - MYSQL_SERVICE_DB_NAME=nacos-db
+      - MYSQL_SERVICE_PASSWORD=root123_A
+      - MYSQL_SERVICE_DB_NAME=nacos_config
       - JVM_XMS=128m
       - JVM_XMX=128m
       - JVM_XMN=128m

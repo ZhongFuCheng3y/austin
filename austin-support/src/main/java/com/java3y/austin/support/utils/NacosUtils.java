@@ -25,9 +25,9 @@ public class NacosUtils {
     @NacosInjected
     private ConfigService configService;
 
-    @Value("${austin.nacos.group}")
+    @Value("${nacos.group}")
     private String nacosGroup;
-    @Value("${austin.nacos.dataId}")
+    @Value("${nacos.data-id}")
     private String nacosDataId;
 
     private final Properties properties = new Properties();

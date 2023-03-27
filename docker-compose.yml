@@ -14,13 +14,13 @@ services:
     volumes:
       - ./sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "23306:3306"
+      - "3306:3306"
     networks:
       - app
   austin-redis:
     image: redis:3.2
     ports:
-      - "16379:6379"
+      - "6379:6379"
     restart: always
     container_name: austin-redis
     volumes:
@@ -104,6 +104,33 @@ services:
       - app
     depends_on:
       - austin-mysql
+  austin-nacos:
+    container_name: austin-nacos-server
+    image: nacos/nacos-server:v2.1.0
+    environment:
+      - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=austin-mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=root123_A
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    volumes:
+      - /home/nacos/single-logs/nacos-server:/home/nacos/logs
+      - /home/nacos/init.d:/home/nacos/init.d
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+    depends_on:
+      - austin-mysql
+    restart: on-failure
+    networks:
+      - app
   austin:
     build:
       context: ./
@@ -121,6 +148,7 @@ services:
       - austin-zookeeper
       - austin-kafka
       - austin-xxl-job
+      - austin-nacos
     networks:
       - app
 networks:

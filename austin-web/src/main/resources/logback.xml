@@ -7,7 +7,7 @@
     <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 后面是可以读配置的 -->
     <property name="log.path" value="logs"/>
 
-    <springProperty scope="context" name="grayLogIp" source="austin.grayLog.ip"/>
+    <springProperty scope="context" name="grayLogIp" source="austin.graylog.ip"/>
 
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -37,7 +37,7 @@
                 <maxFileSize>1000MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!--日志文件保留天数-->
-            <maxHistory>7</maxHistory>
+            <maxHistory>4</maxHistory>
         </rollingPolicy>
         <!-- 此日志文件只记录info级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -63,7 +63,7 @@
                 <maxFileSize>1000MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <!--日志文件保留天数-->
-            <maxHistory>7</maxHistory>
+            <maxHistory>4</maxHistory>
         </rollingPolicy>
         <!-- 此日志文件只记录ERROR级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
