@@ -22,6 +22,7 @@ import com.java3y.austin.support.service.ConfigService;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -46,7 +47,7 @@ public class SmsHandler extends BaseHandler implements Handler {
     private ConfigService config;
 
     @Autowired
-    private Map<String, SmsScript> smsScripts;
+    private ApplicationContext applicationContext;
 
     @Autowired
     private AccountUtils accountUtils;
@@ -75,7 +76,7 @@ public class SmsHandler extends BaseHandler implements Handler {
             for (MessageTypeSmsConfig messageTypeSmsConfig : messageTypeSmsConfigs) {
                 smsParam.setScriptName(messageTypeSmsConfig.getScriptName());
                 smsParam.setSendAccountId(messageTypeSmsConfig.getSendAccount());
-                List<SmsRecord> recordList = smsScripts.get(messageTypeSmsConfig.getScriptName()).send(smsParam);
+                List<SmsRecord> recordList = applicationContext.getBean(messageTypeSmsConfig.getScriptName(), SmsScript.class).send(smsParam);
                 if (CollUtil.isNotEmpty(recordList)) {
                     smsRecordDao.saveAll(recordList);
                     return true;
