@@ -161,12 +161,13 @@
                 <version>${flink.version}</version>
             </dependency>
 
+            <!--目前没有完善RabbitMQ实现-->
             <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-rabbitmq -->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.flink</groupId>-->
-<!--                <artifactId>flink-connector-rabbitmq</artifactId>-->
-<!--                <version>1.15.1</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.flink</groupId>-->
+            <!--                <artifactId>flink-connector-rabbitmq</artifactId>-->
+            <!--                <version>1.15.1</version>-->
+            <!--            </dependency>-->
 
             <!--微信服务号第三方SDK-->
             <dependency>
@@ -216,16 +217,19 @@
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>2.2.2</version>
             </dependency>
+
+            <!--hades规则引擎：https://github.com/ZhongFuCheng3y/hades-->
             <dependency>
                 <groupId>io.github.ZhongFuCheng3y</groupId>
                 <artifactId>hades-nacos-starter</artifactId>
                 <version>1.0.3</version>
             </dependency>
-            <dependency>
-                <groupId>io.github.ZhongFuCheng3y</groupId>
-                <artifactId>hades-apollo-starter</artifactId>
-                <version>1.0.3</version>
-            </dependency>
+            <!--用hades规则引擎用nacos做演示，apollo注释掉-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.github.ZhongFuCheng3y</groupId>-->
+            <!--                <artifactId>hades-apollo-starter</artifactId>-->
+            <!--                <version>1.0.3</version>-->
+            <!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
