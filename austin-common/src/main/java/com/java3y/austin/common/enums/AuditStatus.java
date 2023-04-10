@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum AuditStatus {
+public enum AuditStatus implements PowerfulEnum {
 
     /**
      * 10.待审核

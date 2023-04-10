@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum SmsSupplier {
+public enum SmsSupplier implements PowerfulEnum {
 
 
     /**
@@ -27,19 +27,4 @@ public enum SmsSupplier {
     private final Integer code;
     private final String description;
 
-
-    /**
-     * 根据状态获取描述信息
-     *
-     * @param code
-     * @return
-     */
-    public static String getDescriptionByStatus(Integer code) {
-        for (SmsStatus value : SmsStatus.values()) {
-            if (value.getCode().equals(code)) {
-                return value.getDescription();
-            }
-        }
-        return "";
-    }
 }

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * 发送渠道类型枚举
  *
@@ -14,7 +17,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum ChannelType {
+public enum ChannelType implements PowerfulEnum {
 
 
     /**
@@ -94,28 +97,8 @@ public enum ChannelType {
      * @return
      */
     public static Class<? extends ContentModel> getChanelModelClassByCode(Integer code) {
-        ChannelType[] values = values();
-        for (ChannelType value : values) {
-            if (value.getCode().equals(code)) {
-                return value.getContentModelClass();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 通过code获取enum
-     *
-     * @param code
-     * @return
-     */
-    public static ChannelType getEnumByCode(Integer code) {
-        ChannelType[] values = values();
-        for (ChannelType value : values) {
-            if (value.getCode().equals(code)) {
-                return value;
-            }
-        }
-        return null;
+        return Arrays.stream(values()).filter(channelType -> Objects.equals(code, channelType.getCode()))
+                .map(ChannelType::getContentModelClass)
+                .findFirst().orElse(null);
     }
 }

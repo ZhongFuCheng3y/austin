@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * 发送的消息类型
  *
@@ -12,7 +15,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum MessageType {
+public enum MessageType implements PowerfulEnum {
 
     /**
      * 通知类消息
@@ -42,23 +45,6 @@ public enum MessageType {
      * 英文标识
      */
     private final String codeEn;
-
-
-    /**
-     * 通过code获取enum
-     *
-     * @param code
-     * @return
-     */
-    public static MessageType getEnumByCode(Integer code) {
-        MessageType[] values = values();
-        for (MessageType value : values) {
-            if (value.getCode().equals(code)) {
-                return value;
-            }
-        }
-        return null;
-    }
 
 
 }
