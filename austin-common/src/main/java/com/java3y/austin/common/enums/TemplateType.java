@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum TemplateType {
+public enum TemplateType implements PowerfulEnum {
 
     /**
      * 定时类的模板(后台定时调用)

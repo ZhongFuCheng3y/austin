@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum MessageStatus {
+public enum MessageStatus implements PowerfulEnum {
 
     /**
      * 10.新建

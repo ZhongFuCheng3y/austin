@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum ShieldType {
+public enum ShieldType implements PowerfulEnum {
 
 
     /**
@@ -30,6 +30,4 @@ public enum ShieldType {
 
     private final Integer code;
     private final String description;
-
-
 }

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum IdType {
+public enum IdType implements PowerfulEnum {
     /**
      * 站内userId
      */

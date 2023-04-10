@@ -25,6 +25,7 @@ public class AnchorInfo {
 
     /**
      * 具体点位
+     * @see com.java3y.austin.common.enums.AnchorState
      */
     private int state;
 
