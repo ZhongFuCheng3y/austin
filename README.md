@@ -77,7 +77,7 @@
 
 austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依赖**`kafka`/`prometheus`/`graylog`/`flink`/`xxl-job`/`apollo`/`hive`(**完全部署所有的服务，大概16G内存**)。如果缺少相关的组件可戳：[安装相关组件教程](INSTALL.md)。
 
-> 实在想要`clone`项目后不用自己部署环境直接在**本地**启动`debug`，我这提供了[股东服务](https://mp.weixin.qq.com/s/zpvfqf3ggKFkn5R5moQsKQ)，**直连**部署好的服务器。
+> 实在想要`clone`项目后不用自己部署环境直接在**本地**启动`debug`，我这提供了[股东服务](https://mp.weixin.qq.com/s?__biz=MzI4Njg5MDA5NA==&mid=2247509165&idx=1&sn=3e3d9f8646da79e546d551cbf993ddae&chksm=ebd4e5acdca36cba400f4927b3144e3dbf42d69ae38022a315722c9d33b5369e8ba9b212c685&token=1580829198&lang=zh_CN#rd)，**直连**部署好的服务器。
 
 **1**、austin目前使用的MySQL版本**5.7x**，如果你使用的MySQL版本8.0，注意改变`pom.xml`所依赖的版本以及对应的连接信息。
 
