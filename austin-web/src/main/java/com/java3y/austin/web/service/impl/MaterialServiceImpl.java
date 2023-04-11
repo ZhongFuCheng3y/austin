@@ -12,6 +12,7 @@ import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.EnterpriseWeChatRobotAccount;
+import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.FileType;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
@@ -56,7 +57,7 @@ public class MaterialServiceImpl implements MaterialService {
             FileItem item = new FileItem(new StringBuilder().append(IdUtil.fastSimpleUUID()).append(file.getOriginalFilename()).toString(),
                     file.getInputStream());
             req.setMedia(item);
-            req.setType(FileType.getNameByCode(fileType));
+            req.setType(EnumUtil.getDescriptionByCode(Integer.valueOf(fileType), FileType.class));
             rsp = client.execute(req, accessToken);
             if (rsp.getErrcode() == 0L) {
                 return new BasicResultVO(RespStatusEnum.SUCCESS, UploadResponseVo.builder().id(rsp.getMediaId()).build());
@@ -94,7 +95,8 @@ public class MaterialServiceImpl implements MaterialService {
             WxCpDefaultConfigImpl accountConfig = accountUtils.getAccountById(Integer.valueOf(sendAccount), WxCpDefaultConfigImpl.class);
             WxCpServiceImpl wxCpService = new WxCpServiceImpl();
             wxCpService.setWxCpConfigStorage(accountConfig);
-            WxMediaUploadResult result = wxCpService.getMediaService().upload(FileType.getNameByCode(fileType), SpringFileUtils.getFile(multipartFile));
+            WxMediaUploadResult result = wxCpService.getMediaService()
+                    .upload(EnumUtil.getDescriptionByCode(Integer.valueOf(fileType), FileType.class), SpringFileUtils.getFile(multipartFile));
             if (StrUtil.isNotBlank(result.getMediaId())) {
                 return new BasicResultVO(RespStatusEnum.SUCCESS, UploadResponseVo.builder().id(result.getMediaId()).build());
             }

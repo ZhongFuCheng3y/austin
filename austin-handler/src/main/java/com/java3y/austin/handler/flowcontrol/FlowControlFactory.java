@@ -6,6 +6,7 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.handler.enums.RateLimitStrategy;
 import com.java3y.austin.handler.flowcontrol.annotations.LocalRateLimit;
 import com.java3y.austin.support.service.ConfigService;
@@ -63,7 +64,7 @@ public class FlowControlFactory implements ApplicationContextAware {
         double costTime = flowControlService.flowControl(taskInfo, flowControlParam);
         if (costTime > 0) {
             log.info("consumer {} flow control time {}",
-                    ChannelType.getEnumByCode(taskInfo.getSendChannel()).getDescription(), costTime);
+                    EnumUtil.getEnumByCode(taskInfo.getSendChannel(), ChannelType.class).getDescription(), costTime);
         }
     }
 
