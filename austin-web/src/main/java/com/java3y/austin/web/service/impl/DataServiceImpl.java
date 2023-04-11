@@ -11,6 +11,7 @@ import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.support.dao.MessageTemplateDao;
 import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.MessageTemplate;
@@ -83,7 +84,7 @@ public class DataServiceImpl implements DataService {
                     sb.append(StrPool.CRLF);
                 }
                 String startTime = DateUtil.format(new Date(simpleAnchorInfo.getTimestamp()), DatePattern.NORM_DATETIME_PATTERN);
-                String stateDescription = AnchorState.getDescriptionByCode(simpleAnchorInfo.getState());
+                String stateDescription = EnumUtil.getDescriptionByCode(simpleAnchorInfo.getState(), AnchorState.class);
                 sb.append(startTime).append(StrPool.C_COLON).append(stateDescription).append("==>");
             }
 
@@ -91,7 +92,7 @@ public class DataServiceImpl implements DataService {
                 if (StrUtil.isNotBlank(detail)) {
                     UserTimeLineVo.ItemsVO itemsVO = UserTimeLineVo.ItemsVO.builder()
                             .businessId(entry.getKey())
-                            .sendType(ChannelType.getEnumByCode(messageTemplate.getSendChannel()).getDescription())
+                            .sendType(EnumUtil.getEnumByCode(messageTemplate.getSendChannel(), ChannelType.class).getDescription())
                             .creator(messageTemplate.getCreator())
                             .title(messageTemplate.getName())
                             .detail(detail)

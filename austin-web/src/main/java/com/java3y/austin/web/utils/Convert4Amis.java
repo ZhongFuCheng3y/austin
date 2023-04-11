@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
+import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.support.domain.SmsRecord;
@@ -389,7 +390,7 @@ public class Convert4Amis {
         if (CollUtil.isNotEmpty(anchorResult)) {
             anchorResult = MapUtil.sort(anchorResult);
             for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = AnchorState.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())));
+                String description = EnumUtil.getDescriptionByCode((Integer) entry.getKey(),AnchorState.class);
                 xAxisList.add(description);
                 actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
             }
@@ -426,10 +427,10 @@ public class Convert4Amis {
                 if (smsRecord.getMessageTemplateId() > 0) {
                     itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
                     itemsVO.setContent(smsRecord.getMsgContent());
-                    itemsVO.setSendType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
+                    itemsVO.setSendType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(),SmsStatus.class));
                     itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
                 } else {
-                    itemsVO.setReceiveType(SmsStatus.getDescriptionByStatus(smsRecord.getStatus()));
+                    itemsVO.setReceiveType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(),SmsStatus.class));
                     itemsVO.setReceiveContent(smsRecord.getReportContent());
                     itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
                 }
