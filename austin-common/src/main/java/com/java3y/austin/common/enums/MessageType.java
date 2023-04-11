@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * 发送的消息类型
  *

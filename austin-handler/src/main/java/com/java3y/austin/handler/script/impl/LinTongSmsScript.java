@@ -21,11 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <span>Form File</span>
@@ -58,13 +54,13 @@ public class LinTongSmsScript implements SmsScript {
             LinTongSmsAccount linTongSmsAccount = accountUtils.getSmsAccountByScriptName(smsParam.getScriptName(), LinTongSmsAccount.class);
             String request = assembleReq(smsParam, linTongSmsAccount);
             String response = HttpRequest.post(linTongSmsAccount.getUrl()).body(request)
-                    .header(Header.ACCEPT.getValue(),"application/json")
-                    .header(Header.CONTENT_TYPE.getValue(),"application/json;charset=utf-8")
+                    .header(Header.ACCEPT.getValue(), "application/json")
+                    .header(Header.CONTENT_TYPE.getValue(), "application/json;charset=utf-8")
                     .timeout(2000)
                     .execute().body();
             LinTongSendResult linTongSendResult = JSON.parseObject(response, LinTongSendResult.class);
             return assembleSmsRecord(smsParam, linTongSendResult, linTongSmsAccount);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("LinTongSmsAccount#send fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
             return null;
         }
@@ -83,15 +79,13 @@ public class LinTongSmsScript implements SmsScript {
     }
 
 
-
-
     /**
      * 组装发送短信参数
      */
     private String assembleReq(SmsParam smsParam, LinTongSmsAccount account) {
         Map<String, Object> map = new HashMap<>(5);
         final long time = DateUtil.date().getTime();
-        String sign = SecureUtil.md5( account.getUserName()+time+SecureUtil.md5(account.getPassword()));
+        String sign = SecureUtil.md5(account.getUserName() + time + SecureUtil.md5(account.getPassword()));
         map.put("userName", account.getUserName());
         //获取当前时间戳
         map.put("timestamp", time);
@@ -121,7 +115,7 @@ public class LinTongSmsScript implements SmsScript {
                     .msgContent(smsParam.getContent())
                     .seriesId(datum.getMsgId().toString())
                     .chargingNum(1)
-                    .status(datum.getCode()==0 ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
+                    .status(datum.getCode() == 0 ? SmsStatus.SEND_SUCCESS.getCode() : SmsStatus.SEND_FAIL.getCode())
                     .reportContent(datum.getMessage())
                     .created(Math.toIntExact(DateUtil.currentSeconds()))
                     .updated(Math.toIntExact(DateUtil.currentSeconds()))

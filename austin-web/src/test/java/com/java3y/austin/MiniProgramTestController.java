@@ -19,7 +19,7 @@ public class MiniProgramTestController extends BaseTestController {
                 MockMvcRequestBuilders
                         .get(BASE_URL + "/template/list")
                         .headers(headers)
-                        .param("id","1")
+                        .param("id", "1")
         );
     }
 

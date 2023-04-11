@@ -39,7 +39,7 @@ public class GroupIdMappingUtils {
      */
     public static String getGroupIdByTaskInfo(TaskInfo taskInfo) {
         String channelCodeEn = EnumUtil.getEnumByCode(taskInfo.getSendChannel(), ChannelType.class).getCodeEn();
-        String msgCodeEn = EnumUtil.getEnumByCode(taskInfo.getMsgType(),MessageType.class).getCodeEn();
+        String msgCodeEn = EnumUtil.getEnumByCode(taskInfo.getMsgType(), MessageType.class).getCodeEn();
         return channelCodeEn + "." + msgCodeEn;
     }
 }

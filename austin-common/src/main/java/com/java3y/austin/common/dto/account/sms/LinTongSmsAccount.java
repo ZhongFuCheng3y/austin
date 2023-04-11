@@ -1,10 +1,6 @@
 package com.java3y.austin.common.dto.account.sms;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * <span>Form File</span>
@@ -22,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinTongSmsAccount extends SmsAccount{
+public class LinTongSmsAccount extends SmsAccount {
     /**
      * api相关
      */

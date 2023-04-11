@@ -1,9 +1,23 @@
 package com.java3y.austin.common.enums;
 
-public interface PowerfulEnum {
+/**
+ * @author kyw7
+ * 枚举接口
+ */
+interface PowerfulEnum {
 
-        Integer getCode();
+    /**
+     * 获取枚举的code
+     *
+     * @return
+     */
+    Integer getCode();
 
-        String getDescription();
+    /**
+     * 获取枚举的描述
+     *
+     * @return
+     */
+    String getDescription();
 
 }

@@ -390,7 +390,7 @@ public class Convert4Amis {
         if (CollUtil.isNotEmpty(anchorResult)) {
             anchorResult = MapUtil.sort(anchorResult);
             for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = EnumUtil.getDescriptionByCode((Integer) entry.getKey(),AnchorState.class);
+                String description = EnumUtil.getDescriptionByCode((Integer) entry.getKey(), AnchorState.class);
                 xAxisList.add(description);
                 actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
             }
@@ -427,10 +427,10 @@ public class Convert4Amis {
                 if (smsRecord.getMessageTemplateId() > 0) {
                     itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
                     itemsVO.setContent(smsRecord.getMsgContent());
-                    itemsVO.setSendType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(),SmsStatus.class));
+                    itemsVO.setSendType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
                     itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
                 } else {
-                    itemsVO.setReceiveType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(),SmsStatus.class));
+                    itemsVO.setReceiveType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
                     itemsVO.setReceiveContent(smsRecord.getReportContent());
                     itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
                 }

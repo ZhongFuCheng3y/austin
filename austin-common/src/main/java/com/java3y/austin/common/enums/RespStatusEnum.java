@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum RespStatusEnum  {
+public enum RespStatusEnum {
 
     /**
      * 错误

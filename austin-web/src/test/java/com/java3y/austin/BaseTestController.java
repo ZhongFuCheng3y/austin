@@ -18,8 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @description: 测试基类,主要用于前置处理和后置处理
- *
+ * @description: 测试基类, 主要用于前置处理和后置处理
  * @date: 2023/3/9 9:40
  * @author: pendj
  */

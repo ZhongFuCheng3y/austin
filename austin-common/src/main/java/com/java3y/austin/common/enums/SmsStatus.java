@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public enum SmsStatus  implements PowerfulEnum{
+public enum SmsStatus implements PowerfulEnum {
 
     /**
      * 调用渠道接口发送成功
