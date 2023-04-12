@@ -38,9 +38,9 @@ public class KafkaSendMqServiceImpl implements SendMqService {
         if (StrUtil.isNotBlank(tagId)) {
             List<Header> headers = Arrays.asList(new RecordHeader(tagIdKey, tagId.getBytes(StandardCharsets.UTF_8)));
             kafkaTemplate.send(new ProducerRecord(topic, null, null, null, jsonValue, headers));
-        } else {
-            kafkaTemplate.send(topic, jsonValue);
+            return;
         }
+        kafkaTemplate.send(topic, jsonValue);
     }
 
     @Override
