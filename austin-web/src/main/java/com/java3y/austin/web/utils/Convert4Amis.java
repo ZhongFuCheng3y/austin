@@ -390,7 +390,7 @@ public class Convert4Amis {
         if (CollUtil.isNotEmpty(anchorResult)) {
             anchorResult = MapUtil.sort(anchorResult);
             for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = EnumUtil.getDescriptionByCode((Integer) entry.getKey(), AnchorState.class);
+                String description = EnumUtil.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())), AnchorState.class);
                 xAxisList.add(description);
                 actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
             }
