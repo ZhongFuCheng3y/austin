@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * @Author 3y
+ * @author 3y
  */
-@AustinResult
+
 @AustinAspect
 @Api(tags = {"手动刷新token的接口"})
 @RestController
