@@ -106,7 +106,7 @@ austin项目**强依赖**`MySQL`/`Redis`/(**大概需要2G内存**)，**弱依�
 
 ## 官方项目交流群
 
-austin项目官方交流群已经超过了两百人，添加我的**个人微信(java3yyy)**备注：【**项目**】，我空的时候会拉进项目交流群里。
+austin项目官方交流群已经超过了两百人，添加我的个人微信 java3yyy 添加时备注：【**项目**】，我空的时候会拉进项目交流群里。
 
 <img align="center" src='https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/db4e126ed8d3400983f70c4c5f73cb0a~tplv-k3u1fbpfcp-watermark.image?' width=300px height=300px />
 
