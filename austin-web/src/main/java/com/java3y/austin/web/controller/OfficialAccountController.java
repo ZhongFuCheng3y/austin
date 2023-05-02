@@ -95,7 +95,8 @@ public class OfficialAccountController {
     @AustinResult
     public CommonAmisVo queryDetailList(Integer id, String wxTemplateId) {
         if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
-            throw new CommonException(RespStatusEnum.CLIENT_BAD_PARAMETERS);
+            log.info("id || wxTemplateId null! id:{},wxTemplateId:{}", id, wxTemplateId);
+            return CommonAmisVo.builder().build();
         }
         try {
             WxMpService wxMpService = accountUtils.getAccountById(id, WxMpService.class);
