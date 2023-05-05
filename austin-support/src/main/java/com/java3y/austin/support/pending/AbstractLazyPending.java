@@ -56,6 +56,12 @@ public abstract class AbstractLazyPending<T> {
                         tasks.add(obj);
                     }
 
+                    // 判断是否停止当前线程
+                    if (stop && CollUtil.isEmpty(tasks)) {
+                        executorService.shutdown();
+                        break;
+                    }
+
                     // 处理条件：1. 数量超限 2. 时间超限
                     if (CollUtil.isNotEmpty(tasks) && dataReady()) {
                         List<T> taskRef = tasks;
@@ -66,11 +72,7 @@ public abstract class AbstractLazyPending<T> {
                         pendingParam.getExecutorService().execute(() -> this.handle(taskRef));
                     }
 
-                    // 判断是否停止当前线程
-                    if (stop && CollUtil.isEmpty(tasks)) {
-                        executorService.shutdown();
-                        break;
-                    }
+
                 } catch (Exception e) {
                     log.error("Pending#initConsumePending failed:{}", Throwables.getStackTraceAsString(e));
                 }

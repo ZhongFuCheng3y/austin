@@ -218,17 +218,17 @@
                 <version>2.2.2</version>
             </dependency>
 
-            <!--hades规则引擎：https://github.com/ZhongFuCheng3y/hades-->
+            <!-- hades规则引擎：https://github.com/ZhongFuCheng3y/hades -->
             <dependency>
                 <groupId>io.github.ZhongFuCheng3y</groupId>
                 <artifactId>hades-nacos-starter</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4</version>
             </dependency>
             <!--用hades规则引擎用nacos做演示，apollo注释掉-->
             <!--            <dependency>-->
             <!--                <groupId>io.github.ZhongFuCheng3y</groupId>-->
             <!--                <artifactId>hades-apollo-starter</artifactId>-->
-            <!--                <version>1.0.3</version>-->
+            <!--                <version>1.0.4</version>-->
             <!--            </dependency>-->
         </dependencies>
     </dependencyManagement>

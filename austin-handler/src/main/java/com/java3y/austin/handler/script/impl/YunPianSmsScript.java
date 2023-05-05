@@ -16,8 +16,9 @@ import com.java3y.austin.handler.domain.sms.YunPianSendResult;
 import com.java3y.austin.handler.script.SmsScript;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.AccountUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,9 +29,11 @@ import java.util.*;
  * @date 2022年5月23日
  * 发送短信接入文档：https://www.yunpian.com/official/document/sms/zh_CN/domestic_list
  */
-@Slf4j
 @Component("YunPianSmsScript")
 public class YunPianSmsScript implements SmsScript {
+
+    private static Logger log = LoggerFactory.getLogger(YunPianSmsScript.class);
+
     @Autowired
     private AccountUtils accountUtils;
 
