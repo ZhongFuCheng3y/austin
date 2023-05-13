@@ -25,10 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 短信发送处理
@@ -55,6 +52,9 @@ public class SmsHandler extends BaseHandler implements Handler {
     @Autowired
     private AccountUtils accountUtils;
 
+    @Autowired
+    private Map<String, SmsScript> smsScripts;
+
     /**
      * 流量自动分配策略
      */
@@ -79,7 +79,7 @@ public class SmsHandler extends BaseHandler implements Handler {
             for (MessageTypeSmsConfig messageTypeSmsConfig : messageTypeSmsConfigs) {
                 smsParam.setScriptName(messageTypeSmsConfig.getScriptName());
                 smsParam.setSendAccountId(messageTypeSmsConfig.getSendAccount());
-                List<SmsRecord> recordList = applicationContext.getBean(messageTypeSmsConfig.getScriptName(), SmsScript.class).send(smsParam);
+                List<SmsRecord> recordList = smsScripts.get(messageTypeSmsConfig.getScriptName()).send(smsParam);
                 if (CollUtil.isNotEmpty(recordList)) {
                     smsRecordDao.saveAll(recordList);
                     return true;
