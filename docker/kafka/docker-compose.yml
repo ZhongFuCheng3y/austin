@@ -26,7 +26,7 @@ services:
       - zookeeper
 
   kafka-manager:
-    image: sheepkiller/kafka-manager                         # 原镜像`sheepkiller/kafka-manager`
+    image: kafkamanager/kafka-manager                         # 原镜像`sheepkiller/kafka-manager`
     container_name: kafka-manager                            # 容器名为'kafka-manager'
     environment:                        # 设置环境变量,相当于docker run命令中的-e
       ZK_HOSTS: zookeeper:2181
