@@ -1,5 +1,6 @@
 package com.java3y.austin.support.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.PropertyPlaceholderHelper;
 
 import java.text.MessageFormat;
@@ -43,7 +44,7 @@ public class ContentHolderUtil {
         @Override
         public String resolvePlaceholder(String placeholderName) {
             String value = paramMap.get(placeholderName);
-            if (null == value) {
+            if (StringUtils.isEmpty(value)) {
                 String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}", template, placeholderName, paramMap.toString());
                 throw new IllegalArgumentException(errorStr);
             }

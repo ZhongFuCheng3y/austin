@@ -1,5 +1,6 @@
 package com.java3y.austin.service.api.impl.service;
 
+import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
@@ -7,6 +8,7 @@ import com.java3y.austin.service.api.impl.domain.SendTaskModel;
 import com.java3y.austin.service.api.service.RecallService;
 import com.java3y.austin.support.pipeline.ProcessContext;
 import com.java3y.austin.support.pipeline.ProcessController;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class RecallServiceImpl implements RecallService {
 
     @Override
     public SendResponse recall(SendRequest sendRequest) {
+        if(ObjectUtils.isEmpty(sendRequest)){
+            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg());
+        }
         SendTaskModel sendTaskModel = SendTaskModel.builder()
                 .messageTemplateId(sendRequest.getMessageTemplateId())
                 .build();
