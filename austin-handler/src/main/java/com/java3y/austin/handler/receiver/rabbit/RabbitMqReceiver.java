@@ -8,7 +8,10 @@ import com.java3y.austin.support.domain.MessageTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.*;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,9 @@ import java.util.List;
 @Component
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.RABBIT_MQ)
 public class RabbitMqReceiver {
+
+    private static final String MSG_TYPE_SEND = "send";
+    private static final String MSG_TYPE_RECALL = "recall";
 
     @Autowired
     private ConsumeService consumeService;
@@ -39,11 +45,11 @@ public class RabbitMqReceiver {
         if (StringUtils.isBlank(messageContent)) {
             return;
         }
-        if ("send".equals(messageType)) {
+        if (MSG_TYPE_SEND.equals(messageType)) {
             // 处理发送消息
             List<TaskInfo> taskInfoLists = JSON.parseArray(messageContent, TaskInfo.class);
             consumeService.consume2Send(taskInfoLists);
-        } else if ("recall".equals(messageType)) {
+        } else if (MSG_TYPE_RECALL.equals(messageType)) {
             // 处理撤回消息
             MessageTemplate messageTemplate = JSON.parseObject(messageContent, MessageTemplate.class);
             consumeService.consume2recall(messageTemplate);
