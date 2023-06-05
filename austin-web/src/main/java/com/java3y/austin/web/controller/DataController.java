@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -38,6 +39,9 @@ public class DataController {
     @PostMapping("/user")
     @ApiOperation("/获取【当天】用户接收消息的全链路数据")
     public UserTimeLineVo getUserData(@RequestBody DataParam dataParam) {
+        if (Objects.isNull(dataParam) || StrUtil.isBlank(dataParam.getReceiver())) {
+            return UserTimeLineVo.builder().items(new ArrayList<>()).build();
+        }
         return dataService.getTraceUserInfo(dataParam.getReceiver());
     }
 
