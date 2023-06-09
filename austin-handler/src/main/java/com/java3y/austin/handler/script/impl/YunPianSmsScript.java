@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
@@ -22,7 +23,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author 3y
@@ -37,6 +40,9 @@ public class YunPianSmsScript implements SmsScript {
     @Autowired
     private AccountUtils accountUtils;
 
+    private  static final String PARAMS_SPLIT_KEY = "{|}";
+
+    private  static final String PARAMS_KV_SPLIT_KEY = "{:}";
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
 
@@ -78,7 +84,7 @@ public class YunPianSmsScript implements SmsScript {
         params.put("apikey", account.getApikey());
         params.put("mobile", StringUtils.join(smsParam.getPhones(), StrUtil.C_COMMA));
         params.put("tpl_id", account.getTplId());
-        params.put("tpl_value", "");
+        params.put("tpl_value", getTplValue(smsParam));
         return params;
     }
 
@@ -110,6 +116,18 @@ public class YunPianSmsScript implements SmsScript {
         }
 
         return smsRecordList;
+    }
+
+
+    private String getTplValue(SmsParam smsParam) {
+        String tplValue = "";
+        if (StrUtil.isNotBlank(smsParam.getContent())) {
+            tplValue = StrUtil.split(smsParam.getContent(), PARAMS_SPLIT_KEY).stream().map(item -> {
+                List<String> kv = StrUtil.splitTrim(item, PARAMS_KV_SPLIT_KEY, 2);
+                return String.join("=", URLUtil.encodeQuery(kv.get(0)), URLUtil.encodeQuery(kv.get(1)));
+            }).collect(Collectors.joining("&"));
+        }
+        return tplValue;
     }
 
 
