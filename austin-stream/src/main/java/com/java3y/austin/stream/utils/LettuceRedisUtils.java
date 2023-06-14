@@ -1,5 +1,6 @@
 package com.java3y.austin.stream.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.stream.callback.RedisPipelineCallBack;
 import com.java3y.austin.stream.constants.AustinFlinkConstant;
 import io.lettuce.core.LettuceFutures;
@@ -26,10 +27,18 @@ public class LettuceRedisUtils {
     private static RedisClient redisClient;
 
     static {
-        RedisURI redisUri = RedisURI.Builder.redis(AustinFlinkConstant.REDIS_IP)
-                .withPort(Integer.valueOf(AustinFlinkConstant.REDIS_PORT))
-                .withPassword(AustinFlinkConstant.REDIS_PASSWORD.toCharArray())
-                .build();
+        RedisURI redisUri = null;
+        if (StrUtil.equals(AustinFlinkConstant.REDIS_MODE_SENTINEL, AustinFlinkConstant.REDIS_MODE)) {
+            redisUri = RedisURI.Builder.sentinel(AustinFlinkConstant.REDIS_IP, AustinFlinkConstant.MASTER_ID)
+                    .withPassword(AustinFlinkConstant.REDIS_PASSWORD.toCharArray())
+                    .build();
+        } else if (StrUtil.equals(AustinFlinkConstant.REDIS_MODE_SINGLE, AustinFlinkConstant.REDIS_MODE)) {
+            redisUri = RedisURI.Builder.redis(AustinFlinkConstant.REDIS_IP)
+                    .withPort(Integer.valueOf(AustinFlinkConstant.REDIS_PORT))
+                    .withPassword(AustinFlinkConstant.REDIS_PASSWORD.toCharArray())
+                    .build();
+        }
+
         redisClient = RedisClient.create(redisUri);
     }
 

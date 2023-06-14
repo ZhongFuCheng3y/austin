@@ -22,9 +22,20 @@ public class AustinFlinkConstant {
      * TODO 使用前配置redis ip:port
      * (真实网络ip,这里不能用配置的hosts，看语雀文档得到真实ip)
      */
+
+    public static final String REDIS_MODE_SENTINEL = "SENTINEL";
+
+    public static final String REDIS_MODE_SINGLE = "SINGLE";
+
+    public static final String REDIS_MODE = REDIS_MODE_SENTINEL;
+
     public static final String REDIS_IP = "austin-redis";
-    public static final String REDIS_PORT = "6379";
+
+    public static final Integer REDIS_PORT = 6379;
+
     public static final String REDIS_PASSWORD = "austin";
+
+    public static final String MASTER_ID = "mymaster";
 
 
     /**
