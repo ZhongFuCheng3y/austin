@@ -32,8 +32,9 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flink.version>1.17.1</flink.version>
+        <flink.version>1.14.3</flink.version>
         <target.java.version>1.8</target.java.version>
+        <scala.binary.version>2.11</scala.binary.version>
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
         <log4j.version>2.17.1</log4j.version>
@@ -53,7 +54,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.8.16</version>
+                <version>5.7.15</version>
             </dependency>
 
             <!--guava工具包-->
@@ -134,28 +135,21 @@
                 <version>2.3.0</version>
             </dependency>
 
-            <!--Kafka 消息队列-->
-            <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-clients</artifactId>
-                <version>3.2.3</version>
-            </dependency>
-
             <!--flink相关依赖-->
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-walkthrough-common</artifactId>
+                <artifactId>flink-walkthrough-common_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-java</artifactId>
+                <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-clients</artifactId>
+                <artifactId>flink-clients_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
                 <scope>provided</scope>
             </dependency>
@@ -163,7 +157,7 @@
             <!--kafkaFlink连接器-->
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-connector-kafka</artifactId>
+                <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
 
