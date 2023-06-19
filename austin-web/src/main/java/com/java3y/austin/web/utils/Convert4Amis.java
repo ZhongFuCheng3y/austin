@@ -170,16 +170,18 @@ public class Convert4Amis {
                         .build();
                 List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
                 for (String datum : data) {
-                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
-                    CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder().name(name).type("input-text").required(true).quickEdit(true);
-                    if (datum.contains("first")) {
-                        dtoBuilder.label("名字");
-                    } else if (datum.contains("remark")) {
-                        dtoBuilder.label("备注");
-                    } else {
-                        dtoBuilder.label(datum.split("：")[0]);
+                    if (StrUtil.isNotEmpty(datum)) {
+                        String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
+                        CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder().name(name).type("input-text").required(true).quickEdit(true);
+                        if (datum.contains("first")) {
+                            dtoBuilder.label("名字");
+                        } else if (datum.contains("remark")) {
+                            dtoBuilder.label("备注");
+                        } else {
+                            dtoBuilder.label(datum.split("：")[0]);
+                        }
+                        columnsDtoS.add(dtoBuilder.build());
                     }
-                    columnsDtoS.add(dtoBuilder.build());
                 }
                 officialAccountParam.setColumns(columnsDtoS);
 
