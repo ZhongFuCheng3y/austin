@@ -1,7 +1,7 @@
 version: "2.2"
 services:
   jobmanager:
-    image: flink:latest
+    image: flink:1.16.1
     ports:
       - "8081:8081"
     command: jobmanager
@@ -13,7 +13,7 @@ services:
       - CONTAINER_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
   taskmanager:
-    image: flink:latest
+    image: flink:1.16.1
     depends_on:
       - jobmanager
     command: taskmanager

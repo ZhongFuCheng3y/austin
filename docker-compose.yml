@@ -57,7 +57,7 @@ services:
     networks:
       - app
   jobmanager:
-    image: flink:latest
+    image: flink:1.16.1
     ports:
       - "8081:8081"
     command:
@@ -77,7 +77,7 @@ services:
     networks:
       - app
   taskmanager:
-    image: flink:latest
+    image: flink:1.16.1
     depends_on:
       - jobmanager
       - austin-zookeeper
