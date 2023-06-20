@@ -182,6 +182,12 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         messageTemplate.setUpdator(messageTemplate.getUpdator())
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode());
 
+        // 从数据库查询并注入 定时任务 ID
+        MessageTemplate dbMsg = queryById(messageTemplate.getId());
+        if (Objects.nonNull(dbMsg) && Objects.nonNull(dbMsg.getCronTaskId())) {
+            messageTemplate.setCronTaskId(dbMsg.getCronTaskId());
+        }
+
         if (Objects.nonNull(messageTemplate.getCronTaskId()) && TemplateType.CLOCKING.getCode().equals(messageTemplate.getTemplateType())) {
             XxlJobInfo xxlJobInfo = xxlJobUtils.buildXxlJobInfo(messageTemplate);
             cronTaskService.saveCronTask(xxlJobInfo);
