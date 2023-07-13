@@ -2,6 +2,7 @@ package com.java3y.austin.service.api.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 
@@ -13,6 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
+@NoArgsConstructor
 public class SendResponse {
     /**
      * 响应状态
