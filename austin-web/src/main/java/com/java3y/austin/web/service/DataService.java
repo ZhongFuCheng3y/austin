@@ -13,6 +13,14 @@ import com.java3y.austin.web.vo.amis.UserTimeLineVo;
 public interface DataService {
 
     /**
+     * 获取全链路追踪 消息自身维度信息
+     *
+     * @param messageId 消息
+     * @return
+     */
+    UserTimeLineVo getTraceMessageInfo(String messageId);
+
+    /**
      * 获取全链路追踪 用户维度信息
      *
      * @param receiver 接收者

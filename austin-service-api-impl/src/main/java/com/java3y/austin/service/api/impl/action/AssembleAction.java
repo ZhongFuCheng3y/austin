@@ -79,6 +79,8 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
         for (MessageParam messageParam : messageParamList) {
 
             TaskInfo taskInfo = TaskInfo.builder()
+                    .messageId(TaskInfoUtils.generateMessageId())
+                    .bizId(messageParam.getBizId())
                     .messageTemplateId(messageTemplate.getId())
                     .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
                     .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
@@ -89,6 +91,10 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
                     .shieldType(messageTemplate.getShieldType())
                     .sendAccount(messageTemplate.getSendAccount())
                     .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
+
+            if (StrUtil.isBlank(taskInfo.getBizId())) {
+                taskInfo.setBizId(taskInfo.getMessageId());
+            }
 
             taskInfoList.add(taskInfo);
         }

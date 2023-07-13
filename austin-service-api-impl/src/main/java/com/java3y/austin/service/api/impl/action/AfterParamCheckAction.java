@@ -4,6 +4,7 @@ package com.java3y.austin.service.api.impl.action;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import com.alibaba.fastjson.JSON;
+import com.java3y.austin.common.domain.SimpleTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.IdType;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -49,8 +50,11 @@ public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
         filterIllegalReceiver(taskInfo);
 
         if (CollUtil.isEmpty(taskInfo)) {
-            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
+            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS, "手机号或邮箱不合法, 无有效的发送任务"));
         }
+
+        // 数据组装
+        context.setResponse(BasicResultVO.success(taskInfo.stream().map(v -> SimpleTaskInfo.builder().businessId(v.getBusinessId()).messageId(v.getMessageId()).bizId(v.getBizId()).build()).collect(Collectors.toList())));
     }
 
     /**

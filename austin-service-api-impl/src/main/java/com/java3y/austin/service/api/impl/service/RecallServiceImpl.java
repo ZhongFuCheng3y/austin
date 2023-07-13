@@ -27,7 +27,7 @@ public class RecallServiceImpl implements RecallService {
     @Override
     public SendResponse recall(SendRequest sendRequest) {
         if(ObjectUtils.isEmpty(sendRequest)){
-            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg());
+            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg(), null);
         }
         SendTaskModel sendTaskModel = SendTaskModel.builder()
                 .messageTemplateId(sendRequest.getMessageTemplateId())
@@ -38,6 +38,6 @@ public class RecallServiceImpl implements RecallService {
                 .needBreak(false)
                 .response(BasicResultVO.success()).build();
         ProcessContext process = processController.process(context);
-        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg());
+        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg(), null);
     }
 }

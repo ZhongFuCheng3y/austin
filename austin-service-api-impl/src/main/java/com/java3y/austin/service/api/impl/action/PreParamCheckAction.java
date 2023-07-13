@@ -34,7 +34,7 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
 
         // 1.没有传入 消息模板Id 或者 messageParam
         if (Objects.isNull(messageTemplateId) || CollUtil.isEmpty(messageParamList)) {
-            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
+            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS, "模板ID或参数列表为空"));
             return;
         }
 
@@ -43,7 +43,7 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
                 .filter(messageParam -> !StrUtil.isBlank(messageParam.getReceiver()))
                 .collect(Collectors.toList());
         if (CollUtil.isEmpty(resultMessageParamList)) {
-            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS));
+            context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS, "含接受者的参数列表为空"));
             return;
         }
 
