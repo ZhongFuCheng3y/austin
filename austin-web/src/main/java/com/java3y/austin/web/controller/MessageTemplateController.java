@@ -133,7 +133,7 @@ public class MessageTemplateController {
     @ApiOperation("/测试发送接口")
     public SendResponse test(@RequestBody MessageTemplateParam messageTemplateParam) {
 
-        Map<String, String> variables = JSON.parseObject(messageTemplateParam.getMsgContent(), Map.class);
+        Map<String, Object> variables = JSON.parseObject(messageTemplateParam.getMsgContent(), Map.class);
         MessageParam messageParam = MessageParam.builder().receiver(messageTemplateParam.getReceiver()).variables(variables).build();
         SendRequest sendRequest = SendRequest.builder().code(BusinessCode.COMMON_SEND.getCode()).messageTemplateId(messageTemplateParam.getId()).messageParam(messageParam).build();
         SendResponse response = sendService.send(sendRequest);

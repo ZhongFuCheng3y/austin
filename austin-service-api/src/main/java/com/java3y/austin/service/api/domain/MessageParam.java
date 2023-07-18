@@ -33,11 +33,11 @@ public class MessageParam {
      * @Description: 消息内容中的可变部分(占位符替换)
      * 可选
      */
-    private Map<String, String> variables;
+    private Map<String, Object> variables;
 
     /**
      * @Description: 扩展参数
      * 可选
      */
-    private Map<String, String> extra;
+    private Map<String, Object> extra;
 }

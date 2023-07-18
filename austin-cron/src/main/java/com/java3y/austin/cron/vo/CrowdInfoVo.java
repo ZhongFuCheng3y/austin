@@ -35,5 +35,5 @@ public class CrowdInfoVo implements Serializable {
     /**
      * 参数信息
      */
-    private Map<String, String> params;
+    private Map<String, Object> params;
 }

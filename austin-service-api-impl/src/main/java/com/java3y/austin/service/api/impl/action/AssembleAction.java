@@ -108,7 +108,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
         Class<? extends ContentModel> contentModelClass = ChannelType.getChanelModelClassByCode(sendChannel);
 
         // 得到模板的 msgContent 和 入参
-        Map<String, String> variables = messageParam.getVariables();
+        Map<String, Object> variables = messageParam.getVariables();
         JSONObject jsonObject = JSON.parseObject(messageTemplate.getMsgContent());
 
 

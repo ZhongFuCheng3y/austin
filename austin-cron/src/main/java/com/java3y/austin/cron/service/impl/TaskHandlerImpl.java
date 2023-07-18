@@ -57,7 +57,7 @@ public class TaskHandlerImpl implements TaskHandler {
             }
 
             // 3. 每一行处理交给LazyPending
-            HashMap<String, String> params = ReadFileUtils.getParamFromLine(row.getFieldMap());
+            HashMap<String, Object> params = ReadFileUtils.getParamFromLine(row.getFieldMap());
             CrowdInfoVo crowdInfoVo = CrowdInfoVo.builder().receiver(row.getFieldMap().get(ReadFileUtils.RECEIVER_KEY))
                     .params(params).messageTemplateId(messageTemplateId).build();
             crowdBatchTaskPending.pending(crowdInfoVo);

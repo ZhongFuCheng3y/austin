@@ -69,8 +69,8 @@ public class ReadFileUtils {
      * @param fieldMap
      * @return
      */
-    public static HashMap<String, String> getParamFromLine(Map<String, String> fieldMap) {
-        HashMap<String, String> params = MapUtil.newHashMap();
+    public static HashMap<String, Object> getParamFromLine(Map<String, String> fieldMap) {
+        HashMap<String, Object> params = MapUtil.newHashMap();
         for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
             if (!ReadFileUtils.RECEIVER_KEY.equals(entry.getKey())) {
                 params.put(entry.getKey(), entry.getValue());
@@ -101,7 +101,7 @@ public class ReadFileUtils {
             CsvRow headerInfo = data.getRow(0);
             for (int i = 1; i < data.getRowCount(); i++) {
                 CsvRow row = data.getRow(i);
-                Map<String, String> param = MapUtil.newHashMap();
+                Map<String, Object> param = MapUtil.newHashMap();
                 for (int j = 1; j < headerInfo.size(); j++) {
                     param.put(headerInfo.get(j), row.get(j));
                 }

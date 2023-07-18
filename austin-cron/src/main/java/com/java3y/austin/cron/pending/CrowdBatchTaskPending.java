@@ -53,10 +53,10 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
     public void doHandle(List<CrowdInfoVo> crowdInfoVos) {
 
         // 1. 如果参数相同，组装成同一个MessageParam发送
-        Map<Map<String, String>, String> paramMap = MapUtil.newHashMap();
+        Map<Map<String, Object>, String> paramMap = MapUtil.newHashMap();
         for (CrowdInfoVo crowdInfoVo : crowdInfoVos) {
             String receiver = crowdInfoVo.getReceiver();
-            Map<String, String> vars = crowdInfoVo.getParams();
+            Map<String, Object> vars = crowdInfoVo.getParams();
             if (Objects.isNull(paramMap.get(vars))) {
                 paramMap.put(vars, receiver);
             } else {
@@ -68,7 +68,7 @@ public class CrowdBatchTaskPending extends AbstractLazyPending<CrowdInfoVo> {
 
         // 2. 组装参数
         List<MessageParam> messageParams = Lists.newArrayList();
-        for (Map.Entry<Map<String, String>, String> entry : paramMap.entrySet()) {
+        for (Map.Entry<Map<String, Object>, String> entry : paramMap.entrySet()) {
             MessageParam messageParam = MessageParam.builder().receiver(entry.getValue())
                     .variables(entry.getKey()).build();
             messageParams.add(messageParam);
