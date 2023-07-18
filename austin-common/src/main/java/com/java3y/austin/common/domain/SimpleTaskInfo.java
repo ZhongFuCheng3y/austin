@@ -5,21 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 /**
- * 埋点信息
- *
- * @author 3y
+ * @Author: sky
+ * @Date: 2023/7/13 10:43
+ * @Description: SimpleTaskInfo
+ * @Version 1.0.0
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnchorInfo {
+public class SimpleTaskInfo {
+
     /**
-     * 消息唯一Id(数据追踪使用)
-     * 生成逻辑参考 TaskInfoUtils
+     * 业务消息发送Id, 用于链路追踪, 若不存在, 则使用 messageId
      */
     private String bizId;
 
@@ -28,28 +27,10 @@ public class AnchorInfo {
      * 生成逻辑参考 TaskInfoUtils
      */
     private String messageId;
-    /**
-     * 发送用户
-     */
-    private Set<String> ids;
-
-    /**
-     * 具体点位
-     *
-     * @see com.java3y.austin.common.enums.AnchorState
-     */
-    private int state;
 
     /**
      * 业务Id(数据追踪使用)
      * 生成逻辑参考 TaskInfoUtils
      */
     private Long businessId;
-
-
-    /**
-     * 日志生成时间
-     */
-    private long logTimestamp;
-
 }

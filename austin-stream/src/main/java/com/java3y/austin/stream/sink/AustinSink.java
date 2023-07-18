@@ -1,8 +1,10 @@
 package com.java3y.austin.stream.sink;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.stream.utils.LettuceRedisUtils;
@@ -10,6 +12,7 @@ import io.lettuce.core.RedisFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,12 +44,20 @@ public class AustinSink implements SinkFunction<AnchorInfo> {
             LettuceRedisUtils.pipeline(redisAsyncCommands -> {
                 List<RedisFuture<?>> redisFutures = new ArrayList<>();
                 /**
+                 * 1.构建messageId维度的链路信息 数据结构list:{key,list}
+                 * key:Austin:MessageId:{messageId},listValue:[{timestamp,state,businessId},{timestamp,state,businessId}]
+                 */
+                String redisMessageKey = StrUtil.join(StrUtil.COLON, AustinConstant.CACHE_KEY_PREFIX, AustinConstant.MESSAGE_ID, info.getMessageId());
+                SimpleAnchorInfo messageAnchorInfo = SimpleAnchorInfo.builder().businessId(info.getBusinessId()).state(info.getState()).timestamp(info.getLogTimestamp()).build();
+                redisFutures.add(redisAsyncCommands.lpush(redisMessageKey.getBytes(), JSON.toJSONString(messageAnchorInfo).getBytes()));
+                redisFutures.add(redisAsyncCommands.expire(redisMessageKey.getBytes(), Duration.ofDays(3).toMillis() / 1000));
+                /**
                  * 1.构建userId维度的链路信息 数据结构list:{key,list}
                  * key:userId,listValue:[{timestamp,state,businessId},{timestamp,state,businessId}]
                  */
-                SimpleAnchorInfo simpleAnchorInfo = SimpleAnchorInfo.builder().businessId(info.getBusinessId()).state(info.getState()).timestamp(info.getLogTimestamp()).build();
+                SimpleAnchorInfo userAnchorInfo = SimpleAnchorInfo.builder().businessId(info.getBusinessId()).state(info.getState()).timestamp(info.getLogTimestamp()).build();
                 for (String id : info.getIds()) {
-                    redisFutures.add(redisAsyncCommands.lpush(id.getBytes(), JSON.toJSONString(simpleAnchorInfo).getBytes()));
+                    redisFutures.add(redisAsyncCommands.lpush(id.getBytes(), JSON.toJSONString(userAnchorInfo).getBytes()));
                     redisFutures.add(redisAsyncCommands.expire(id.getBytes(), (DateUtil.endOfDay(new Date()).getTime() - DateUtil.current()) / 1000));
                 }
 

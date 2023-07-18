@@ -1,6 +1,6 @@
 package com.java3y.austin.service.api.domain;
 
-import com.java3y.austin.common.domain.SimpleTaskInfo;
+import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,17 +8,17 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
-
 /**
- * 发送接口返回值
- *
- * @author 3y
+ * @Author: sky
+ * @Date: 2023/7/13 13:38
+ * @Description: TraceResponse
+ * @Version 1.0.0
  */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class SendResponse {
+public class TraceResponse {
     /**
      * 响应状态
      */
@@ -29,8 +29,7 @@ public class SendResponse {
     private String msg;
 
     /**
-     * 实际发送任务列表
+     * 埋点信息
      */
-    private List<SimpleTaskInfo> data;
-
+    private List<SimpleAnchorInfo> data;
 }

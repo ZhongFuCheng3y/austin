@@ -27,6 +27,10 @@ public class AustinConstant {
      */
     public static final String SEND_ALL = "@all";
 
+    public static final String CACHE_KEY_PREFIX = "Austin";
+
+
+    public static final String MESSAGE_ID = "MessageId";
 
     /**
      * 默认的常量，如果新建模板/账号时，没传入则用该常量

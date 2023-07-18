@@ -1,6 +1,7 @@
 package com.java3y.austin.service.api.impl.service;
 
 import cn.monitor4all.logRecord.annotation.OperationLog;
+import com.java3y.austin.common.domain.SimpleTaskInfo;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.BatchSendRequest;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * 发送接口
@@ -31,7 +33,7 @@ public class SendServiceImpl implements SendService {
     @OperationLog(bizType = "SendService#send", bizId = "#sendRequest.messageTemplateId", msg = "#sendRequest")
     public SendResponse send(SendRequest sendRequest) {
         if(ObjectUtils.isEmpty(sendRequest)){
-            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg());
+            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg(), null);
         }
 
         SendTaskModel sendTaskModel = SendTaskModel.builder()
@@ -47,7 +49,7 @@ public class SendServiceImpl implements SendService {
 
         ProcessContext process = processController.process(context);
 
-        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg());
+        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg(), (List<SimpleTaskInfo>) process.getResponse().getData());
     }
 
     @Override
@@ -66,7 +68,7 @@ public class SendServiceImpl implements SendService {
 
         ProcessContext process = processController.process(context);
 
-        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg());
+        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg(), null);
     }
 
 
