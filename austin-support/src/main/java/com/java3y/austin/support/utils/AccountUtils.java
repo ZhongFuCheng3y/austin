@@ -123,6 +123,7 @@ public class AccountUtils {
         config.setAppId(officialAccount.getAppId());
         config.setSecret(officialAccount.getSecret());
         config.setToken(officialAccount.getToken());
+        config.useStableAccessToken(true);
         wxMpService.setWxMpConfigStorage(config);
         return wxMpService;
     }
@@ -138,6 +139,7 @@ public class AccountUtils {
         WxMaRedisBetterConfigImpl config = new WxMaRedisBetterConfigImpl(redisTemplateWxRedisOps(), SendAccountConstant.MINI_PROGRAM_TOKEN_PREFIX);
         config.setAppid(miniProgramAccount.getAppId());
         config.setSecret(miniProgramAccount.getAppSecret());
+        config.useStableAccessToken(true);
         wxMaService.setWxMaConfig(config);
         return wxMaService;
     }
