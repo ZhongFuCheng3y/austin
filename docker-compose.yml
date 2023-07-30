@@ -24,7 +24,7 @@ services:
     restart: always
     container_name: austin-redis
     volumes:
-      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./doc/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:rw
     command:
       /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf"
     networks:
