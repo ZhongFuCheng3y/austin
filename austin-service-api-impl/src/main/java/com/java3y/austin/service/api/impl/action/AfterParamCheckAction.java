@@ -51,6 +51,7 @@ public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
 
         if (CollUtil.isEmpty(taskInfo)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS, "手机号或邮箱不合法, 无有效的发送任务"));
+            return;
         }
 
         // 数据组装
