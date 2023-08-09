@@ -68,7 +68,7 @@ public class RefreshDingDingAccessTokenHandler {
      * @param account
      * @return
      */
-    private String getAccessToken(DingDingWorkNoticeAccount account) {
+    public String getAccessToken(DingDingWorkNoticeAccount account) {
         String accessToken = "";
         try {
             DingTalkClient client = new DefaultDingTalkClient(URL);

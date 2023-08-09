@@ -67,7 +67,7 @@ public class RefreshGeTuiAccessTokenHandler {
      * @param account
      * @return
      */
-    private String getAccessToken(GeTuiAccount account) {
+    public String getAccessToken(GeTuiAccount account) {
         String accessToken = "";
         try {
             String url = "https://restapi.getui.com/v2/" + account.getAppId() + "/auth";

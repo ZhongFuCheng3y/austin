@@ -53,6 +53,10 @@
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.java3y.austin</groupId>
+            <artifactId>austin-cron</artifactId>
+        </dependency>
 
     </dependencies>
 </project>
