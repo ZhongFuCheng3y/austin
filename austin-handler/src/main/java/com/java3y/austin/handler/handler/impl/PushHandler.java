@@ -2,6 +2,7 @@ package com.java3y.austin.handler.handler.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -19,6 +20,7 @@ import com.java3y.austin.handler.domain.push.getui.SendPushResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.domain.MessageTemplate;
+import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,7 @@ public class PushHandler extends BaseHandler implements Handler {
 
         try {
             GeTuiAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), GeTuiAccount.class);
-            String token = redisTemplate.opsForValue().get(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
+            String token = getAccessToken(taskInfo, account);
             PushParam pushParam = PushParam.builder().token(token).appId(account.getAppId()).taskInfo(taskInfo).build();
 
             String result;
@@ -145,6 +147,26 @@ public class PushHandler extends BaseHandler implements Handler {
         return taskId;
     }
 
+    /**
+     * 获取第三方token
+     *
+     * @param taskInfo 发送任务信息
+     * @param account  个推账号时的元信息
+     * @return token
+     */
+    private String getAccessToken(TaskInfo taskInfo, GeTuiAccount account) {
+        String token = redisTemplate.opsForValue().get(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
+        if (StrUtil.isNotBlank(token)) {
+            return token;
+        }
+        token = AccessTokenUtils.getGeTuiAccessToken(account);
+        if (StrUtil.isNotBlank(token)) {
+            redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount(), token);
+        } else {
+            log.error("PushHandler#getAccessToken fail taskInfo:{} account:{}", taskInfo, account);
+        }
+        return token;
+    }
 
     private SendPushParam assembleParam(PushContentModel pushContentModel) {
         return assembleParam(pushContentModel, null);

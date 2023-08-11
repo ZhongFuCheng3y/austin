@@ -1,21 +1,15 @@
 package com.java3y.austin.cron.handler;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.http.ContentType;
-import cn.hutool.http.Header;
-import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
-import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.common.enums.ChannelType;
-import com.java3y.austin.cron.dto.getui.GeTuiTokenResultDTO;
-import com.java3y.austin.cron.dto.getui.QueryTokenParamDTO;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import com.java3y.austin.support.dao.ChannelAccountDao;
 import com.java3y.austin.support.domain.ChannelAccount;
+import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +47,7 @@ public class RefreshGeTuiAccessTokenHandler {
             List<ChannelAccount> accountList = channelAccountDao.findAllByIsDeletedEqualsAndSendChannelEquals(CommonConstant.FALSE, ChannelType.PUSH.getCode());
             for (ChannelAccount channelAccount : accountList) {
                 GeTuiAccount account = JSON.parseObject(channelAccount.getAccountConfig(), GeTuiAccount.class);
-                String accessToken = getAccessToken(account);
+                String accessToken = AccessTokenUtils.getGeTuiAccessToken(account);
                 if (StrUtil.isNotBlank(accessToken)) {
                     redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
                 }
@@ -61,35 +55,6 @@ public class RefreshGeTuiAccessTokenHandler {
         });
     }
 
-    /**
-     * 获取 access_token
-     *
-     * @param account
-     * @return
-     */
-    private String getAccessToken(GeTuiAccount account) {
-        String accessToken = "";
-        try {
-            String url = "https://restapi.getui.com/v2/" + account.getAppId() + "/auth";
-            String time = String.valueOf(System.currentTimeMillis());
-            String digest = SecureUtil.sha256().digestHex(account.getAppKey() + time + account.getMasterSecret());
-            QueryTokenParamDTO param = QueryTokenParamDTO.builder()
-                    .timestamp(time)
-                    .appKey(account.getAppKey())
-                    .sign(digest).build();
 
-            String body = HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
-                    .body(JSON.toJSONString(param))
-                    .timeout(20000)
-                    .execute().body();
-            GeTuiTokenResultDTO geTuiTokenResultDTO = JSON.parseObject(body, GeTuiTokenResultDTO.class);
-            if (geTuiTokenResultDTO.getCode().equals(0)) {
-                accessToken = geTuiTokenResultDTO.getData().getToken();
-            }
-        } catch (Exception e) {
-            log.error("RefreshGeTuiAccessTokenHandler#getAccessToken fail:{}", Throwables.getStackTraceAsString(e));
-        }
-        return accessToken;
-    }
 
 }
