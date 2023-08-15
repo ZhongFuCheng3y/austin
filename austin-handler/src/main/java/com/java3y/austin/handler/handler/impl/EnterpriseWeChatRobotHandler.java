@@ -5,6 +5,7 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.EnterpriseWeChatRobotAccount;
 import com.java3y.austin.common.dto.model.EnterpriseWeChatRobotContentModel;
@@ -14,7 +15,6 @@ import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRobotParam;
 import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRootResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +85,9 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
         return param;
     }
 
+
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

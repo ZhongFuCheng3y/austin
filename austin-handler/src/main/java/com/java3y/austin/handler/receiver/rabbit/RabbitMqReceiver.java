@@ -1,10 +1,10 @@
 package com.java3y.austin.handler.receiver.rabbit;
 
 import com.alibaba.fastjson.JSON;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
-import com.java3y.austin.support.domain.MessageTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
@@ -51,8 +51,8 @@ public class RabbitMqReceiver {
             consumeService.consume2Send(taskInfoLists);
         } else if (MSG_TYPE_RECALL.equals(messageType)) {
             // 处理撤回消息
-            MessageTemplate messageTemplate = JSON.parseObject(messageContent, MessageTemplate.class);
-            consumeService.consume2recall(messageTemplate);
+            RecallTaskInfo recallTaskInfo = JSON.parseObject(messageContent, RecallTaskInfo.class);
+            consumeService.consume2recall(recallTaskInfo);
         }
 
     }

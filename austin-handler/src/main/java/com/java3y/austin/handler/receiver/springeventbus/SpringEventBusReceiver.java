@@ -1,9 +1,9 @@
 package com.java3y.austin.handler.receiver.springeventbus;
 
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
-import com.java3y.austin.support.domain.MessageTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class SpringEventBusReceiver {
         consumeService.consume2Send(lists);
     }
 
-    public void recall(MessageTemplate messageTemplate) {
-        consumeService.consume2recall(messageTemplate);
+    public void recall(RecallTaskInfo recallTaskInfo) {
+        consumeService.consume2recall(recallTaskInfo);
     }
 }

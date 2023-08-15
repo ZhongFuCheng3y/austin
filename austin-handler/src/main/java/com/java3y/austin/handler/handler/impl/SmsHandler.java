@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.sms.SmsAccount;
 import com.java3y.austin.common.dto.model.SmsContentModel;
@@ -16,7 +17,6 @@ import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.handler.script.SmsScript;
 import com.java3y.austin.support.dao.SmsRecordDao;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.service.ConfigService;
 import com.java3y.austin.support.utils.AccountUtils;
@@ -182,7 +182,7 @@ public class SmsHandler extends BaseHandler implements Handler {
     }
 
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

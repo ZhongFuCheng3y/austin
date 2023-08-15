@@ -8,6 +8,7 @@ import com.dtp.core.thread.ThreadPoolBuilder;
 import com.java3y.austin.common.constant.ThreadPoolConstant;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +35,7 @@ public class CronAsyncThreadPoolConfig {
         return ExecutorBuilder.create()
                 .setCorePoolSize(ThreadPoolConstant.COMMON_CORE_POOL_SIZE)
                 .setMaxPoolSize(ThreadPoolConstant.COMMON_MAX_POOL_SIZE)
-                .setWorkQueue(ThreadPoolConstant.BIG_BLOCKING_QUEUE)
+                .setWorkQueue(new LinkedBlockingQueue(ThreadPoolConstant.BIG_QUEUE_SIZE))
                 .setHandler(new ThreadPoolExecutor.CallerRunsPolicy())
                 .setAllowCoreThreadTimeOut(true)
                 .setKeepAliveTime(ThreadPoolConstant.SMALL_KEEP_LIVE_TIME, TimeUnit.SECONDS)

@@ -43,7 +43,7 @@ public class AustinFileUtils {
     /**
      * 读取 远程链接集合 返回有效的File对象集合
      *
-     * @param path      文件路径
+     * @param path       文件路径
      * @param remoteUrls cdn/oss文件访问链接集合
      * @return
      */

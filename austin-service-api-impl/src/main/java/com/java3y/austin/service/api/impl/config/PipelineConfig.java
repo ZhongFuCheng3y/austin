@@ -2,10 +2,12 @@ package com.java3y.austin.service.api.impl.config;
 
 
 import com.java3y.austin.service.api.enums.BusinessCode;
-import com.java3y.austin.service.api.impl.action.AfterParamCheckAction;
-import com.java3y.austin.service.api.impl.action.AssembleAction;
-import com.java3y.austin.service.api.impl.action.PreParamCheckAction;
-import com.java3y.austin.service.api.impl.action.SendMqAction;
+import com.java3y.austin.service.api.impl.action.recall.RecallAssembleAction;
+import com.java3y.austin.service.api.impl.action.recall.RecallMqAction;
+import com.java3y.austin.service.api.impl.action.send.SendAfterCheckAction;
+import com.java3y.austin.service.api.impl.action.send.SendAssembleAction;
+import com.java3y.austin.service.api.impl.action.send.SendMqAction;
+import com.java3y.austin.service.api.impl.action.send.SendPreCheckAction;
 import com.java3y.austin.support.pipeline.ProcessController;
 import com.java3y.austin.support.pipeline.ProcessTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,19 @@ import java.util.Map;
 public class PipelineConfig {
 
     @Autowired
-    private PreParamCheckAction preParamCheckAction;
+    private SendPreCheckAction sendPreCheckAction;
     @Autowired
-    private AssembleAction assembleAction;
+    private SendAssembleAction sendAssembleAction;
     @Autowired
-    private AfterParamCheckAction afterParamCheckAction;
+    private SendAfterCheckAction sendAfterCheckAction;
     @Autowired
     private SendMqAction sendMqAction;
+
+    @Autowired
+    private RecallAssembleAction recallAssembleAction;
+    @Autowired
+    private RecallMqAction recallMqAction;
+
 
     /**
      * 普通发送执行流程
@@ -45,8 +53,8 @@ public class PipelineConfig {
     @Bean("commonSendTemplate")
     public ProcessTemplate commonSendTemplate() {
         ProcessTemplate processTemplate = new ProcessTemplate();
-        processTemplate.setProcessList(Arrays.asList(preParamCheckAction, assembleAction,
-                afterParamCheckAction, sendMqAction));
+        processTemplate.setProcessList(Arrays.asList(sendPreCheckAction, sendAssembleAction,
+                sendAfterCheckAction, sendMqAction));
         return processTemplate;
     }
 
@@ -60,7 +68,7 @@ public class PipelineConfig {
     @Bean("recallMessageTemplate")
     public ProcessTemplate recallMessageTemplate() {
         ProcessTemplate processTemplate = new ProcessTemplate();
-        processTemplate.setProcessList(Arrays.asList(assembleAction, sendMqAction));
+        processTemplate.setProcessList(Arrays.asList(recallAssembleAction, recallMqAction));
         return processTemplate;
     }
 

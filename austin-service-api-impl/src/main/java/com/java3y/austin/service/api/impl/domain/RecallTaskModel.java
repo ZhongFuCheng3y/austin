@@ -1,7 +1,6 @@
 package com.java3y.austin.service.api.impl.domain;
 
-import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.service.api.domain.MessageParam;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.support.pipeline.ProcessModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SendTaskModel implements ProcessModel {
+public class RecallTaskModel implements ProcessModel {
 
     /**
      * 消息模板Id
@@ -27,13 +26,12 @@ public class SendTaskModel implements ProcessModel {
     private Long messageTemplateId;
 
     /**
-     * 请求参数
+     * 需要撤回的消息ids
      */
-    private List<MessageParam> messageParamList;
+    private List<String> recallMessageId;
 
     /**
-     * 发送任务的信息
+     * 撤回任务 domain
      */
-    private List<TaskInfo> taskInfo;
-
+    private RecallTaskInfo recallTaskInfo;
 }

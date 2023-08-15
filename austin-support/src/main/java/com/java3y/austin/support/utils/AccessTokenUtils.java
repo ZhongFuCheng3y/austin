@@ -11,6 +11,7 @@ import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.constant.SendChanelUrlConstant;
 import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.support.dto.GeTuiTokenResultDTO;
@@ -19,14 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 获取第三发token工具类
+ *
+ * @author wuhui
  */
 @Slf4j
 public class AccessTokenUtils {
-
-    /**
-     * 钉钉获取token地址
-     */
-    private static final String DING_DING_TOKEN_URL = "https://oapi.dingtalk.com/gettoken";
 
     /**
      * 获取钉钉 access_token
@@ -37,7 +35,7 @@ public class AccessTokenUtils {
     public static String getDingDingAccessToken(DingDingWorkNoticeAccount account) {
         String accessToken = "";
         try {
-            DingTalkClient client = new DefaultDingTalkClient(DING_DING_TOKEN_URL);
+            DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_TOKEN_URL);
             OapiGettokenRequest req = new OapiGettokenRequest();
             req.setAppkey(account.getAppKey());
             req.setAppsecret(account.getAppSecret());
@@ -59,7 +57,7 @@ public class AccessTokenUtils {
     public static String getGeTuiAccessToken(GeTuiAccount account) {
         String accessToken = "";
         try {
-            String url = "https://restapi.getui.com/v2/" + account.getAppId() + "/auth";
+            String url = SendChanelUrlConstant.GE_TUI_BASE_URL + account.getAppId() + SendChanelUrlConstant.GE_TUI_AUTH;
             String time = String.valueOf(System.currentTimeMillis());
             String digest = SecureUtil.sha256().digestHex(account.getAppKey() + time + account.getMasterSecret());
             QueryTokenParamDTO param = QueryTokenParamDTO.builder()

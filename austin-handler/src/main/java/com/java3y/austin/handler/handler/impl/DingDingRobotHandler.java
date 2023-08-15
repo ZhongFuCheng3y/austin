@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.DingDingRobotAccount;
 import com.java3y.austin.common.dto.model.DingDingRobotContentModel;
@@ -16,7 +17,6 @@ import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -137,7 +137,7 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
 
 
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

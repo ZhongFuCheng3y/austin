@@ -4,7 +4,7 @@
 
     <contextName>austin</contextName>
 
-    <!-- 设置日志输出路径  可以使“${}”来使用变量。TODO 后面是可以读配置的 -->
+    <!-- 设置日志输出路径  可以使“${}”来使用变量。-->
     <property name="log.path" value="logs"/>
 
     <springProperty scope="context" name="grayLogIp" source="austin.graylog.ip"/>
@@ -103,12 +103,23 @@
         </encoder>
     </appender>
 
-    <root level="info">
-        <!-- TODO console打印后面可以只针对dev环境的 -->
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="INFO_FILE"/>
-        <appender-ref ref="ERROR_FILE"/>
-        <appender-ref ref="GELF"/>
-    </root>
+    <!--test环境会写到graylog，dev默认不写graylog-->
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="GELF"/>
+        </root>
+    </springProfile>
+
 
 </configuration>

@@ -2,8 +2,8 @@ package com.java3y.austin.cron.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
 import com.java3y.austin.common.constant.CommonConstant;
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
@@ -49,7 +49,7 @@ public class RefreshDingDingAccessTokenHandler {
                 DingDingWorkNoticeAccount account = JSON.parseObject(channelAccount.getAccountConfig(), DingDingWorkNoticeAccount.class);
                 String accessToken = AccessTokenUtils.getDingDingAccessToken(account);
                 if (StrUtil.isNotBlank(accessToken)) {
-                    redisTemplate.opsForValue().set(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
+                    redisTemplate.opsForValue().set(AccessTokenPrefixConstant.DING_DING_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
                 }
             }
         });

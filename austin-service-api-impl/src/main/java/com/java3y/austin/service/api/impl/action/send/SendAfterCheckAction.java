@@ -1,10 +1,9 @@
-package com.java3y.austin.service.api.impl.action;
+package com.java3y.austin.service.api.impl.action.send;
 
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import com.alibaba.fastjson.JSON;
-import com.java3y.austin.common.domain.SimpleTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.IdType;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -28,12 +27,14 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
+public class SendAfterCheckAction implements BusinessProcess<SendTaskModel> {
 
+    /**
+     * 邮件和手机号正则
+     */
+    public static final HashMap<Integer, String> CHANNEL_REGEX_EXP = new HashMap<>();
     public static final String PHONE_REGEX_EXP = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$";
     public static final String EMAIL_REGEX_EXP = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-
-    public static final HashMap<Integer, String> CHANNEL_REGEX_EXP = new HashMap<>();
 
     static {
         CHANNEL_REGEX_EXP.put(IdType.PHONE.getCode(), PHONE_REGEX_EXP);
@@ -46,16 +47,13 @@ public class AfterParamCheckAction implements BusinessProcess<SendTaskModel> {
         SendTaskModel sendTaskModel = context.getProcessModel();
         List<TaskInfo> taskInfo = sendTaskModel.getTaskInfo();
 
-        // 1. 过滤掉不合法的手机号、邮件
+        // 过滤掉不合法的手机号、邮件
         filterIllegalReceiver(taskInfo);
-
         if (CollUtil.isEmpty(taskInfo)) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.CLIENT_BAD_PARAMETERS, "手机号或邮箱不合法, 无有效的发送任务"));
             return;
         }
 
-        // 数据组装
-        context.setResponse(BasicResultVO.success(taskInfo.stream().map(v -> SimpleTaskInfo.builder().businessId(v.getBusinessId()).messageId(v.getMessageId()).bizId(v.getBizId()).build()).collect(Collectors.toList())));
     }
 
     /**

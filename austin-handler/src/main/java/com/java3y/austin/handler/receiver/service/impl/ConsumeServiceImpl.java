@@ -3,6 +3,7 @@ package com.java3y.austin.handler.receiver.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.LogParam;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.handler.handler.HandlerHolder;
@@ -10,7 +11,6 @@ import com.java3y.austin.handler.pending.Task;
 import com.java3y.austin.handler.pending.TaskPendingHolder;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -48,8 +48,8 @@ public class ConsumeServiceImpl implements ConsumeService {
     }
 
     @Override
-    public void consume2recall(MessageTemplate messageTemplate) {
-        logUtils.print(LogParam.builder().bizType(LOG_BIZ_RECALL_TYPE).object(messageTemplate).build());
-        handlerHolder.route(messageTemplate.getSendChannel()).recall(messageTemplate);
+    public void consume2recall(RecallTaskInfo recallTaskInfo) {
+        logUtils.print(LogParam.builder().bizType(LOG_BIZ_RECALL_TYPE).object(recallTaskInfo).build());
+        handlerHolder.route(recallTaskInfo.getSendChannel()).recall(recallTaskInfo);
     }
 }

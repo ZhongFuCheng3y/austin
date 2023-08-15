@@ -2,6 +2,7 @@ package com.java3y.austin.support.mq.eventbus;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.eventbus.EventBus;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import com.java3y.austin.support.domain.MessageTemplate;
@@ -43,7 +44,7 @@ public class EventBusSendMqServiceImpl implements SendMqService {
         if (topic.equals(sendTopic)) {
             eventBus.post(JSON.parseArray(jsonValue, TaskInfo.class));
         } else if (topic.equals(recallTopic)) {
-            eventBus.post(JSON.parseObject(jsonValue, MessageTemplate.class));
+            eventBus.post(JSON.parseObject(jsonValue, RecallTaskInfo.class));
         }
     }
 

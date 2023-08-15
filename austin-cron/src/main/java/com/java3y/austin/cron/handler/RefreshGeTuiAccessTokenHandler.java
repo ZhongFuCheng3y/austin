@@ -2,8 +2,8 @@ package com.java3y.austin.cron.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
 import com.java3y.austin.common.constant.CommonConstant;
-import com.java3y.austin.common.constant.SendAccountConstant;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
@@ -49,12 +49,11 @@ public class RefreshGeTuiAccessTokenHandler {
                 GeTuiAccount account = JSON.parseObject(channelAccount.getAccountConfig(), GeTuiAccount.class);
                 String accessToken = AccessTokenUtils.getGeTuiAccessToken(account);
                 if (StrUtil.isNotBlank(accessToken)) {
-                    redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
+                    redisTemplate.opsForValue().set(AccessTokenPrefixConstant.GE_TUI_ACCESS_TOKEN_PREFIX + channelAccount.getId(), accessToken);
                 }
             }
         });
     }
-
 
 
 }

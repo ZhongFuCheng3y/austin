@@ -65,20 +65,5 @@ public class AlipayMiniProgramAccountServiceImpl implements AlipayMiniProgramAcc
         return requestList;
     }
 
-//    /**
-//     * 初始化支付宝小程序
-//     */
-//    private AlipayClient initService(AlipayMiniProgramAccount alipayMiniProgramAccount) throws AlipayApiException {
-//        AlipayConfig alipayConfig = new AlipayConfig();
-//        alipayConfig.setServerUrl("https://openapi.alipaydev.com/gateway.do");
-//        alipayConfig.setAppId(alipayMiniProgramAccount.getAppId());
-//        alipayConfig.setPrivateKey(alipayMiniProgramAccount.getPrivateKey());
-//        alipayConfig.setFormat("json");
-//        alipayConfig.setAlipayPublicKey(alipayMiniProgramAccount.getAlipayPublicKey());
-//        alipayConfig.setCharset("utf-8");
-//        alipayConfig.setSignType("RSA2");
-//        return new DefaultAlipayClient(alipayConfig);
-//    }
-
 
 }

@@ -32,7 +32,7 @@ public class SendServiceImpl implements SendService {
     @Override
     @OperationLog(bizType = "SendService#send", bizId = "#sendRequest.messageTemplateId", msg = "#sendRequest")
     public SendResponse send(SendRequest sendRequest) {
-        if(ObjectUtils.isEmpty(sendRequest)){
+        if (ObjectUtils.isEmpty(sendRequest)) {
             return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg(), null);
         }
 
@@ -55,6 +55,10 @@ public class SendServiceImpl implements SendService {
     @Override
     @OperationLog(bizType = "SendService#batchSend", bizId = "#batchSendRequest.messageTemplateId", msg = "#batchSendRequest")
     public SendResponse batchSend(BatchSendRequest batchSendRequest) {
+        if (ObjectUtils.isEmpty(batchSendRequest)) {
+            return new SendResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg(), null);
+        }
+
         SendTaskModel sendTaskModel = SendTaskModel.builder()
                 .messageTemplateId(batchSendRequest.getMessageTemplateId())
                 .messageParamList(batchSendRequest.getMessageParamList())
@@ -68,7 +72,7 @@ public class SendServiceImpl implements SendService {
 
         ProcessContext process = processController.process(context);
 
-        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg(), null);
+        return new SendResponse(process.getResponse().getStatus(), process.getResponse().getMsg(), (List<SimpleTaskInfo>) process.getResponse().getData());
     }
 
 

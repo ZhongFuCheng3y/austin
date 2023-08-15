@@ -8,7 +8,9 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.SendAccountConstant;
+import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
+import com.java3y.austin.common.constant.SendChanelUrlConstant;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.GeTuiAccount;
 import com.java3y.austin.common.dto.model.PushContentModel;
@@ -19,7 +21,6 @@ import com.java3y.austin.handler.domain.push.getui.SendPushParam;
 import com.java3y.austin.handler.domain.push.getui.SendPushResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +40,6 @@ import java.util.Set;
 @Component
 @Slf4j
 public class PushHandler extends BaseHandler implements Handler {
-
-    private static final String BASE_URL = "https://restapi.getui.com/v2/";
-    private static final String SINGLE_PUSH_PATH = "/push/single/cid";
-    private static final String BATCH_PUSH_CREATE_TASK_PATH = "/push/list/message";
-    private static final String BATCH_PUSH_PATH = "/push/list/cid";
 
     public PushHandler() {
         channelCode = ChannelType.PUSH.getCode();
@@ -89,7 +85,7 @@ public class PushHandler extends BaseHandler implements Handler {
      * @return http result
      */
     private String singlePush(PushParam pushParam) {
-        String url = BASE_URL + pushParam.getAppId() + SINGLE_PUSH_PATH;
+        String url = SendChanelUrlConstant.GE_TUI_BASE_URL + pushParam.getAppId() + SendChanelUrlConstant.GE_TUI_SINGLE_PUSH_PATH;
         SendPushParam sendPushParam = assembleParam((PushContentModel) pushParam.getTaskInfo().getContentModel(), pushParam.getTaskInfo().getReceiver());
         String body = HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
                 .header("token", pushParam.getToken())
@@ -108,7 +104,7 @@ public class PushHandler extends BaseHandler implements Handler {
      * @return
      */
     private String batchPush(String taskId, PushParam pushParam) {
-        String url = BASE_URL + pushParam.getAppId() + BATCH_PUSH_PATH;
+        String url = SendChanelUrlConstant.GE_TUI_BASE_URL + pushParam.getAppId() + SendChanelUrlConstant.GE_TUI_BATCH_PUSH_PATH;
         BatchSendPushParam batchSendPushParam = BatchSendPushParam.builder()
                 .taskId(taskId)
                 .isAsync(true)
@@ -129,7 +125,7 @@ public class PushHandler extends BaseHandler implements Handler {
      * @return http result
      */
     private String createTaskId(PushParam pushParam) {
-        String url = BASE_URL + pushParam.getAppId() + BATCH_PUSH_CREATE_TASK_PATH;
+        String url = SendChanelUrlConstant.GE_TUI_BASE_URL + pushParam.getAppId() + SendChanelUrlConstant.GE_TUI_BATCH_PUSH_CREATE_TASK_PATH;
         SendPushParam param = assembleParam((PushContentModel) pushParam.getTaskInfo().getContentModel());
         String taskId = "";
         try {
@@ -155,13 +151,13 @@ public class PushHandler extends BaseHandler implements Handler {
      * @return token
      */
     private String getAccessToken(TaskInfo taskInfo, GeTuiAccount account) {
-        String token = redisTemplate.opsForValue().get(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
+        String token = redisTemplate.opsForValue().get(AccessTokenPrefixConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount());
         if (StrUtil.isNotBlank(token)) {
             return token;
         }
         token = AccessTokenUtils.getGeTuiAccessToken(account);
         if (StrUtil.isNotBlank(token)) {
-            redisTemplate.opsForValue().set(SendAccountConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount(), token);
+            redisTemplate.opsForValue().set(AccessTokenPrefixConstant.GE_TUI_ACCESS_TOKEN_PREFIX + taskInfo.getSendAccount(), token);
         } else {
             log.error("PushHandler#getAccessToken fail taskInfo:{} account:{}", taskInfo, account);
         }
@@ -185,8 +181,9 @@ public class PushHandler extends BaseHandler implements Handler {
         return param;
     }
 
+
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

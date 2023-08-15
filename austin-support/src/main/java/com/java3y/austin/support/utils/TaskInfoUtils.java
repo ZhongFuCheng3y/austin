@@ -19,11 +19,13 @@ public class TaskInfoUtils {
 
     /**
      * 生成任务唯一Id
+     *
      * @return
      */
     public static String generateMessageId() {
         return IdUtil.nanoId();
     }
+
     /**
      * 生成BusinessId
      * 模板类型+模板ID+当天日期

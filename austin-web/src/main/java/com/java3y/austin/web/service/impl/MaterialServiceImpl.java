@@ -9,8 +9,9 @@ import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiMediaUploadRequest;
 import com.dingtalk.api.response.OapiMediaUploadResponse;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
 import com.java3y.austin.common.constant.CommonConstant;
-import com.java3y.austin.common.constant.SendAccountConstant;
+import com.java3y.austin.common.constant.SendChanelUrlConstant;
 import com.java3y.austin.common.dto.account.EnterpriseWeChatRobotAccount;
 import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.FileType;
@@ -44,15 +45,13 @@ public class MaterialServiceImpl implements MaterialService {
     @Autowired
     private AccountUtils accountUtils;
 
-    private static final String DING_DING_URL = "https://oapi.dingtalk.com/media/upload";
-    private static final String ENTERPRISE_WE_CHAT_ROBOT_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=<KEY>&type=<TYPE>";
 
     @Override
     public BasicResultVO dingDingMaterialUpload(MultipartFile file, String sendAccount, String fileType) {
         OapiMediaUploadResponse rsp;
         try {
-            String accessToken = redisTemplate.opsForValue().get(SendAccountConstant.DING_DING_ACCESS_TOKEN_PREFIX + sendAccount);
-            DingTalkClient client = new DefaultDingTalkClient(DING_DING_URL);
+            String accessToken = redisTemplate.opsForValue().get(AccessTokenPrefixConstant.DING_DING_ACCESS_TOKEN_PREFIX + sendAccount);
+            DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_UPLOAD_URL);
             OapiMediaUploadRequest req = new OapiMediaUploadRequest();
             FileItem item = new FileItem(new StringBuilder().append(IdUtil.fastSimpleUUID()).append(file.getOriginalFilename()).toString(),
                     file.getInputStream());
@@ -74,7 +73,9 @@ public class MaterialServiceImpl implements MaterialService {
         try {
             EnterpriseWeChatRobotAccount weChatRobotAccount = accountUtils.getAccountById(Integer.valueOf(sendAccount), EnterpriseWeChatRobotAccount.class);
             String key = weChatRobotAccount.getWebhook().substring(weChatRobotAccount.getWebhook().indexOf(CommonConstant.EQUAL_STRING) + 1);
-            String url = ENTERPRISE_WE_CHAT_ROBOT_URL.replace("<KEY>", key).replace("<TYPE>", "file");
+
+            // 企业微信机器人 默认只上传"file"文件类型
+            String url = SendChanelUrlConstant.ENTERPRISE_WE_CHAT_ROBOT_URL.replace("<KEY>", key).replace("<TYPE>", "file");
             String response = HttpRequest.post(url)
                     .form(IdUtil.fastSimpleUUID(), SpringFileUtils.getFile(multipartFile))
                     .execute().body();

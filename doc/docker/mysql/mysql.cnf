@@ -1,0 +1,5 @@
+[mysqld]
+max_connections=10000
+group_concat_max_len=10240
+wait_timeout=300
+interactive_timeout=500

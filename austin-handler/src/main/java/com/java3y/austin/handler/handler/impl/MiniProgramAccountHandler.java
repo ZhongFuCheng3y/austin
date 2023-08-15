@@ -4,12 +4,12 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.MiniProgramContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +77,9 @@ public class MiniProgramAccountHandler extends BaseHandler implements Handler {
         return templateDataList;
     }
 
+
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

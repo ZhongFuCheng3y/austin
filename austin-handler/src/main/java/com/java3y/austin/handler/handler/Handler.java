@@ -1,7 +1,7 @@
 package com.java3y.austin.handler.handler;
 
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.support.domain.MessageTemplate;
 
 /**
  * @author 3y
@@ -19,9 +19,9 @@ public interface Handler {
     /**
      * 撤回消息
      *
-     * @param messageTemplate
+     * @param recallTaskInfo
      * @return
      */
-    void recall(MessageTemplate messageTemplate);
+    void recall(RecallTaskInfo recallTaskInfo);
 
 }

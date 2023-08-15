@@ -2,6 +2,7 @@ package com.java3y.austin.handler.handler.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.AlipayMiniProgramContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -9,7 +10,6 @@ import com.java3y.austin.handler.alipay.AlipayMiniProgramAccountService;
 import com.java3y.austin.handler.domain.alipay.AlipayMiniProgramParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,8 +60,9 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
         return param;
     }
 
+
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

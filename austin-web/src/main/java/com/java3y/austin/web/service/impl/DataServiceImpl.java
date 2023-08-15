@@ -124,7 +124,7 @@ public class DataServiceImpl implements DataService {
         return businessId;
     }
 
-    private UserTimeLineVo buildUserTimeLineVo(List<SimpleAnchorInfo> sortAnchorList){
+    private UserTimeLineVo buildUserTimeLineVo(List<SimpleAnchorInfo> sortAnchorList) {
         // 1. 对相同的businessId进行分类  {"businessId":[{businessId,state,timeStamp},{businessId,state,timeStamp}]}
         Map<String, List<SimpleAnchorInfo>> map = MapUtil.newHashMap();
         for (SimpleAnchorInfo simpleAnchorInfo : sortAnchorList) {

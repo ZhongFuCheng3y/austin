@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,9 +39,10 @@ public class YunPianSmsScript implements SmsScript {
     @Autowired
     private AccountUtils accountUtils;
 
-    private  static final String PARAMS_SPLIT_KEY = "{|}";
+    private static final String PARAMS_SPLIT_KEY = "{|}";
 
-    private  static final String PARAMS_KV_SPLIT_KEY = "{:}";
+    private static final String PARAMS_KV_SPLIT_KEY = "{:}";
+
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {
 

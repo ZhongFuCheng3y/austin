@@ -7,6 +7,7 @@ import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.RateLimiter;
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.EmailContentModel;
 import com.java3y.austin.common.enums.ChannelType;
@@ -14,7 +15,6 @@ import com.java3y.austin.handler.enums.RateLimitStrategy;
 import com.java3y.austin.handler.flowcontrol.FlowControlParam;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
-import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.support.utils.AustinFileUtils;
 import com.sun.mail.util.MailSSLSocketFactory;
@@ -85,8 +85,9 @@ public class EmailHandler extends BaseHandler implements Handler {
         return account;
     }
 
+
     @Override
-    public void recall(MessageTemplate messageTemplate) {
+    public void recall(RecallTaskInfo recallTaskInfo) {
 
     }
 }

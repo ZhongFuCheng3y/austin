@@ -1,8 +1,8 @@
 package com.java3y.austin.handler.receiver.service;
 
 
+import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
-import com.java3y.austin.support.domain.MessageTemplate;
 
 import java.util.List;
 
@@ -23,10 +23,12 @@ public interface ConsumeService {
 
     /**
      * 从MQ拉到消息进行消费，撤回消息
+     * 如果有 recallMessageId ，则优先撤回 recallMessageId
+     * 如果没有 recallMessageId ，则撤回整个模板的消息
      *
-     * @param messageTemplate
+     * @param recallTaskInfo
      */
-    void consume2recall(MessageTemplate messageTemplate);
+    void consume2recall(RecallTaskInfo recallTaskInfo);
 
 
 }

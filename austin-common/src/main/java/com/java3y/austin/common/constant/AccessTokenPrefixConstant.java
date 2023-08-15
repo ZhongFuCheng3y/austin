@@ -6,7 +6,7 @@ package com.java3y.austin.common.constant;
  *
  * @author 3y
  */
-public class SendAccountConstant {
+public class AccessTokenPrefixConstant {
 
     /**
      * 钉钉 工作应用消息 账号

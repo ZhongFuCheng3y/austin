@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.domain.SimpleAnchorInfo;
 import com.java3y.austin.common.enums.RespStatusEnum;
-import com.java3y.austin.service.api.domain.SendResponse;
 import com.java3y.austin.service.api.domain.TraceResponse;
 import com.java3y.austin.service.api.service.TraceService;
 import com.java3y.austin.support.utils.RedisUtils;

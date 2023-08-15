@@ -28,7 +28,6 @@ public class AustinSink implements SinkFunction<AnchorInfo> {
     @Override
     public void invoke(AnchorInfo anchorInfo, Context context) throws Exception {
         realTimeData(anchorInfo);
-        offlineDate(anchorInfo);
     }
 
 
@@ -43,14 +42,16 @@ public class AustinSink implements SinkFunction<AnchorInfo> {
         try {
             LettuceRedisUtils.pipeline(redisAsyncCommands -> {
                 List<RedisFuture<?>> redisFutures = new ArrayList<>();
+
                 /**
-                 * 1.构建messageId维度的链路信息 数据结构list:{key,list}
+                 * 0.构建messageId维度的链路信息 数据结构list:{key,list}
                  * key:Austin:MessageId:{messageId},listValue:[{timestamp,state,businessId},{timestamp,state,businessId}]
                  */
                 String redisMessageKey = StrUtil.join(StrUtil.COLON, AustinConstant.CACHE_KEY_PREFIX, AustinConstant.MESSAGE_ID, info.getMessageId());
                 SimpleAnchorInfo messageAnchorInfo = SimpleAnchorInfo.builder().businessId(info.getBusinessId()).state(info.getState()).timestamp(info.getLogTimestamp()).build();
                 redisFutures.add(redisAsyncCommands.lpush(redisMessageKey.getBytes(), JSON.toJSONString(messageAnchorInfo).getBytes()));
                 redisFutures.add(redisAsyncCommands.expire(redisMessageKey.getBytes(), Duration.ofDays(3).toMillis() / 1000));
+
                 /**
                  * 1.构建userId维度的链路信息 数据结构list:{key,list}
                  * key:userId,listValue:[{timestamp,state,businessId},{timestamp,state,businessId}]
@@ -77,15 +78,4 @@ public class AustinSink implements SinkFunction<AnchorInfo> {
             log.error("AustinSink#invoke error: {}", Throwables.getStackTraceAsString(e));
         }
     }
-
-    /**
-     * 离线数据存入hive
-     *
-     * @param anchorInfo
-     */
-    private void offlineDate(AnchorInfo anchorInfo) {
-
-    }
-
-
 }
