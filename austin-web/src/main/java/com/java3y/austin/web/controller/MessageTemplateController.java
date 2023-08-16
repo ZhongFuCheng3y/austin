@@ -155,7 +155,7 @@ public class MessageTemplateController {
 
 
     /**
-     * 撤回接口
+     * 撤回接口（根据模板id撤回）
      */
     @PostMapping("recall/{id}")
     @ApiOperation("/撤回消息接口")

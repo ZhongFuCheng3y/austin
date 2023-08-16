@@ -209,8 +209,10 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
 
                 // 优先去除messageId，如果未传入messageId，则按照模板id去除
                 if (CollUtil.isNotEmpty(recallTaskInfo.getRecallMessageId())) {
-                    String taskId = redisTemplate.opsForValue().get(DING_DING_RECALL_KEY_PREFIX + recallTaskInfo.getMessageTemplateId());
-                    recallBiz(account, accessToken, taskId);
+                    for (String messageId : recallTaskInfo.getRecallMessageId()) {
+                        String taskId = redisTemplate.opsForValue().get(DING_DING_RECALL_KEY_PREFIX + messageId);
+                        recallBiz(account, accessToken, taskId);
+                    }
                 } else {
                     while (redisTemplate.opsForList().size(DING_DING_RECALL_KEY_PREFIX + recallTaskInfo.getMessageTemplateId()) > 0) {
                         String taskId = redisTemplate.opsForList().leftPop(DING_DING_RECALL_KEY_PREFIX + recallTaskInfo.getMessageTemplateId());

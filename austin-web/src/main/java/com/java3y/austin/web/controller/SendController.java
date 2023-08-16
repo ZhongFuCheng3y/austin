@@ -4,6 +4,7 @@ package com.java3y.austin.web.controller;
 import com.java3y.austin.service.api.domain.BatchSendRequest;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
+import com.java3y.austin.service.api.service.RecallService;
 import com.java3y.austin.service.api.service.SendService;
 import com.java3y.austin.web.annotation.AustinAspect;
 import io.swagger.annotations.Api;
@@ -24,6 +25,9 @@ public class SendController {
 
     @Autowired
     private SendService sendService;
+
+    @Autowired
+    private RecallService recallService;
 
 
     /**
@@ -48,5 +52,17 @@ public class SendController {
     @PostMapping("/batchSend")
     public SendResponse batchSend(@RequestBody BatchSendRequest batchSendRequest) {
         return sendService.batchSend(batchSendRequest);
+    }
+
+    /**
+     * 优先根据messageId撤回消息，如果messageId不存在则根据模板id撤回
+     *
+     * @param sendRequest
+     * @return
+     */
+    @ApiOperation(value = "撤回消息接口", notes = "优先根据messageId撤回消息，如果messageId不存在则根据模板id撤回")
+    @PostMapping("/recall")
+    public SendResponse recall(@RequestBody SendRequest sendRequest) {
+        return recallService.recall(sendRequest);
     }
 }
