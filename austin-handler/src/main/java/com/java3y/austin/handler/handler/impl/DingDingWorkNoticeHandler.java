@@ -13,7 +13,6 @@ import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
 import com.dingtalk.api.response.OapiMessageCorpconversationGetsendresultResponse;
 import com.dingtalk.api.response.OapiMessageCorpconversationRecallResponse;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.SendChanelUrlConstant;
 import com.java3y.austin.common.domain.LogParam;
@@ -54,6 +53,8 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     @Autowired
     private AccountUtils accountUtils;
     @Autowired
+    private AccessTokenUtils accessTokenUtils;
+    @Autowired
     private StringRedisTemplate redisTemplate;
     @Autowired
     private LogUtils logUtils;
@@ -69,8 +70,9 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     public boolean handler(TaskInfo taskInfo) {
         try {
             DingDingWorkNoticeAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), DingDingWorkNoticeAccount.class);
+            String accessToken = accessTokenUtils.getAccessToken(taskInfo.getSendChannel(), taskInfo.getSendAccount(), account, false);
+
             OapiMessageCorpconversationAsyncsendV2Request request = assembleParam(account, taskInfo);
-            String accessToken = getAccessToken(account, Long.valueOf(taskInfo.getSendAccount()));
             OapiMessageCorpconversationAsyncsendV2Response response = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_SEND_URL).execute(request, accessToken);
 
             // 发送成功后记录TaskId，用于消息撤回(支持当天的)
@@ -179,7 +181,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     public void pull(Long accountId) {
         try {
             DingDingWorkNoticeAccount account = accountUtils.getAccountById(accountId.intValue(), DingDingWorkNoticeAccount.class);
-            String accessToken = getAccessToken(account, accountId);
+            String accessToken = accessTokenUtils.getAccessToken(ChannelType.DING_DING_WORK_NOTICE.getCode(), accountId.intValue(), account, false);
             DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_PULL_URL);
             OapiMessageCorpconversationGetsendresultRequest req = new OapiMessageCorpconversationGetsendresultRequest();
             req.setAgentId(Long.valueOf(account.getAgentId()));
@@ -205,7 +207,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
             try {
                 DingDingWorkNoticeAccount account = accountUtils.getAccountById(recallTaskInfo.getSendAccount(), DingDingWorkNoticeAccount.class);
-                String accessToken = getAccessToken(account, Long.valueOf(recallTaskInfo.getSendAccount()));
+                String accessToken = accessTokenUtils.getAccessToken(recallTaskInfo.getSendChannel(), recallTaskInfo.getSendAccount(), account, false);
 
                 // 优先去除messageId，如果未传入messageId，则按照模板id去除
                 if (CollUtil.isNotEmpty(recallTaskInfo.getRecallMessageId())) {
@@ -241,27 +243,5 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
         OapiMessageCorpconversationRecallResponse rsp = client.execute(req, accessToken);
         logUtils.print(LogParam.builder().bizType(RECALL_BIZ_TYPE).object(JSON.toJSONString(rsp)).build());
     }
-
-    /**
-     * 获取第三方token
-     *
-     * @param account   钉钉工作消息 账号信息
-     * @param accountId 账号ID
-     * @return token
-     */
-    private String getAccessToken(DingDingWorkNoticeAccount account, Long accountId) {
-        String accessToken = redisTemplate.opsForValue().get(AccessTokenPrefixConstant.DING_DING_ACCESS_TOKEN_PREFIX + accountId);
-        if (StrUtil.isNotBlank(accessToken)) {
-            return accessToken;
-        }
-        accessToken = AccessTokenUtils.getDingDingAccessToken(account);
-        if (StrUtil.isNotBlank(accessToken)) {
-            redisTemplate.opsForValue().set(AccessTokenPrefixConstant.DING_DING_ACCESS_TOKEN_PREFIX + accountId, accessToken);
-        } else {
-            log.error("DingDingWorkNoticeHandler#getAccessToken fail accessToken{} accountId{} ", accessToken, accountId);
-        }
-        return accessToken;
-    }
-
 }
 

@@ -5,6 +5,7 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.account.EnterpriseWeChatRobotAccount;
@@ -16,6 +17,7 @@ import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRootResult;
 import com.java3y.austin.handler.handler.BaseHandler;
 import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
+import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
 
     @Autowired
     private AccountUtils accountUtils;
+    @Autowired
+    private LogUtils logUtils;
 
     public EnterpriseWeChatRobotHandler() {
         channelCode = ChannelType.ENTERPRISE_WE_CHAT_ROBOT.getCode();
@@ -51,7 +55,8 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
             if (weChatRootResult.getErrcode() == 0) {
                 return true;
             }
-            log.error("EnterpriseWeChatRobotHandler#handler fail! result:{},params:{}", JSON.toJSONString(weChatRootResult), JSON.toJSONString(taskInfo));
+            logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())
+                    .ids(taskInfo.getReceiver()).state(weChatRootResult.getErrcode()).build());
         } catch (Exception e) {
             log.error("EnterpriseWeChatRobotHandler#handler fail!e:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
         }

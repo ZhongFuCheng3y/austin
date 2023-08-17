@@ -30,7 +30,8 @@ public class ChannelAccount {
 
     /**
      * 发送渠道
-     * 枚举值：com.java3y.austin.common.enums.ChannelType
+     *
+     * @see com.java3y.austin.common.enums.ChannelType
      */
     private Integer sendChannel;
 

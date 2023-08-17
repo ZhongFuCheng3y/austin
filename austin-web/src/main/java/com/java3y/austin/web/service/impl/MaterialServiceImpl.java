@@ -9,15 +9,17 @@ import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiMediaUploadRequest;
 import com.dingtalk.api.response.OapiMediaUploadResponse;
 import com.google.common.base.Throwables;
-import com.java3y.austin.common.constant.AccessTokenPrefixConstant;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendChanelUrlConstant;
+import com.java3y.austin.common.dto.account.DingDingWorkNoticeAccount;
 import com.java3y.austin.common.dto.account.EnterpriseWeChatRobotAccount;
+import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.FileType;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRootResult;
+import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.web.service.MaterialService;
 import com.java3y.austin.web.utils.SpringFileUtils;
@@ -39,18 +41,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Service
 public class MaterialServiceImpl implements MaterialService {
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
     @Autowired
     private AccountUtils accountUtils;
+    @Autowired
+    private AccessTokenUtils accessTokenUtils;
 
 
     @Override
     public BasicResultVO dingDingMaterialUpload(MultipartFile file, String sendAccount, String fileType) {
         OapiMediaUploadResponse rsp;
         try {
-            String accessToken = redisTemplate.opsForValue().get(AccessTokenPrefixConstant.DING_DING_ACCESS_TOKEN_PREFIX + sendAccount);
+            DingDingWorkNoticeAccount account = accountUtils.getAccountById(Integer.valueOf(sendAccount), DingDingWorkNoticeAccount.class);
+            String accessToken = accessTokenUtils.getAccessToken(ChannelType.DING_DING_WORK_NOTICE.getCode(), Integer.valueOf(sendAccount), account, false);
             DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_UPLOAD_URL);
             OapiMediaUploadRequest req = new OapiMediaUploadRequest();
             FileItem item = new FileItem(new StringBuilder().append(IdUtil.fastSimpleUUID()).append(file.getOriginalFilename()).toString(),
