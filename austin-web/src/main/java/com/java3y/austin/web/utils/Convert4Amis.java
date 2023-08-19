@@ -8,11 +8,11 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.SmsStatus;
 import com.java3y.austin.support.domain.ChannelAccount;
+import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.TaskInfoUtils;
 import com.java3y.austin.web.vo.amis.CommonAmisVo;
@@ -386,19 +386,19 @@ public class Convert4Amis {
      * @param businessId
      * @return
      */
-    public static EchartsVo getEchartsVo(Map<Object, Object> anchorResult, String templateName, String businessId) {
+    public static EchartsVo getEchartsVo(Map<Object, Object> anchorResult, MessageTemplate messageTemplate, String businessId) {
         List<String> xAxisList = new ArrayList<>();
         List<Integer> actualData = new ArrayList<>();
         if (CollUtil.isNotEmpty(anchorResult)) {
             anchorResult = MapUtil.sort(anchorResult);
             for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = EnumUtil.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())), AnchorState.class);
+                String description = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), Integer.valueOf(String.valueOf(entry.getKey())));
                 xAxisList.add(description);
                 actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
             }
         }
 
-        String title = "【" + templateName + "】在" + DateUtil.format(DateUtil.parse(String.valueOf(TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)))), DatePattern.CHINESE_DATE_FORMATTER) + "的下发情况：";
+        String title = "【" + messageTemplate.getName() + "】在" + DateUtil.format(DateUtil.parse(String.valueOf(TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)))), DatePattern.CHINESE_DATE_FORMATTER) + "的下发情况：";
 
         return EchartsVo.builder()
                 .title(EchartsVo.TitleVO.builder().text(title).build())

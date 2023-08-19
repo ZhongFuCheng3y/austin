@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskInfo {
+public class TaskInfo implements Serializable {
 
     /**
      * 业务消息发送Id, 用于链路追踪, 若不存在, 则使用 messageId

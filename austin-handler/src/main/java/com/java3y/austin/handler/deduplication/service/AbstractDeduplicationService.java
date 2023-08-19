@@ -27,15 +27,13 @@ public abstract class AbstractDeduplicationService implements DeduplicationServi
 
     @Autowired
     private DeduplicationHolder deduplicationHolder;
+    @Autowired
+    private LogUtils logUtils;
 
     @PostConstruct
     private void init() {
         deduplicationHolder.putService(deduplicationType, this);
     }
-
-    @Autowired
-    private LogUtils logUtils;
-
 
     @Override
     public void deduplication(DeduplicationParam param) {

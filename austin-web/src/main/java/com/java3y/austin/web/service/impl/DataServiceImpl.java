@@ -21,6 +21,7 @@ import com.java3y.austin.support.domain.SmsRecord;
 import com.java3y.austin.support.utils.RedisUtils;
 import com.java3y.austin.support.utils.TaskInfoUtils;
 import com.java3y.austin.web.service.DataService;
+import com.java3y.austin.web.utils.AnchorStateUtils;
 import com.java3y.austin.web.utils.Convert4Amis;
 import com.java3y.austin.web.vo.DataParam;
 import com.java3y.austin.web.vo.amis.EchartsVo;
@@ -91,7 +92,7 @@ public class DataServiceImpl implements DataService {
          */
         Map<Object, Object> anchorResult = redisUtils.hGetAll(getRealBusinessId(businessId));
 
-        return Convert4Amis.getEchartsVo(anchorResult, optional.get().getName(), businessId);
+        return Convert4Amis.getEchartsVo(anchorResult, optional.get(), businessId);
     }
 
     @Override
@@ -151,7 +152,8 @@ public class DataServiceImpl implements DataService {
                     sb.append(StrPool.CRLF);
                 }
                 String startTime = DateUtil.format(new Date(simpleAnchorInfo.getTimestamp()), DatePattern.NORM_DATETIME_PATTERN);
-                String stateDescription = EnumUtil.getDescriptionByCode(simpleAnchorInfo.getState(), AnchorState.class);
+                String stateDescription = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), simpleAnchorInfo.getState());
+
                 sb.append(startTime).append(StrPool.C_COLON).append(stateDescription).append("==>");
             }
 

@@ -2,9 +2,9 @@ package com.java3y.austin.handler.handler.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.google.common.collect.Sets;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
@@ -45,16 +45,13 @@ public class MiniProgramAccountHandler extends BaseHandler implements Handler {
         try {
             MiniProgramContentModel contentModel = (MiniProgramContentModel) taskInfo.getContentModel();
             WxMaService wxMaService = accountUtils.getAccountById(taskInfo.getSendAccount(), WxMaService.class);
-            List<WxMaSubscribeMessage> wxMaSubscribeMessages = assembleReq(taskInfo.getReceiver(), contentModel);
-            for (WxMaSubscribeMessage message : wxMaSubscribeMessages) {
-                try {
-                    wxMaService.getSubscribeService().sendSubscribeMsg(message);
-                } catch (WxErrorException e) {
-                    logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())
-                            .ids(Sets.newHashSet(message.getToUser())).state(e.getError().getErrorCode()).build());
-                }
-            }
+
+            WxMaSubscribeMessage message = assembleReq(taskInfo.getReceiver(), contentModel);
+            wxMaService.getSubscribeService().sendSubscribeMsg(message);
             return true;
+        } catch (WxErrorException e) {
+            logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())
+                    .ids(taskInfo.getReceiver()).state(e.getError().getErrorCode()).build());
         } catch (Exception e) {
             log.error("MiniProgramAccountHandler#handler fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
         }
@@ -65,18 +62,13 @@ public class MiniProgramAccountHandler extends BaseHandler implements Handler {
     /**
      * 组装发送模板信息参数
      */
-    private List<WxMaSubscribeMessage> assembleReq(Set<String> receiver, MiniProgramContentModel contentModel) {
-        List<WxMaSubscribeMessage> messageList = new ArrayList<>(receiver.size());
-        for (String openId : receiver) {
-            WxMaSubscribeMessage subscribeMessage = WxMaSubscribeMessage.builder()
-                    .toUser(openId)
-                    .data(getWxMaTemplateData(contentModel.getMiniProgramParam()))
-                    .templateId(contentModel.getTemplateId())
-                    .page(contentModel.getPage())
-                    .build();
-            messageList.add(subscribeMessage);
-        }
-        return messageList;
+    private WxMaSubscribeMessage assembleReq(Set<String> receiver, MiniProgramContentModel contentModel) {
+        return WxMaSubscribeMessage.builder()
+                .toUser(CollUtil.getFirst(receiver.iterator()))
+                .data(getWxMaTemplateData(contentModel.getMiniProgramParam()))
+                .templateId(contentModel.getTemplateId())
+                .page(contentModel.getPage())
+                .build();
     }
 
     /**

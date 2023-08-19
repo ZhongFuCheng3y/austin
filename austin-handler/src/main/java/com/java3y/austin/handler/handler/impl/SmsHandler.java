@@ -39,29 +39,24 @@ import java.util.Random;
 @Slf4j
 public class SmsHandler extends BaseHandler implements Handler {
 
-    public SmsHandler() {
-        channelCode = ChannelType.SMS.getCode();
-    }
-
-    @Autowired
-    private SmsRecordDao smsRecordDao;
-
-    @Autowired
-    private ConfigService config;
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    private AccountUtils accountUtils;
-
     /**
      * 流量自动分配策略
      */
     private static final Integer AUTO_FLOW_RULE = 0;
-
     private static final String FLOW_KEY = "msgTypeSmsConfig";
     private static final String FLOW_KEY_PREFIX = "message_type_";
+    @Autowired
+    private SmsRecordDao smsRecordDao;
+    @Autowired
+    private ConfigService config;
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private AccountUtils accountUtils;
+
+    public SmsHandler() {
+        channelCode = ChannelType.SMS.getCode();
+    }
 
     @Override
     public boolean handler(TaskInfo taskInfo) {

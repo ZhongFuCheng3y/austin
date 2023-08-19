@@ -50,6 +50,8 @@ import java.util.concurrent.TimeUnit;
 public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
 
 
+    private static final String DING_DING_RECALL_KEY_PREFIX = "RECALL_";
+    private static final String RECALL_BIZ_TYPE = "DingDingWorkNoticeHandler#recall";
     @Autowired
     private AccountUtils accountUtils;
     @Autowired
@@ -62,9 +64,6 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     public DingDingWorkNoticeHandler() {
         channelCode = ChannelType.DING_DING_WORK_NOTICE.getCode();
     }
-
-    private static final String DING_DING_RECALL_KEY_PREFIX = "RECALL_";
-    private static final String RECALL_BIZ_TYPE = "DingDingWorkNoticeHandler#recall";
 
     @Override
     public boolean handler(TaskInfo taskInfo) {

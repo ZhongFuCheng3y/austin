@@ -34,14 +34,11 @@ import java.util.stream.Collectors;
 @Component("YunPianSmsScript")
 public class YunPianSmsScript implements SmsScript {
 
+    private static final String PARAMS_SPLIT_KEY = "{|}";
+    private static final String PARAMS_KV_SPLIT_KEY = "{:}";
     private static Logger log = LoggerFactory.getLogger(YunPianSmsScript.class);
-
     @Autowired
     private AccountUtils accountUtils;
-
-    private static final String PARAMS_SPLIT_KEY = "{|}";
-
-    private static final String PARAMS_KV_SPLIT_KEY = "{:}";
 
     @Override
     public List<SmsRecord> send(SmsParam smsParam) {

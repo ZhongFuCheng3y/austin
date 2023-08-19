@@ -19,6 +19,7 @@ import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +53,7 @@ public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler
                     .timeout(2000)
                     .execute().body();
             EnterpriseWeChatRootResult weChatRootResult = JSON.parseObject(result, EnterpriseWeChatRootResult.class);
-            if (weChatRootResult.getErrcode() == 0) {
+            if (Integer.valueOf(WxCpErrorMsgEnum.CODE_0.getCode()).equals(weChatRootResult.getErrcode())) {
                 return true;
             }
             logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())

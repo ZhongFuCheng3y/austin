@@ -2,7 +2,10 @@ package com.java3y.austin.handler.pending;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.google.common.collect.Sets;
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.deduplication.DeduplicationRuleService;
 import com.java3y.austin.handler.discard.DiscardMessageService;
 import com.java3y.austin.handler.handler.HandlerHolder;
@@ -63,6 +66,17 @@ public class Task implements Runnable {
 
         // 3. 真正发送消息
         if (CollUtil.isNotEmpty(taskInfo.getReceiver())) {
+
+            // 3.1 微信小程序&服务号只支持单人推送，为了后续逻辑统一处理，于是在这做了打散
+            if (ChannelType.MINI_PROGRAM.getCode().equals(taskInfo.getSendChannel())
+                    || ChannelType.OFFICIAL_ACCOUNT.getCode().equals(taskInfo.getSendChannel())) {
+                for (String receiver : taskInfo.getReceiver()) {
+                    TaskInfo taskClone = ObjectUtil.cloneByStream(this.taskInfo);
+                    taskClone.setReceiver(Sets.newHashSet(receiver));
+                    handlerHolder.route(taskInfo.getSendChannel()).doHandler(taskClone);
+                }
+                return;
+            }
             handlerHolder.route(taskInfo.getSendChannel()).doHandler(taskInfo);
         }
 

@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 public class FrequencyDeduplicationService extends AbstractDeduplicationService {
 
 
+    private static final String PREFIX = "FRE";
+
     @Autowired
     public FrequencyDeduplicationService(@Qualifier("SimpleLimitService") LimitService limitService) {
 
@@ -25,8 +27,6 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
         deduplicationType = DeduplicationType.FREQUENCY.getCode();
 
     }
-
-    private static final String PREFIX = "FRE";
 
     /**
      * 业务规则去重 构建key

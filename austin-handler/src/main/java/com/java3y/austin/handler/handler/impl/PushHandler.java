@@ -38,15 +38,14 @@ import java.util.Set;
 @Slf4j
 public class PushHandler extends BaseHandler implements Handler {
 
-    public PushHandler() {
-        channelCode = ChannelType.PUSH.getCode();
-    }
-
     @Autowired
     private AccountUtils accountUtils;
     @Autowired
     private AccessTokenUtils accessTokenUtils;
 
+    public PushHandler() {
+        channelCode = ChannelType.PUSH.getCode();
+    }
 
     @Override
     public boolean handler(TaskInfo taskInfo) {

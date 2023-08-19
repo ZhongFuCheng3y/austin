@@ -33,13 +33,12 @@ import java.util.List;
 @Component
 public class AustinAspect {
 
-    @Autowired
-    private HttpServletRequest request;
-
     /**
      * 同一个请求的KEY
      */
     private final String REQUEST_ID_KEY = "request_unique_id";
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * 只切AustinAspect注解

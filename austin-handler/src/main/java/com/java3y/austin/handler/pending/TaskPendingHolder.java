@@ -21,15 +21,13 @@ import java.util.concurrent.ExecutorService;
  */
 @Component
 public class TaskPendingHolder {
-    @Autowired
-    private ThreadPoolUtils threadPoolUtils;
-
-    private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
-
     /**
      * 获取得到所有的groupId
      */
     private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
+    @Autowired
+    private ThreadPoolUtils threadPoolUtils;
+    private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
 
     /**
      * 给每个渠道，每种消息类型初始化一个线程池

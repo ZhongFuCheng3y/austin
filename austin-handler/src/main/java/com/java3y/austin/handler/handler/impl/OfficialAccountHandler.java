@@ -1,8 +1,8 @@
 package com.java3y.austin.handler.handler.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
-import com.google.common.collect.Sets;
 import com.java3y.austin.common.domain.AnchorInfo;
 import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
@@ -47,39 +47,31 @@ public class OfficialAccountHandler extends BaseHandler implements Handler {
         try {
             OfficialAccountsContentModel contentModel = (OfficialAccountsContentModel) taskInfo.getContentModel();
             WxMpService wxMpService = accountUtils.getAccountById(taskInfo.getSendAccount(), WxMpService.class);
-            List<WxMpTemplateMessage> messages = assembleReq(taskInfo.getReceiver(), contentModel);
-            for (WxMpTemplateMessage message : messages) {
-                try {
-                    wxMpService.getTemplateMsgService().sendTemplateMsg(message);
-                } catch (WxErrorException e) {
-                    logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())
-                            .ids(Sets.newHashSet(message.getToUser())).state(e.getError().getErrorCode()).build());
-                }
-            }
+
+            WxMpTemplateMessage message = assembleReq(taskInfo.getReceiver(), contentModel);
+            wxMpService.getTemplateMsgService().sendTemplateMsg(message);
+
             return true;
+        } catch (WxErrorException e) {
+            logUtils.print(AnchorInfo.builder().bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId())
+                    .ids(taskInfo.getReceiver()).state(e.getError().getErrorCode()).build());
         } catch (Exception e) {
             log.error("OfficialAccountHandler#handler fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(taskInfo));
         }
         return false;
     }
 
-
     /**
      * 组装发送模板信息参数
      */
-    private List<WxMpTemplateMessage> assembleReq(Set<String> receiver, OfficialAccountsContentModel contentModel) {
-        List<WxMpTemplateMessage> wxMpTemplateMessages = new ArrayList<>(receiver.size());
-        for (String openId : receiver) {
-            WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
-                    .toUser(openId)
-                    .templateId(contentModel.getTemplateId())
-                    .url(contentModel.getUrl())
-                    .data(getWxMpTemplateData(contentModel.getOfficialAccountParam()))
-                    .miniProgram(new WxMpTemplateMessage.MiniProgram(contentModel.getMiniProgramId(), contentModel.getPath(), false))
-                    .build();
-            wxMpTemplateMessages.add(templateMessage);
-        }
-        return wxMpTemplateMessages;
+    private WxMpTemplateMessage assembleReq(Set<String> receiver, OfficialAccountsContentModel contentModel) {
+        return WxMpTemplateMessage.builder()
+                .toUser(CollUtil.getFirst(receiver.iterator()))
+                .templateId(contentModel.getTemplateId())
+                .url(contentModel.getUrl())
+                .data(getWxMpTemplateData(contentModel.getOfficialAccountParam()))
+                .miniProgram(new WxMpTemplateMessage.MiniProgram(contentModel.getMiniProgramId(), contentModel.getPath(), false))
+                .build();
     }
 
     /**

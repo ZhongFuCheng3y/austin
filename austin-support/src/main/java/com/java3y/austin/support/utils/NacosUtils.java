@@ -22,15 +22,13 @@ import java.util.Properties;
 @Slf4j
 @Component
 public class NacosUtils {
+    private final Properties properties = new Properties();
     @NacosInjected
     private ConfigService configService;
-
     @Value("${nacos.group}")
     private String nacosGroup;
     @Value("${nacos.data-id}")
     private String nacosDataId;
-
-    private final Properties properties = new Properties();
 
     public String getProperty(String key, String defaultValue) {
         try {

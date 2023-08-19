@@ -14,11 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ThreadPoolUtils {
 
+    private static final String SOURCE_NAME = "austin";
     @Autowired
     private ThreadPoolExecutorShutdownDefinition shutdownDefinition;
-
-    private static final String SOURCE_NAME = "austin";
-
 
     /**
      * 1. 将当前线程池 加入到 动态线程池内
