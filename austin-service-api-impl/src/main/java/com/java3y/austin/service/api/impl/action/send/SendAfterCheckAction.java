@@ -7,10 +7,10 @@ import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.IdType;
 import com.java3y.austin.common.enums.RespStatusEnum;
+import com.java3y.austin.common.pipeline.BusinessProcess;
+import com.java3y.austin.common.pipeline.ProcessContext;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.impl.domain.SendTaskModel;
-import com.java3y.austin.support.pipeline.BusinessProcess;
-import com.java3y.austin.support.pipeline.ProcessContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

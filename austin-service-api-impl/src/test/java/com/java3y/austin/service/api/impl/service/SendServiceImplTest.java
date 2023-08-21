@@ -1,8 +1,8 @@
 package com.java3y.austin.service.api.impl.service;
 
-import com.java3y.austin.support.pipeline.BusinessProcess;
-import com.java3y.austin.support.pipeline.ProcessController;
-import com.java3y.austin.support.pipeline.ProcessTemplate;
+import com.java3y.austin.common.pipeline.BusinessProcess;
+import com.java3y.austin.common.pipeline.ProcessController;
+import com.java3y.austin.common.pipeline.ProcessTemplate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

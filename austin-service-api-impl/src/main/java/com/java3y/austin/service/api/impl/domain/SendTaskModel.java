@@ -1,8 +1,8 @@
 package com.java3y.austin.service.api.impl.domain;
 
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.common.pipeline.ProcessModel;
 import com.java3y.austin.service.api.domain.MessageParam;
-import com.java3y.austin.support.pipeline.ProcessModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

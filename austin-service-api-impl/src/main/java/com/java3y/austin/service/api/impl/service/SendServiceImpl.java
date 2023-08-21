@@ -3,16 +3,17 @@ package com.java3y.austin.service.api.impl.service;
 import cn.monitor4all.logRecord.annotation.OperationLog;
 import com.java3y.austin.common.domain.SimpleTaskInfo;
 import com.java3y.austin.common.enums.RespStatusEnum;
+import com.java3y.austin.common.pipeline.ProcessContext;
+import com.java3y.austin.common.pipeline.ProcessController;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.service.api.domain.BatchSendRequest;
 import com.java3y.austin.service.api.domain.SendRequest;
 import com.java3y.austin.service.api.domain.SendResponse;
 import com.java3y.austin.service.api.impl.domain.SendTaskModel;
 import com.java3y.austin.service.api.service.SendService;
-import com.java3y.austin.support.pipeline.ProcessContext;
-import com.java3y.austin.support.pipeline.ProcessController;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,6 +28,7 @@ import java.util.List;
 public class SendServiceImpl implements SendService {
 
     @Autowired
+    @Qualifier("apiProcessController")
     private ProcessController processController;
 
     @Override

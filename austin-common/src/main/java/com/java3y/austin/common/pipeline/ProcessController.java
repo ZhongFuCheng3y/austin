@@ -1,13 +1,9 @@
-package com.java3y.austin.support.pipeline;
+package com.java3y.austin.common.pipeline;
 
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
-import com.java3y.austin.support.exception.ProcessException;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +14,6 @@ import java.util.Objects;
  *
  * @author 3y
  */
-@Slf4j
 @Data
 public class ProcessController {
 
@@ -75,7 +70,7 @@ public class ProcessController {
 
         // 业务代码
         String businessCode = context.getCode();
-        if (StrUtil.isBlank(businessCode)) {
+        if (Objects.isNull(businessCode)) {
             context.setResponse(BasicResultVO.fail(RespStatusEnum.BUSINESS_CODE_IS_NULL));
             throw new ProcessException(context);
         }
@@ -89,7 +84,7 @@ public class ProcessController {
 
         // 执行模板列表
         List<BusinessProcess> processList = processTemplate.getProcessList();
-        if (CollUtil.isEmpty(processList)) {
+        if (Objects.isNull(processList) || processList.size() == 0) {
             context.setResponse(BasicResultVO.fail(RespStatusEnum.PROCESS_LIST_IS_NULL));
             throw new ProcessException(context);
         }

@@ -1,6 +1,7 @@
 package com.java3y.austin.common.domain;
 
 import com.java3y.austin.common.dto.model.ContentModel;
+import com.java3y.austin.common.pipeline.ProcessModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskInfo implements Serializable {
+public class TaskInfo implements Serializable, ProcessModel {
 
     /**
      * 业务消息发送Id, 用于链路追踪, 若不存在, 则使用 messageId
