@@ -4,7 +4,6 @@ package com.java3y.austin.web.controller;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.constant.AustinConstant;
-import com.java3y.austin.common.enums.AccountFormat;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.support.domain.ChannelAccount;
 import com.java3y.austin.web.annotation.AustinAspect;
