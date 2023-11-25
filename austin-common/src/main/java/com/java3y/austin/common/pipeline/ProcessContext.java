@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * 责任链上下文
  *
@@ -17,7 +19,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class ProcessContext<T extends ProcessModel> {
+public class ProcessContext<T extends ProcessModel> implements Serializable {
     /**
      * 标识责任链的code
      */

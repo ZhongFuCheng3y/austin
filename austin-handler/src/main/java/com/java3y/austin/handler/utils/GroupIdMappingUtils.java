@@ -15,6 +15,8 @@ import java.util.List;
  * @author 3y
  */
 public class GroupIdMappingUtils {
+    private GroupIdMappingUtils() {
+    }
 
     /**
      * 获取所有的groupIds

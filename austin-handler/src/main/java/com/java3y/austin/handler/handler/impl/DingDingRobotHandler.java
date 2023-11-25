@@ -1,7 +1,7 @@
 package com.java3y.austin.handler.handler.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,10 +125,10 @@ public class DingDingRobotHandler extends BaseHandler implements Handler {
     private String assembleSign(long currentTimeMillis, String secret) {
         String sign = "";
         try {
-            String stringToSign = currentTimeMillis + String.valueOf(StrUtil.C_LF) + secret;
+            String stringToSign = currentTimeMillis + String.valueOf(StrPool.C_LF) + secret;
             Mac mac = Mac.getInstance(CommonConstant.HMAC_SHA256_ENCRYPTION_ALGO);
-            mac.init(new SecretKeySpec(secret.getBytes(CommonConstant.CHARSET_NAME), CommonConstant.HMAC_SHA256_ENCRYPTION_ALGO));
-            byte[] signData = mac.doFinal(stringToSign.getBytes(CommonConstant.CHARSET_NAME));
+            mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), CommonConstant.HMAC_SHA256_ENCRYPTION_ALGO));
+            byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
             sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), CommonConstant.CHARSET_NAME);
         } catch (Exception e) {
             log.error("DingDingHandler#assembleSign fail!:{}", Throwables.getStackTraceAsString(e));

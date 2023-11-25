@@ -1,8 +1,9 @@
 package com.java3y.austin.web.controller;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.enums.RespStatusEnum;
@@ -34,7 +35,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -73,7 +77,7 @@ public class MessageTemplateController {
     @PostMapping("/save")
     @ApiOperation("/保存数据")
     public MessageTemplate saveOrUpdate(@RequestBody MessageTemplate messageTemplate) {
-        if (loginUtils.needLogin() && StrUtil.isBlank(messageTemplate.getCreator())) {
+        if (loginUtils.needLogin() && CharSequenceUtil.isBlank(messageTemplate.getCreator())) {
             throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         return messageTemplateService.saveOrUpdate(messageTemplate);
@@ -85,7 +89,7 @@ public class MessageTemplateController {
     @GetMapping("/list")
     @ApiOperation("/列表页")
     public MessageTemplateVo queryList(@Validated MessageTemplateParam messageTemplateParam) {
-        if (loginUtils.needLogin() && StrUtil.isBlank(messageTemplateParam.getCreator())) {
+        if (loginUtils.needLogin() && CharSequenceUtil.isBlank(messageTemplateParam.getCreator())) {
             throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
         Page<MessageTemplate> messageTemplates = messageTemplateService.queryList(messageTemplateParam);
@@ -119,8 +123,8 @@ public class MessageTemplateController {
     @DeleteMapping("delete/{id}")
     @ApiOperation("/根据Ids删除")
     public void deleteByIds(@PathVariable("id") String id) {
-        if (StrUtil.isNotBlank(id)) {
-            List<Long> idList = Arrays.stream(id.split(StrUtil.COMMA)).map(Long::valueOf).collect(Collectors.toList());
+        if (CharSequenceUtil.isNotBlank(id)) {
+            List<Long> idList = Arrays.stream(id.split(StrPool.COMMA)).map(Long::valueOf).collect(Collectors.toList());
             messageTemplateService.deleteByIds(idList);
         }
     }
@@ -192,7 +196,7 @@ public class MessageTemplateController {
      */
     @PostMapping("upload")
     @ApiOperation("/上传人群文件")
-    public HashMap<Object, Object> upload(@RequestParam("file") MultipartFile file) {
+    public Map<Object, Object> upload(@RequestParam("file") MultipartFile file) {
         String filePath = dataPath + IdUtil.fastSimpleUUID() + file.getOriginalFilename();
         try {
             File localFile = new File(filePath);

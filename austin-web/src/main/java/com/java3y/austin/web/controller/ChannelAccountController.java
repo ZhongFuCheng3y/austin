@@ -1,8 +1,9 @@
 package com.java3y.austin.web.controller;
 
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import com.alibaba.fastjson.JSON;
+import cn.hutool.core.text.StrPool;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.support.domain.ChannelAccount;
@@ -50,10 +51,10 @@ public class ChannelAccountController {
     @ApiOperation("/保存数据")
     public ChannelAccount saveOrUpdate(@RequestBody ChannelAccount channelAccount) {
         accountConfigPreCheck(channelAccount);
-        if (loginUtils.needLogin() && StrUtil.isBlank(channelAccount.getCreator())) {
+        if (loginUtils.needLogin() && CharSequenceUtil.isBlank(channelAccount.getCreator())) {
             throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
-        channelAccount.setCreator(StrUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
+        channelAccount.setCreator(CharSequenceUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
 
         return channelAccountService.save(channelAccount);
     }
@@ -64,10 +65,10 @@ public class ChannelAccountController {
     @GetMapping("/queryByChannelType")
     @ApiOperation("/根据渠道标识查询相关的记录")
     public List<CommonAmisVo> query(Integer channelType, String creator) {
-        if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
+        if (loginUtils.needLogin() && CharSequenceUtil.isBlank(creator)) {
             throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
         }
-        creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
+        creator = CharSequenceUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
 
         List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType, creator);
         return Convert4Amis.getChannelAccountVo(channelAccounts, channelType);
@@ -79,11 +80,11 @@ public class ChannelAccountController {
     @GetMapping("/list")
     @ApiOperation("/渠道账号列表信息")
     public List<ChannelAccount> list(String creator) {
-        if (loginUtils.needLogin() && StrUtil.isBlank(creator)) {
+        if (loginUtils.needLogin() && CharSequenceUtil.isBlank(creator)) {
             throw new CommonException(RespStatusEnum.NO_LOGIN.getCode(), RespStatusEnum.NO_LOGIN.getMsg());
 
         }
-        creator = StrUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
+        creator = CharSequenceUtil.isBlank(creator) ? AustinConstant.DEFAULT_CREATOR : creator;
 
         return channelAccountService.list(creator);
     }
@@ -95,8 +96,8 @@ public class ChannelAccountController {
     @DeleteMapping("delete/{id}")
     @ApiOperation("/根据Ids删除")
     public void deleteByIds(@PathVariable("id") String id) {
-        if (StrUtil.isNotBlank(id)) {
-            List<Long> idList = Arrays.stream(id.split(StrUtil.COMMA)).map(Long::valueOf).collect(Collectors.toList());
+        if (CharSequenceUtil.isNotBlank(id)) {
+            List<Long> idList = Arrays.stream(id.split(StrPool.COMMA)).map(Long::valueOf).collect(Collectors.toList());
             channelAccountService.deleteByIds(idList);
         }
     }

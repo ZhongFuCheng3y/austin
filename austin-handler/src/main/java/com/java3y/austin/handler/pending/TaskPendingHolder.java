@@ -27,7 +27,7 @@ public class TaskPendingHolder {
     private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
     @Autowired
     private ThreadPoolUtils threadPoolUtils;
-    private Map<String, ExecutorService> taskPendingHolder = new HashMap<>(32);
+    private Map<String, ExecutorService> holder = new HashMap<>(32);
 
     /**
      * 给每个渠道，每种消息类型初始化一个线程池
@@ -43,7 +43,7 @@ public class TaskPendingHolder {
             DtpExecutor executor = HandlerThreadPoolConfig.getExecutor(groupId);
             threadPoolUtils.register(executor);
 
-            taskPendingHolder.put(groupId, executor);
+            holder.put(groupId, executor);
         }
     }
 
@@ -54,7 +54,7 @@ public class TaskPendingHolder {
      * @return
      */
     public ExecutorService route(String groupId) {
-        return taskPendingHolder.get(groupId);
+        return holder.get(groupId);
     }
 
 

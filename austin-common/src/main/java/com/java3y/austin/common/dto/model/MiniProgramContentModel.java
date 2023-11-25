@@ -18,7 +18,7 @@ public class MiniProgramContentModel extends ContentModel {
     /**
      * 模板消息发送的数据
      */
-    Map<String, String> miniProgramParam;
+    private Map<String, String> miniProgramParam;
 
     /**
      * 模板Id

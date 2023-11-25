@@ -54,7 +54,7 @@ public class TencentSmsScript implements SmsScript {
             return assembleSendSmsRecord(smsParam, response, tencentSmsAccount);
         } catch (Exception e) {
             log.error("TencentSmsScript#send fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -68,7 +68,7 @@ public class TencentSmsScript implements SmsScript {
             return assemblePullSmsRecord(account, resp);
         } catch (Exception e) {
             log.error("TencentSmsReceipt#pull fail!{}", Throwables.getStackTraceAsString(e));
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -81,11 +81,12 @@ public class TencentSmsScript implements SmsScript {
      * @return
      */
     private List<SmsRecord> assembleSendSmsRecord(SmsParam smsParam, SendSmsResponse response, TencentSmsAccount tencentSmsAccount) {
-        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getSendStatusSet())) {
-            return null;
-        }
 
         List<SmsRecord> smsRecordList = new ArrayList<>();
+        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getSendStatusSet())) {
+            return smsRecordList;
+        }
+
         for (SendStatus sendStatus : response.getSendStatusSet()) {
 
             // 腾讯返回的电话号有前缀，这里取巧直接翻转获取手机号
@@ -139,8 +140,7 @@ public class TencentSmsScript implements SmsScript {
         httpProfile.setEndpoint(account.getUrl());
         ClientProfile clientProfile = new ClientProfile();
         clientProfile.setHttpProfile(httpProfile);
-        SmsClient client = new SmsClient(cred, account.getRegion(), clientProfile);
-        return client;
+        return new SmsClient(cred, account.getRegion(), clientProfile);
     }
 
     /**

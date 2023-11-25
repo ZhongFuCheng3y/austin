@@ -57,7 +57,10 @@ public class SlideWindowLimitService extends AbstractLimitService {
             String key = LIMIT_TAG + deduplicationSingleKey(service, taskInfo, receiver);
             String scoreValue = String.valueOf(IdUtil.getSnowflake().nextId());
             String score = String.valueOf(nowTime);
-            if (redisUtils.execLimitLua(redisScript, Collections.singletonList(key), String.valueOf(param.getDeduplicationTime() * 1000), score, String.valueOf(param.getCountNum()), scoreValue)) {
+
+            final Boolean result = redisUtils.execLimitLua(redisScript, Collections.singletonList(key),
+                    String.valueOf(param.getDeduplicationTime() * 1000), score, String.valueOf(param.getCountNum()), scoreValue);
+            if (Boolean.TRUE.equals(result)) {
                 filterReceiver.add(receiver);
             }
 

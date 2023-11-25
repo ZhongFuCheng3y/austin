@@ -2,7 +2,8 @@ package com.java3y.austin.handler.handler.impl;
 
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.google.common.base.Throwables;
@@ -57,9 +58,14 @@ public class EmailHandler extends BaseHandler implements Handler {
         EmailContentModel emailContentModel = (EmailContentModel) taskInfo.getContentModel();
         MailAccount account = getAccountConfig(taskInfo.getSendAccount());
         try {
-            List<File> files = StrUtil.isNotBlank(emailContentModel.getUrl()) ? AustinFileUtils.getRemoteUrl2File(dataPath, StrUtil.split(emailContentModel.getUrl(), StrUtil.COMMA)) : null;
-            String result = CollUtil.isEmpty(files) ? MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true) :
-                    MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true, files.toArray(new File[files.size()]));
+            List<File> files = CharSequenceUtil.isNotBlank(emailContentModel.getUrl()) ? AustinFileUtils.getRemoteUrl2File(dataPath, CharSequenceUtil.split(emailContentModel.getUrl(), StrPool.COMMA)) : null;
+            if (CollUtil.isEmpty(files)) {
+                MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true);
+            } else {
+                MailUtil.send(account, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true, files.toArray(new File[files.size()]));
+            }
+
+
         } catch (Exception e) {
             log.error("EmailHandler#handler fail!{},params:{}", Throwables.getStackTraceAsString(e), taskInfo);
             return false;

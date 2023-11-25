@@ -23,6 +23,8 @@ public class CronAsyncThreadPoolConfig {
      */
     public static final String EXECUTE_XXL_THREAD_POOL_NAME = "execute-xxl-thread-pool";
 
+    private CronAsyncThreadPoolConfig() {
+    }
 
     /**
      * 业务：消费pending队列实际的线程池

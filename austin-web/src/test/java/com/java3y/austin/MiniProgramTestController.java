@@ -3,7 +3,7 @@ package com.java3y.austin;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-public class MiniProgramTestController extends BaseTestController {
+class MiniProgramTestController extends BaseTestController {
 
     private static final String BASE_URL = "/miniProgram";
 
@@ -13,7 +13,7 @@ public class MiniProgramTestController extends BaseTestController {
      * @throws Exception
      */
     @Test
-    public void queryList() throws Exception {
+    void queryList() throws Exception {
         //doRequest
         resultActions = mvc.perform(
                 MockMvcRequestBuilders

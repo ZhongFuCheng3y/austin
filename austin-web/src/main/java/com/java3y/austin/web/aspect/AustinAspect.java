@@ -36,7 +36,7 @@ public class AustinAspect {
     /**
      * 同一个请求的KEY
      */
-    private final String REQUEST_ID_KEY = "request_unique_id";
+    private static final String REQUEST_ID_KEY = "request_unique_id";
     @Autowired
     private HttpServletRequest request;
 

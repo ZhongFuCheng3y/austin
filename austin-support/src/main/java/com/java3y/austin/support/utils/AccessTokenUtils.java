@@ -1,6 +1,6 @@
 package com.java3y.austin.support.utils;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,7 +60,7 @@ public class AccessTokenUtils {
 
         try {
             resultToken = redisTemplate.opsForValue().get(accessTokenPrefix + accountId);
-            if (StrUtil.isNotBlank(resultToken) && !refresh) {
+            if (CharSequenceUtil.isNotBlank(resultToken) && Boolean.FALSE.equals(refresh)) {
                 return resultToken;
             }
             if (ChannelType.DING_DING_WORK_NOTICE.getCode().equals(sendChannel)) {
@@ -67,7 +68,8 @@ public class AccessTokenUtils {
             } else if (ChannelType.PUSH.getCode().equals(sendChannel)) {
                 resultToken = getGeTuiAccessToken(account);
             }
-            if (StrUtil.isNotBlank(resultToken)) {
+            if (Objects.nonNull(resultToken) && CharSequenceUtil.isNotBlank(resultToken)) {
+
                 redisTemplate.opsForValue().set(accessTokenPrefix + accountId, resultToken, expireTime, TimeUnit.SECONDS);
             }
         } catch (Exception e) {

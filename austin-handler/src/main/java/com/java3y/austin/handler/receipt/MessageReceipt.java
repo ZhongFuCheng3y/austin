@@ -34,6 +34,7 @@ public class MessageReceipt {
                     Thread.sleep(2000);
                 } catch (Exception e) {
                     log.error("MessageReceipt#init fail:{}", Throwables.getStackTraceAsString(e));
+                    Thread.currentThread().interrupt();
                 }
             }
         });

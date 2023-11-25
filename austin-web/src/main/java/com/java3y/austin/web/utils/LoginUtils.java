@@ -1,5 +1,6 @@
 package com.java3y.austin.web.utils;
 
+import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.OfficialAccountParamConstant;
 import com.java3y.austin.web.config.WeChatLoginConfig;
@@ -53,6 +54,7 @@ public class LoginUtils {
                 return true;
             }
         } catch (Exception e) {
+            log.error("LoginUtils#needLogin fail:{}", Throwables.getStackTraceAsString(e));
         }
         return false;
     }

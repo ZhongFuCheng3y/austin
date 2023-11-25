@@ -20,6 +20,6 @@ public class AlipayMiniProgramContentModel extends ContentModel {
     /**
      * 模板消息发送的数据
      */
-    Map<String, String> map;
+    private Map<String, String> map;
 
 }

@@ -97,7 +97,7 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
         EnterpriseWeChatContentModel contentModel = (EnterpriseWeChatContentModel) taskInfo.getContentModel();
 
         // 通用配置
-        WxCpMessage wxCpMessage = null;
+        WxCpMessage wxCpMessage = new WxCpMessage();
 
         if (SendMessageType.TEXT.getCode().equals(contentModel.getSendType())) {
             wxCpMessage = WxCpMessage.TEXT().content(contentModel.getContent()).build();
@@ -125,6 +125,7 @@ public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
         } else if (SendMessageType.TEMPLATE_CARD.getCode().equals(contentModel.getSendType())) {
             // WxJava 未支持
         }
+
         wxCpMessage.setAgentId(agentId);
         wxCpMessage.setToUser(userId);
         return wxCpMessage;

@@ -1,7 +1,8 @@
 package com.java3y.austin.service.api.impl.action.send;
 
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -61,7 +62,7 @@ public class SendAssembleAction implements BusinessProcess<SendTaskModel> {
         for (Field field : fields) {
             String originValue = jsonObject.getString(field.getName());
 
-            if (StrUtil.isNotBlank(originValue)) {
+            if (CharSequenceUtil.isNotBlank(originValue)) {
                 String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, variables);
                 Object resultObj = JSONUtil.isJsonObj(resultValue) ? JSONUtil.toBean(resultValue, field.getType()) : resultValue;
                 ReflectUtil.setFieldValue(contentModel, field, resultObj);
@@ -70,7 +71,7 @@ public class SendAssembleAction implements BusinessProcess<SendTaskModel> {
 
         // 如果 url 字段存在，则在url拼接对应的埋点参数
         String url = (String) ReflectUtil.getFieldValue(contentModel, LINK_NAME);
-        if (StrUtil.isNotBlank(url)) {
+        if (CharSequenceUtil.isNotBlank(url)) {
             String resultUrl = TaskInfoUtils.generateUrl(url, messageTemplate.getId(), messageTemplate.getTemplateType());
             ReflectUtil.setFieldValue(contentModel, LINK_NAME, resultUrl);
         }
@@ -114,7 +115,7 @@ public class SendAssembleAction implements BusinessProcess<SendTaskModel> {
                     .bizId(messageParam.getBizId())
                     .messageTemplateId(messageTemplate.getId())
                     .businessId(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()))
-                    .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrUtil.C_COMMA)))))
+                    .receiver(new HashSet<>(Arrays.asList(messageParam.getReceiver().split(String.valueOf(StrPool.C_COMMA)))))
                     .idType(messageTemplate.getIdType())
                     .sendChannel(messageTemplate.getSendChannel())
                     .templateType(messageTemplate.getTemplateType())
@@ -123,7 +124,7 @@ public class SendAssembleAction implements BusinessProcess<SendTaskModel> {
                     .sendAccount(messageTemplate.getSendAccount())
                     .contentModel(getContentModelValue(messageTemplate, messageParam)).build();
 
-            if (StrUtil.isBlank(taskInfo.getBizId())) {
+            if (CharSequenceUtil.isBlank(taskInfo.getBizId())) {
                 taskInfo.setBizId(taskInfo.getMessageId());
             }
 

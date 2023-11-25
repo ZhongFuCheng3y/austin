@@ -12,6 +12,9 @@ import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsIni
  */
 @Slf4j
 public class MessageQueueUtils {
+    private MessageQueueUtils() {
+    }
+
     /**
      * 获取kafkaConsumer
      *
@@ -20,13 +23,12 @@ public class MessageQueueUtils {
      * @return
      */
     public static KafkaSource<String> getKafkaConsumer(String topicName, String groupId, String broker) {
-        KafkaSource<String> source = KafkaSource.<String>builder()
+        return KafkaSource.<String>builder()
                 .setBootstrapServers(broker)
                 .setTopics(topicName)
                 .setGroupId(groupId)
                 .setStartingOffsets(OffsetsInitializer.earliest())
                 .setValueOnlyDeserializer(new SimpleStringSchema())
                 .build();
-        return source;
     }
 }

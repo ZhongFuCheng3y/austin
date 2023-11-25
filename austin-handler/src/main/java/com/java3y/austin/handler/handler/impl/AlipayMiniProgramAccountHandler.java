@@ -94,8 +94,11 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
         return requestList;
     }
 
+    /**
+     * @param recallTaskInfo
+     */
     @Override
     public void recall(RecallTaskInfo recallTaskInfo) {
-
+        // 未实现 or 渠道不支持
     }
 }

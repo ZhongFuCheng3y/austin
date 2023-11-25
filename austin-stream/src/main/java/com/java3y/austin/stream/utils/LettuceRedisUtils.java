@@ -33,6 +33,9 @@ public class LettuceRedisUtils {
         redisClient = RedisClient.create(redisUri);
     }
 
+    private LettuceRedisUtils() {
+
+    }
 
     /**
      * 封装pipeline操作

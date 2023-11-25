@@ -50,7 +50,7 @@ public class AccountUtils {
 
     @Bean
     public RedisTemplateWxRedisOps redisTemplateWxRedisOps() {
-        return new RedisTemplateWxRedisOps(redisTemplate);
+        return new RedisTemplateWxRedisOps(this.redisTemplate);
     }
 
     /**

@@ -13,19 +13,19 @@ import java.util.Map;
  * austin占位符格式{$var}
  */
 public class ContentHolderUtil {
-
     /**
      * 占位符前缀
      */
     private static final String PLACE_HOLDER_PREFIX = "{$";
-
     /**
      * 占位符后缀
      */
     private static final String PLACE_HOLDER_SUFFIX = "}";
-
     private static final PropertyPlaceholderHelper PROPERTY_PLACEHOLDER_HELPER = new PropertyPlaceholderHelper(PLACE_HOLDER_PREFIX, PLACE_HOLDER_SUFFIX);
 
+    private ContentHolderUtil() {
+
+    }
 
     public static String replacePlaceHolder(final String template, final Map<String, String> paramMap) {
         return PROPERTY_PLACEHOLDER_HELPER.replacePlaceholders(template, new CustomPlaceholderResolver(template, paramMap));
@@ -45,7 +45,7 @@ public class ContentHolderUtil {
         public String resolvePlaceholder(String placeholderName) {
             String value = paramMap.get(placeholderName);
             if (StringUtils.isEmpty(value)) {
-                String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}", template, placeholderName, paramMap.toString());
+                String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}", template, placeholderName, paramMap);
                 throw new IllegalArgumentException(errorStr);
             }
             return value;

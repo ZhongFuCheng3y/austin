@@ -1,9 +1,9 @@
 package com.java3y.austin.web.controller;
 
 
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
@@ -132,7 +132,7 @@ public class OfficialAccountController {
             String timestamp = request.getParameter(OfficialAccountParamConstant.TIMESTAMP);
 
             // echoStr!=null，说明只是微信调试的请求
-            if (StrUtil.isNotBlank(echoStr)) {
+            if (CharSequenceUtil.isNotBlank(echoStr)) {
                 return echoStr;
             }
 
@@ -140,7 +140,7 @@ public class OfficialAccountController {
                 return RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg();
             }
 
-            String encryptType = StrUtil.isBlank(request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE)) ? OfficialAccountParamConstant.RAW : request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE);
+            String encryptType = CharSequenceUtil.isBlank(request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE)) ? OfficialAccountParamConstant.RAW : request.getParameter(OfficialAccountParamConstant.ENCRYPT_TYPE);
             if (OfficialAccountParamConstant.RAW.equals(encryptType)) {
                 WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(request.getInputStream());
                 log.info("raw inMessage:{}", JSON.toJSONString(inMessage));
@@ -197,7 +197,7 @@ public class OfficialAccountController {
     @AustinResult
     public WxMpUser checkLogin(String sceneId) {
         String userInfo = redisTemplate.opsForValue().get(sceneId);
-        if (StrUtil.isBlank(userInfo)) {
+        if (CharSequenceUtil.isBlank(userInfo)) {
             throw new CommonException(RespStatusEnum.SUCCESS.getCode(), RespStatusEnum.SUCCESS.getMsg(), RespStatusEnum.NO_LOGIN);
         }
         return JSON.parseObject(userInfo, WxMpUser.class);

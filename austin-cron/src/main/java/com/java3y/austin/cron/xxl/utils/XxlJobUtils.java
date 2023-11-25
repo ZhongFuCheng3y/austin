@@ -1,7 +1,7 @@
 package com.java3y.austin.cron.xxl.utils;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
@@ -63,10 +63,10 @@ public class XxlJobUtils {
                 .executorFailRetryCount(XxlJobConstant.RETRY_COUNT)
                 .glueType(GlueTypeEnum.BEAN.name())
                 .triggerStatus(CommonConstant.FALSE)
-                .glueRemark(StrUtil.EMPTY)
-                .glueSource(StrUtil.EMPTY)
-                .alarmEmail(StrUtil.EMPTY)
-                .childJobId(StrUtil.EMPTY).build();
+                .glueRemark(CharSequenceUtil.EMPTY)
+                .glueSource(CharSequenceUtil.EMPTY)
+                .alarmEmail(CharSequenceUtil.EMPTY)
+                .childJobId(CharSequenceUtil.EMPTY).build();
 
         if (Objects.nonNull(messageTemplate.getCronTaskId())) {
             xxlJobInfo.setId(messageTemplate.getCronTaskId());
@@ -80,14 +80,14 @@ public class XxlJobUtils {
      * @return
      */
     private Integer queryJobGroupId() {
-        BasicResultVO basicResultVO = cronTaskService.getGroupId(appName, jobHandlerName);
+        BasicResultVO<Integer> basicResultVO = cronTaskService.getGroupId(appName, jobHandlerName);
         if (Objects.isNull(basicResultVO.getData())) {
             XxlJobGroup xxlJobGroup = XxlJobGroup.builder().appname(appName).title(jobHandlerName).addressType(CommonConstant.FALSE).build();
             if (RespStatusEnum.SUCCESS.getCode().equals(cronTaskService.createGroup(xxlJobGroup).getStatus())) {
                 return (int) cronTaskService.getGroupId(appName, jobHandlerName).getData();
             }
         }
-        return (Integer) basicResultVO.getData();
+        return basicResultVO.getData();
     }
 
 }

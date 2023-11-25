@@ -30,13 +30,4 @@ public class LinTongSmsAccount extends SmsAccount {
     private String userName;
     private String password;
 
-    /**
-     * 标识渠道商Id
-     */
-    private Integer supplierId;
-
-    /**
-     * 标识渠道商名字
-     */
-    private String supplierName;
 }

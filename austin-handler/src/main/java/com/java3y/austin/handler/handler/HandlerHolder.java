@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class HandlerHolder {
 
-    private Map<Integer, Handler> handlers = new HashMap<Integer, Handler>(128);
+    private Map<Integer, Handler> handlers = new HashMap<>(128);
 
     public void putHandler(Integer channelCode, Handler handler) {
         handlers.put(channelCode, handler);

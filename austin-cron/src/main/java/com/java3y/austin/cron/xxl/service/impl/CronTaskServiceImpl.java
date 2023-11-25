@@ -145,6 +145,9 @@ public class CronTaskServiceImpl implements CronTaskService {
         HttpResponse response = null;
         try {
             response = HttpRequest.post(path).form(params).cookie(getCookie()).execute();
+            if (Objects.isNull(response)) {
+                return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR);
+            }
             Integer id = JSON.parseObject(response.body()).getJSONArray("data").getJSONObject(0).getInteger("id");
             if (response.isOk() && Objects.nonNull(id)) {
                 return BasicResultVO.success(id);

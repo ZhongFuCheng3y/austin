@@ -17,7 +17,6 @@ import java.util.Map;
  */
 public class AlipayClientSingleton {
 
-    private static volatile DefaultAlipayClient alipayClientSingleton;
 
     private static Map<String, DefaultAlipayClient> alipayClientMap = new HashMap<>();
 
@@ -36,9 +35,7 @@ public class AlipayClientSingleton {
                     alipayConfig.setAlipayPublicKey(alipayMiniProgramAccount.getAlipayPublicKey());
                     alipayConfig.setCharset("utf-8");
                     alipayConfig.setSignType("RSA2");
-                    alipayClientSingleton = new DefaultAlipayClient(alipayConfig);
-                    alipayClientMap.put(alipayMiniProgramAccount.getAppId(), alipayClientSingleton);
-                    return alipayClientSingleton;
+                    alipayClientMap.put(alipayMiniProgramAccount.getAppId(), new DefaultAlipayClient(alipayConfig));
                 }
             }
         }

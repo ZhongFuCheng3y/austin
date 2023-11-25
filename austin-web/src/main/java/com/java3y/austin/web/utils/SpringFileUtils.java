@@ -14,7 +14,8 @@ import java.util.Objects;
  * multipartFile 转成 File 对象
  */
 public class SpringFileUtils {
-
+    private SpringFileUtils() {
+    }
 
     /**
      * multipartFile 转成 File 对象

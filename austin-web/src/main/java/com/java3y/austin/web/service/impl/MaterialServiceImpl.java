@@ -1,7 +1,7 @@
 package com.java3y.austin.web.service.impl;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -66,7 +66,7 @@ public class MaterialServiceImpl implements MaterialService {
         } catch (Exception e) {
             log.error("MaterialService#dingDingMaterialUpload fail:{}", Throwables.getStackTraceAsString(e));
         }
-        return BasicResultVO.fail("未知错误，联系管理员");
+        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR.getMsg());
     }
 
     @Override
@@ -88,7 +88,7 @@ public class MaterialServiceImpl implements MaterialService {
         } catch (Exception e) {
             log.error("MaterialService#enterpriseWeChatRootMaterialUpload fail:{}", Throwables.getStackTraceAsString(e));
         }
-        return BasicResultVO.fail("未知错误，联系管理员");
+        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR.getMsg());
     }
 
     @Override
@@ -99,13 +99,13 @@ public class MaterialServiceImpl implements MaterialService {
             wxCpService.setWxCpConfigStorage(accountConfig);
             WxMediaUploadResult result = wxCpService.getMediaService()
                     .upload(EnumUtil.getDescriptionByCode(Integer.valueOf(fileType), FileType.class), SpringFileUtils.getFile(multipartFile));
-            if (StrUtil.isNotBlank(result.getMediaId())) {
+            if (CharSequenceUtil.isNotBlank(result.getMediaId())) {
                 return new BasicResultVO(RespStatusEnum.SUCCESS, UploadResponseVo.builder().id(result.getMediaId()).build());
             }
             log.error("MaterialService#enterpriseWeChatMaterialUpload fail:{}", JSON.toJSONString(result));
         } catch (Exception e) {
             log.error("MaterialService#enterpriseWeChatMaterialUpload fail:{}", Throwables.getStackTraceAsString(e));
         }
-        return BasicResultVO.fail("未知错误，联系管理员");
+        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR.getMsg());
     }
 }

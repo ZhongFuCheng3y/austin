@@ -21,18 +21,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ThreadPoolExecutorShutdownDefinition implements ApplicationListener<ContextClosedEvent> {
 
-    private final List<ExecutorService> POOLS = Collections.synchronizedList(new ArrayList<>(12));
-
     /**
      * 线程中的任务在接收到应用关闭信号量后最多等待多久就强制终止，其实就是给剩余任务预留的时间， 到时间后线程池必须销毁
      */
-    private final long AWAIT_TERMINATION = 20;
-
+    private static final long AWAIT_TERMINATION = 20;
     /**
      * awaitTermination的单位
      */
-    private final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
-
+    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+    private final List<ExecutorService> POOLS = Collections.synchronizedList(new ArrayList<>(12));
 
     public void registryExecutor(ExecutorService executor) {
         POOLS.add(executor);
@@ -53,14 +50,10 @@ public class ThreadPoolExecutorShutdownDefinition implements ApplicationListener
             pool.shutdown();
             try {
                 if (!pool.awaitTermination(AWAIT_TERMINATION, TIME_UNIT)) {
-                    if (log.isWarnEnabled()) {
-                        log.warn("Timed out while waiting for executor [{}] to terminate", pool);
-                    }
-                }
-            } catch (InterruptedException ex) {
-                if (log.isWarnEnabled()) {
                     log.warn("Timed out while waiting for executor [{}] to terminate", pool);
                 }
+            } catch (InterruptedException ex) {
+                log.warn("Timed out while waiting for executor [{}] to terminate", pool);
                 Thread.currentThread().interrupt();
             }
         }
