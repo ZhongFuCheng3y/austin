@@ -20,11 +20,13 @@ import java.util.*;
  */
 @Slf4j
 public class ReadFileUtils {
-
     /**
      * csv文件 存储 接收者 的列名
      */
     public static final String RECEIVER_KEY = "userId";
+
+    private ReadFileUtils() {
+    }
 
     /**
      * 读取csv文件，每读取一行都会调用 csvRowHandler 对应的方法
@@ -33,14 +35,13 @@ public class ReadFileUtils {
      * @param csvRowHandler
      */
     public static void getCsvRow(String path, CsvRowHandler csvRowHandler) {
-        try {
-            // 把首行当做是标题，获取reader
-            CsvReader reader = CsvUtil.getReader(new FileReader(path),
-                    new CsvReadConfig().setContainsHeader(true));
+
+        // 把首行当做是标题，获取reader
+        try (CsvReader reader = CsvUtil.getReader(new FileReader(path),
+                new CsvReadConfig().setContainsHeader(true))) {
             reader.read(csvRowHandler);
         } catch (Exception e) {
             log.error("ReadFileUtils#getCsvRow fail!{}", Throwables.getStackTraceAsString(e));
-
         }
     }
 
@@ -51,10 +52,11 @@ public class ReadFileUtils {
      * @param countFileRowHandler
      */
     public static long countCsvRow(String path, CountFileRowHandler countFileRowHandler) {
-        try {
-            // 把首行当做是标题，获取reader
-            CsvReader reader = CsvUtil.getReader(new FileReader(path),
-                    new CsvReadConfig().setContainsHeader(true));
+
+        // 把首行当做是标题，获取reader
+        try (CsvReader reader = CsvUtil.getReader(new FileReader(path),
+                new CsvReadConfig().setContainsHeader(true))) {
+
             reader.read(countFileRowHandler);
         } catch (Exception e) {
             log.error("ReadFileUtils#getCsvRow fail!{}", Throwables.getStackTraceAsString(e));
@@ -69,7 +71,7 @@ public class ReadFileUtils {
      * @param fieldMap
      * @return
      */
-    public static HashMap<String, String> getParamFromLine(Map<String, String> fieldMap) {
+    public static Map<String, String> getParamFromLine(Map<String, String> fieldMap) {
         HashMap<String, String> params = MapUtil.newHashMap();
         for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
             if (!ReadFileUtils.RECEIVER_KEY.equals(entry.getKey())) {
@@ -88,6 +90,7 @@ public class ReadFileUtils {
      *
      * @param path
      * @return
+     * @Deprecated 可能会导致内存爆炸
      */
     @Deprecated
     public static List<CrowdInfoVo> getCsvRowList(String path) {
@@ -96,6 +99,7 @@ public class ReadFileUtils {
             CsvData data = CsvUtil.getReader().read(FileUtil.file(path));
             if (Objects.isNull(data) || Objects.isNull(data.getRow(0)) || Objects.isNull(data.getRow(1))) {
                 log.error("read csv file empty!,path:{}", path);
+                return result;
             }
             // 第一行为默认为头信息,所以遍历从第二行开始,第一列默认为接收者Id(不处理)
             CsvRow headerInfo = data.getRow(0);

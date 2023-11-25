@@ -46,7 +46,7 @@ public class ProcessController {
         List<BusinessProcess> processList = templateConfig.get(context.getCode()).getProcessList();
         for (BusinessProcess businessProcess : processList) {
             businessProcess.process(context);
-            if (context.getNeedBreak()) {
+            if (Boolean.TRUE.equals(context.getNeedBreak())) {
                 break;
             }
         }
@@ -84,7 +84,7 @@ public class ProcessController {
 
         // 执行模板列表
         List<BusinessProcess> processList = processTemplate.getProcessList();
-        if (Objects.isNull(processList) || processList.size() == 0) {
+        if (Objects.isNull(processList) || processList.isEmpty()) {
             context.setResponse(BasicResultVO.fail(RespStatusEnum.PROCESS_LIST_IS_NULL));
             throw new ProcessException(context);
         }

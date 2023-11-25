@@ -1,6 +1,6 @@
 package com.java3y.austin.web.utils;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import com.java3y.austin.common.enums.AnchorState;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.EnumUtil;
@@ -15,6 +15,10 @@ import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
  */
 public class AnchorStateUtils {
 
+    private AnchorStateUtils() {
+
+    }
+
     /**
      * 根据渠道和点位 获取点位的描述
      *
@@ -26,7 +30,7 @@ public class AnchorStateUtils {
         String stateDescription = EnumUtil.getDescriptionByCode(state, AnchorState.class);
 
         // 如果 AnchorState 找不到对应的点位描述，那就是在对应渠道的点位信息
-        if (StrUtil.isBlank(stateDescription)) {
+        if (CharSequenceUtil.isBlank(stateDescription)) {
             if (ChannelType.MINI_PROGRAM.getCode().equals(channel)) {
                 stateDescription = WxMaErrorMsgEnum.findMsgByCode(state);
             } else if (ChannelType.OFFICIAL_ACCOUNT.getCode().equals(channel)) {

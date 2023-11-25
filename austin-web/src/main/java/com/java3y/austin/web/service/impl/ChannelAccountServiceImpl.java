@@ -1,7 +1,7 @@
 package com.java3y.austin.web.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.support.dao.ChannelAccountDao;
@@ -28,7 +28,7 @@ public class ChannelAccountServiceImpl implements ChannelAccountService {
             channelAccount.setCreated(Math.toIntExact(DateUtil.currentSeconds()));
             channelAccount.setIsDeleted(CommonConstant.FALSE);
         }
-        channelAccount.setCreator(StrUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
+        channelAccount.setCreator(CharSequenceUtil.isBlank(channelAccount.getCreator()) ? AustinConstant.DEFAULT_CREATOR : channelAccount.getCreator());
         channelAccount.setUpdated(Math.toIntExact(DateUtil.currentSeconds()));
         return channelAccountDao.save(channelAccount);
     }

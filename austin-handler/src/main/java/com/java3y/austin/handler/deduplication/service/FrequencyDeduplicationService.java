@@ -1,6 +1,6 @@
 package com.java3y.austin.handler.deduplication.service;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.StrPool;
 import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.enums.DeduplicationType;
 import com.java3y.austin.handler.deduplication.limit.LimitService;
@@ -41,9 +41,9 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
      */
     @Override
     public String deduplicationSingleKey(TaskInfo taskInfo, String receiver) {
-        return PREFIX + StrUtil.C_UNDERLINE
-                + receiver + StrUtil.C_UNDERLINE
-                + taskInfo.getMessageTemplateId() + StrUtil.C_UNDERLINE
+        return PREFIX + StrPool.C_UNDERLINE
+                + receiver + StrPool.C_UNDERLINE
+                + taskInfo.getMessageTemplateId() + StrPool.C_UNDERLINE
                 + taskInfo.getSendChannel();
     }
 }

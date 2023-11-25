@@ -1,8 +1,8 @@
 package com.java3y.austin.web.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.java3y.austin.common.constant.AustinConstant;
 import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.enums.AuditStatus;
@@ -50,11 +50,11 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public Page<MessageTemplate> queryList(MessageTemplateParam param) {
         PageRequest pageRequest = PageRequest.of(param.getPage() - 1, param.getPerPage());
-        String creator = StrUtil.isBlank(param.getCreator()) ? AustinConstant.DEFAULT_CREATOR : param.getCreator();
+        String creator = CharSequenceUtil.isBlank(param.getCreator()) ? AustinConstant.DEFAULT_CREATOR : param.getCreator();
         return messageTemplateDao.findAll((Specification<MessageTemplate>) (root, query, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
             // 加搜索条件
-            if (StrUtil.isNotBlank(param.getKeywords())) {
+            if (CharSequenceUtil.isNotBlank(param.getKeywords())) {
                 predicateList.add(cb.like(root.get("name").as(String.class), "%" + param.getKeywords() + "%"));
             }
             predicateList.add(cb.equal(root.get("isDeleted").as(Integer.class), CommonConstant.FALSE));
@@ -161,12 +161,12 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
      * @param messageTemplate
      */
     private void initStatus(MessageTemplate messageTemplate) {
-        messageTemplate.setFlowId(StrUtil.EMPTY)
+        messageTemplate.setFlowId(CharSequenceUtil.EMPTY)
                 .setMsgStatus(MessageStatus.INIT.getCode()).setAuditStatus(AuditStatus.WAIT_AUDIT.getCode())
-                .setCreator(StrUtil.isBlank(messageTemplate.getCreator()) ? AustinConstant.DEFAULT_CREATOR : messageTemplate.getCreator())
-                .setUpdator(StrUtil.isBlank(messageTemplate.getUpdator()) ? AustinConstant.DEFAULT_UPDATOR : messageTemplate.getUpdator())
-                .setTeam(StrUtil.isBlank(messageTemplate.getTeam()) ? AustinConstant.DEFAULT_TEAM : messageTemplate.getTeam())
-                .setAuditor(StrUtil.isBlank(messageTemplate.getAuditor()) ? AustinConstant.DEFAULT_AUDITOR : messageTemplate.getAuditor())
+                .setCreator(CharSequenceUtil.isBlank(messageTemplate.getCreator()) ? AustinConstant.DEFAULT_CREATOR : messageTemplate.getCreator())
+                .setUpdator(CharSequenceUtil.isBlank(messageTemplate.getUpdator()) ? AustinConstant.DEFAULT_UPDATOR : messageTemplate.getUpdator())
+                .setTeam(CharSequenceUtil.isBlank(messageTemplate.getTeam()) ? AustinConstant.DEFAULT_TEAM : messageTemplate.getTeam())
+                .setAuditor(CharSequenceUtil.isBlank(messageTemplate.getAuditor()) ? AustinConstant.DEFAULT_AUDITOR : messageTemplate.getAuditor())
                 .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
                 .setIsDeleted(CommonConstant.FALSE);
 

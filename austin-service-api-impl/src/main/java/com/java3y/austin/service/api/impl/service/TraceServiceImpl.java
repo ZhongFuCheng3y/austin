@@ -1,6 +1,7 @@
 package com.java3y.austin.service.api.impl.service;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.constant.AustinConstant;
@@ -31,10 +32,10 @@ public class TraceServiceImpl implements TraceService {
 
     @Override
     public TraceResponse traceByMessageId(String messageId) {
-        if (StrUtil.isBlank(messageId)) {
+        if (CharSequenceUtil.isBlank(messageId)) {
             return new TraceResponse(RespStatusEnum.CLIENT_BAD_PARAMETERS.getCode(), RespStatusEnum.CLIENT_BAD_PARAMETERS.getMsg(), null);
         }
-        String redisMessageKey = StrUtil.join(StrUtil.COLON, AustinConstant.CACHE_KEY_PREFIX, AustinConstant.MESSAGE_ID, messageId);
+        String redisMessageKey = CharSequenceUtil.join(StrUtil.COLON, AustinConstant.CACHE_KEY_PREFIX, AustinConstant.MESSAGE_ID, messageId);
         List<String> messageList = redisUtils.lRange(redisMessageKey, 0, -1);
         if (CollUtil.isEmpty(messageList)) {
             return new TraceResponse(RespStatusEnum.FAIL.getCode(), RespStatusEnum.FAIL.getMsg(), null);

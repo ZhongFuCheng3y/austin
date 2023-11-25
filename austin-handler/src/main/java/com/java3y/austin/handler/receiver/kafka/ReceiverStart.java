@@ -1,6 +1,6 @@
 package com.java3y.austin.handler.receiver.kafka;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.StrPool;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class ReceiverStart {
     public static KafkaListenerAnnotationBeanPostProcessor.AnnotationEnhancer groupIdEnhancer() {
         return (attrs, element) -> {
             if (element instanceof Method) {
-                String name = ((Method) element).getDeclaringClass().getSimpleName() + StrUtil.DOT + ((Method) element).getName();
+                String name = ((Method) element).getDeclaringClass().getSimpleName() + StrPool.DOT + ((Method) element).getName();
                 if (RECEIVER_METHOD_NAME.equals(name)) {
                     attrs.put("groupId", groupIds.get(index++));
                 }

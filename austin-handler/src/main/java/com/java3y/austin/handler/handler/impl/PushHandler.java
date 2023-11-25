@@ -38,6 +38,7 @@ import java.util.Set;
 @Slf4j
 public class PushHandler extends BaseHandler implements Handler {
 
+    private static final String HEADER_TOKEN_NAME = "token";
     @Autowired
     private AccountUtils accountUtils;
     @Autowired
@@ -83,12 +84,11 @@ public class PushHandler extends BaseHandler implements Handler {
     private String singlePush(PushParam pushParam) {
         String url = SendChanelUrlConstant.GE_TUI_BASE_URL + pushParam.getAppId() + SendChanelUrlConstant.GE_TUI_SINGLE_PUSH_PATH;
         SendPushParam sendPushParam = assembleParam((PushContentModel) pushParam.getTaskInfo().getContentModel(), pushParam.getTaskInfo().getReceiver());
-        String body = HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
-                .header("token", pushParam.getToken())
+        return HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
+                .header(HEADER_TOKEN_NAME, pushParam.getToken())
                 .body(JSON.toJSONString(sendPushParam))
                 .timeout(2000)
                 .execute().body();
-        return body;
     }
 
 
@@ -105,12 +105,11 @@ public class PushHandler extends BaseHandler implements Handler {
                 .taskId(taskId)
                 .isAsync(true)
                 .audience(BatchSendPushParam.AudienceVO.builder().cid(pushParam.getTaskInfo().getReceiver()).build()).build();
-        String body = HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
-                .header("token", pushParam.getToken())
+        return HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
+                .header(HEADER_TOKEN_NAME, pushParam.getToken())
                 .body(JSON.toJSONString(batchSendPushParam))
                 .timeout(2000)
                 .execute().body();
-        return body;
     }
 
 
@@ -126,7 +125,7 @@ public class PushHandler extends BaseHandler implements Handler {
         String taskId = "";
         try {
             String body = HttpRequest.post(url).header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
-                    .header("token", pushParam.getToken())
+                    .header(HEADER_TOKEN_NAME, pushParam.getToken())
                     .body(JSON.toJSONString(param))
                     .timeout(2000)
                     .execute().body();

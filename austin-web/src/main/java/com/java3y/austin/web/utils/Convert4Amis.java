@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
@@ -116,7 +117,7 @@ public class Convert4Amis {
         for (Field field : fields) {
             if (FLAT_FIELD_NAME.contains(field.getName())) {
                 String fieldValue = (String) ReflectUtil.getFieldValue(obj, field);
-                JSONObject jsonObject = JSONObject.parseObject(fieldValue);
+                JSONObject jsonObject = JSON.parseObject(fieldValue);
                 for (String key : jsonObject.keySet()) {
                     /**
                      * 钉钉OA消息回显
@@ -160,7 +161,7 @@ public class Convert4Amis {
         CommonAmisVo officialAccountParam = null;
         for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
             if (wxTemplateId.equals(wxMpTemplate.getTemplateId())) {
-                String[] data = wxMpTemplate.getContent().split(StrUtil.LF);
+                String[] data = wxMpTemplate.getContent().split(StrPool.LF);
                 officialAccountParam = CommonAmisVo.builder()
                         .type("input-table")
                         .name("officialAccountParam")

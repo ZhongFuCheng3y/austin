@@ -2,9 +2,10 @@ package com.java3y.austin.handler.script.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.net.URLEncodeUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
@@ -58,7 +59,7 @@ public class YunPianSmsScript implements SmsScript {
             return assembleSmsRecord(smsParam, yunPianSendResult, account);
         } catch (Exception e) {
             log.error("YunPianSmsScript#send fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
-            return null;
+            return new ArrayList<>();
         }
 
     }
@@ -66,7 +67,7 @@ public class YunPianSmsScript implements SmsScript {
     @Override
     public List<SmsRecord> pull(Integer accountId) {
         // .....
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -79,7 +80,7 @@ public class YunPianSmsScript implements SmsScript {
     private Map<String, Object> assembleParam(SmsParam smsParam, YunPianSmsAccount account) {
         Map<String, Object> params = new HashMap<>(8);
         params.put("apikey", account.getApikey());
-        params.put("mobile", StringUtils.join(smsParam.getPhones(), StrUtil.C_COMMA));
+        params.put("mobile", StringUtils.join(smsParam.getPhones(), StrPool.COMMA));
         params.put("tpl_id", account.getTplId());
         params.put("tpl_value", getTplValue(smsParam));
         return params;
@@ -87,11 +88,12 @@ public class YunPianSmsScript implements SmsScript {
 
 
     private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, YunPianSendResult response, YunPianSmsAccount account) {
-        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getData())) {
-            return null;
-        }
 
         List<SmsRecord> smsRecordList = new ArrayList<>();
+        if (Objects.isNull(response) || ArrayUtil.isEmpty(response.getData())) {
+            return smsRecordList;
+        }
+
 
         for (YunPianSendResult.DataDTO datum : response.getData()) {
             SmsRecord smsRecord = SmsRecord.builder()
@@ -118,10 +120,10 @@ public class YunPianSmsScript implements SmsScript {
 
     private String getTplValue(SmsParam smsParam) {
         String tplValue = "";
-        if (StrUtil.isNotBlank(smsParam.getContent())) {
-            tplValue = StrUtil.split(smsParam.getContent(), PARAMS_SPLIT_KEY).stream().map(item -> {
-                List<String> kv = StrUtil.splitTrim(item, PARAMS_KV_SPLIT_KEY, 2);
-                return String.join("=", URLUtil.encodeQuery(kv.get(0)), URLUtil.encodeQuery(kv.get(1)));
+        if (CharSequenceUtil.isNotBlank(smsParam.getContent())) {
+            tplValue = CharSequenceUtil.split(smsParam.getContent(), PARAMS_SPLIT_KEY).stream().map(item -> {
+                List<String> kv = CharSequenceUtil.splitTrim(item, PARAMS_KV_SPLIT_KEY, 2);
+                return String.join("=", URLEncodeUtil.encodeQuery(kv.get(0)), URLEncodeUtil.encodeQuery(kv.get(1)));
             }).collect(Collectors.joining("&"));
         }
         return tplValue;

@@ -2,7 +2,7 @@ package com.java3y.austin.handler.handler.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.StrPool;
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -105,7 +105,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
             if (AustinConstant.SEND_ALL.equals(CollUtil.getFirst(taskInfo.getReceiver()))) {
                 req.setToAllUser(true);
             } else {
-                req.setUseridList(StringUtils.join(taskInfo.getReceiver(), StrUtil.C_COMMA));
+                req.setUseridList(StringUtils.join(taskInfo.getReceiver(), StrPool.COMMA));
             }
             req.setAgentId(Long.parseLong(account.getAgentId()));
 

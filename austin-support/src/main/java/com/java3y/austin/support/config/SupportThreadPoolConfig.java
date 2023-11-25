@@ -14,6 +14,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class SupportThreadPoolConfig {
 
+    private SupportThreadPoolConfig() {
+    }
+
     /**
      * 业务：实现pending队列的单线程池
      * 配置：核心线程可以被回收，当线程池无被引用且无核心线程数，应当被回收

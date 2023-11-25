@@ -62,7 +62,7 @@ public class LinTongSmsScript implements SmsScript {
             return assembleSmsRecord(smsParam, linTongSendResult, linTongSmsAccount);
         } catch (Exception e) {
             log.error("LinTongSmsAccount#send fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
-            return null;
+            return new ArrayList<>();
         }
 
     }
@@ -75,7 +75,7 @@ public class LinTongSmsScript implements SmsScript {
      */
     @Override
     public List<SmsRecord> pull(Integer id) {
-        return null;
+        return new ArrayList<>();
     }
 
 
@@ -100,7 +100,7 @@ public class LinTongSmsScript implements SmsScript {
 
     private List<SmsRecord> assembleSmsRecord(SmsParam smsParam, LinTongSendResult response, LinTongSmsAccount account) {
         if (response == null || ArrayUtil.isEmpty(response.getDtoList())) {
-            return null;
+            return new ArrayList<>();
         }
 
         List<SmsRecord> smsRecordList = new ArrayList<>();

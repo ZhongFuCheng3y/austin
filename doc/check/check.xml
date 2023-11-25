@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<!--checkStyle -->
+<module name="Checker">
+
+    <!-- 检查文件是否以一个空行结束 -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- 文件长度不超过1500行 -->
+    <module name="FileLength">
+        <property name="max" value="1500"/>
+    </module>
+
+    <!-- 长度检查 -->
+    <!-- 每行不超过140个字符 -->
+    <module name="LineLength">
+        <property name="fileExtensions" value="java"/>
+        <property name="max" value="140"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+    </module>
+    <!--禁止打印e.printStackTrace错误信息-->
+    <module name="RegexpSingleline">
+        <property name="format" value="printStackTrace"/>
+        <property name="message" value="Prohibit invoking printStackTrace in source code !"/>
+    </module>
+
+    <!-- 每个java文件一个语法树 -->
+    <module name="TreeWalker">
+        <!-- import检查-->
+        <!-- 避免使用* -->
+        <module name="AvoidStarImport">
+            <property name="excludes" value="java.io,java.net,java.lang.Math"/>
+            <!-- 实例；import java.util.*;.-->
+            <property name="allowClassImports" value="false"/>
+            <!-- 实例 ；import static org.junit.Assert.*;-->
+            <property name="allowStaticMemberImports" value="true"/>
+        </module>
+        <!-- 检查是否导入了多余的包 -->
+        <module name="RedundantImport"/>
+        <!-- 没用的import检查，比如：1.没有被用到2.重复的3.import java.lang的4.import 与该类在同一个package的 -->
+        <module name="UnusedImports"/>
+
+        <!-- 注释检查 -->
+        <!-- 检查构造函数的javadoc -->
+        <module name="JavadocType">
+            <!--允许位置的tag如@date,@description等-->
+            <property name="allowUnknownTags" value="true"/>
+            <message key="javadoc.missing" value="类注释：缺少Javadoc注释。"/>
+        </module>
+        <!--方法注释-->
+        <module name="JavadocMethod">
+            <property name="tokens" value="METHOD_DEF"/>
+            <!--允许get set 方法没有注释-->
+            <!--            <property name="allowMissingPropertyJavadoc" value="true"/>-->
+            <message key="javadoc.missing" value="方法注释：缺少Javadoc注释。"/>
+        </module>
+        <!--校验方法的注释-->
+        <module name="MissingJavadocMethod">
+            <!--允许get set 方法没有注释-->
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+            <!--允许构造方法没有注释-->
+            <!--            <property name="" value="true"/>-->
+            <property name="scope" value="private"/>
+        </module>
+
+        <!-- 命名检查 -->
+        <!-- 局部的final变量，包括catch中的参数的检查 -->
+        <module name="LocalFinalVariableName"/>
+        <!-- 局部的非final型的变量，包括catch中的参数的检查 -->
+        <module name="LocalVariableName"/>
+        <!-- 包名的检查（只允许小写字母），默认^[a-z]+(\.[a-zA-Z_][a-zA-Z_0-9_]*)*$ -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+            <message key="name.invalidPattern" value="包名 ''{0}'' 要符合 ''{1}''格式."/>
+        </module>
+        <!-- 仅仅是static型的变量（不包括static final型）的检查 -->
+        <module name="StaticVariableName"/>
+        <!-- Class或Interface名检查，默认^[A-Z][a-zA-Z0-9]*$-->
+        <module name="TypeName">
+            <property name="severity" value="warning"/>
+            <message key="name.invalidPattern" value="名称 ''{0}'' 要符合 ''{1}''格式."/>
+        </module>
+        <!-- 非static型变量的检查 -->
+        <module name="MemberName"/>
+        <!-- 方法名的检查 -->
+        <module name="MethodName"/>
+        <!-- 方法的参数名 -->
+        <module name="ParameterName "/>
+        <!-- 常量名的检查（只允许大写），默认^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$ -->
+        <module name="ConstantName"/>
+
+        <!-- 定义检查 -->
+        <!-- 检查数组类型定义的样式 -->
+        <module name="ArrayTypeStyle"/>
+        <!-- 检查long型定义是否有大写的“L” -->
+        <module name="UpperEll"/>
+
+
+        <!-- 方法不超过100行 -->
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="100"/>
+        </module>
+        <!-- 方法的参数个数不超过5个。 并且不对构造方法进行检查-->
+        <module name="ParameterNumber">
+            <property name="max" value="5"/>
+            <property name="ignoreOverriddenMethods" value="true"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+
+        <!-- 空格检查-->
+        <!-- 方法名后跟左圆括号"(" -->
+        <module name="MethodParamPad"/>
+        <!-- 在类型转换时，不允许左圆括号右边有空格，也不允许与右圆括号左边有空格 -->
+        <module name="TypecastParenPad"/>
+        <!-- 检查在某个特定关键字之后应保留空格 -->
+        <module name="NoWhitespaceAfter"/>
+        <!-- 检查在某个特定关键字之前应保留空格 -->
+        <module name="NoWhitespaceBefore"/>
+        <!-- 操作符换行策略检查 -->
+        <module name="OperatorWrap"/>
+        <!-- 圆括号空白 -->
+        <module name="ParenPad"/>
+        <!-- 检查分隔符是否在空白之后 -->
+        <module name="WhitespaceAfter"/>
+        <!-- 检查分隔符周围是否有空白 -->
+        <module name="WhitespaceAround"/>
+
+        <!-- 修饰符检查 -->
+        <!-- 检查修饰符的顺序是否遵照java语言规范，默认public、protected、private、abstract、static、final、transient、volatile、synchronized、native、strictfp -->
+        <module name="ModifierOrder"/>
+        <!-- 检查接口和annotation中是否有多余修饰符，如接口方法不必使用public -->
+        <module name="RedundantModifier"/>
+
+        <!-- 代码块检查 -->
+        <!-- 检查是否有嵌套代码块 -->
+        <module name="AvoidNestedBlocks"/>
+        <!-- 检查是否有空代码块 -->
+        <module name="EmptyBlock"/>
+        <!-- 检查左大括号位置 -->
+        <module name="LeftCurly"/>
+        <!-- 检查代码块是否缺失{} -->
+        <module name="NeedBraces"/>
+        <!-- 检查右大括号位置 -->
+        <module name="RightCurly"/>
+
+        <!-- 代码检查 -->
+        <!-- 检查空的代码段 -->
+        <module name="EmptyStatement"/>
+        <!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
+        <module name="EqualsHashCode"/>
+        <!-- 检查子表达式中是否有赋值操作 -->
+        <module name="InnerAssignment"/>
+        <!-- 检查是否有"魔术"数字 -->
+        <module name="MagicNumber">
+            <property name="ignoreNumbers" value="0, 1"/>
+            <property name="ignoreAnnotation" value="true"/>
+        </module>
+        <!-- 检查switch语句是否有default -->
+        <module name="MissingSwitchDefault"/>
+        <!-- 检查是否有过度复杂的布尔表达式 -->
+        <module name="SimplifyBooleanExpression"/>
+        <!-- 检查是否有过于复杂的布尔返回代码段 -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- 类设计检查 -->
+        <!-- 检查类是否为扩展设计l -->
+        <!-- 检查只有private构造函数的类是否声明为final -->
+        <module name="FinalClass"/>
+        <!-- 语法 -->
+        <!-- String的比较不能用!= 和 == -->
+        <module name="StringLiteralEquality"/>
+        <!-- 限制for循环最多嵌套2层 -->
+        <module name="NestedForDepth">
+            <property name="max" value="2"/>
+        </module>
+        <!-- if最多嵌套3层 -->
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+        <!-- 检查未被注释的main方法,排除以Application结尾命名的类 -->
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value=".*[Application,Test]$"/>
+        </module>
+        <!-- 禁止使用System.out.println -->
+        <module name="Regexp">
+            <property name="format" value="System\.out\.println"/>
+            <property name="illegalPattern" value="true"/>
+        </module>
+        <!-- return个数 3个-->
+        <module name="ReturnCount">
+            <property name="max" value="3"/>
+        </module>
+        <!--try catch 异常处理数量 3-->
+        <module name="NestedTryDepth ">
+            <property name="max" value="3"/>
+        </module>
+
+    </module>
+</module>
