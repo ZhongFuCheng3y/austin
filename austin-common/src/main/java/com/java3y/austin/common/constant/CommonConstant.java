@@ -55,9 +55,11 @@ public class CommonConstant {
     public static final String EMPTY_JSON_OBJECT = "{}";
     public static final String EMPTY_VALUE_JSON_ARRAY = "[]";
     /**
-     * cron时间格式
+     * 日期相关
      */
     public static final String CRON_FORMAT = "ss mm HH dd MM ? yyyy-yyyy";
+    public static final Long ONE_DAY_SECOND = 86400L;
+
     /**
      * 环境常量
      */

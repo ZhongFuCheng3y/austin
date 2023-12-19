@@ -175,6 +175,11 @@ public class SmsHandler extends BaseHandler implements Handler {
         }
     }
 
+    /**
+     * 短信不支持撤回
+     * 腾讯云文档 eg：https://cloud.tencent.com/document/product/382/52077
+     * @param recallTaskInfo
+     */
     @Override
     public void recall(RecallTaskInfo recallTaskInfo) {
 

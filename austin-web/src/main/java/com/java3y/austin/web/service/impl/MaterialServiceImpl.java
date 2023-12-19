@@ -27,6 +27,7 @@ import com.java3y.austin.web.vo.UploadResponseVo;
 import com.taobao.api.FileItem;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class MaterialServiceImpl implements MaterialService {
             req.setMedia(item);
             req.setType(EnumUtil.getDescriptionByCode(Integer.valueOf(fileType), FileType.class));
             rsp = client.execute(req, accessToken);
-            if (rsp.getErrcode() == 0L) {
+            if (rsp.isSuccess()) {
                 return new BasicResultVO(RespStatusEnum.SUCCESS, UploadResponseVo.builder().id(rsp.getMediaId()).build());
             }
             log.error("MaterialService#dingDingMaterialUpload fail:{}", rsp.getErrmsg());
@@ -81,7 +82,7 @@ public class MaterialServiceImpl implements MaterialService {
                     .form(IdUtil.fastSimpleUUID(), SpringFileUtils.getFile(multipartFile))
                     .execute().body();
             EnterpriseWeChatRootResult result = JSON.parseObject(response, EnterpriseWeChatRootResult.class);
-            if (result.getErrcode() == 0) {
+            if (Integer.valueOf(WxCpErrorMsgEnum.CODE_0.getCode()).equals(result.getErrcode())) {
                 return new BasicResultVO(RespStatusEnum.SUCCESS, UploadResponseVo.builder().id(result.getMediaId()).build());
             }
             log.error("MaterialService#enterpriseWeChatRootMaterialUpload fail:{}", result.getErrmsg());

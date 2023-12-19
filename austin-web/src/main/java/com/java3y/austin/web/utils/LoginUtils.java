@@ -49,9 +49,11 @@ public class LoginUtils {
      */
     public boolean needLogin() {
         try {
-            WeChatLoginConfig bean = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
-            if (CommonConstant.ENV_TEST.equals(env) && Objects.nonNull(bean)) {
-                return true;
+            if (CommonConstant.ENV_TEST.equals(env)) {
+                WeChatLoginConfig bean = applicationContext.getBean(OfficialAccountParamConstant.WE_CHAT_LOGIN_CONFIG, WeChatLoginConfig.class);
+                if (Objects.nonNull(bean)) {
+                    return true;
+                }
             }
         } catch (Exception e) {
             log.error("LoginUtils#needLogin fail:{}", Throwables.getStackTraceAsString(e));

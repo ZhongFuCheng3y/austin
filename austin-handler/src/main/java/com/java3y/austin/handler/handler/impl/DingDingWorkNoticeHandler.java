@@ -1,7 +1,6 @@
 package com.java3y.austin.handler.handler.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrPool;
 import com.alibaba.fastjson.JSON;
 import com.dingtalk.api.DefaultDingTalkClient;
@@ -14,6 +13,7 @@ import com.dingtalk.api.response.OapiMessageCorpconversationGetsendresultRespons
 import com.dingtalk.api.response.OapiMessageCorpconversationRecallResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
+import com.java3y.austin.common.constant.CommonConstant;
 import com.java3y.austin.common.constant.SendChanelUrlConstant;
 import com.java3y.austin.common.domain.LogParam;
 import com.java3y.austin.common.domain.RecallTaskInfo;
@@ -35,13 +35,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 /**
- * 钉钉消息自定义机器人 消息处理器
+ * 钉钉工作消息 消息处理器
  * <p>
- * https://open.dingtalk.com/document/group/custom-robot-access
+ * https://open.dingtalk.com/document/orgapp/asynchronous-sending-of-enterprise-session-messages
  *
  * @author 3y
  */
@@ -50,8 +47,8 @@ import java.util.concurrent.TimeUnit;
 public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
 
 
-    private static final String DING_DING_RECALL_KEY_PREFIX = "RECALL_";
-    private static final String RECALL_BIZ_TYPE = "DingDingWorkNoticeHandler#recall";
+    private static final String DING_DING_RECALL_KEY_PREFIX = "DING_RECALL_";
+    private static final String DING_DING_RECALL_BIZ_TYPE = "DingDingWorkNoticeHandler#recall";
     @Autowired
     private AccountUtils accountUtils;
     @Autowired
@@ -74,16 +71,11 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
             OapiMessageCorpconversationAsyncsendV2Request request = assembleParam(account, taskInfo);
             OapiMessageCorpconversationAsyncsendV2Response response = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_SEND_URL).execute(request, accessToken);
 
-            // 发送成功后记录TaskId，用于消息撤回(支持当天的)
-            if (response.getErrcode() == 0) {
-                redisTemplate.opsForList().leftPush(DING_DING_RECALL_KEY_PREFIX + taskInfo.getMessageTemplateId(), String.valueOf(response.getTaskId()));
-                redisTemplate.opsForValue().set(DING_DING_RECALL_KEY_PREFIX + taskInfo.getMessageId(), String.valueOf(response.getTaskId()));
-                redisTemplate.expire(DING_DING_RECALL_KEY_PREFIX + taskInfo.getMessageTemplateId(), (DateUtil.endOfDay(new Date()).getTime() - DateUtil.current()) / 1000, TimeUnit.SECONDS);
-                redisTemplate.expire(DING_DING_RECALL_KEY_PREFIX + taskInfo.getMessageId(), (DateUtil.endOfDay(new Date()).getTime() - DateUtil.current()) / 1000, TimeUnit.SECONDS);
+            // 发送成功后记录TaskId，用于消息撤回(支持24小时之内)
+            if (response.isSuccess()) {
+                saveRecallInfo(DING_DING_RECALL_KEY_PREFIX, taskInfo.getMessageTemplateId(), String.valueOf(response.getTaskId()), CommonConstant.ONE_DAY_SECOND);
                 return true;
             }
-
-            // 常见的错误 应当 关联至 AnchorState,由austin后台统一透出失败原因
             log.error("DingDingWorkNoticeHandler#handler fail!result:{},params:{}", JSON.toJSONString(response), JSON.toJSONString(taskInfo));
         } catch (Exception e) {
             log.error("DingDingWorkNoticeHandler#handler fail!{},params:{}", Throwables.getStackTraceAsString(e), taskInfo);
@@ -176,6 +168,9 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
 
     /**
      * 拉取回执
+     * 未完成；当前未拉取钉钉应用消息的回执信息
+     *
+     * @param accountId 需要拉取的账号
      */
     public void pull(Long accountId) {
         try {
@@ -205,19 +200,20 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     public void recall(RecallTaskInfo recallTaskInfo) {
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
             try {
+                DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_RECALL_URL);
                 DingDingWorkNoticeAccount account = accountUtils.getAccountById(recallTaskInfo.getSendAccount(), DingDingWorkNoticeAccount.class);
                 String accessToken = accessTokenUtils.getAccessToken(recallTaskInfo.getSendChannel(), recallTaskInfo.getSendAccount(), account, false);
 
-                // 优先去除messageId，如果未传入messageId，则按照模板id去除
+                // 优先撤回messageId，如果未传入messageId，则按照模板id撤回
                 if (CollUtil.isNotEmpty(recallTaskInfo.getRecallMessageId())) {
                     for (String messageId : recallTaskInfo.getRecallMessageId()) {
                         String taskId = redisTemplate.opsForValue().get(DING_DING_RECALL_KEY_PREFIX + messageId);
-                        recallBiz(account, accessToken, taskId);
+                        recallBiz(client, account, accessToken, taskId);
                     }
                 } else {
                     while (redisTemplate.opsForList().size(DING_DING_RECALL_KEY_PREFIX + recallTaskInfo.getMessageTemplateId()) > 0) {
                         String taskId = redisTemplate.opsForList().leftPop(DING_DING_RECALL_KEY_PREFIX + recallTaskInfo.getMessageTemplateId());
-                        recallBiz(account, accessToken, taskId);
+                        recallBiz(client, account, accessToken, taskId);
                     }
                 }
             } catch (Exception e) {
@@ -229,18 +225,18 @@ public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
     /**
      * 调用 钉钉api 撤回消息
      *
+     * @param client
      * @param account
      * @param accessToken
      * @param taskId
      * @throws ApiException
      */
-    private void recallBiz(DingDingWorkNoticeAccount account, String accessToken, String taskId) throws ApiException {
-        DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_RECALL_URL);
+    private void recallBiz(DingTalkClient client, DingDingWorkNoticeAccount account, String accessToken, String taskId) throws ApiException {
         OapiMessageCorpconversationRecallRequest req = new OapiMessageCorpconversationRecallRequest();
         req.setAgentId(Long.valueOf(account.getAgentId()));
         req.setMsgTaskId(Long.valueOf(taskId));
         OapiMessageCorpconversationRecallResponse rsp = client.execute(req, accessToken);
-        logUtils.print(LogParam.builder().bizType(RECALL_BIZ_TYPE).object(JSON.toJSONString(rsp)).build());
+        logUtils.print(LogParam.builder().bizType(DING_DING_RECALL_BIZ_TYPE).object(JSON.toJSONString(rsp)).build());
     }
 }
 

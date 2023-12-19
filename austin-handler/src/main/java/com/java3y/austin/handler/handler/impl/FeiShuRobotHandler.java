@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 企业微信群机器人 消息处理器
- *
+ * 飞书自定义机器人 消息处理器
+ * https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
  * @author 3y
  */
 @Slf4j
@@ -60,6 +60,12 @@ public class FeiShuRobotHandler extends BaseHandler implements Handler {
         return false;
     }
 
+    /**
+     * 飞书自定义机器人 暂只支持文本消息下发，其他的消息类型的组装参数过于复杂。
+     *
+     * @param taskInfo
+     * @return
+     */
     private FeiShuRobotParam assembleParam(TaskInfo taskInfo) {
         FeiShuRobotContentModel contentModel = (FeiShuRobotContentModel) taskInfo.getContentModel();
 
@@ -91,9 +97,13 @@ public class FeiShuRobotHandler extends BaseHandler implements Handler {
     }
 
 
+    /**
+     * 飞书自定义机器人 不支持撤回消息
+     * https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
+     * @param recallTaskInfo
+     */
     @Override
     public void recall(RecallTaskInfo recallTaskInfo) {
-        // 不支持或未实现
     }
 }
 

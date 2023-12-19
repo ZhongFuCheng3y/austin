@@ -91,7 +91,10 @@ public class EmailHandler extends BaseHandler implements Handler {
         return account;
     }
 
-
+    /**
+     * 邮箱 api 不支持撤回消息
+     * @param recallTaskInfo
+     */
     @Override
     public void recall(RecallTaskInfo recallTaskInfo) {
 
