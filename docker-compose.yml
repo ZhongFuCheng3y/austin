@@ -13,7 +13,6 @@ services:
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
       - ./doc/sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./doc/docker/mysql:/var/lib/mysql
       - ./doc/docker/mysql/mysql.cnf:/etc/mysql/my.cnf
     ports:
       - "3306:3306"
