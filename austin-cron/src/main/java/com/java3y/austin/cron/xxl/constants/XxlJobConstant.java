@@ -37,6 +37,10 @@ public class XxlJobConstant {
      * 立即执行的任务 延迟时间(秒数)
      */
     public static final Integer DELAY_TIME = 10;
+    /**
+     * 请求 xxl-job-admin 需要用到的 cookie
+     */
+    public static final String COOKIE_PREFIX = "xxl_job_cookie_";
 
     private XxlJobConstant() {
     }
