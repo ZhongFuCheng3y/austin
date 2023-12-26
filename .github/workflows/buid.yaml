@@ -1,0 +1,30 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Compile And Install Modules
+        run: mvn clean install -DskipTests=true -q
+        timeout-minutes: 10
+      - name: Login To Huawei Cloud Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: swr.cn-south-1.myhuaweicloud.com
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWD }}
+      - name: Build Docker Backend Server Image
+        run: docker buildx build -f Dockerfile --platform linux/amd64 . -t austin:local
+        timeout-minutes: 60
+      - name: Push Backend Server Docker Image
+        run: docker tag austin:local swr.cn-south-1.myhuaweicloud.com/juji-dev/austin:$(git rev-parse --short HEAD) && docker push swr.cn-south-1.myhuaweicloud.com/juji-dev/austin:$(git rev-parse --short HEAD)
+        timeout-minutes: 10
