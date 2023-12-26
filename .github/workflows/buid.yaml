@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWD }}
       - name: Build Docker Backend Server Image
-        run: docker buildx build -f Dockerfile --platform linux/amd64 . -t austin:local
+        run: docker buildx build -f Dockerfile --platform linux/arm64 . -t austin:local
         timeout-minutes: 60
       - name: Push Backend Server Docker Image
         run: docker tag austin:local swr.cn-south-1.myhuaweicloud.com/juji-dev/austin:$(git rev-parse --short HEAD) && docker push swr.cn-south-1.myhuaweicloud.com/juji-dev/austin:$(git rev-parse --short HEAD)
