@@ -1,7 +1,6 @@
 package com.java3y.austin.stream.utils;
 
 import com.java3y.austin.stream.callback.RedisPipelineCallBack;
-import com.java3y.austin.stream.constants.AustinFlinkConstant;
 import io.lettuce.core.LettuceFutures;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisFuture;
