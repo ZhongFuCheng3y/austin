@@ -2,6 +2,7 @@ package com.java3y.austin.cron.xxl.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
@@ -14,7 +15,9 @@ import com.java3y.austin.cron.xxl.entity.XxlJobInfo;
 import com.java3y.austin.cron.xxl.service.CronTaskService;
 import com.xxl.job.core.biz.model.ReturnT;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.net.HttpCookie;
@@ -38,6 +41,9 @@ public class CronTaskServiceImpl implements CronTaskService {
 
     @Value("${xxl.job.admin.addresses}")
     private String xxlAddresses;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
 
     @Override
@@ -65,6 +71,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#saveTask fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(xxlJobInfo), JSON.toJSONString(returnT));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(returnT));
     }
 
@@ -87,6 +94,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#deleteCronTask fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(params), JSON.toJSONString(returnT));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(returnT));
     }
 
@@ -109,6 +117,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#startCronTask fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(params), JSON.toJSONString(returnT));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(returnT));
     }
 
@@ -131,6 +140,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#stopCronTask fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(params), JSON.toJSONString(returnT));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(returnT));
     }
 
@@ -156,6 +166,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#getGroupId fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(params), JSON.toJSONString(response.body()));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(response.body()));
     }
 
@@ -177,6 +188,7 @@ public class CronTaskServiceImpl implements CronTaskService {
             log.error("CronTaskService#createGroup fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
                     , JSON.toJSONString(params), JSON.toJSONString(returnT));
         }
+        invalidateCookie();
         return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(returnT));
     }
 
@@ -186,6 +198,11 @@ public class CronTaskServiceImpl implements CronTaskService {
      * @return String
      */
     private String getCookie() {
+        String cachedCookie = redisTemplate.opsForValue().get(XxlJobConstant.COOKIE_PREFIX + xxlUserName);
+        if (StrUtil.isNotBlank(cachedCookie)) {
+            return cachedCookie;
+        }
+
         Map<String, Object> params = MapUtil.newHashMap();
         params.put("userName", xxlUserName);
         params.put("password", xxlPassword);
@@ -201,6 +218,7 @@ public class CronTaskServiceImpl implements CronTaskService {
                 for (HttpCookie cookie : cookies) {
                     sb.append(cookie.toString());
                 }
+                redisTemplate.opsForValue().set(XxlJobConstant.COOKIE_PREFIX + xxlUserName, sb.toString());
                 return sb.toString();
             }
         } catch (Exception e) {
@@ -208,5 +226,12 @@ public class CronTaskServiceImpl implements CronTaskService {
                     , JSON.toJSONString(params), JSON.toJSONString(response));
         }
         return null;
+    }
+
+    /**
+     * 清除缓存的 cookie
+     */
+    private void invalidateCookie() {
+        redisTemplate.delete(XxlJobConstant.COOKIE_PREFIX + xxlUserName);
     }
 }
