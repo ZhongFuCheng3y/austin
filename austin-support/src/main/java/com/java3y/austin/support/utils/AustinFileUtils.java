@@ -40,9 +40,9 @@ public class AustinFileUtils {
             URL url = new URL(remoteUrl);
             File file = new File(path, url.getPath());
             inputStream = url.openStream();
-            fileOutputStream = new FileOutputStream(file);
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
+                fileOutputStream = new FileOutputStream(file);
                 IoUtil.copy(inputStream, fileOutputStream);
             }
             return file;
