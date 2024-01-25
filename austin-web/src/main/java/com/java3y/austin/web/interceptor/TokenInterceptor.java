@@ -26,7 +26,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(request.getRequestURI().startsWith("/actuator") || request.getRequestURI().startsWith("/user/login")) {
+        if(request.getRequestURI().startsWith("/actuator") || request.getRequestURI().startsWith("/swagger")  || request.getRequestURI().startsWith("/user/login")) {
             return true;
         }
 
