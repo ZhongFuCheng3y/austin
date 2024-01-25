@@ -8,10 +8,9 @@ import java.util.Set;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
 
-    private String key;
+    private String key = "3a79fb4970284e1b849b3ff26e7e1248";
 
 }
 

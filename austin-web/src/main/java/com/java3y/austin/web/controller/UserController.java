@@ -1,6 +1,7 @@
 package com.java3y.austin.web.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.java3y.austin.web.annotation.AustinAspect;
 import com.java3y.austin.web.annotation.AustinResult;
 import com.java3y.austin.web.config.JwtConfig;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class UserController {
         Map resultMap = new HashMap();
         resultMap.put("creator", creator);
 
-        String token = JwtUtil.createToken(creator, jwtConfig.getKey(), 24 * 60 * 60);
+        String token = JwtUtil.createToken(JSON.toJSONString(Collections.singletonMap("creator", creator)), jwtConfig.getKey(), 24 * 60 * 60);
         resultMap.put("token", token);
         return ResponseEntity.ok(resultMap);
     }
