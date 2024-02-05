@@ -17,7 +17,7 @@ jobs:
         run: mvn clean install -DskipTests=true -q
         timeout-minutes: 10
       - name: Prepare Docker Cross Compile
-        run: docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 && docker buildx create --use --name multi-arch-builder
+        run: docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 && docker buildx  create --name multi-arch-builder --node multi-arch-builder0 --use --name multi-arch-builder
         timeout-minutes: 10
       - name: Build Docker Backend Server Image
         run: docker buildx build -f Dockerfile --platform linux/arm64 . -t austin:local --load
