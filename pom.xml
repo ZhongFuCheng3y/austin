@@ -12,8 +12,8 @@
         <module>austin-support</module>
         <module>austin-handler</module>
         <module>austin-cron</module>
-<!--         <module>austin-stream</module>
-        <module>austin-data-house</module> -->
+        <module>austin-stream</module>
+        <module>austin-data-house</module>
     </modules>
 
     <parent>
