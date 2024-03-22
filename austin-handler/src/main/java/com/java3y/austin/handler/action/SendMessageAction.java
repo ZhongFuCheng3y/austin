@@ -31,6 +31,7 @@ public class SendMessageAction implements BusinessProcess<TaskInfo> {
             for (String receiver : taskInfo.getReceiver()) {
                 TaskInfo taskClone = ObjectUtil.cloneByStream(taskInfo);
                 taskClone.setReceiver(Sets.newHashSet(receiver));
+                taskClone.setAnchorInfo(taskInfo.getAnchorInfo());
                 handlerHolder.route(taskInfo.getSendChannel()).doHandler(taskClone);
             }
             return;
