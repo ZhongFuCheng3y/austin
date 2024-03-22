@@ -393,7 +393,7 @@ public class Convert4Amis {
         if (CollUtil.isNotEmpty(anchorResult)) {
             anchorResult = MapUtil.sort(anchorResult);
             for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-                String description = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), Integer.valueOf(String.valueOf(entry.getKey())));
+                String description = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), Integer.valueOf(String.valueOf(entry.getKey())), "");
                 xAxisList.add(description);
                 actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
             }
