@@ -58,6 +58,9 @@ public abstract class BaseHandler implements Handler {
             return;
         }
         logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_FAIL.getCode()).bizId(taskInfo.getBizId()).messageId(taskInfo.getMessageId()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+        if(taskInfo.getAnchorInfo() != null) {
+            taskInfo.getAnchorInfo().setState(AnchorState.SEND_FAIL.getCode());
+        }
     }
 
 
