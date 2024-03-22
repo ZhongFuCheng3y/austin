@@ -65,7 +65,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public UserTimeLineVo getTraceUserInfo(String receiver) {
-        List<String> userInfoList = redisUtils.lRange(receiver, 0, -1);
+        List<String> userInfoList = redisUtils.lRange(receiver, 0, redisUtils.lLen(receiver) > 1000 ? 1000 : -1);
         if (CollUtil.isEmpty(userInfoList)) {
             return UserTimeLineVo.builder().items(new ArrayList<>()).build();
         }
@@ -148,13 +148,14 @@ public class DataServiceImpl implements DataService {
 
             StringBuilder sb = new StringBuilder();
             for (SimpleAnchorInfo simpleAnchorInfo : entry.getValue()) {
-                if (AnchorState.RECEIVE.getCode().equals(simpleAnchorInfo.getState())) {
-                    sb.append(StrPool.CRLF);
-                }
+                // if (AnchorState.RECEIVE.getCode().equals(simpleAnchorInfo.getState())) {
+                //     sb.append(StrPool.CRLF);
+                // }
                 String startTime = DateUtil.format(new Date(simpleAnchorInfo.getTimestamp()), DatePattern.NORM_DATETIME_PATTERN);
                 String stateDescription = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), simpleAnchorInfo.getState(), simpleAnchorInfo.getMessageId());
 
                 sb.append(startTime).append(StrPool.C_COLON).append(stateDescription).append("==>");
+                sb.append(StrPool.CRLF);
             }
 
             for (String detail : sb.toString().split(StrPool.CRLF)) {
