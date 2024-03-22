@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
 
+    public static final ThreadLocal<String> CREAT_THREAD_LOCAL = new ThreadLocal<>();
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
@@ -41,6 +43,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         String subject = claims.getSubject();
         String creator = StringUtils.defaultIfEmpty(JSON.parseObject(subject).getString("creator"), JSON.parseObject(subject).getString("userId"));
 
+        CREAT_THREAD_LOCAL.set(creator);
         request.setAttribute("creator", creator);
         log.info("request {} with creator {} ", request.getRequestURI(), creator);
         return true;
@@ -48,5 +51,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        CREAT_THREAD_LOCAL.remove();
     }
 }

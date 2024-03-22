@@ -17,6 +17,10 @@ import com.java3y.austin.support.dao.MessageTemplateDao;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.service.MessageTemplateService;
 import com.java3y.austin.web.vo.MessageTemplateParam;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +31,9 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * 消息模板管理 Service
@@ -195,5 +202,15 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
         }
     }
 
-
+    @Override
+    public Boolean hasPermission(Collection<Long> ids, String creator) {
+        if(CollectionUtils.isEmpty(ids)) {
+            return true;
+        }
+        Set<Long> filteredIds = ids.stream().filter(obj -> obj != null).collect(Collectors.toSet());
+        if(CollectionUtils.isEmpty(filteredIds)) {
+            return true;
+        }
+        return messageTemplateDao.findAllById(ids).stream().allMatch(messageTemplate ->  StringUtils.equalsIgnoreCase(messageTemplate.getCreator(), creator));
+    }
 }

@@ -56,7 +56,7 @@ public class LoginUtils {
                 }
             }
         } catch (Exception e) {
-            log.error("LoginUtils#needLogin fail:{}", Throwables.getStackTraceAsString(e));
+            log.debug("LoginUtils#needLogin fail:{}", Throwables.getStackTraceAsString(e));
         }
         return false;
     }
