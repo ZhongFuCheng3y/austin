@@ -8,10 +8,9 @@ import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxMaErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
 
-
 /**
  * @author 3y
- * AnchorStateUtils
+ *         AnchorStateUtils
  */
 public class AnchorStateUtils {
 
@@ -26,7 +25,7 @@ public class AnchorStateUtils {
      * @param state   点位状态码
      * @return 点位描述
      */
-    public static String getDescriptionByState(Integer channel, Integer state) {
+    public static String getDescriptionByState(Integer channel, Integer state, String messageId) {
         String stateDescription = EnumUtil.getDescriptionByCode(state, AnchorState.class);
 
         // 如果 AnchorState 找不到对应的点位描述，那就是在对应渠道的点位信息
@@ -39,6 +38,7 @@ public class AnchorStateUtils {
                 stateDescription = WxCpErrorMsgEnum.findMsgByCode(state);
             }
         }
+        stateDescription = String.join("", stateDescription, " [", messageId, "]");
         return stateDescription;
 
     }

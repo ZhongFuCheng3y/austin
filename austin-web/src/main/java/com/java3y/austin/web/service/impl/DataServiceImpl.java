@@ -152,7 +152,7 @@ public class DataServiceImpl implements DataService {
                     sb.append(StrPool.CRLF);
                 }
                 String startTime = DateUtil.format(new Date(simpleAnchorInfo.getTimestamp()), DatePattern.NORM_DATETIME_PATTERN);
-                String stateDescription = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), simpleAnchorInfo.getState());
+                String stateDescription = AnchorStateUtils.getDescriptionByState(messageTemplate.getSendChannel(), simpleAnchorInfo.getState(), simpleAnchorInfo.getMessageId());
 
                 sb.append(startTime).append(StrPool.C_COLON).append(stateDescription).append("==>");
             }
