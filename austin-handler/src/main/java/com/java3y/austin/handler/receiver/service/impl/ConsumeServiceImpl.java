@@ -64,9 +64,10 @@ public class ConsumeServiceImpl implements ConsumeService {
             taskInfo.setAnchorInfo(info);
             logUtils.print(LogParam.builder().bizType(LOG_BIZ_TYPE).object(taskInfo).build(), info);
             Task task = context.getBean(Task.class).setTaskInfo(taskInfo);
-            taskPendingHolder.route(topicGroupId).execute(task);
-
-            realTimeData(info);
+            taskPendingHolder.route(topicGroupId).execute(() -> {
+                task.run();
+                realTimeData(info);
+            });
         }
     }
 
