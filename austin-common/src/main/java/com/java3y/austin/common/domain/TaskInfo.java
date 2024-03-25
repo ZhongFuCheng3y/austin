@@ -86,5 +86,5 @@ public class TaskInfo implements Serializable, ProcessModel {
      */
     private Integer sendAccount;
 
-
+    private transient AnchorInfo anchorInfo;
 }

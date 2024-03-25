@@ -32,4 +32,9 @@ public class SimpleAnchorInfo {
      * 生成时间
      */
     private long timestamp;
+
+    /**
+     * 消息id
+     */
+    private String messageId;
 }

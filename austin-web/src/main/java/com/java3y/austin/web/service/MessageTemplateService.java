@@ -4,8 +4,10 @@ package com.java3y.austin.web.service;
 import com.java3y.austin.common.vo.BasicResultVO;
 import com.java3y.austin.support.domain.MessageTemplate;
 import com.java3y.austin.web.vo.MessageTemplateParam;
+
 import org.springframework.data.domain.Page;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -80,4 +82,5 @@ public interface MessageTemplateService {
      */
     BasicResultVO stopCronTask(Long id);
 
+    Boolean hasPermission(Collection<Long> ids, String creator);
 }

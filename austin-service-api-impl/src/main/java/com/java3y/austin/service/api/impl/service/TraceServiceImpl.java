@@ -42,7 +42,11 @@ public class TraceServiceImpl implements TraceService {
         }
 
         // 0. 按时间排序
-        List<SimpleAnchorInfo> sortAnchorList = messageList.stream().map(s -> JSON.parseObject(s, SimpleAnchorInfo.class)).sorted((o1, o2) -> Math.toIntExact(o1.getTimestamp() - o2.getTimestamp())).collect(Collectors.toList());
+        List<SimpleAnchorInfo> sortAnchorList = messageList.stream().map(s -> {
+            SimpleAnchorInfo simpleAnchorInfo = JSON.parseObject(s, SimpleAnchorInfo.class);
+            simpleAnchorInfo.setMessageId(messageId);
+            return simpleAnchorInfo;
+        }).sorted((o1, o2) -> Math.toIntExact(o1.getTimestamp() - o2.getTimestamp())).collect(Collectors.toList());
 
         return new TraceResponse(RespStatusEnum.SUCCESS.getCode(), RespStatusEnum.SUCCESS.getMsg(), sortAnchorList);
     }
