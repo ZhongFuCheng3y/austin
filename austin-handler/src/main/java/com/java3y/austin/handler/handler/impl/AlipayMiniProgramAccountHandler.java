@@ -1,5 +1,7 @@
 package com.java3y.austin.handler.handler.impl;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.AlipayOpenAppMiniTemplatemessageSendModel;
@@ -19,9 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author jwq
@@ -40,11 +41,12 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
 
     @Override
     public boolean handler(TaskInfo taskInfo) {
-        AlipayMiniProgramParam miniProgramParam = buildMiniProgramParam(taskInfo);
+        AlipayMiniProgramContentModel contentModel= (AlipayMiniProgramContentModel) taskInfo.getContentModel();
+
         try {
-            AlipayMiniProgramAccount miniProgramAccount = accountUtils.getAccountById(miniProgramParam.getSendAccount(), AlipayMiniProgramAccount.class);
+            AlipayMiniProgramAccount miniProgramAccount = accountUtils.getAccountById(taskInfo.getSendAccount(), AlipayMiniProgramAccount.class);
             AlipayClient client = AlipayClientSingleton.getSingleton(miniProgramAccount);
-            List<AlipayOpenAppMiniTemplatemessageSendRequest> request = assembleReq(miniProgramParam, miniProgramAccount);
+            List<AlipayOpenAppMiniTemplatemessageSendRequest> request = assembleReq(taskInfo.getReceiver(), contentModel);
             for (AlipayOpenAppMiniTemplatemessageSendRequest req : request) {
                 client.execute(req);
             }
@@ -59,35 +61,43 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler implements Hand
     /**
      * 通过taskInfo构建小程序订阅消息
      *
-     * @param taskInfo 任务信息
+     * @param
      * @return AlipayMiniProgramParam
      */
-    private AlipayMiniProgramParam buildMiniProgramParam(TaskInfo taskInfo) {
-        AlipayMiniProgramParam param = AlipayMiniProgramParam.builder()
-                .toUserId(taskInfo.getReceiver())
-                .messageTemplateId(taskInfo.getMessageTemplateId())
-                .sendAccount(taskInfo.getSendAccount())
-                .build();
+    private String getAlipayMiniProgramParam(Map<String, String> data) {
 
-        AlipayMiniProgramContentModel contentModel = (AlipayMiniProgramContentModel) taskInfo.getContentModel();
-        param.setData(contentModel.getMap());
-        return param;
+        Map<String, Map<String, String>> newMap = data.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> {
+                            Map<String, String> valueMap = new HashMap<>();
+                            valueMap.put("value", entry.getValue());
+                            return valueMap;
+                        }
+                ));
+        return JSONUtil.toJsonStr(newMap);
+
     }
 
     /**
      * 组装模板消息的参数
      */
-    private List<AlipayOpenAppMiniTemplatemessageSendRequest> assembleReq(AlipayMiniProgramParam alipayMiniProgramParam, AlipayMiniProgramAccount alipayMiniProgramAccount) {
-        Set<String> receiver = alipayMiniProgramParam.getToUserId();
+    private List<AlipayOpenAppMiniTemplatemessageSendRequest> assembleReq(Set<String> receiver, AlipayMiniProgramContentModel alipayMiniProgramContentModel) {
         List<AlipayOpenAppMiniTemplatemessageSendRequest> requestList = new ArrayList<>(receiver.size());
 
         for (String toUserId : receiver) {
             AlipayOpenAppMiniTemplatemessageSendRequest request = new AlipayOpenAppMiniTemplatemessageSendRequest();
             AlipayOpenAppMiniTemplatemessageSendModel model = new AlipayOpenAppMiniTemplatemessageSendModel();
+            //兼容新旧用户ID
+            if(toUserId.startsWith("2088")) {
+                model.setToUserId(toUserId);
+            } else {
+                model.setToOpenId(toUserId);
+            }
             model.setToUserId(toUserId);
-            model.setUserTemplateId(alipayMiniProgramAccount.getUserTemplateId());
-            model.setPage(alipayMiniProgramAccount.getPage());
-            model.setData(alipayMiniProgramParam.getData().toString());
+            model.setUserTemplateId(alipayMiniProgramContentModel.getTemplateId());
+            model.setPage(alipayMiniProgramContentModel.getPage());
+            model.setData(getAlipayMiniProgramParam(alipayMiniProgramContentModel.getMiniProgramParam()));
             request.setBizModel(model);
             requestList.add(request);
         }

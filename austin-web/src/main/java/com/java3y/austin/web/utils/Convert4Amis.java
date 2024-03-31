@@ -9,6 +9,7 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.domain.MerchantMsgTemplateVO;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.EnumUtil;
 import com.java3y.austin.common.enums.SmsStatus;
@@ -317,6 +318,45 @@ public class Convert4Amis {
                             .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
                     columnsDtoS.add(columnsDTO);
                 }
+                officialAccountParam.setColumns(columnsDtoS);
+
+            }
+        }
+        return officialAccountParam;
+
+    }
+
+    /**
+     * 【这个方法不用看】，纯粹为了适配amis前端
+     * <p>
+     * 得到模板的参数 组装好 返回给前端展示
+     *
+     * @param alipayTemplateId
+     * @param templateList
+     * @return
+     */
+    public static CommonAmisVo getAlipayTemplateParam(String alipayTemplateId,  List<MerchantMsgTemplateVO> templateList) {
+        CommonAmisVo officialAccountParam = null;
+        for (MerchantMsgTemplateVO templateInfo : templateList) {
+            if (alipayTemplateId.equals(templateInfo.getTemplateId())) {
+                String[] data = templateInfo.getKeywordDesc().split(StrUtil.COMMA);
+                officialAccountParam = CommonAmisVo.builder()
+                        .type("input-table")
+                        .name("miniProgramParam")
+                        .addable(true)
+                        .editable(true)
+                        .needConfirm(false)
+                        .build();
+                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
+                //使用i作为变量循环
+                for (int i=0;i<data.length;i++) {
+                    String name ="keyword"+String.valueOf(i+1);
+                    String label = data[i];
+                    CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
+                            .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
+                    columnsDtoS.add(columnsDTO);
+                }
+
                 officialAccountParam.setColumns(columnsDtoS);
 
             }
