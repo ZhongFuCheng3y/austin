@@ -27,7 +27,8 @@ public class SendMessageAction implements BusinessProcess<TaskInfo> {
 
         // 微信小程序&服务号只支持单人推送，为了后续逻辑统一处理，于是在这做了单发处理
         if (ChannelType.MINI_PROGRAM.getCode().equals(taskInfo.getSendChannel())
-                || ChannelType.OFFICIAL_ACCOUNT.getCode().equals(taskInfo.getSendChannel())) {
+                || ChannelType.OFFICIAL_ACCOUNT.getCode().equals(taskInfo.getSendChannel())
+                || ChannelType.ALIPAY_MINI_PROGRAM.getCode().equals(taskInfo.getSendChannel())) {
             for (String receiver : taskInfo.getReceiver()) {
                 TaskInfo taskClone = ObjectUtil.cloneByStream(taskInfo);
                 taskClone.setReceiver(Sets.newHashSet(receiver));

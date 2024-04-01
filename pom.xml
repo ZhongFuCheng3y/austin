@@ -201,7 +201,7 @@
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
                 <artifactId>alipay-sdk-java</artifactId>
-                <version>4.33.39.ALL</version>
+                <version>4.39.19.ALL</version>
             </dependency>
 
             <!--阿里云 钉钉 SDK-->

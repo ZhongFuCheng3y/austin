@@ -30,7 +30,7 @@ public class SendChanelUrlConstant {
     /**
      * 支付宝小程序相关的url
      */
-    public static final String ALI_MINI_PROGRAM_GATEWAY_URL = "https://openapi.alipaydev.com/gateway.do";
+    public static final String ALI_MINI_PROGRAM_GATEWAY_URL = "https://openapi.alipay.com/gateway.do";
     /**
      * 微信小程序相关的url
      */
