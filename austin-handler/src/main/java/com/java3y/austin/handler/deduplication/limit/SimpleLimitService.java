@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 /**
  * 采用普通的计数去重方法，限制的是每天发送的条数。
- *
+ * 业务逻辑： 一天内相同的用户如果已经收到某渠道内容5次，则应该被过滤掉
+ * 技术方案：由pipeline set & mget实现
  * @author cao
  * @date 2022-04-20 13:41
  */

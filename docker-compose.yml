@@ -10,9 +10,8 @@ services:
     container_name: austin-mysql
     image: mysql:5.7
     hostname: mysql
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
-      - ./doc/sql/austin.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./doc/sql:/docker-entrypoint-initdb.d
       - ./doc/docker/mysql/mysql.cnf:/etc/mysql/my.cnf
     ports:
       - "3306:3306"
