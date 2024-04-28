@@ -31,7 +31,7 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
     /**
      * 业务规则去重 构建key
      * <p>
-     * key ： receiver + templateId + sendChannel
+     * key ： receiver  + sendChannel
      * <p>
      * 一天内一个用户只能收到某个渠道的消息 N 次
      *
@@ -43,7 +43,6 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
     public String deduplicationSingleKey(TaskInfo taskInfo, String receiver) {
         return PREFIX + StrPool.C_UNDERLINE
                 + receiver + StrPool.C_UNDERLINE
-                + taskInfo.getMessageTemplateId() + StrPool.C_UNDERLINE
                 + taskInfo.getSendChannel();
     }
 }

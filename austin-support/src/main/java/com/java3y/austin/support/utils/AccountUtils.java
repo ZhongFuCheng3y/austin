@@ -119,7 +119,7 @@ public class AccountUtils {
      */
     public WxMpService initOfficialAccountService(WeChatOfficialAccount officialAccount) {
         WxMpService wxMpService = new WxMpServiceImpl();
-        WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(redisTemplateWxRedisOps(), ChannelType.ENTERPRISE_WE_CHAT.getAccessTokenPrefix());
+        WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(redisTemplateWxRedisOps(), ChannelType.OFFICIAL_ACCOUNT.getAccessTokenPrefix());
         config.setAppId(officialAccount.getAppId());
         config.setSecret(officialAccount.getSecret());
         config.setToken(officialAccount.getToken());
