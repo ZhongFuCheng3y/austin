@@ -31,7 +31,7 @@ public class FrequencyDeduplicationService extends AbstractDeduplicationService 
     /**
      * 业务规则去重 构建key
      * <p>
-     * key ： receiver  + sendChannel
+     * key ： receiver + sendChannel
      * <p>
      * 一天内一个用户只能收到某个渠道的消息 N 次
      *
