@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  
+  <mirrors>
+    
+    <!-- 阿里云 Maven 仓库 -->
+    <mirror>
+      <id>aliyunmaven</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Aliyun Maven</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
+
+    <!-- 阿里云 Nexus 仓库 -->
+    <mirror>
+      <id>alimaven</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Aliyun Nexus Maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+    </mirror>
+
+    <!-- 阿里云 Spring Plugin 仓库 -->
+    <mirror>
+      <id>aliyunmaven-spring-plugin</id>
+      <mirrorOf>*</mirrorOf>
+      <name>Aliyun Spring Plugin</name>
+      <url>https://maven.aliyun.com/repository/spring-plugin</url>
+    </mirror>
+
+    <!-- 华为云 Maven 仓库 -->
+    <mirror>
+      <id>huaweicloud</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Huawei Cloud Maven</name>
+      <url>https://repo.huaweicloud.com/repository/maven/</url>
+    </mirror>
+
+    <!-- 腾讯云 Maven 仓库 -->
+    <mirror>
+      <id>tencentmaven</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Tencent Maven</name>
+      <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+    </mirror>
+
+  </mirrors>
+
+  <profiles>
+
+    <!-- 默认源为官网 -->
+    <profile>
+      <id>default</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>default</activeProfile>
+  </activeProfiles>
+
+</settings>
