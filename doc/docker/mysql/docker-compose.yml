@@ -10,7 +10,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: austin_pwd+-
+      MYSQL_ROOT_PASSWORD: root123_A
       TZ: Asia/Shanghai
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 volumes:

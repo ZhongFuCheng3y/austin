@@ -2,7 +2,7 @@ version: '3'
 
 services:
   redis:
-    image: redis:latest
+    image: redis:3.2
     container_name: redis
     restart: always
     ports:
