@@ -3,6 +3,7 @@ package com.java3y.austin.handler.receiver.rabbit;
 import com.alibaba.fastjson.JSON;
 import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.handler.receiver.MessageReceiver;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Component
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.RABBIT_MQ)
-public class RabbitMqReceiver {
+public class RabbitMqReceiver implements MessageReceiver {
 
     private static final String MSG_TYPE_SEND = "send";
     private static final String MSG_TYPE_RECALL = "recall";
