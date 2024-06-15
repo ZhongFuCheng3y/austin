@@ -12,7 +12,6 @@ import com.java3y.austin.common.dto.model.EnterpriseWeChatContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.support.utils.LogUtils;
@@ -41,7 +40,7 @@ import java.util.Map;
  */
 @Component
 @Slf4j
-public class EnterpriseWeChatHandler extends BaseHandler implements Handler {
+public class EnterpriseWeChatHandler extends BaseHandler{
 
     private static final String WE_CHAT_RECALL_KEY_PREFIX = "WECHAT_RECALL_";
     private static final String WE_CHAT_RECALL_BIZ_TYPE = "EnterpriseWeChatHandler#recall";

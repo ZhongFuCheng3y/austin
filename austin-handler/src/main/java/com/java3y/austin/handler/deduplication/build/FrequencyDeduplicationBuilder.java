@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 
 @Service
-public class FrequencyDeduplicationBuilder extends AbstractDeduplicationBuilder implements Builder {
+public class FrequencyDeduplicationBuilder extends AbstractDeduplicationBuilder{
     public FrequencyDeduplicationBuilder() {
         deduplicationType = DeduplicationType.FREQUENCY.getCode();
     }

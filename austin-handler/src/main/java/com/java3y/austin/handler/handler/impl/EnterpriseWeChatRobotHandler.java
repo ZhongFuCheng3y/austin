@@ -15,7 +15,6 @@ import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRobotParam;
 import com.java3y.austin.handler.domain.wechat.robot.EnterpriseWeChatRootResult;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class EnterpriseWeChatRobotHandler extends BaseHandler implements Handler {
+public class EnterpriseWeChatRobotHandler extends BaseHandler{
 
     @Autowired
     private AccountUtils accountUtils;

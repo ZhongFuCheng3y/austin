@@ -18,7 +18,6 @@ import com.java3y.austin.handler.domain.push.getui.BatchSendPushParam;
 import com.java3y.austin.handler.domain.push.getui.SendPushParam;
 import com.java3y.austin.handler.domain.push.getui.SendPushResult;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,7 @@ import java.util.Set;
  */
 @Component
 @Slf4j
-public class PushHandler extends BaseHandler implements Handler {
+public class PushHandler extends BaseHandler{
 
     private static final String HEADER_TOKEN_NAME = "token";
     @Autowired

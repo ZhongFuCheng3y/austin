@@ -14,7 +14,6 @@ import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.domain.feishu.FeiShuRobotParam;
 import com.java3y.austin.handler.domain.feishu.FeiShuRobotResult;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class FeiShuRobotHandler extends BaseHandler implements Handler {
+public class FeiShuRobotHandler extends BaseHandler{
 
     @Autowired
     private AccountUtils accountUtils;

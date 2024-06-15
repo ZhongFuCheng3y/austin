@@ -1,6 +1,5 @@
 package com.java3y.austin.handler.handler.impl;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayClient;
@@ -13,9 +12,7 @@ import com.java3y.austin.common.dto.account.AlipayMiniProgramAccount;
 import com.java3y.austin.common.dto.model.AlipayMiniProgramContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.config.AlipayClientSingleton;
-import com.java3y.austin.handler.domain.alipay.AlipayMiniProgramParam;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +27,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
-public class AlipayMiniProgramAccountHandler extends BaseHandler implements Handler {
+public class AlipayMiniProgramAccountHandler extends BaseHandler{
 
     @Autowired
     private AccountUtils accountUtils;

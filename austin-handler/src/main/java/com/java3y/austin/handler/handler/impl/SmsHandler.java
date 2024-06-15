@@ -14,7 +14,6 @@ import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.domain.sms.MessageTypeSmsConfig;
 import com.java3y.austin.handler.domain.sms.SmsParam;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.handler.script.SmsScript;
 import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.SmsRecord;
@@ -37,7 +36,7 @@ import java.util.Random;
  */
 @Component
 @Slf4j
-public class SmsHandler extends BaseHandler implements Handler {
+public class SmsHandler extends BaseHandler{
 
     /**
      * 流量自动分配策略

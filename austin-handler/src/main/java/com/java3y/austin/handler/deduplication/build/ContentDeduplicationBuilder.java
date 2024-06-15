@@ -14,7 +14,7 @@ import java.util.Objects;
  * @date 2022/1/18
  */
 @Service
-public class ContentDeduplicationBuilder extends AbstractDeduplicationBuilder implements Builder {
+public class ContentDeduplicationBuilder extends AbstractDeduplicationBuilder{
 
     public ContentDeduplicationBuilder() {
         deduplicationType = DeduplicationType.CONTENT.getCode();
