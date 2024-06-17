@@ -25,114 +25,188 @@
 
     <groupId>com.java3y.austin</groupId>
     <artifactId>austin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>austin</name>
     <description>austin-message</description>
+    <url>https://github.com/ZhongFuCheng3y/austin</url>
 
     <properties>
+        <!--项目版本-->
+        <revision>0.0.1-SNAPSHOT</revision>
+
+        <!--构建配置-->
         <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flink.version>1.14.3</flink.version>
         <target.java.version>1.8</target.java.version>
-        <scala.binary.version>2.11</scala.binary.version>
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
-        <log4j.version>2.17.1</log4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--依赖库版本-->
+        <mysql-connector-java.version>5.1.35</mysql-connector-java.version>
+        <hutool-all.version>5.7.15</hutool-all.version>
+        <guava.version>31.0.1-jre</guava.version>
+        <okhttp.version>4.9.2</okhttp.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <tencentcloud-sdk-java.version>3.1.510</tencentcloud-sdk-java.version>
+        <nacos-config-spring-boot-starter.version>0.2.12</nacos-config-spring-boot-starter.version>
+        <apollo-client.version>2.1.0</apollo-client.version>
+        <log-record-starter.version>1.0.4.1</log-record-starter.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <logback-gelf.version>3.0.0</logback-gelf.version>
+        <xxl-job-core.version>2.3.0</xxl-job-core.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <flink.version>1.14.3</flink.version>
+        <flink-connector-hive_2.12.version>1.16.0</flink-connector-hive_2.12.version>
+        <flink-table-api-java-bridge.version>1.16.0</flink-table-api-java-bridge.version>
+        <hive-exec.version>2.3.4</hive-exec.version>
         <weixin-java>4.5.3.B</weixin-java>
+        <dynamic-tp-spring-boot-starter-apollo.version>1.0.2</dynamic-tp-spring-boot-starter-apollo.version>
+        <alipay-sdk-java.version>4.39.19.ALL</alipay-sdk-java.version>
+        <alibaba-dingtalk-service-sdk.version>2.0.0</alibaba-dingtalk-service-sdk.version>
+        <rocketmq-spring-boot-starter.version>2.2.2</rocketmq-spring-boot-starter.version>
+        <hades-nacos-starter.version>1.0.4</hades-nacos-starter.version>
+        <spring-boot-configuration-processor.version>2.5.6</spring-boot-configuration-processor.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--本地依赖，按需引入-->
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-cron</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-data-house</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-handler</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-service-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-service-api-impl</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-stream</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-support</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.java3y.austin</groupId>
+                <artifactId>austin-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!--mysql驱动包-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.35</version>
+                <version>${mysql-connector-java.version}</version>
             </dependency>
 
             <!--hutool工具包-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.7.15</version>
+                <version>${hutool-all.version}</version>
             </dependency>
 
             <!--guava工具包-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>31.0.1-jre</version>
+                <version>${guava.version}</version>
             </dependency>
 
             <!--http库-->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
-                <version>4.9.2</version>
+                <version>${okhttp.version}</version>
             </dependency>
 
             <!--fastjson包-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.83</version>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!--腾讯sdk(目前用在短信上)-->
             <dependency>
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
-                <version>3.1.510</version>
+                <version>${tencentcloud-sdk-java.version}</version>
             </dependency>
 
             <!--nacos-->
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
-                <version>0.2.12</version>
+                <version>${nacos-config-spring-boot-starter.version}</version>
             </dependency>
 
             <!--apollo-->
             <dependency>
                 <groupId>com.ctrip.framework.apollo</groupId>
                 <artifactId>apollo-client</artifactId>
-                <version>2.1.0</version>
+                <version>${apollo-client.version}</version>
             </dependency>
 
             <!--注解打印日志-->
             <dependency>
                 <groupId>cn.monitor4all</groupId>
                 <artifactId>log-record-starter</artifactId>
-                <version>1.0.4.1</version>
+                <version>${log-record-starter.version}</version>
             </dependency>
 
             <!--邮件发送-->
             <dependency>
                 <groupId>com.sun.mail</groupId>
                 <artifactId>javax.mail</artifactId>
-                <version>1.6.2</version>
+                <version>${javax.mail.version}</version>
             </dependency>
 
             <!--swagger-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
-                <version>3.0.0</version>
+                <version>${springfox-boot-starter.version}</version>
             </dependency>
-
 
             <!--graylog-->
             <dependency>
                 <groupId>de.siegmar</groupId>
                 <artifactId>logback-gelf</artifactId>
-                <version>3.0.0</version>
+                <version>${logback-gelf.version}</version>
             </dependency>
 
             <!--xxl-job分布式定时任务-->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
-                <version>2.3.0</version>
+                <version>${xxl-job-core.version}</version>
             </dependency>
 
             <!--flink相关依赖-->
@@ -153,21 +227,28 @@
                 <version>${flink.version}</version>
                 <scope>provided</scope>
             </dependency>
-
-            <!--kafkaFlink连接器-->
             <dependency>
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
                 <version>${flink.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-hive_2.12</artifactId>
+                <version>${flink-connector-hive_2.12.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-table-api-java-bridge</artifactId>
+                <version>${flink-table-api-java-bridge.version}</version>
+            </dependency>
 
-            <!--目前没有完善RabbitMQ实现-->
-            <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-rabbitmq -->
-            <!--            <dependency>-->
-            <!--                <groupId>org.apache.flink</groupId>-->
-            <!--                <artifactId>flink-connector-rabbitmq</artifactId>-->
-            <!--                <version>1.15.1</version>-->
-            <!--            </dependency>-->
+            <!--Hive exec-->
+            <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-exec</artifactId>
+                <version>${hive-exec.version}</version>
+            </dependency>
 
             <!--微信服务号第三方SDK-->
             <dependency>
@@ -183,13 +264,6 @@
                 <version>${weixin-java}</version>
             </dependency>
 
-            <!--动态线程池引入-->
-            <dependency>
-                <groupId>io.github.lyh200</groupId>
-                <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
-                <version>1.0.2</version>
-            </dependency>
-
             <!--企业微信第三方SDK-->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -197,39 +271,47 @@
                 <version>${weixin-java}</version>
             </dependency>
 
-            <!-- 支付宝sdk https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+            <!--动态线程池引入-->
+            <dependency>
+                <groupId>io.github.lyh200</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
+                <version>${dynamic-tp-spring-boot-starter-apollo.version}</version>
+            </dependency>
+
+            <!--支付宝sdk-->
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
                 <artifactId>alipay-sdk-java</artifactId>
-                <version>4.39.19.ALL</version>
+                <version>${alipay-sdk-java.version}</version>
             </dependency>
 
             <!--阿里云 钉钉 SDK-->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
-                <version>2.0.0</version>
+                <version>${alibaba-dingtalk-service-sdk.version}</version>
             </dependency>
 
             <!--rocketmq-->
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>2.2.2</version>
+                <version>${rocketmq-spring-boot-starter.version}</version>
             </dependency>
 
-            <!-- hades规则引擎：https://github.com/ZhongFuCheng3y/hades -->
+            <!--hades规则引擎：https://github.com/ZhongFuCheng3y/hades -->
             <dependency>
                 <groupId>io.github.ZhongFuCheng3y</groupId>
                 <artifactId>hades-nacos-starter</artifactId>
-                <version>1.0.4</version>
+                <version>${hades-nacos-starter.version}</version>
             </dependency>
-            <!--用hades规则引擎用nacos做演示，apollo注释掉-->
-            <!--            <dependency>-->
-            <!--                <groupId>io.github.ZhongFuCheng3y</groupId>-->
-            <!--                <artifactId>hades-apollo-starter</artifactId>-->
-            <!--                <version>1.0.4</version>-->
-            <!--            </dependency>-->
+
+            <!--Configuration Processor-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot-configuration-processor.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

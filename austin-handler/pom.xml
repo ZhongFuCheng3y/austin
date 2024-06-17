@@ -2,28 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>austin</artifactId>
         <groupId>com.java3y.austin</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>austin-handler</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>com.java3y.austin</groupId>
             <artifactId>austin-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.java3y.austin</groupId>
             <artifactId>austin-support</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.tencentcloudapi</groupId>
@@ -42,17 +40,16 @@
             <artifactId>javax.mail</artifactId>
         </dependency>
 
-
         <!--企业微信发送消息-->
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-cp</artifactId>
         </dependency>
+
         <!--支付宝SDK-->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
         </dependency>
-
     </dependencies>
 </project>

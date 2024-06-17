@@ -2,22 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>austin</artifactId>
         <groupId>com.java3y.austin</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>austin-stream</artifactId>
 
-
     <dependencies>
+        <dependency>
+            <groupId>com.java3y.austin</groupId>
+            <artifactId>austin-support</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-walkthrough-common_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
+
         <!-- This dependency is provided, because it should not be packaged into the JAR file. -->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -25,25 +31,20 @@
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-clients_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Add connector dependencies here. They must be in the default scope (compile). -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.java3y.austin</groupId>
-            <artifactId>austin-support</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -102,7 +103,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
 
         </plugins>
     </build>
