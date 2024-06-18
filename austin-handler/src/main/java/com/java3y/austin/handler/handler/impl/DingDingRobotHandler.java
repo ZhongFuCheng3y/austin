@@ -16,7 +16,6 @@ import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotParam;
 import com.java3y.austin.handler.domain.dingding.DingDingRobotResult;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -37,7 +36,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class DingDingRobotHandler extends BaseHandler implements Handler {
+public class DingDingRobotHandler extends BaseHandler{
 
     @Autowired
     private AccountUtils accountUtils;

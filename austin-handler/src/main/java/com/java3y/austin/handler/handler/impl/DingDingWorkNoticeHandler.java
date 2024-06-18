@@ -23,7 +23,6 @@ import com.java3y.austin.common.dto.model.DingDingWorkContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.common.enums.SendMessageType;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.config.SupportThreadPoolConfig;
 import com.java3y.austin.support.utils.AccessTokenUtils;
 import com.java3y.austin.support.utils.AccountUtils;
@@ -44,7 +43,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class DingDingWorkNoticeHandler extends BaseHandler implements Handler {
+public class DingDingWorkNoticeHandler extends BaseHandler{
 
 
     private static final String DING_DING_RECALL_KEY_PREFIX = "DING_RECALL_";

@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    ports:
+      - "5001:3000"
+    restart: always

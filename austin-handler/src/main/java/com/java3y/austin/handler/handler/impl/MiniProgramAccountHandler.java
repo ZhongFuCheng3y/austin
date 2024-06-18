@@ -11,7 +11,6 @@ import com.java3y.austin.common.domain.TaskInfo;
 import com.java3y.austin.common.dto.model.MiniProgramContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.handler.BaseHandler;
-import com.java3y.austin.handler.handler.Handler;
 import com.java3y.austin.support.utils.AccountUtils;
 import com.java3y.austin.support.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ import java.util.Set;
  */
 @Component
 @Slf4j
-public class MiniProgramAccountHandler extends BaseHandler implements Handler {
+public class MiniProgramAccountHandler extends BaseHandler{
     @Autowired
     private AccountUtils accountUtils;
     @Autowired

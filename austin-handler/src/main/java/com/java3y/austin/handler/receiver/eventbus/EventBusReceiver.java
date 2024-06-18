@@ -3,6 +3,7 @@ package com.java3y.austin.handler.receiver.eventbus;
 import com.google.common.eventbus.Subscribe;
 import com.java3y.austin.common.domain.RecallTaskInfo;
 import com.java3y.austin.common.domain.TaskInfo;
+import com.java3y.austin.handler.receiver.MessageReceiver;
 import com.java3y.austin.handler.receiver.service.ConsumeService;
 import com.java3y.austin.support.constans.MessageQueuePipeline;
 import com.java3y.austin.support.mq.eventbus.EventBusListener;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Component
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.EVENT_BUS)
-public class EventBusReceiver implements EventBusListener {
+public class EventBusReceiver implements EventBusListener, MessageReceiver {
 
     @Autowired
     private ConsumeService consumeService;
