@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 /**
  * Redis 消息队列实现类
  *
+ * Guava Eventbus 和 Spring EventBus 只适用于单体服务
+ * Redis 适合单体、微服务，且无需单独部署三方消息队列，方便开发与简单应用
+ *
  * @author xiaoxiamao
  * @date 2024/7/4
  */
@@ -39,10 +42,11 @@ public class RedisSendMqServiceImpl implements SendMqService {
     public void send(String topic, String jsonValue, String tagId) {
         // 非业务topic，抛错不发送
         if (!sendTopic.equals(topic) && !recallTopic.equals(topic)) {
-            log.error("RedisSendMqServiceImpl#The topic type is not supported! topic:{}, jsonValue:{}, tagId:{}",
+            log.error("RedisSendMqServiceImpl#send The topic type is not supported! topic:{}, jsonValue:{}, tagId:{}",
                     topic, jsonValue, tagId);
             return;
         }
+        log.debug("RedisSendMqServiceImpl#send topic:{}, jsonValue:{}, tagId:{}", topic, jsonValue, tagId);
         stringRedisTemplate.opsForList().leftPush(topic, jsonValue);
     }
 
