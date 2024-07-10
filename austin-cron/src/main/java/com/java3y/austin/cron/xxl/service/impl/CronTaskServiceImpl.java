@@ -168,7 +168,8 @@ public class CronTaskServiceImpl implements CronTaskService {
                     response != null ? JSON.toJSONString(response.body()) : "");
         }
         invalidateCookie();
-        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(response.body()));
+        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR,
+                response != null ? JSON.toJSONString(response.body()) : "");
     }
 
     @Override

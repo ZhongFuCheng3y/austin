@@ -13,7 +13,7 @@ import java.util.Date;
  * @author 3y
  */
 public class TaskInfoUtils {
-    private static final int TYPE_FLAG = 1000000;
+    private static final long TYPE_FLAG = 1000000L;
     private static final String CODE = "track_code_bid";
     private TaskInfoUtils() {
     }
@@ -34,7 +34,7 @@ public class TaskInfoUtils {
      */
     public static Long generateBusinessId(Long templateId, Integer templateType) {
         Integer today = Integer.valueOf(DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN));
-        return Long.valueOf(String.format("%d%s", templateType * TYPE_FLAG + templateId, today));
+        return Long.valueOf(String.format("%d%s", templateType.longValue() * TYPE_FLAG + templateId, today));
     }
 
     /**
