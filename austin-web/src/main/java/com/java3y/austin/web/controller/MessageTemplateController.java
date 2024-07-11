@@ -201,7 +201,11 @@ public class MessageTemplateController {
         try {
             File localFile = new File(filePath);
             if (!localFile.exists()) {
-                localFile.mkdirs();
+                boolean res = localFile.mkdirs();
+                if (!res) {
+                    log.error("MessageTemplateController#upload fail! Failed to create folder.");
+                    throw new CommonException(RespStatusEnum.SERVICE_ERROR);
+                }
             }
             file.transferTo(localFile);
         } catch (Exception e) {
