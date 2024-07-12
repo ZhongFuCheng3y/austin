@@ -4,12 +4,16 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.csv.*;
+import cn.hutool.core.util.CharsetUtil;
 import com.google.common.base.Throwables;
 import com.java3y.austin.cron.csv.CountFileRowHandler;
 import com.java3y.austin.cron.vo.CrowdInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -37,7 +41,8 @@ public class ReadFileUtils {
     public static void getCsvRow(String path, CsvRowHandler csvRowHandler) {
 
         // 把首行当做是标题，获取reader
-        try (CsvReader reader = CsvUtil.getReader(new FileReader(path),
+        try (CsvReader reader = CsvUtil.getReader(
+                new InputStreamReader(Files.newInputStream(Paths.get(path)), CharsetUtil.CHARSET_UTF_8),
                 new CsvReadConfig().setContainsHeader(true))) {
             reader.read(csvRowHandler);
         } catch (Exception e) {
@@ -54,7 +59,8 @@ public class ReadFileUtils {
     public static long countCsvRow(String path, CountFileRowHandler countFileRowHandler) {
 
         // 把首行当做是标题，获取reader
-        try (CsvReader reader = CsvUtil.getReader(new FileReader(path),
+        try (CsvReader reader = CsvUtil.getReader(
+                new InputStreamReader(new FileInputStream(path), CharsetUtil.CHARSET_UTF_8),
                 new CsvReadConfig().setContainsHeader(true))) {
 
             reader.read(countFileRowHandler);

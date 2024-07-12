@@ -35,7 +35,7 @@ public class CommonConstant {
     /**
      * 编码格式
      */
-    public static final String CHARSET_NAME = "UTF-8";
+    public static final String CHARSET_UTF_8 = "UTF-8";
     /**
      * HTTP请求内容格式
      */

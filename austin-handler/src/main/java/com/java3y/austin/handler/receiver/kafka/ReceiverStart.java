@@ -84,14 +84,15 @@ public class ReceiverStart {
     @Bean
     public ConcurrentKafkaListenerContainerFactory filterContainerFactory(@Value("${austin.business.tagId.key}") String tagIdKey,
                                                                           @Value("${austin.business.tagId.value}") String tagIdValue) {
-        ConcurrentKafkaListenerContainerFactory factory = new ConcurrentKafkaListenerContainerFactory();
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         factory.setAckDiscarded(true);
 
         factory.setRecordFilterStrategy(consumerRecord -> {
             if (Optional.ofNullable(consumerRecord.value()).isPresent()) {
                 for (Header header : consumerRecord.headers()) {
-                    if (header.key().equals(tagIdKey) && new String(header.value()).equals(new String(tagIdValue.getBytes(StandardCharsets.UTF_8)))) {
+                    if (header.key().equals(tagIdKey) &&
+                            new String(header.value(), StandardCharsets.UTF_8).equals(tagIdValue)) {
                         return false;
                     }
                 }
