@@ -6,7 +6,6 @@ import cn.hutool.core.net.URLEncodeUtil;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
@@ -38,7 +37,7 @@ public class YunPianSmsScript implements SmsScript {
 
     private static final String PARAMS_SPLIT_KEY = "{|}";
     private static final String PARAMS_KV_SPLIT_KEY = "{:}";
-    private static Logger log = LoggerFactory.getLogger(YunPianSmsScript.class);
+    private static final Logger log = LoggerFactory.getLogger(YunPianSmsScript.class);
     @Autowired
     private AccountUtils accountUtils;
 

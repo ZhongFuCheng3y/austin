@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.EVENT_BUS)
 public class EventBusSendMqServiceImpl implements SendMqService {
-    private EventBus eventBus = new EventBus();
+    private final EventBus eventBus = new EventBus();
 
     @Autowired
     private EventBusListener eventBusListener;

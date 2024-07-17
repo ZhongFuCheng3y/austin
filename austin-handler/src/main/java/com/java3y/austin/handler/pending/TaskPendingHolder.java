@@ -24,10 +24,10 @@ public class TaskPendingHolder {
     /**
      * 获取得到所有的groupId
      */
-    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
+    private static final List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
     @Autowired
     private ThreadPoolUtils threadPoolUtils;
-    private Map<String, ExecutorService> holder = new HashMap<>(32);
+    private final Map<String, ExecutorService> holder = new HashMap<>(32);
 
     /**
      * 给每个渠道，每种消息类型初始化一个线程池

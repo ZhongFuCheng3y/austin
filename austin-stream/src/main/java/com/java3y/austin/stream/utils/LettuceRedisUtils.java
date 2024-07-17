@@ -23,7 +23,7 @@ public class LettuceRedisUtils {
     /**
      * 初始化 redisClient
      */
-    private static RedisClient redisClient;
+    private static final RedisClient redisClient;
 
     static {
         RedisURI redisUri = RedisURI.Builder.redis(AustinFlinkConstant.REDIS_IP)

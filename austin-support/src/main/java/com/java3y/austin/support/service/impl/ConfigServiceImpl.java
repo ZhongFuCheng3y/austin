@@ -23,7 +23,7 @@ public class ConfigServiceImpl implements ConfigService {
      * 本地配置
      */
     private static final String PROPERTIES_PATH = "local.properties";
-    private Props props = new Props(PROPERTIES_PATH, StandardCharsets.UTF_8);
+    private final Props props = new Props(PROPERTIES_PATH, StandardCharsets.UTF_8);
 
     /**
      * apollo配置

@@ -18,7 +18,7 @@ import java.util.Map;
 public class AlipayClientSingleton {
 
 
-    private static Map<String, DefaultAlipayClient> alipayClientMap = new HashMap<>();
+    private static final Map<String, DefaultAlipayClient> alipayClientMap = new HashMap<>();
 
     private AlipayClientSingleton() {
     }

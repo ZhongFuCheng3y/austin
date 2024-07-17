@@ -39,7 +39,7 @@ public class ReceiverStart {
     /**
      * 获取得到所有的groupId
      */
-    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
+    private static final List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
     /**
      * 下标(用于迭代groupIds位置)
      */
