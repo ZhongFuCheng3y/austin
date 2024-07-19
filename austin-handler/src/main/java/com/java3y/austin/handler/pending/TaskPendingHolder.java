@@ -24,7 +24,7 @@ public class TaskPendingHolder {
     /**
      * 获取得到所有的groupId
      */
-    private static final List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
+    private static final List<String> GROUP_IDS = GroupIdMappingUtils.getAllGroupIds();
     @Autowired
     private ThreadPoolUtils threadPoolUtils;
     private final Map<String, ExecutorService> holder = new HashMap<>(32);
@@ -39,7 +39,7 @@ public class TaskPendingHolder {
          *
          * 可以通过apollo配置：dynamic-tp-apollo-dtp.yml  动态修改线程池的信息
          */
-        for (String groupId : groupIds) {
+        for (String groupId : GROUP_IDS) {
             DtpExecutor executor = HandlerThreadPoolConfig.getExecutor(groupId);
             threadPoolUtils.register(executor);
 

@@ -37,11 +37,11 @@ services:
       - mongo
       - elasticsearch
     ports:
-      - 9009:9000
-      - 1514:1514
-      - 1514:1514/udp
-      - 12201:12201
-      - 12201:12201/udp
+      - "9009:9000"
+      - "1514:1514"
+      - "1514:1514/udp"
+      - "12201:12201"
+      - "12201:12201/udp"
 networks:
   graylog:
     driver: bridge

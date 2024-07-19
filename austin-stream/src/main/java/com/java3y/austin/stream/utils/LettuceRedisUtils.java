@@ -23,14 +23,14 @@ public class LettuceRedisUtils {
     /**
      * 初始化 redisClient
      */
-    private static final RedisClient redisClient;
+    private static final RedisClient REDIS_CLIENT;
 
     static {
         RedisURI redisUri = RedisURI.Builder.redis(AustinFlinkConstant.REDIS_IP)
                 .withPort(Integer.valueOf(AustinFlinkConstant.REDIS_PORT))
                 .withPassword(AustinFlinkConstant.REDIS_PASSWORD.toCharArray())
                 .build();
-        redisClient = RedisClient.create(redisUri);
+        REDIS_CLIENT = RedisClient.create(redisUri);
     }
 
     private LettuceRedisUtils() {
@@ -41,7 +41,7 @@ public class LettuceRedisUtils {
      * 封装pipeline操作
      */
     public static void pipeline(RedisPipelineCallBack pipelineCallBack) {
-        StatefulRedisConnection<byte[], byte[]> connect = redisClient.connect(new ByteArrayCodec());
+        StatefulRedisConnection<byte[], byte[]> connect = REDIS_CLIENT.connect(new ByteArrayCodec());
         RedisAsyncCommands<byte[], byte[]> commands = connect.async();
 
         List<RedisFuture<?>> futures = pipelineCallBack.invoke(commands);
