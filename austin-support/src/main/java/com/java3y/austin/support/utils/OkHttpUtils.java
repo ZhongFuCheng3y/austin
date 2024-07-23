@@ -70,12 +70,12 @@ public class OkHttpUtils {
         StringBuilder sb = new StringBuilder(url);
         if (Objects.nonNull(params) && params.keySet().size() > 0) {
             boolean firstFlag = true;
-            for (String key : params.keySet()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (firstFlag) {
-                    sb.append("?").append(key).append("=").append(params.get(key));
+                    sb.append("?").append(entry.getKey()).append("=").append(entry.getValue());
                     firstFlag = false;
                 } else {
-                    sb.append("&").append(key).append("=").append(params.get(key));
+                    sb.append("&").append(entry.getKey()).append("=").append(entry.getValue());
                 }
             }
         }
@@ -98,8 +98,8 @@ public class OkHttpUtils {
         FormBody.Builder formBuilder = new FormBody.Builder();
 
         if (Objects.nonNull(params) && params.keySet().size() > 0) {
-            for (String key : params.keySet()) {
-                formBuilder.add(key, params.get(key));
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                formBuilder.add(entry.getKey(), entry.getValue());
             }
         }
         Request.Builder builder = getBuilderWithHeaders(headers);

@@ -32,7 +32,7 @@ public class LinTongSendResult {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public class DataDTO {
+    public static class DataDTO {
         Integer code;
         String message;
         Long msgId;

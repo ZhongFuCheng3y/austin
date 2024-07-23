@@ -84,7 +84,7 @@ public class XxlJobUtils {
         if (Objects.isNull(basicResultVO.getData())) {
             XxlJobGroup xxlJobGroup = XxlJobGroup.builder().appname(appName).title(jobHandlerName).addressType(CommonConstant.FALSE).build();
             if (RespStatusEnum.SUCCESS.getCode().equals(cronTaskService.createGroup(xxlJobGroup).getStatus())) {
-                return (int) cronTaskService.getGroupId(appName, jobHandlerName).getData();
+                return (Integer) cronTaskService.getGroupId(appName, jobHandlerName).getData();
             }
         }
         return basicResultVO.getData();

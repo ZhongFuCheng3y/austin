@@ -34,7 +34,6 @@ public class AustinFileUtils {
      * @return
      */
     public static File getRemoteUrl2File(String path, String remoteUrl) {
-
         InputStream inputStream = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -51,7 +50,11 @@ public class AustinFileUtils {
             File file = new File(path, url.getPath());
             inputStream = url.openStream();
             if (!file.exists()) {
-                file.getParentFile().mkdirs();
+                boolean res = file.getParentFile().mkdirs();
+                if (!res) {
+                    log.error("AustinFileUtils#getRemoteUrl2File Failed to create folder, path:{}, remoteUrl:{}", path, remoteUrl);
+                    return null;
+                }
                 fileOutputStream = new FileOutputStream(file);
                 IoUtil.copy(inputStream, fileOutputStream);
             }
@@ -59,20 +62,8 @@ public class AustinFileUtils {
         } catch (Exception e) {
             log.error("AustinFileUtils#getRemoteUrl2File fail:{},remoteUrl:{}", Throwables.getStackTraceAsString(e), remoteUrl);
         } finally {
-            if (Objects.nonNull(inputStream)) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    log.error("close#inputStream fail:{}", Throwables.getStackTraceAsString(e));
-                }
-            }
-            if (Objects.nonNull(fileOutputStream)) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    log.error("close#fileOutputStream fail:{}", Throwables.getStackTraceAsString(e));
-                }
-            }
+            closeQuietly(inputStream);
+            closeQuietly(fileOutputStream);
         }
         return null;
     }
@@ -95,4 +86,33 @@ public class AustinFileUtils {
         return files;
     }
 
+    /**
+     * 关闭InputStream流
+     *
+     * @param inputStream
+     */
+    private static void closeQuietly(InputStream inputStream) {
+        if (Objects.nonNull(inputStream)) {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                log.error("close#inputStream fail:{}", Throwables.getStackTraceAsString(e));
+            }
+        }
+    }
+
+    /**
+     * 关闭FileOutputStream流
+     *
+     * @param fileOutputStream
+     */
+    private static void closeQuietly(FileOutputStream fileOutputStream) {
+        if (Objects.nonNull(fileOutputStream)) {
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                log.error("close#fileOutputStream fail:{}", Throwables.getStackTraceAsString(e));
+            }
+        }
+    }
 }

@@ -31,11 +31,14 @@ public class SendAfterCheckAction implements BusinessProcess<SendTaskModel> {
     /**
      * 邮件和手机号正则
      */
-    protected static final Map<Integer, String> CHANNEL_REGEX_EXP = new HashMap<>();
+    protected static final Map<Integer, String> CHANNEL_REGEX_EXP;
 
     static {
-        CHANNEL_REGEX_EXP.put(IdType.PHONE.getCode(), PHONE_REGEX_EXP);
-        CHANNEL_REGEX_EXP.put(IdType.EMAIL.getCode(), EMAIL_REGEX_EXP);
+        Map<Integer, String> tempMap = new HashMap<>();
+        tempMap.put(IdType.PHONE.getCode(), PHONE_REGEX_EXP);
+        tempMap.put(IdType.EMAIL.getCode(), EMAIL_REGEX_EXP);
+        // 初始化为不可变集合，避免被恶意修改
+        CHANNEL_REGEX_EXP = Collections.unmodifiableMap(tempMap);
     }
 
 

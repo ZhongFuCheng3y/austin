@@ -2,6 +2,8 @@ package com.java3y.austin.common.dto.account.sms;
 
 import lombok.*;
 
+import java.util.Objects;
+
 /**
  * <span>Form File</span>
  * <p>Description</p>
@@ -13,7 +15,6 @@ import lombok.*;
  * @Description
  * @see com.java3y.austin.common.dto.account austin
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @AllArgsConstructor
@@ -30,4 +31,36 @@ public class LinTongSmsAccount extends SmsAccount {
     private String userName;
     private String password;
 
+    /**
+     * 重写equals方法
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        LinTongSmsAccount that = (LinTongSmsAccount) o;
+        return url.equals(that.url) &&
+                userName.equals(that.userName) &&
+                password.equals(that.password);
+    }
+
+    /**
+     * 重写hashCode方法
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, userName, password);
+    }
 }

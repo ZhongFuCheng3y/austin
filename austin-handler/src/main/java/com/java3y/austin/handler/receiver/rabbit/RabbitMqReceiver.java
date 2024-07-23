@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class RabbitMqReceiver implements MessageReceiver {
     public void onMessage(Message message) {
         String messageType = message.getMessageProperties().getHeader("messageType");
         byte[] body = message.getBody();
-        String messageContent = new String(body);
+        String messageContent = new String(body, StandardCharsets.UTF_8);
         if (StringUtils.isBlank(messageContent)) {
             return;
         }

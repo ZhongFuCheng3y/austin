@@ -9,7 +9,6 @@ import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
 import com.dingtalk.api.request.OapiMessageCorpconversationGetsendresultRequest;
 import com.dingtalk.api.request.OapiMessageCorpconversationRecallRequest;
 import com.dingtalk.api.response.OapiMessageCorpconversationAsyncsendV2Response;
-import com.dingtalk.api.response.OapiMessageCorpconversationGetsendresultResponse;
 import com.dingtalk.api.response.OapiMessageCorpconversationRecallResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.AustinConstant;
@@ -179,7 +178,7 @@ public class DingDingWorkNoticeHandler extends BaseHandler{
             OapiMessageCorpconversationGetsendresultRequest req = new OapiMessageCorpconversationGetsendresultRequest();
             req.setAgentId(Long.valueOf(account.getAgentId()));
             req.setTaskId(456L);
-            OapiMessageCorpconversationGetsendresultResponse rsp = client.execute(req, accessToken);
+            client.execute(req, accessToken);
         } catch (Exception e) {
             log.error("DingDingWorkNoticeHandler#pull fail:{}", Throwables.getStackTraceAsString(e));
         }
