@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 /**
  * @author 3y
  */
@@ -27,5 +29,33 @@ public class SmsAccount {
      */
     protected String scriptName;
 
+    /**
+     * 重写equals方法
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SmsAccount that = (SmsAccount) o;
+        return supplierId.equals(that.supplierId) &&
+                supplierName.equals(that.supplierName) &&
+                scriptName.equals(that.scriptName);
+    }
 
+    /**
+     * 重写hashCode方法
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(supplierId, supplierName, scriptName);
+    }
 }

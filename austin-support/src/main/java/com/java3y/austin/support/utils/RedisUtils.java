@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -82,8 +83,8 @@ public class RedisUtils {
         try {
             redisTemplate.executePipelined((RedisCallback<String>) connection -> {
                 for (Map.Entry<String, String> entry : keyValues.entrySet()) {
-                    connection.setEx(entry.getKey().getBytes(), seconds,
-                            entry.getValue().getBytes());
+                    connection.setEx(entry.getKey().getBytes(StandardCharsets.UTF_8), seconds,
+                            entry.getValue().getBytes(StandardCharsets.UTF_8));
                 }
                 return null;
             });
@@ -99,8 +100,8 @@ public class RedisUtils {
     public void lPush(String key, String value, Long seconds) {
         try {
             redisTemplate.executePipelined((RedisCallback<String>) connection -> {
-                connection.lPush(key.getBytes(), value.getBytes());
-                connection.expire(key.getBytes(), seconds);
+                connection.lPush(key.getBytes(StandardCharsets.UTF_8), value.getBytes(StandardCharsets.UTF_8));
+                connection.expire(key.getBytes(StandardCharsets.UTF_8), seconds);
                 return null;
             });
         } catch (Exception e) {
@@ -142,8 +143,11 @@ public class RedisUtils {
         try {
             redisTemplate.executePipelined((RedisCallback<String>) connection -> {
                 for (Map.Entry<String, String> entry : keyValues.entrySet()) {
-                    connection.hIncrBy(entry.getKey().getBytes(), entry.getValue().getBytes(), delta);
-                    connection.expire(entry.getKey().getBytes(), seconds);
+                    connection.hIncrBy(entry.getKey().getBytes(StandardCharsets.UTF_8),
+                            entry.getValue().getBytes(StandardCharsets.UTF_8),
+                            delta);
+                    connection.expire(entry.getKey().getBytes(StandardCharsets.UTF_8),
+                            seconds);
                 }
                 return null;
             });

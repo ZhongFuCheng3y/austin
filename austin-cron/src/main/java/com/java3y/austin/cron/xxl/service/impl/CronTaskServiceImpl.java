@@ -164,10 +164,12 @@ public class CronTaskServiceImpl implements CronTaskService {
             }
         } catch (Exception e) {
             log.error("CronTaskService#getGroupId fail,e:{},param:{},response:{}", Throwables.getStackTraceAsString(e)
-                    , JSON.toJSONString(params), JSON.toJSONString(response.body()));
+                    , JSON.toJSONString(params),
+                    response != null ? JSON.toJSONString(response.body()) : "");
         }
         invalidateCookie();
-        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR, JSON.toJSONString(response.body()));
+        return BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR,
+                response != null ? JSON.toJSONString(response.body()) : "");
     }
 
     @Override

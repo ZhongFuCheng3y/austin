@@ -35,7 +35,7 @@ public class CommonConstant {
     /**
      * 编码格式
      */
-    public static final String CHARSET_NAME = "UTF-8";
+    public static final String CHARSET_UTF_8 = "UTF-8";
     /**
      * HTTP请求内容格式
      */
@@ -44,6 +44,12 @@ public class CommonConstant {
     public static final String CONTENT_TYPE_XML = "application/xml; charset=UTF-8";
     public static final String CONTENT_TYPE_FORM_URL_ENCODE = "application/x-www-form-urlencoded;charset=utf-8;";
     public static final String CONTENT_TYPE_MULTIPART_FORM_DATA = "multipart/form-data";
+    /**
+     * 协议
+     */
+    public static final String HTTP = "http";
+    public static final String HTTPS = "https";
+    public static final String OSS = "oss";
     /**
      * HTTP 请求方法
      */
