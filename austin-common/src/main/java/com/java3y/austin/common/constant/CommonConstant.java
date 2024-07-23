@@ -45,6 +45,12 @@ public class CommonConstant {
     public static final String CONTENT_TYPE_FORM_URL_ENCODE = "application/x-www-form-urlencoded;charset=utf-8;";
     public static final String CONTENT_TYPE_MULTIPART_FORM_DATA = "multipart/form-data";
     /**
+     * 协议
+     */
+    public static final String HTTP = "http";
+    public static final String HTTPS = "https";
+    public static final String OSS = "oss";
+    /**
      * HTTP 请求方法
      */
     public static final String REQUEST_METHOD_GET = "GET";

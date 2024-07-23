@@ -2,6 +2,7 @@ package com.java3y.austin.support.utils;
 
 import cn.hutool.core.io.IoUtil;
 import com.google.common.base.Throwables;
+import com.java3y.austin.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -38,6 +39,15 @@ public class AustinFileUtils {
         FileOutputStream fileOutputStream = null;
         try {
             URL url = new URL(remoteUrl);
+            String protocol = url.getProtocol();
+            // 防止SSRF攻击
+            if (!CommonConstant.HTTP.equalsIgnoreCase(protocol)
+                    && !CommonConstant.HTTPS.equalsIgnoreCase(protocol)
+                    && !CommonConstant.OSS.equalsIgnoreCase(protocol)) {
+                log.error("AustinFileUtils#getRemoteUrl2File fail:{}, remoteUrl:{}",
+                        "The remoteUrl is invalid, it can only be of the types http, https, and oss.", remoteUrl);
+                return null;
+            }
             File file = new File(path, url.getPath());
             inputStream = url.openStream();
             if (!file.exists()) {
