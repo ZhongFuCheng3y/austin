@@ -24,7 +24,7 @@ systemctl status mysqld.service
 grep "password" /var/log/mysqld.log
 ```
 
-[![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/98b36a9b01de4cc79f3a53245296a19c~tplv-k3u1fbpfcp-zoom-1.image)](https://tva1.sinaimg.cn/large/008i3skNgy1gwg6eiwyqfj313402mgm8.jpg)
+![](images/10.png)
 
 **四**、登录进MySQL
 
@@ -409,11 +409,11 @@ services:
 
 目录结构最好保持一致：
 
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a532e3221834466a85b6739871694957~tplv-k3u1fbpfcp-watermark.image?)
+![](images/11.png)
 
 注：我的配置里更改过端口，所以我的程序`AustinApplication`写的端口为7000
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1b3944f3a9e849219c60e673baa5b7ff~tplv-k3u1fbpfcp-watermark.image?)
+![](images/12.png)
 
 **<https://www.apolloconfig.com/#/zh/deployment/quick-start-docker>**
 
@@ -421,11 +421,11 @@ services:
 
 部门的创建其实也是一份"配置"，输入`organizations`就能把现有的部门给改掉，我新增了`boss`股东部门，大家都是我的股东。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/41b096b379244288a8ab25c67b484c62~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/13.png)
 
 PS：我的namespace是`boss.austin`
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c4636a5620a454b931aea8b248e2890~tplv-k3u1fbpfcp-watermark.image?)
+![](images/14.png)
 
 apollo配置样例可看example/apollo.properties文件的内容
 
@@ -544,31 +544,31 @@ scrape_configs:
 
 进到Grafana首页，配置prometheus作为数据源
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/76474c290b594d72b8c26f32e6c93753~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/15.png)
 
 进到配置页面，写下对应的URL，然后保存就好了。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8a78755f4f30431882878ab08e6855bc~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/16.png)
 
 相关监控的模板可以在 <https://grafana.com/grafana/dashboards/> 这里查到。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5836357acce442b480628e06b2e7420a~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/17.png)
 
 服务器的监控直接选用**8919**的就好了
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/01a19e6370f54c10b096e1c9bd743b59~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/18.png)
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b97faddc55324c2bac2bf13a6e47355e~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/19.png)
 
 import后就能直接看到高大上的监控页面了：
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4505d818d2474d8f83d033ad3ad60a64~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/20.png)
 
 使用模板**893**来配置监控docker的信息：
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da69a42ffb984caa99c0beea410dde07~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/21.png)
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14a5c8b4fb5441598ddda816d42d56fd~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/22.png)
 
 选用了`4701`模板的JVM监控和`12900`SpringBoot监控（**程序代码已经接入了actuator和prometheus**）。需要在`prometheus.yml`配置下新增暴露的服务地址：
 
@@ -579,9 +579,9 @@ import后就能直接看到高大上的监控页面了：
     - targets: ['ip:port'] # todo 这里的ip和端口写自己的应用下的
 ```
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbd1b8e2b15242a194da0ce8a7c61a80~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/23.png)
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/26f4d6d83f4a441d85cb0a396cd0543c~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/24.png)
 
 **安装文件详见./doc/docker/prometheus目录**
 
@@ -643,11 +643,11 @@ networks:
 
 启动以后，我们就可以通过`ip:port`访问对应的Graylog后台地址了，默认的账号和密码是`admin/admin`
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c7d068f7bb7445238688a695eab49c8c~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/25.png)
 
 配置下`inputs`的配置，找到`GELF UDP`，然后点击`Launch new input`，只需要填写`Title`字段，保存就完事了（其他不用动）。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/88878e8e4bb8428c9c6930cb09d5e249~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/26.png)
 
 最后配置`austin.grayLogIp`的ip即可实现分布式日志收集
 
@@ -672,7 +672,7 @@ services:
 ```
 **注意**：**ip**和**password**需要更改为自己的，并且，我开的是**6767**端口
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/180eabb4945e475494f3803c69318755~tplv-k3u1fbpfcp-zoom-1.image)
+![](images/27.png)
 
 **安装文件详见./doc/docker/xxljob目录**
 
@@ -980,7 +980,7 @@ source /etc/profile
 http://localhost:50070/dfshealth.html#tab-datanode
 ```
 
-![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/384425d102464c059d462add377b4582~tplv-k3u1fbpfcp-watermark.image?)
+![](images/28.png)
 
 ### 11.6 启动flink调试kafka数据到hive
 
@@ -1181,11 +1181,3 @@ networks:
 ```
 
 **安装文件详见./doc/docker/rocketmq目录**
-
-## 未完待续
-
-安装更详细的过程以及整个文章系列的更新思路都在公众号**Java3y**连载哟！
-
-如果你需要用这个项目写在简历上，**强烈建议关注公众号看实现细节的思路**。如果⽂档中有任何的不懂的问题，都可以直接来找我询问，我乐意帮助你们！公众号下有我的联系方式
-
-<img align="center" src='https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e109cdb8d064c1e87541d7b6c17957d~tplv-k3u1fbpfcp-zoom-1.image' width=300px height=300px />
