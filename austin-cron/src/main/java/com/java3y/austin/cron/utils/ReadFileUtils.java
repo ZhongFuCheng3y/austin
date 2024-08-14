@@ -10,7 +10,6 @@ import com.java3y.austin.cron.csv.CountFileRowHandler;
 import com.java3y.austin.cron.vo.CrowdInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -60,7 +59,7 @@ public class ReadFileUtils {
 
         // 把首行当做是标题，获取reader
         try (CsvReader reader = CsvUtil.getReader(
-                new InputStreamReader(new FileInputStream(path), CharsetUtil.CHARSET_UTF_8),
+                new InputStreamReader(Files.newInputStream(Paths.get(path)), CharsetUtil.CHARSET_UTF_8),
                 new CsvReadConfig().setContainsHeader(true))) {
 
             reader.read(countFileRowHandler);

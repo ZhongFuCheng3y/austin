@@ -465,11 +465,11 @@ public class Convert4Amis {
                     itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
                     itemsVO.setContent(smsRecord.getMsgContent());
                     itemsVO.setSendType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
-                    itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
+                    itemsVO.setSendTime(DateUtil.format(new Date(smsRecord.getCreated() * 1000L), DatePattern.NORM_DATETIME_PATTERN));
                 } else {
                     itemsVO.setReceiveType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
                     itemsVO.setReceiveContent(smsRecord.getReportContent());
-                    itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
+                    itemsVO.setReceiveTime(DateUtil.format(new Date(smsRecord.getUpdated() * 1000L), DatePattern.NORM_DATETIME_PATTERN));
                 }
             }
             itemsVoS.add(itemsVO);

@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 
 /**
@@ -27,13 +27,13 @@ public class SpringFileUtils {
     public static File getFile(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         File file = new File(fileName);
-        try (OutputStream out = new FileOutputStream(file)){
+        try (OutputStream out = Files.newOutputStream(file.toPath())){
             byte[] ss = multipartFile.getBytes();
-            for (int i = 0; i < ss.length; i++) {
-                out.write(ss[i]);
+            for (byte s : ss) {
+                out.write(s);
             }
         } catch (IOException e) {
-            log.error("SpringFileUtils#getFile multipartFile is converted to File error:{}", e);
+            log.error("SpringFileUtils#getFile multipartFile is converted to File error:{}", e.toString());
             return null;
         }
         return file;

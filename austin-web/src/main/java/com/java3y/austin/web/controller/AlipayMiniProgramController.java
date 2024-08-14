@@ -60,7 +60,7 @@ public class AlipayMiniProgramController {
             AlipayOpenMiniMessageTemplateBatchqueryModel model = new AlipayOpenMiniMessageTemplateBatchqueryModel();
 
             // 设置子板状态列表
-            List<String> statusList = new ArrayList<String>();
+            List<String> statusList = new ArrayList<>();
             statusList.add("STARTED");
             model.setStatusList(statusList);
 
@@ -112,7 +112,7 @@ public class AlipayMiniProgramController {
             AlipayOpenMiniMessageTemplateBatchqueryModel model = new AlipayOpenMiniMessageTemplateBatchqueryModel();
 
             // 设置子板状态列表
-            List<String> statusList = new ArrayList<String>();
+            List<String> statusList = new ArrayList<>();
             statusList.add("STARTED");
             model.setStatusList(statusList);
 

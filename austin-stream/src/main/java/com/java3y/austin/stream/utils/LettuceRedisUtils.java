@@ -48,7 +48,7 @@ public class LettuceRedisUtils {
 
         commands.flushCommands();
         LettuceFutures.awaitAll(10, TimeUnit.SECONDS,
-                futures.toArray(new RedisFuture[futures.size()]));
+                futures.toArray(new RedisFuture[0]));
         connect.close();
     }
 
