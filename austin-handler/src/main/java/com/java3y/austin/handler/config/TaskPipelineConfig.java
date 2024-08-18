@@ -3,10 +3,7 @@ package com.java3y.austin.handler.config;
 
 import com.java3y.austin.common.pipeline.ProcessController;
 import com.java3y.austin.common.pipeline.ProcessTemplate;
-import com.java3y.austin.handler.action.DeduplicationAction;
-import com.java3y.austin.handler.action.DiscardAction;
-import com.java3y.austin.handler.action.SendMessageAction;
-import com.java3y.austin.handler.action.ShieldAction;
+import com.java3y.austin.handler.action.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +27,8 @@ public class TaskPipelineConfig {
     @Autowired
     private DeduplicationAction deduplicationAction;
     @Autowired
+    private SensWordsAction sensWordsAction;
+    @Autowired
     private SendMessageAction sendMessageAction;
 
 
@@ -45,7 +44,8 @@ public class TaskPipelineConfig {
     @Bean("taskTemplate")
     public ProcessTemplate taskTemplate() {
         ProcessTemplate processTemplate = new ProcessTemplate();
-        processTemplate.setProcessList(Arrays.asList(discardAction, shieldAction, deduplicationAction, sendMessageAction));
+        processTemplate.setProcessList(Arrays.asList(discardAction, shieldAction, deduplicationAction,
+                sensWordsAction, sendMessageAction));
         return processTemplate;
     }
 
