@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import java.lang.annotation.*;
 
 /**
- * 单机限流注解
- * Created by TOM
- * On 2022/7/21 17:03
- *
- * @author TOM
+ * 负载均衡策略
+ * @Author Gavin
+ * @Date 2024/9/14
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
