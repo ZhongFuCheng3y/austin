@@ -1,5 +1,6 @@
 package com.java3y.austin.handler.pending;
 
+import com.dtp.core.DtpRegistry;
 import com.dtp.core.thread.DtpExecutor;
 import com.java3y.austin.handler.config.HandlerThreadPoolConfig;
 import com.java3y.austin.handler.utils.GroupIdMappingUtils;
@@ -24,10 +25,9 @@ public class TaskPendingHolder {
     /**
      * 获取得到所有的groupId
      */
-    private static final List<String> GROUP_IDS = GroupIdMappingUtils.getAllGroupIds();
+    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
     @Autowired
     private ThreadPoolUtils threadPoolUtils;
-    private final Map<String, ExecutorService> holder = new HashMap<>(32);
 
     /**
      * 给每个渠道，每种消息类型初始化一个线程池
@@ -39,11 +39,9 @@ public class TaskPendingHolder {
          *
          * 可以通过apollo配置：dynamic-tp-apollo-dtp.yml  动态修改线程池的信息
          */
-        for (String groupId : GROUP_IDS) {
+        for (String groupId : groupIds) {
             DtpExecutor executor = HandlerThreadPoolConfig.getExecutor(groupId);
             threadPoolUtils.register(executor);
-
-            holder.put(groupId, executor);
         }
     }
 
@@ -54,7 +52,7 @@ public class TaskPendingHolder {
      * @return
      */
     public ExecutorService route(String groupId) {
-        return holder.get(groupId);
+        return DtpRegistry.getExecutor(HandlerThreadPoolConfig.PRE_FIX + groupId);
     }
 
 
