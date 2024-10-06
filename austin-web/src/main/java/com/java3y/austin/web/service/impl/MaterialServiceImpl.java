@@ -55,7 +55,7 @@ public class MaterialServiceImpl implements MaterialService {
             String accessToken = accessTokenUtils.getAccessToken(ChannelType.DING_DING_WORK_NOTICE.getCode(), Integer.valueOf(sendAccount), account, false);
             DingTalkClient client = new DefaultDingTalkClient(SendChanelUrlConstant.DING_DING_UPLOAD_URL);
             OapiMediaUploadRequest req = new OapiMediaUploadRequest();
-            FileItem item = new FileItem(new StringBuilder().append(IdUtil.fastSimpleUUID()).append(file.getOriginalFilename()).toString(),
+            FileItem item = new FileItem(IdUtil.fastSimpleUUID() + file.getOriginalFilename(),
                     file.getInputStream());
             req.setMedia(item);
             req.setType(EnumUtil.getDescriptionByCode(Integer.valueOf(fileType), FileType.class));

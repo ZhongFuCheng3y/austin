@@ -45,7 +45,7 @@ public class ContentHolderUtil {
         @Override
         public String resolvePlaceholder(String placeholderName) {
             if (Objects.isNull(paramMap)) {
-                String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}", template, placeholderName, paramMap);
+                String errorStr = MessageFormat.format("template:{0} require param:{1},but not exist! paramMap:{2}", template, placeholderName, null);
                 throw new IllegalArgumentException(errorStr);
             }
             String value = paramMap.get(placeholderName);

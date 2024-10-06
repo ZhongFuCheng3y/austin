@@ -177,7 +177,7 @@ public class OkHttpUtils {
     private String execute(Request request) {
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                return response.body().string();
+                return String.valueOf(response.body());
             }
         } catch (Exception e) {
             log.error(Throwables.getStackTraceAsString(e));

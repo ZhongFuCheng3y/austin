@@ -23,7 +23,7 @@ public class ConfigServiceImpl implements ConfigService {
      * 本地配置
      */
     private static final String PROPERTIES_PATH = "local.properties";
-    private Props props = new Props(PROPERTIES_PATH, StandardCharsets.UTF_8);
+    private final Props PROPS = new Props(PROPERTIES_PATH, StandardCharsets.UTF_8);
 
     /**
      * apollo配置
@@ -49,7 +49,7 @@ public class ConfigServiceImpl implements ConfigService {
         } else if (Boolean.TRUE.equals(enableNacos)) {
             return nacosUtils.getProperty(key, defaultValue);
         } else {
-            return props.getProperty(key, defaultValue);
+            return PROPS.getProperty(key, defaultValue);
         }
     }
 }

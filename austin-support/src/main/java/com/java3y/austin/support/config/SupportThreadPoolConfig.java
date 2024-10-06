@@ -26,7 +26,7 @@ public class SupportThreadPoolConfig {
         return ExecutorBuilder.create()
                 .setCorePoolSize(ThreadPoolConstant.SINGLE_CORE_POOL_SIZE)
                 .setMaxPoolSize(ThreadPoolConstant.SINGLE_MAX_POOL_SIZE)
-                .setWorkQueue(new LinkedBlockingQueue(ThreadPoolConstant.BIG_QUEUE_SIZE))
+                .setWorkQueue(new LinkedBlockingQueue<>(ThreadPoolConstant.BIG_QUEUE_SIZE))
                 .setHandler(new ThreadPoolExecutor.CallerRunsPolicy())
                 .setAllowCoreThreadTimeOut(true)
                 .setKeepAliveTime(ThreadPoolConstant.SMALL_KEEP_LIVE_TIME, TimeUnit.SECONDS)

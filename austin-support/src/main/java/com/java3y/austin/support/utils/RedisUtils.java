@@ -171,14 +171,15 @@ public class RedisUtils {
      */
     public Boolean execLimitLua(RedisScript<Long> redisScript, List<String> keys, String... args) {
 
+        // 可变参数转数组
+        String[] argsArray = args != null ? args : new String[0];
         try {
-            Long execute = redisTemplate.execute(redisScript, keys, args);
+            Long execute = redisTemplate.execute(redisScript, keys, (Object[]) argsArray);
             if (Objects.isNull(execute)) {
                 return false;
             }
             return CommonConstant.TRUE.equals(execute.intValue());
         } catch (Exception e) {
-
             log.error("redis execLimitLua fail! e:{}", Throwables.getStackTraceAsString(e));
         }
         return false;

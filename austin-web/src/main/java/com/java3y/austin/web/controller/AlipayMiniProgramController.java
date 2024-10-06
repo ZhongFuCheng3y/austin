@@ -1,10 +1,12 @@
 package com.java3y.austin.web.controller;
 
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.hutool.http.HttpUtil;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.domain.AlipayOpenMiniMessageTemplateBatchqueryModel;
 import com.alipay.api.domain.MerchantMsgTemplateVO;
+import com.alipay.api.request.AlipayOpenMiniMessageTemplateBatchqueryRequest;
+import com.alipay.api.response.AlipayOpenMiniMessageTemplateBatchqueryResponse;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.constant.SendChanelUrlConstant;
 import com.java3y.austin.common.dto.account.AlipayMiniProgramAccount;
@@ -19,15 +21,11 @@ import com.java3y.austin.web.vo.amis.CommonAmisVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alipay.api.request.AlipayOpenMiniMessageTemplateBatchqueryRequest;
-import com.alipay.api.response.AlipayOpenMiniMessageTemplateBatchqueryResponse;
-import com.alipay.api.domain.AlipayOpenMiniMessageTemplateBatchqueryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +60,7 @@ public class AlipayMiniProgramController {
             AlipayOpenMiniMessageTemplateBatchqueryModel model = new AlipayOpenMiniMessageTemplateBatchqueryModel();
 
             // 设置子板状态列表
-            List<String> statusList = new ArrayList<String>();
+            List<String> statusList = new ArrayList<>();
             statusList.add("STARTED");
             model.setStatusList(statusList);
 
@@ -114,7 +112,7 @@ public class AlipayMiniProgramController {
             AlipayOpenMiniMessageTemplateBatchqueryModel model = new AlipayOpenMiniMessageTemplateBatchqueryModel();
 
             // 设置子板状态列表
-            List<String> statusList = new ArrayList<String>();
+            List<String> statusList = new ArrayList<>();
             statusList.add("STARTED");
             model.setStatusList(statusList);
 

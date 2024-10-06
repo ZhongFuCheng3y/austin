@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,9 +45,9 @@ public class SmsHandler extends BaseHandler{
     private static final String FLOW_KEY = "msgTypeSmsConfig";
     private static final String FLOW_KEY_PREFIX = "message_type_";
     /**
-     * 安全随机数，重用性能与随机数质量更高
+     * 安全随机数，性能与随机数质量更高
      */
-    private static final SecureRandom secureRandom = new SecureRandom();
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     @Autowired
     private SmsRecordDao smsRecordDao;
@@ -104,10 +104,10 @@ public class SmsHandler extends BaseHandler{
         }
 
         // 生成一个随机数[1,total]，看落到哪个区间
-        int index = secureRandom.nextInt(total) + 1;
+        int index = SECURE_RANDOM.nextInt(total) + 1;
 
-        MessageTypeSmsConfig supplier = null;
-        MessageTypeSmsConfig supplierBack = null;
+        MessageTypeSmsConfig supplier;
+        MessageTypeSmsConfig supplierBack;
         for (int i = 0; i < messageTypeSmsConfigs.size(); ++i) {
             if (index <= messageTypeSmsConfigs.get(i).getWeights()) {
                 supplier = messageTypeSmsConfigs.get(i);
@@ -147,7 +147,7 @@ public class SmsHandler extends BaseHandler{
          */
         if (!taskInfo.getSendAccount().equals(AUTO_FLOW_RULE)) {
             SmsAccount account = accountUtils.getAccountById(taskInfo.getSendAccount(), SmsAccount.class);
-            return Arrays.asList(MessageTypeSmsConfig.builder().sendAccount(taskInfo.getSendAccount()).scriptName(account.getScriptName()).weights(100).build());
+            return Collections.singletonList(MessageTypeSmsConfig.builder().sendAccount(taskInfo.getSendAccount()).scriptName(account.getScriptName()).weights(100).build());
         }
 
         /**

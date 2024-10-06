@@ -6,7 +6,7 @@ services:
     container_name: mysql
     restart: always
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     environment:

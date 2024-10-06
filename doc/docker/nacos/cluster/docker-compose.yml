@@ -22,8 +22,8 @@ services:
       - /home/nacos/cluster-logs/nacos-server01:/home/nacos/logs
       - /home/nacos/init.d:/home/nacos/init.d
     ports:
-      - 8846:8848
-      - 9555:9555
+      - "8846:8848"
+      - "9555:9555"
     restart: on-failure
 
   nacos2:
@@ -47,7 +47,7 @@ services:
       - /home/nacos/cluster-logs/nacos-server02:/home/nacos/logs
       - /home/nacos/init.d:/home/nacos/init.d
     ports:
-      - 8847:8848
+      - "8847:8848"
     restart: on-failure
 
   nacos3:
@@ -71,5 +71,5 @@ services:
       - /home/nacos/cluster-logs/nacos-server03:/home/nacos/logs
       - /home/nacos/init.d:/home/nacos/init.d
     ports:
-      - 8848:8848
+      - "8848:8848"
     restart: on-failure

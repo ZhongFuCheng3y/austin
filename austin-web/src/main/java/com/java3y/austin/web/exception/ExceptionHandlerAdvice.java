@@ -35,7 +35,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.OK)
     public BasicResultVO<RespStatusEnum> commonResponse(CommonException ce) {
         log.error(Throwables.getStackTrace(ce));
-        return new BasicResultVO(ce.getCode(), ce.getMessage(), ce.getRespStatusEnum());
+        return new BasicResultVO<>(ce.getCode(), ce.getMessage(), ce.getRespStatusEnum());
     }
 }
 

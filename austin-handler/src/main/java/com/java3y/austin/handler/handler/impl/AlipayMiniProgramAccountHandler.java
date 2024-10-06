@@ -67,7 +67,7 @@ public class AlipayMiniProgramAccountHandler extends BaseHandler{
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> {
-                            Map<String, String> valueMap = new HashMap<>();
+                            Map<String, String> valueMap = new HashMap<>(1);
                             valueMap.put("value", entry.getValue());
                             return valueMap;
                         }
