@@ -124,7 +124,7 @@ public class SensitiveWordsConfig {
             try {
                 TimeUnit.SECONDS.sleep(UPDATE_TIME_SECONDS);
                 log.debug("SensitiveWordConfig#startScheduledUpdate start update...");
-                loadSensitiveWords();
+                loadSensWords();
                 storeSensWords();
             } catch (InterruptedException e) {
                 log.error("SensitiveWordConfig#startScheduledUpdate interrupted: {}", e.getMessage());
