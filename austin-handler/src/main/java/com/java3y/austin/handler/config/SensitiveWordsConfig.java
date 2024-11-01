@@ -9,9 +9,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -68,6 +70,11 @@ public class SensitiveWordsConfig {
     private ResourceLoader resourceLoader;
 
     /**
+     * 是否终止线程
+     */
+    private volatile boolean stop = false;
+
+    /**
      * 初始化敏感词字典
      */
     @PostConstruct
@@ -120,7 +127,7 @@ public class SensitiveWordsConfig {
      * 实现热更新，修改词典后自动加载
      */
     private void startScheduledUpdate() {
-        while (true) {
+        while (!stop) {
             try {
                 TimeUnit.SECONDS.sleep(UPDATE_TIME_SECONDS);
                 log.debug("SensitiveWordConfig#startScheduledUpdate start update...");
@@ -128,8 +135,21 @@ public class SensitiveWordsConfig {
                 storeSensWords();
             } catch (InterruptedException e) {
                 log.error("SensitiveWordConfig#startScheduledUpdate interrupted: {}", e.getMessage());
+                Thread.currentThread().interrupt();
                 break;
             }
+        }
+    }
+
+    /**
+     * onDestroy
+     */
+    @PreDestroy
+    public void onDestroy() {
+        stop = true;
+        if (taskExecutor instanceof ThreadPoolTaskExecutor) {
+            ThreadPoolTaskExecutor threadPoolTaskExecutor = (ThreadPoolTaskExecutor) taskExecutor;
+            threadPoolTaskExecutor.shutdown();
         }
     }
 

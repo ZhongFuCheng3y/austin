@@ -49,6 +49,11 @@ public class RedisReceiver implements MessageReceiver {
     private ScheduledExecutorService scheduler;
 
     /**
+     * 是否终止线程
+     */
+    private volatile boolean stop = false;
+
+    /**
      * 初始化调度线程池
      */
     @PostConstruct
@@ -92,7 +97,7 @@ public class RedisReceiver implements MessageReceiver {
      * @param consumer 消费处理逻辑
      */
     private void receiveMessage(String topic, Consumer<String> consumer) {
-        while (true) {
+        while (!stop) {
             try {
                 // 阻塞操作，减少CPU，IO消耗
                 Optional<String> message = Optional.ofNullable(
@@ -117,6 +122,7 @@ public class RedisReceiver implements MessageReceiver {
      */
     @PreDestroy
     public void onDestroy() {
+        stop = true;
         scheduler.shutdown();
     }
 

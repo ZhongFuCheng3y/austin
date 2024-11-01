@@ -25,10 +25,15 @@ public class MessageReceipt {
     @Autowired
     private List<ReceiptMessageStater> receiptMessageStaterList;
 
+    /**
+     * 是否终止线程
+     */
+    private volatile boolean stop = false;
+
     @PostConstruct
     private void init() {
         SupportThreadPoolConfig.getPendingSingleThreadPool().execute(() -> {
-            while (true) {
+            while (!stop) {
                 try {
                     for (ReceiptMessageStater receiptMessageStater : receiptMessageStaterList) {
                         //receiptMessageStater.start();
@@ -50,6 +55,7 @@ public class MessageReceipt {
      */
     @PreDestroy
     public void onDestroy() {
+        this.stop = true;
         SupportThreadPoolConfig.getPendingSingleThreadPool().shutdown();
     }
 
