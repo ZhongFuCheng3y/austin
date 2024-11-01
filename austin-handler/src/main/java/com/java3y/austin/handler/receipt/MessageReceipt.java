@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 拉取回执信息 入口
@@ -31,12 +33,24 @@ public class MessageReceipt {
                     for (ReceiptMessageStater receiptMessageStater : receiptMessageStaterList) {
                         //receiptMessageStater.start();
                     }
-                    Thread.sleep(2000);
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException ex) {
+                    log.error("MessageReceipt#init interrupted: {}", ex.getMessage());
+                    Thread.currentThread().interrupt();
+                    break;
                 } catch (Exception e) {
                     log.error("MessageReceipt#init fail:{}", Throwables.getStackTraceAsString(e));
-                    Thread.currentThread().interrupt();
                 }
             }
         });
     }
+
+    /**
+     * 销毁调用
+     */
+    @PreDestroy
+    public void onDestroy() {
+        SupportThreadPoolConfig.getPendingSingleThreadPool().shutdown();
+    }
+
 }
