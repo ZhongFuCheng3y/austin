@@ -13,7 +13,9 @@ import com.java3y.austin.common.dto.model.SmsContentModel;
 import com.java3y.austin.common.enums.ChannelType;
 import com.java3y.austin.handler.domain.sms.MessageTypeSmsConfig;
 import com.java3y.austin.handler.domain.sms.SmsParam;
+import com.java3y.austin.handler.enums.LoadBalancerStrategy;
 import com.java3y.austin.handler.handler.BaseHandler;
+import com.java3y.austin.handler.loadbalance.ServiceLoadBalancerFactory;
 import com.java3y.austin.handler.script.SmsScript;
 import com.java3y.austin.support.dao.SmsRecordDao;
 import com.java3y.austin.support.domain.SmsRecord;
@@ -24,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +45,11 @@ public class SmsHandler extends BaseHandler{
     private static final Integer AUTO_FLOW_RULE = 0;
     private static final String FLOW_KEY = "msgTypeSmsConfig";
     private static final String FLOW_KEY_PREFIX = "message_type_";
+
     /**
-     * 安全随机数，重用性能与随机数质量更高
+     * 默认负载均衡为随机加权, 待拓展读取配置, 不同Handler可绑定不同的负载均衡策略
      */
-    private static final SecureRandom secureRandom = new SecureRandom();
+    private static final String loadBalancerStrategy = LoadBalancerStrategy.SERVICE_LOAD_BALANCER_RANDOM_WEIGHT_ENHANCED;
 
     @Autowired
     private SmsRecordDao smsRecordDao;
@@ -57,6 +59,8 @@ public class SmsHandler extends BaseHandler{
     private ApplicationContext applicationContext;
     @Autowired
     private AccountUtils accountUtils;
+    @Autowired
+    private ServiceLoadBalancerFactory<MessageTypeSmsConfig> serviceLoadBalancer;
 
     public SmsHandler() {
         channelCode = ChannelType.SMS.getCode();
@@ -74,7 +78,7 @@ public class SmsHandler extends BaseHandler{
              * 1、动态配置做流量负载
              * 2、发送短信
              */
-            MessageTypeSmsConfig[] messageTypeSmsConfigs = loadBalance(getMessageTypeSmsConfig(taskInfo));
+            List<MessageTypeSmsConfig> messageTypeSmsConfigs = serviceLoadBalancer.selectService(getMessageTypeSmsConfig(taskInfo), loadBalancerStrategy);
             for (MessageTypeSmsConfig messageTypeSmsConfig : messageTypeSmsConfigs) {
                 smsParam.setScriptName(messageTypeSmsConfig.getScriptName());
                 smsParam.setSendAccountId(messageTypeSmsConfig.getSendAccount());
@@ -88,41 +92,6 @@ public class SmsHandler extends BaseHandler{
             log.error("SmsHandler#handler fail:{},params:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(smsParam));
         }
         return false;
-    }
-
-    /**
-     * 流量负载
-     * 根据配置的权重优先走某个账号，并取出一个备份的
-     *
-     * @param messageTypeSmsConfigs
-     */
-    private MessageTypeSmsConfig[] loadBalance(List<MessageTypeSmsConfig> messageTypeSmsConfigs) {
-
-        int total = 0;
-        for (MessageTypeSmsConfig channelConfig : messageTypeSmsConfigs) {
-            total += channelConfig.getWeights();
-        }
-
-        // 生成一个随机数[1,total]，看落到哪个区间
-        int index = secureRandom.nextInt(total) + 1;
-
-        MessageTypeSmsConfig supplier = null;
-        MessageTypeSmsConfig supplierBack = null;
-        for (int i = 0; i < messageTypeSmsConfigs.size(); ++i) {
-            if (index <= messageTypeSmsConfigs.get(i).getWeights()) {
-                supplier = messageTypeSmsConfigs.get(i);
-
-                // 取下一个供应商
-                int j = (i + 1) % messageTypeSmsConfigs.size();
-                if (i == j) {
-                    return new MessageTypeSmsConfig[]{supplier};
-                }
-                supplierBack = messageTypeSmsConfigs.get(j);
-                return new MessageTypeSmsConfig[]{supplier, supplierBack};
-            }
-            index -= messageTypeSmsConfigs.get(i).getWeights();
-        }
-        return new MessageTypeSmsConfig[0];
     }
 
     /**
