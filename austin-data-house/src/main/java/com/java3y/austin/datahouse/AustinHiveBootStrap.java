@@ -8,7 +8,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.catalog.hive.HiveCatalog;
 
 /**
- * flink启动类
+ * hive启动类
  * <p>
  * 接受Kafka的消息 写入hive表中
  *
