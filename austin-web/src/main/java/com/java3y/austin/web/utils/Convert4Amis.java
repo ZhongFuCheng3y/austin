@@ -57,7 +57,7 @@ public class Convert4Amis {
      * 需要打散的字段(将json字符串打散为一个一个字段返回）
      * (主要是用于回显数据)
      */
-    private static final List<String> FLAT_FIELD_NAME = Arrays.asList("msgContent");
+    private static final List<String> FLAT_FIELD_NAME = Collections.singletonList("msgContent");
 
     /**
      * 需要格式化为jsonArray返回的字段
@@ -344,7 +344,7 @@ public class Convert4Amis {
                 List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
                 //使用i作为变量循环
                 for (int i=0;i<data.length;i++) {
-                    String name ="keyword"+String.valueOf(i+1);
+                    String name ="keyword"+ (i + 1);
                     String label = data[i];
                     CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
                             .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
@@ -437,9 +437,9 @@ public class Convert4Amis {
 
         return EchartsVo.builder()
                 .title(EchartsVo.TitleVO.builder().text(title).build())
-                .legend(EchartsVo.LegendVO.builder().data(Arrays.asList("人数")).build())
+                .legend(EchartsVo.LegendVO.builder().data(Collections.singletonList("人数")).build())
                 .xAxis(EchartsVo.XaxisVO.builder().data(xAxisList).build())
-                .series(Arrays.asList(EchartsVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
+                .series(Collections.singletonList(EchartsVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
                 .yAxis(EchartsVo.YaxisVO.builder().build())
                 .tooltip(EchartsVo.TooltipVO.builder().build())
                 .build();
@@ -465,11 +465,11 @@ public class Convert4Amis {
                     itemsVO.setBusinessId(String.valueOf(smsRecord.getMessageTemplateId()));
                     itemsVO.setContent(smsRecord.getMsgContent());
                     itemsVO.setSendType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
-                    itemsVO.setSendTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getCreated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
+                    itemsVO.setSendTime(DateUtil.format(new Date(smsRecord.getCreated() * 1000L), DatePattern.NORM_DATETIME_PATTERN));
                 } else {
                     itemsVO.setReceiveType(EnumUtil.getDescriptionByCode(smsRecord.getStatus(), SmsStatus.class));
                     itemsVO.setReceiveContent(smsRecord.getReportContent());
-                    itemsVO.setReceiveTime(DateUtil.format(new Date(Long.valueOf(smsRecord.getUpdated() * 1000L)), DatePattern.NORM_DATETIME_PATTERN));
+                    itemsVO.setReceiveTime(DateUtil.format(new Date(smsRecord.getUpdated() * 1000L), DatePattern.NORM_DATETIME_PATTERN));
                 }
             }
             itemsVoS.add(itemsVO);

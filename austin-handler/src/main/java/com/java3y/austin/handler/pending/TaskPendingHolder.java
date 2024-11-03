@@ -42,7 +42,6 @@ public class TaskPendingHolder {
         for (String groupId : groupIds) {
             DtpExecutor executor = HandlerThreadPoolConfig.getExecutor(groupId);
             threadPoolUtils.register(executor);
-
         }
     }
 

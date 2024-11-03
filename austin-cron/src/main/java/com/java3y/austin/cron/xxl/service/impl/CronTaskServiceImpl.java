@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.google.common.base.Throwables;
 import com.java3y.austin.common.enums.RespStatusEnum;
 import com.java3y.austin.common.vo.BasicResultVO;
@@ -48,7 +49,7 @@ public class CronTaskServiceImpl implements CronTaskService {
 
     @Override
     public BasicResultVO saveCronTask(XxlJobInfo xxlJobInfo) {
-        Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobInfo), Map.class);
+        Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobInfo), new TypeReference<Map<String, Object>>() {});
         String path = Objects.isNull(xxlJobInfo.getId()) ? xxlAddresses + XxlJobConstant.INSERT_URL
                 : xxlAddresses + XxlJobConstant.UPDATE_URL;
 
@@ -174,7 +175,7 @@ public class CronTaskServiceImpl implements CronTaskService {
 
     @Override
     public BasicResultVO createGroup(XxlJobGroup xxlJobGroup) {
-        Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobGroup), Map.class);
+        Map<String, Object> params = JSON.parseObject(JSON.toJSONString(xxlJobGroup),  new TypeReference<Map<String, Object>>() {});
         String path = xxlAddresses + XxlJobConstant.JOB_GROUP_INSERT_URL;
 
         HttpResponse response;

@@ -39,7 +39,7 @@ public class ReceiverStart {
     /**
      * 获取得到所有的groupId
      */
-    private static List<String> groupIds = GroupIdMappingUtils.getAllGroupIds();
+    private static final List<String> GROUP_IDS = GroupIdMappingUtils.getAllGroupIds();
     /**
      * 下标(用于迭代groupIds位置)
      */
@@ -58,7 +58,7 @@ public class ReceiverStart {
             if (element instanceof Method) {
                 String name = ((Method) element).getDeclaringClass().getSimpleName() + StrPool.DOT + ((Method) element).getName();
                 if (RECEIVER_METHOD_NAME.equals(name)) {
-                    attrs.put("groupId", groupIds.get(index++));
+                    attrs.put("groupId", GROUP_IDS.get(index++));
                 }
             }
             return attrs;
@@ -70,7 +70,7 @@ public class ReceiverStart {
      */
     @PostConstruct
     public void init() {
-        for (int i = 0; i < groupIds.size(); i++) {
+        for (int i = 0; i < GROUP_IDS.size(); i++) {
             context.getBean(Receiver.class);
         }
     }

@@ -37,7 +37,7 @@ public class RecallMqAction implements BusinessProcess<RecallTaskModel> {
     public void process(ProcessContext<RecallTaskModel> context) {
         RecallTaskInfo recallTaskInfo = context.getProcessModel().getRecallTaskInfo();
         try {
-            String message = JSON.toJSONString(recallTaskInfo, new SerializerFeature[]{SerializerFeature.WriteClassName});
+            String message = JSON.toJSONString(recallTaskInfo, SerializerFeature.WriteClassName);
             sendMqService.send(austinRecall, message, tagId);
         } catch (Exception e) {
             context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.SERVICE_ERROR));

@@ -37,7 +37,7 @@ public class SlideWindowLimitService extends AbstractLimitService {
 
     @PostConstruct
     public void init() {
-        redisScript = new DefaultRedisScript();
+        redisScript = new DefaultRedisScript<>();
         redisScript.setResultType(Long.class);
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("limit.lua")));
     }

@@ -5,7 +5,7 @@ services:
     image: foxiswho/rocketmq:server
     container_name: rocketmq_server
     ports:
-      - 9876:9876
+      - "9876:9876"
     volumes:
       - ./rocketmq/rocketmq_server/logs:/opt/logs
       - ./rocketmq/rocketmq_server/store:/opt/store
@@ -19,8 +19,8 @@ services:
     image: foxiswho/rocketmq:broker
     container_name: rocketmq_broker
     ports:
-      - 10909:10909
-      - 10911:10911
+      - "10909:10909"
+      - "10911:10911"
     volumes:
       - ./rocketmq/rocketmq_broker/logs:/opt/logs
       - ./rocketmq/rocketmq_broker/store:/opt/store
@@ -42,7 +42,7 @@ services:
     image: styletang/rocketmq-console-ng
     container_name: rocketmq_console_ng
     ports:
-      - 9002:8080
+      - "9002:8080"
     environment:
       JAVA_OPTS: "-Drocketmq.namesrv.addr=rocketmq_server:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
     depends_on:

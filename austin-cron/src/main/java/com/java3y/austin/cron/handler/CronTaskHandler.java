@@ -25,7 +25,7 @@ public class CronTaskHandler {
 
     @Autowired
     private ThreadPoolUtils threadPoolUtils;
-    private DtpExecutor dtpExecutor = CronAsyncThreadPoolConfig.getXxlCronExecutor();
+    private final DtpExecutor dtpExecutor = CronAsyncThreadPoolConfig.getXxlCronExecutor();
 
     /**
      * 处理后台的 austin 定时任务消息

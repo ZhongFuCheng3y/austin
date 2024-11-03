@@ -28,7 +28,7 @@ import java.util.List;
 public class AustinSink implements SinkFunction<AnchorInfo> {
 
     @Override
-    public void invoke(AnchorInfo anchorInfo, Context context) throws Exception {
+    public void invoke(AnchorInfo anchorInfo, Context context){
         realTimeData(anchorInfo);
     }
 

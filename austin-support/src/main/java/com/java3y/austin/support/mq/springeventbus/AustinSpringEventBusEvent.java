@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 public class AustinSpringEventBusEvent extends ApplicationEvent {
 
-    private AustinSpringEventSource austinSpringEventSource;
+    private final AustinSpringEventSource austinSpringEventSource;
 
     public AustinSpringEventBusEvent(Object source, AustinSpringEventSource austinSpringEventSource) {
         super(source);

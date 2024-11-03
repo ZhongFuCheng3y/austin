@@ -18,15 +18,15 @@ import java.util.Map;
 public class AlipayClientSingleton {
 
 
-    private static Map<String, DefaultAlipayClient> alipayClientMap = new HashMap<>();
+    private static final Map<String, DefaultAlipayClient> ALIPAY_CLIENT_MAP = new HashMap<>();
 
     private AlipayClientSingleton() {
     }
 
     public static DefaultAlipayClient getSingleton(AlipayMiniProgramAccount alipayMiniProgramAccount) throws AlipayApiException {
-        if (!alipayClientMap.containsKey(alipayMiniProgramAccount.getAppId())) {
+        if (!ALIPAY_CLIENT_MAP.containsKey(alipayMiniProgramAccount.getAppId())) {
             synchronized (DefaultAlipayClient.class) {
-                if (!alipayClientMap.containsKey(alipayMiniProgramAccount.getAppId())) {
+                if (!ALIPAY_CLIENT_MAP.containsKey(alipayMiniProgramAccount.getAppId())) {
                     AlipayConfig alipayConfig = new AlipayConfig();
                     alipayConfig.setServerUrl(SendChanelUrlConstant.ALI_MINI_PROGRAM_GATEWAY_URL);
                     alipayConfig.setAppId(alipayMiniProgramAccount.getAppId());
@@ -35,10 +35,10 @@ public class AlipayClientSingleton {
                     alipayConfig.setAlipayPublicKey(alipayMiniProgramAccount.getAlipayPublicKey());
                     alipayConfig.setCharset("utf-8");
                     alipayConfig.setSignType("RSA2");
-                    alipayClientMap.put(alipayMiniProgramAccount.getAppId(), new DefaultAlipayClient(alipayConfig));
+                    ALIPAY_CLIENT_MAP.put(alipayMiniProgramAccount.getAppId(), new DefaultAlipayClient(alipayConfig));
                 }
             }
         }
-        return alipayClientMap.get(alipayMiniProgramAccount.getAppId());
+        return ALIPAY_CLIENT_MAP.get(alipayMiniProgramAccount.getAppId());
     }
 }

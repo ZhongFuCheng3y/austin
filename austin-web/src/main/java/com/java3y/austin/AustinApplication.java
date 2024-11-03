@@ -34,7 +34,7 @@ public class AustinApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info(AnsiOutput.toString(AustinConstant.PROJECT_BANNER, "\n", AnsiColor.GREEN, AustinConstant.PROJECT_NAME, AnsiColor.DEFAULT, AnsiStyle.FAINT));
         log.info("Austin start succeeded, Index >> http://127.0.0.1:{}/", serverPort);
         log.info("Austin start succeeded, Swagger Url >> http://127.0.0.1:{}/swagger-ui/index.html", serverPort);
