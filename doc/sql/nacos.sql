@@ -7,8 +7,8 @@ USE `nacos_config`;
 CREATE TABLE IF NOT EXISTS `config_info`
 (
     `id`                 BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `data_id`            VARCHAR(255) NOT NULL COMMENT 'data_id',
-    `group_id`           VARCHAR(255)          DEFAULT NULL COMMENT 'group_id',
+    `data_id`            VARCHAR(64) NOT NULL COMMENT 'data_id',
+    `group_id`           VARCHAR(64)          DEFAULT NULL COMMENT 'group_id',
     `content`            LONGTEXT     NOT NULL COMMENT 'content',
     `md5`                VARCHAR(32)           DEFAULT NULL COMMENT 'md5',
     `gmt_create`         DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `config_info`
     `src_user`           TEXT COMMENT 'source user',
     `src_ip`             VARCHAR(50)           DEFAULT NULL COMMENT 'source ip',
     `app_name`           VARCHAR(128)          DEFAULT NULL,
-    `tenant_id`          VARCHAR(128)          DEFAULT '' COMMENT '租户字段',
+    `tenant_id`          VARCHAR(64)          DEFAULT '' COMMENT '租户字段',
     `c_desc`             VARCHAR(256)          DEFAULT NULL,
     `c_use`              VARCHAR(64)           DEFAULT NULL,
     `effect`             VARCHAR(64)           DEFAULT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `his_config_info`
 (
     `id`                 BIGINT(64) UNSIGNED NOT NULL,
     `nid`                BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `data_id`            VARCHAR(255)        NOT NULL,
+    `data_id`            VARCHAR(64)        NOT NULL,
     `group_id`           VARCHAR(128)        NOT NULL,
     `app_name`           VARCHAR(128)                 DEFAULT NULL COMMENT 'app_name',
     `content`            LONGTEXT            NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `his_config_info`
     `src_user`           TEXT,
     `src_ip`             VARCHAR(50)                  DEFAULT NULL,
     `op_type`            CHAR(10)                     DEFAULT NULL,
-    `tenant_id`          VARCHAR(128)                 DEFAULT '' COMMENT '租户字段',
+    `tenant_id`          VARCHAR(64)                 DEFAULT '' COMMENT '租户字段',
     `encrypted_data_key` VARCHAR(255)                 DEFAULT NULL,
     PRIMARY KEY (`nid`),
     KEY `idx_gmt_create` (`gmt_create`),
