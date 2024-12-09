@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 
+
 /**
  * @author xzcawl
  * @Date 2022/7/15 17:29
@@ -22,19 +23,29 @@ public class RabbitSendMqServiceImpl implements SendMqService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Value("${austin.rabbitmq.topic.name}")
-    private String confTopic;
-
     @Value("${austin.rabbitmq.exchange.name}")
     private String exchangeName;
 
+    @Value("${austin.business.topic.name}")
+    private String sendMessageTopic;
+
+    @Value("${austin.business.recall.topic.name}")
+    private String austinRecall;
+
+    @Value("${austin.rabbitmq.routing.send}")
+    private String sendRoutingKey;
+
+    @Value("${austin.rabbitmq.routing.recall}")
+    private String recallRoutingKey;
 
     @Override
     public void send(String topic, String jsonValue, String tagId) {
-        if (topic.equals(confTopic)) {
-            rabbitTemplate.convertAndSend(exchangeName, confTopic, jsonValue);
-        } else {
-            log.error("RabbitSendMqServiceImpl send topic error! topic:{},confTopic:{}", topic, confTopic);
+        if (topic.equals(sendMessageTopic)){
+            rabbitTemplate.convertAndSend(exchangeName, sendRoutingKey, jsonValue);
+        }else if (topic.equals(austinRecall)){
+            rabbitTemplate.convertAndSend(exchangeName, recallRoutingKey, jsonValue);
+        }else {
+            log.error("RabbitSendMqServiceImpl send topic error! topic:{}", topic);
         }
     }
 

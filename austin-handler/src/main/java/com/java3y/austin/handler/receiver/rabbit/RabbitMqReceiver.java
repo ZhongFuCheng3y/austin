@@ -29,34 +29,39 @@ import java.util.List;
 @ConditionalOnProperty(name = "austin.mq.pipeline", havingValue = MessageQueuePipeline.RABBIT_MQ)
 public class RabbitMqReceiver implements MessageReceiver {
 
-    private static final String MSG_TYPE_SEND = "send";
-    private static final String MSG_TYPE_RECALL = "recall";
-
     @Autowired
     private ConsumeService consumeService;
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${spring.rabbitmq.queues}", durable = "true"),
+            value = @Queue(value = "${spring.rabbitmq.queues.send}", durable = "true"),
             exchange = @Exchange(value = "${austin.rabbitmq.exchange.name}", type = ExchangeTypes.TOPIC),
-            key = "${austin.rabbitmq.routing.key}"
+            key = "${austin.rabbitmq.routing.send}"
     ))
-    public void onMessage(Message message) {
-        String messageType = message.getMessageProperties().getHeader("messageType");
+    public void send(Message message) {
         byte[] body = message.getBody();
         String messageContent = new String(body, StandardCharsets.UTF_8);
         if (StringUtils.isBlank(messageContent)) {
             return;
         }
-        if (MSG_TYPE_SEND.equals(messageType)) {
-            // 处理发送消息
-            List<TaskInfo> taskInfoLists = JSON.parseArray(messageContent, TaskInfo.class);
-            consumeService.consume2Send(taskInfoLists);
-        } else if (MSG_TYPE_RECALL.equals(messageType)) {
-            // 处理撤回消息
-            RecallTaskInfo recallTaskInfo = JSON.parseObject(messageContent, RecallTaskInfo.class);
-            consumeService.consume2recall(recallTaskInfo);
-        }
+        // 处理发送消息
+        List<TaskInfo> taskInfoLists = JSON.parseArray(messageContent, TaskInfo.class);
+        consumeService.consume2Send(taskInfoLists);
+    }
 
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = "${spring.rabbitmq.queues.recall}", durable = "true"),
+            exchange = @Exchange(value = "${austin.rabbitmq.exchange.name}", type = ExchangeTypes.TOPIC),
+            key = "${austin.rabbitmq.routing.recall}"
+    ))
+    public void recall(Message message) {
+        byte[] body = message.getBody();
+        String messageContent = new String(body, StandardCharsets.UTF_8);
+        if (StringUtils.isBlank(messageContent)) {
+            return;
+        }
+        // 处理撤回消息
+        RecallTaskInfo recallTaskInfo = JSON.parseObject(messageContent, RecallTaskInfo.class);
+        consumeService.consume2recall(recallTaskInfo);
     }
 
 }
