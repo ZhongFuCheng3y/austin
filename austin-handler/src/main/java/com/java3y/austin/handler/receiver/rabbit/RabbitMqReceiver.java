@@ -9,6 +9,7 @@ import com.java3y.austin.support.constans.MessageQueuePipeline;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Argument;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -33,7 +34,14 @@ public class RabbitMqReceiver implements MessageReceiver {
     private ConsumeService consumeService;
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${spring.rabbitmq.queues.send}", durable = "true"),
+            value = @Queue(
+                    value = "${spring.rabbitmq.queues.send}",
+                    durable = "true",
+                    arguments = {
+                            @Argument(name = "x-dead-letter-exchange", value = "${austin.rabbitmq.dlx.exchange}"),
+                            @Argument(name = "x-dead-letter-routing-key", value = "${austin.rabbitmq.routing.send.dead}")
+                    }
+            ),
             exchange = @Exchange(value = "${austin.rabbitmq.exchange.name}", type = ExchangeTypes.TOPIC),
             key = "${austin.rabbitmq.routing.send}"
     ))
@@ -49,7 +57,14 @@ public class RabbitMqReceiver implements MessageReceiver {
     }
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${spring.rabbitmq.queues.recall}", durable = "true"),
+            value = @Queue(
+                    value = "${spring.rabbitmq.queues.recall}",
+                    durable = "true",
+                    arguments = {
+                            @Argument(name = "x-dead-letter-exchange", value = "${austin.rabbitmq.dlx.exchange}"),
+                            @Argument(name = "x-dead-letter-routing-key", value = "${austin.rabbitmq.routing.recall.dead}")
+                    }
+            ),
             exchange = @Exchange(value = "${austin.rabbitmq.exchange.name}", type = ExchangeTypes.TOPIC),
             key = "${austin.rabbitmq.routing.recall}"
     ))
